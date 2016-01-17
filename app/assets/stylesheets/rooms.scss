@@ -1,0 +1,74 @@
+// Place all the styles related to the Rooms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.panel {
+  border: 0px;
+  box-shadow: 0 0px 1px rgba(0,0,0,0.09);
+  margin-bottom: 30px;
+}
+
+.vote-list {
+  height: 200px;
+
+  ul li input.btn {
+    width: 100px;
+    margin-bottom: 15px;
+  }
+
+  ul li input.btn:hover {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+  }
+}
+
+.vote-list {
+  ul li {
+    list-style-type: none;
+  }
+}
+
+#storyListArea {
+  // border: 1px solid #ccc;
+  // padding: 10px;
+}
+
+.story-desc {
+  color: #666;
+}
+
+.people-list ul {
+  list-style-type: none;
+
+  li {
+    padding: 5px 5px;
+  }
+
+  li:hover {
+    cursor: pointer;
+    background-color: #efefef;
+  }
+
+  li a {
+    text-decoration: none;
+    color: #333;
+    padding-left: 5px;
+  }
+
+  li i.owner {
+    color: red;
+  }
+
+  li i.watcher {
+    color: #FFD700;
+  }
+
+  li span.icon, span.glyphicon {
+    margin-right: 5px;
+  }
+}
+
+.room .name {
+  margin-bottom: 10px;
+}

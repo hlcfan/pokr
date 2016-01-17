@@ -1,0 +1,5 @@
+<%= form_for "/set_person_name", method: :post do |f| %>
+  <%= text_field_tag :redirect, params[:redirect], hidden: true %>
+  <%= text_field_tag :name %>
+  <%= f.submit "Submit" %>
+<% end %>

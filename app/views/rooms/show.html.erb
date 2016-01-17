@@ -1,0 +1,35 @@
+<%= javascript_include_tag "http://localhost:9292/faye.js" %>
+
+<script type="text/javascript" charset="utf-8">
+  (function(){
+    POKER.room_id = <%= @room.id %>
+  }());
+</script>
+
+<div id="new_message_form"></div>
+<div class="room">
+  <div class="col-md-12 name">
+    <h3>
+      <%= @room.name %>
+      <i class="pull-right">Yo, <%= current_user.name %>(<%= current_user.display_role %>)!</i>
+    </h3>
+  </div>
+  <div id="operationArea" class="col-md-8">
+    <% if current_user.watcher? || current_user.owner? %>
+      <%= render 'monitor' %>
+    <% else %>
+      <%= render partial: 'vote', locals: {points: current_user.points_of_story(cookies[:story_id].to_i)} %>
+    <% end %>
+    <div class="panel panel-default">
+      <div class="panel-heading">Stories</div>
+      <div id="storyListArea" class="panel-body row"></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">People</div>
+      <div id="peopleListArea" class="panel-body row">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Poker</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript" charset="utf-8">
+    var POKER = window['POKER'] = function(){};
+  </script>
+</head>
+<body>
+<div class="container">
+  <%= yield %>
+</div>
+</body>
+</html>
