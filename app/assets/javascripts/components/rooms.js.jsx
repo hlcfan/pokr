@@ -155,13 +155,28 @@ var Person = React.createClass({
     }
 
     return (
-      <li className="person" id={'u-' + this.props.id}>
+      <li className="person" id={'u-' + this.props.id} data-point={this.props.points}>
         <i className={this.props.role + ' ' + userIconClass} aria-hidden="true"></i>
         <a href="javascript:;" className="person">
           {this.props.name}
           <span className="points label label-success pull-right">{this.props.points}</span>
         </a>
       </li>
+    );
+  }
+});
+
+var ResultList = React.createClass({
+  render: function() {
+    // var peopleNodes = this.props.data.map(function(person) {
+    //   return (
+    //     <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} />
+    //   );
+    // });
+    return (
+      <div className="col-md-12">
+        
+      </div>
     );
   }
 });
@@ -184,14 +199,62 @@ $(document).on("page:change", function() {
   POKER.story_id = 1;
   Cookies.set('story_id', POKER.story_id);
 
+  function drawResult() {
+    var pointHash = {};
+    $('.people-list ul li').each(function(i, ele) {
+      var point = $(ele).attr('data-point')
+      if (point) {
+        var pointCount = pointHash[point] || 0;
+        pointHash[point] = (pointCount += 1);
+      }
+    });
+
+    var maxPointCount = 0;
+    $.each(pointHash, function(k, v){
+      if (v > maxPointCount) {
+        maxPointCount = 1;
+      }
+    });
+
+    keys = Object.keys(pointHash),
+    len = keys.length;
+
+    keys.sort();
+    keys.reverse();
+
+    var colorArray = ['']
+    $('#show-result .row-container').html('');
+    for (i = 0; i < len; i++) {
+      point = keys[i];
+      count = pointHash[point];
+
+      barWidth = count/maxPointCount * 100;
+
+      $('#show-result .row-container').append("<div class='row'><div class='col-md-1'>"+point+"</div><div class='col-md-10'><div style='width:"+barWidth+"%; background:gray; color: transparent;'>aaaa</div></div></div>");
+    }
+
+    // alert(maxPointCount)
+  }
+
   window.client = new Faye.Client('http://localhost:9292/faye');
  
   // Subscribe to the public channel
   var channelName = ['/rooms', POKER.room_id, POKER.story_id].join('/')
   var public_subscription = client.subscribe(channelName, function(data) {
     console.log(data);
-    $('#p-' + data.person_id).find(".points").text(data.points);
-    $('#u-' + data.person_id + ' .points').text(data.points);
+    if (data.type === 'action') {
+      drawResult();
+    } else {
+      $('#u-' + data.person_id + ' .points').text(data.points);
+      $('#u-' + data.person_id).attr('data-point', data.points);
+    }
   });
+
+  $('#open-result a').click(function(){
+    client.publish(channelName, {
+      data: 'open',
+      type: 'action'
+    });
+  })
 
 });

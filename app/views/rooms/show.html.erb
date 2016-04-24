@@ -15,7 +15,7 @@
     </h3>
   </div>
   <div id="operationArea" class="col-md-8">
-    <% if current_user.watcher? || current_user.owner? %>
+    <% if current_user.watcher? #|| current_user.owner? %>
       <%= render 'monitor' %>
     <% else %>
       <%= render partial: 'vote', locals: {points: current_user.points_of_story(cookies[:story_id].to_i)} %>
@@ -25,11 +25,32 @@
       <div id="storyListArea" class="panel-body row"></div>
     </div>
   </div>
+
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">People</div>
       <div id="peopleListArea" class="panel-body row">
       </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Action</div>
+      <div id="resultArea" class="panel-body row">
+        <% if current_user.owner? %>
+            <div class="col-sm-3"></div>
+            <div id="open-result" class="col-sm-4">
+              <a class="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+        <% end %>
+
+        <div id="show-result" class="container-fluid" style="clear: both; width: 100%;">
+            <div class="row-container">
+            </div>
+          </div>
     </div>
   </div>
 </div>
