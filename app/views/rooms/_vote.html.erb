@@ -10,31 +10,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $('.vote-list ul li input').on('click', function(e){
-    var node = $(this);
-
-    $.ajax({
-      url: '/rooms/' + <%= @room.id %> + '/vote',
-      data: { points: node.val(), story_id: POKER.story_id },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // Remove all selected points
-        $('.vote-list ul li input').removeClass('btn-info');
-        node.toggleClass('btn-info');
-        // Tell others
-        // var channelName = ['/rooms', POKER.room_id, POKER.story_id].join('/')
-        // client.publish(channelName, {
-        //   text: 'Hello world'
-        // });
-
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
-    });
-  })
-</script>

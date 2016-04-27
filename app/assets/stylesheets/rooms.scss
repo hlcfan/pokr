@@ -69,8 +69,18 @@
   }
 }
 
-#show-result .row-container .row {
+#show-result li.row {
   margin-bottom: 5px;
+}
+
+#show-result li.row {
+  .bar {
+    cursor: pointer;
+  }
+
+  .bar div:hover {
+    background: lightblue !important;
+  }
 }
 
 .room .name {
