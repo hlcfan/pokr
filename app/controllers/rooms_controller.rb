@@ -112,6 +112,16 @@ class RoomsController < ApplicationController
     end
   end
 
+  def set_story_point
+    story = Story.find_by id: params[:story_id], room_id: params[:id]
+    if story
+      story.point = params[:point]
+      story.save!
+    end
+
+    render json: {success: true}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_room
