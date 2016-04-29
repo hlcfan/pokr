@@ -1,21 +1,28 @@
-/**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-   function publishResult() {
-    client.publish(channelName, {
-      data: 'open',
-      type: 'action'
-    });
+var EventEmitter = {
+  _events: {},
+  dispatch: function (event, data) {
+      if (!this._events[event]) { // 没有监听事件
+        return;
+      }
+      for (var i = 0; i < this._events[event].length; i++) {
+          this._events[event][i](data);
+      }
+  },
+  subscribe: function (event, callback) {
+    // 创建一个新事件数组
+    if (!this._events[event]) {
+      this._events[event] = [];
+    }
+    this._events[event].push(callback);
   }
+};
+
+function publishResult() {
+  client.publish(channelName, {
+    data: 'open',
+    type: 'action'
+  });
+}
 
 var Room = React.createClass({
   rawMarkup: function() {
@@ -56,8 +63,15 @@ var StoryListBox = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
+    this.state.data.subscribe('storyListUpdated', function(data) {
+      alert(data);
+    });
     this.loadStoryListFromServer();
-    setInterval(this.loadStoryListFromServer, this.props.pollInterval);
+  },
+  componentDidUpdate: function() {
+    POKER.story_id = (function() {
+      return $('.storyList ul li:first').data('id')
+    })();
   },
   render: function() {
     return (
@@ -72,7 +86,7 @@ var StoryList = React.createClass({
   render: function() {
     var storyNodes = this.props.data.map(function(story) {
       return (
-        <Story key={story.link} link={story.link} desc={story.desc} />
+        <Story key={story.id} id={story.id} link={story.link} desc={story.desc} />
       );
     });
     return (
@@ -93,7 +107,7 @@ var Story = React.createClass({
 
   render: function() {
     return (
-      <li className="story">
+      <li className="story" id={'story-' + this.props.id} data-id={this.props.id}>
         <a href={this.props.link} className="storyLink">
           {this.props.link}
         </a>
@@ -214,7 +228,7 @@ var ActionOpenButton = React.createClass({
 
 var ResultPanel = React.createClass({
   readFromElement: function() {
-    var pointHash = {}
+    var pointHash = {};
     $('.people-list ul li').each(function(i, ele) {
       var point = $(ele).attr('data-point')
       if (point) {
@@ -236,12 +250,11 @@ var ResultPanel = React.createClass({
     keys.sort();
 
     var pointArray = [];
-    for (i = 0; i < len; i++) {
+    for (i = len; i >= 0; i--) {
       point = keys[i];
       count = pointHash[point];
       barWidth = count/maxPointCount * 100;
       pointArray.push({point: point, count: count, barWidth: barWidth})
-      //$('#show-result .row-container').append("");
     }
     this.setState({data: pointArray});
   },
@@ -272,7 +285,19 @@ var ResultPanel = React.createClass({
 
 var PointBar = React.createClass({
   selectPoint: function() {
-    
+    $.ajax({
+      url: '/rooms/' + POKER.room_id + '/set_story_point',
+      data: { point: this.props.point, story_id: POKER.story_id },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        alert('success');
+      },
+      error: function(xhr, status, err) {
+        console.error(status, err.toString());
+      }
+    });
   },
   render: function() {
     return (
@@ -295,7 +320,7 @@ $(document).on("page:change", function() {
   var peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
   ReactDOM.render(
     // Interval was 2000
-    <StoryListBox url={storyListUrl} pollInterval={2000000} />,
+    <StoryListBox url={storyListUrl} />,
     document.getElementById('storyListArea')
   );
 
@@ -310,7 +335,10 @@ $(document).on("page:change", function() {
     document.getElementById('actionPanel')
   );
 
-  POKER.story_id = 1;
+  POKER.story_id = (function() {
+    return $('.storyList ul li:first').data('id')
+  })();
+
   Cookies.set('story_id', POKER.story_id);
 
   window.client = new Faye.Client('http://localhost:9292/faye');
@@ -353,5 +381,10 @@ $(document).on("page:change", function() {
       }
     });
   })
+
+  POKER.nextStory = function() {
+    $('#story-' + POKER.story_id).fadeOut();
+    this.dispatch('storyListUpdated', { name: 'John' });
+  }
 
 });
