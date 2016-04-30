@@ -24,35 +24,76 @@ function publishResult() {
   });
 }
 
-var Room = React.createClass({
-  rawMarkup: function() {
-    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    return { __html: rawMarkup };
-  },
-
-  render: function() {
+var StatusBar = React.createClass({
+  render:function(){
     return (
-      <div className="room">
-        <h2 className="roomId">
-          {this.props.id}
-        </h2>
-        <h2 className="roomName">
-          {this.props.name}
-        </h2>
-        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      <h3>
+        {this.props.name}
+        <i className="pull-right">Yo, {this.props.poker.currentUser.name}({this.props.poker.currentUser.role})!</i>
+      </h3>
+    );
+  }
+});
+
+var VoteBox = React.createClass({
+  onItemClick: function(e) {
+    var node = $(e.target);
+
+    $.ajax({
+      url: '/rooms/' + POKER.room_id + '/vote',
+      data: { points: node.val(), story_id: POKER.story_id },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        // Remove all selected points
+        $('.vote-list ul li input').removeClass('btn-info');
+        node.toggleClass('btn-info');
+        if (true) {
+          publishResult();
+        }
+      },
+      error: function(xhr, status, err) {
+        console.error(status, err.toString());
+      }
+    });
+  },
+  render:function() {
+    var currentVote = this.props.poker.currentVote;
+    var that = this;
+    var pointsList = this.props.poker.pointsRange.map(function(point) {
+      var currentVoteClassName = currentVote == point ? ' btn-info' : '';
+      return (
+        <li key={point}>
+          <input className={'btn btn-default btn-lg' + currentVoteClassName } type="button" onClick={that.onItemClick} value={point} />
+        </li>
+      )
+    });
+
+    return (
+      <div className="panel panel-default">
+        <div className="panel-heading">Vote</div>
+        <div className="vote-list panel-body row">
+          <div className="col-md-12">
+            <ul className="list-inline">
+              {pointsList}
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }
 });
 
 var StoryListBox = React.createClass({
-  loadStoryListFromServer: function() {
+  loadStoryListFromServer: function(callback) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
+        callback();
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -63,20 +104,25 @@ var StoryListBox = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.state.data.subscribe('storyListUpdated', function(data) {
-      alert(data);
+    this.loadStoryListFromServer(function(){
+      setupChannelSubscription();
     });
-    this.loadStoryListFromServer();
   },
   componentDidUpdate: function() {
     POKER.story_id = (function() {
       return $('.storyList ul li:first').data('id')
     })();
+    Cookies.set('story_id', POKER.story_id);
   },
   render: function() {
     return (
-      <div className="storyListBox">
-        <StoryList data={this.state.data} />
+      <div className="panel panel-default">
+        <div className="panel-heading">Stories</div>
+        <div id="storyListArea" className="panel-body row">
+          <div className="storyListBox">
+            <StoryList data={this.state.data} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -120,13 +166,14 @@ var Story = React.createClass({
 });
 
 var PeopleListBox = React.createClass({
-  loadPeopleListFromServer: function() {
+  loadPeopleListFromServer: function(callback) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
+        callback();
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -137,13 +184,20 @@ var PeopleListBox = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadPeopleListFromServer();
-    setInterval(this.loadPeopleListFromServer, this.props.pollInterval);
+    this.loadPeopleListFromServer(function(){
+      EventEmitter.dispatch("peopleListLoaded")
+    });
+    // setInterval(this.loadPeopleListFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
-      <div className="peopleListBox">
-        <PeopleList data={this.state.data} />
+      <div className="panel panel-default">
+        <div className="panel-heading">People</div>
+        <div id="peopleListArea" className="panel-body row">
+          <div className="peopleListBox">
+            <PeopleList data={this.state.data} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -187,42 +241,36 @@ var Person = React.createClass({
   }
 });
 
-var ActionPanel = React.createClass({
-  render: function() {
-    return (
-      <ActionOpenButton />
-    );
-  }
-});
-
-var ActionOpenButton = React.createClass({
+var ActionBox = React.createClass({
   getInitialState: function() {
-    return {openYet: false};
+    return { openYet: false };
   },
-  handleClick: function() {
+  handleClick: function(e) {
     window.syncResult = true;
     this.setState({openYet: !this.state.openYet});
+    $(this.refs.openButton).hide();
   },
   render: function() {
-    if (!this.state.openYet) {
-      return (
-        <div>
-          <div className="col-sm-3"></div>
-          <div id="open-result" className="col-sm-4">
-            <a onClick={this.handleClick} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
+    return (
+      <div className="panel panel-default">
+        <div className="panel-heading">Action</div>
+        <div className="panel-body row">
+          <div id="actionBox" className="row">
+            <div ref="openButton" className="openButton">
+              <div className="col-sm-3"></div>
+              <div className="col-sm-4">
+                <a onClick={this.handleClick} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+              </div>
+              <div className="col-sm-4"></div>
+            </div>
+
+            <ResultPanel open={this.state.openYet}/>
           </div>
-          <div className="col-sm-4"></div>
         </div>
-      );
-    } else {
-      publishResult();
-      return (
-        <ResultPanel />
-      );
-    }
-    
+      </div>
+    );
   }
 });
 
@@ -262,21 +310,32 @@ var ResultPanel = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.readFromElement();
+    EventEmitter.subscribe("peopleListLoaded", this.readFromElement)
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {
       return (
-        <PointBar key={pointBar.point} point={pointBar.point} count={pointBar.count} barWidth={pointBar.barWidth} />
+        <PointBar key={pointBar.point+ '-' +pointBar.count} point={pointBar.point} count={pointBar.count} barWidth={pointBar.barWidth} />
       );
     });
 
-    return (
-      <div id="show-result" className="container-fluid" style={{clear: 'both', width: '100%'}}>
-        <div className="row-container container-fluid">
+    var that = this;
+    var resultChart = (function() {
+      if (that.props.open) {
+        return (
           <ul className="list-unstyled">
             {pointBars}
           </ul>
+        );
+      } else {
+        return (<div></div>);
+      }
+    })();
+
+    return (
+      <div className="container-fluid" style={{clear: 'both', width: '100%'}}>
+        <div className="row-container container-fluid">
+          {resultChart}
         </div>
       </div>
     );
@@ -315,72 +374,92 @@ var PointBar = React.createClass({
   }
 });
 
-$(document).on("page:change", function() {
-  var storyListUrl = "/rooms/"+POKER.room_id+"/story_list.json";
-  var peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
-  ReactDOM.render(
-    // Interval was 2000
-    <StoryListBox url={storyListUrl} />,
-    document.getElementById('storyListArea')
-  );
+var Room = React.createClass({
+  rawMarkup: function() {
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return { __html: rawMarkup };
+  },
+  getInitialState: function() {
+    return { storyListUrl: this.props.poker.storyListUrl, peopleListUrl: this.props.poker.peopleListUrl };
+  },
+  render: function() {
+    return (
+      <div>
+        <div className="col-md-12 name">
+          <StatusBar poker={POKER}/>
+        </div>
+        <div id="operationArea" className="col-md-8">
+          <VoteBox poker={POKER}/>
+          <StoryListBox url={this.props.poker.storyListUrl} />
+        </div>
 
-  ReactDOM.render(
-    // Interval was 2000
-    <PeopleListBox url={peopleListUrl} pollInterval={10000} />,
-    document.getElementById('peopleListArea')
-  );
+        <div className="col-md-4">
+          <PeopleListBox url={this.props.poker.peopleListUrl} />
+          <ActionBox />
+        </div>
+      </div>
+    );
+  }
+});
 
-  ReactDOM.render(
-    <ActionPanel />,
-    document.getElementById('actionPanel')
-  );
-
-  POKER.story_id = (function() {
-    return $('.storyList ul li:first').data('id')
-  })();
-
-  Cookies.set('story_id', POKER.story_id);
-
-  window.client = new Faye.Client('http://localhost:9292/faye');
- 
+function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName = ['/rooms', POKER.room_id, POKER.story_id].join('/')
   var public_subscription = client.subscribe(channelName, function(data) {
     console.log(data);
     if (data.type === 'action') {
       window.syncResult = true;
-      ReactDOM.render(
-        <ResultPanel />,
-        document.getElementById('actionPanel')
-      );
+      $('#show-result').show();
     } else {
       $('#u-' + data.person_id + ' .points').text(data.points);
       $('#u-' + data.person_id).attr('data-point', data.points);
     }
   });
+}
 
-  $('.vote-list ul li input').on('click', function(e){
-    var node = $(this);
+$(document).on("page:change", function() {
+  var storyListUrl = "/rooms/"+POKER.room_id+"/story_list.json";
+  var peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
 
-    $.ajax({
-      url: '/rooms/' + POKER.room_id + '/vote',
-      data: { points: node.val(), story_id: POKER.story_id },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // Remove all selected points
-        $('.vote-list ul li input').removeClass('btn-info');
-        node.toggleClass('btn-info');
-        if (syncResult) {
-          publishResult();
-        }
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
-    });
-  })
+  POKER.storyListUrl = "/rooms/"+POKER.room_id+"/story_list.json";
+  POKER.peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
+  POKER.pointsRange = [0, 2, 3, 5, 8, 13, 20, 40, 100, 'coffee'];
+  POKER.story_id = (function() {
+    return $('.storyList ul li:first').data('id')
+  })();
+
+  // Initialize sync result as false
+  window.syncResult = false;
+
+  window.client = new Faye.Client('http://localhost:9292/faye');
+
+  ReactDOM.render(
+    <Room poker={POKER} />,
+    document.getElementById('room')
+  );
+
+  // $('.vote-list ul li input').on('click', function(e){
+  //   var node = $(this);
+
+  //   $.ajax({
+  //     url: '/rooms/' + POKER.room_id + '/vote',
+  //     data: { points: node.val(), story_id: POKER.story_id },
+  //     method: 'post',
+  //     dataType: 'json',
+  //     cache: false,
+  //     success: function(data) {
+  //       // Remove all selected points
+  //       $('.vote-list ul li input').removeClass('btn-info');
+  //       node.toggleClass('btn-info');
+  //       if (syncResult) {
+  //         publishResult();
+  //       }
+  //     },
+  //     error: function(xhr, status, err) {
+  //       console.error(status, err.toString());
+  //     }
+  //   });
+  // })
 
   POKER.nextStory = function() {
     $('#story-' + POKER.story_id).fadeOut();
