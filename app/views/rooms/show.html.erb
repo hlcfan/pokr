@@ -2,7 +2,8 @@
 
 <script type="text/javascript" charset="utf-8">
   (function(){
-    POKER.room_id = <%= @room.id %>
+    POKER.roomId = <%= @room.id %>;
+    POKER.roomName = '<%= @room.name %>';
     POKER.currentVote = '<%= current_user.points_of_story(cookies[:story_id]) %>';
   }());
 </script>
