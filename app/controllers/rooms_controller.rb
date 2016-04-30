@@ -146,7 +146,6 @@ class RoomsController < ApplicationController
 
     def set_user_role
       if current_user.role.blank?
-        binding.pry
         if @room.users.blank?
           # if first user come into the room
           # then he/she is the owner
