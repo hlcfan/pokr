@@ -30,12 +30,27 @@
 }
 
 #storyListArea {
-  // border: 1px solid #ccc;
-  // padding: 10px;
-}
+  .story-desc {
+    color: #666;
+  }
 
-.story-desc {
-  color: #666;
+  .story-enter {
+    opacity: 0.01;
+    transition: opacity .5s ease-in;
+  }
+
+  .story-enter.story-enter-active {
+    opacity: 1;
+  }
+
+  .story-leave {
+    opacity: 1;
+  }
+
+  .story-leave.story-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
 }
 
 .people-list ul {
@@ -69,11 +84,11 @@
   }
 }
 
-#show-result li.row {
+#actionBox li.row {
   margin-bottom: 5px;
 }
 
-#show-result li.row {
+#actionBox li.row {
   .bar {
     cursor: pointer;
   }

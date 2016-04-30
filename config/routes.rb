@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post :vote
       get :story_list
       get :user_list
+      post :set_story_point
     end
   end
 

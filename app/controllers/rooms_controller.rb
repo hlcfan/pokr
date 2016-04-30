@@ -36,14 +36,14 @@ class RoomsController < ApplicationController
   end
 
   def story_list
-    @stories = @room.stories
+    @stories = @room.un_groomed_stories
   end
 
   def user_list
     @users = @room.users.to_a
     @users.each do |user|
       user.points = user.points_of_story cookies[:story_id]
-    end
+    end if current_user.owner? && params[:sync] == 'true'
   end
 
   # GET /rooms/1
@@ -112,6 +112,18 @@ class RoomsController < ApplicationController
     end
   end
 
+  def set_story_point
+    if current_user.owner?
+      story = Story.find_by id: params[:story_id], room_id: params[:id]
+      if story
+        story.point = params[:point]
+        story.save!
+      end
+    end
+
+    render json: {success: true}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_room
@@ -136,7 +148,6 @@ class RoomsController < ApplicationController
 
     def set_user_role
       if current_user.role.blank?
-        binding.pry
         if @room.users.blank?
           # if first user come into the room
           # then he/she is the owner
