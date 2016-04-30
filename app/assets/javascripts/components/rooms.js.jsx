@@ -49,8 +49,8 @@ var StatusBar = React.createClass({
   render:function(){
     return (
       <h3>
-        {this.props.name}
-        <i className="pull-right">Yo, {this.props.poker.currentUser.name}({this.props.poker.currentUser.role})!</i>
+        {POKER.roomName}
+        <i className="pull-right">Yo, {POKER.currentUser.name}({POKER.currentUser.role})!</i>
       </h3>
     );
   }
@@ -61,7 +61,7 @@ var VoteBox = React.createClass({
     var node = $(e.target);
 
     $.ajax({
-      url: '/rooms/' + POKER.room_id + '/vote',
+      url: '/rooms/' + POKER.roomId + '/vote',
       data: { points: node.val(), story_id: POKER.story_id },
       method: 'post',
       dataType: 'json',
@@ -295,15 +295,33 @@ var Person = React.createClass({
 
 var ActionBox = React.createClass({
   getInitialState: function() {
-    return { openYet: false };
+    return { buttonState: 'open' };
   },
-  handleClick: function(e) {
-    this.setState({openYet: !this.state.openYet});
-    $(this.refs.openButton).hide();
+  showResult: function(e) {
+    this.setState({buttonState: 'skip'});
     publishResult();
   },
+  skipStory: function() {
+    if (POKER.currentUser.role === 'Owner') {
+      $.ajax({
+        url: '/rooms/' + POKER.roomId + '/set_story_point',
+        data: { point: 'null', story_id: POKER.story_id },
+        method: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          refreshStories();
+          refreshPeople();
+          resetActionBox();
+        },
+        error: function(xhr, status, err) {
+          console.error(status, err.toString());
+        }
+      });
+    }
+  },
   resetActionBox: function() {
-    this.setState({ openYet: false });
+    this.setState({ buttonState: 'open' });
   },
   componentDidMount: function() {
     EventEmitter.subscribe("storySwitched", this.resetActionBox)
@@ -311,19 +329,21 @@ var ActionBox = React.createClass({
   render: function() {
     var that = this;
     var actionButton = (function() {
-      if (!that.state.openYet && POKER.currentUser.role === 'Owner') {
-        return (
-          <div ref="openButton" className="openButton">
-            <div className="col-sm-3"></div>
-            <div className="col-sm-4">
-              <a onClick={that.handleClick} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </a>
-            </div>
-            <div className="col-sm-4"></div>
-          </div>
-        );
-      };
+      if (POKER.currentUser.role === 'Owner') {
+        if (that.state.buttonState === 'open') {
+          return (
+            <a onClick={that.showResult} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+          );
+        } else if (that.state.buttonState === 'skip') {
+          return (
+            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skip it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+          );
+        }
+      }
     })();
 
     return (
@@ -331,8 +351,14 @@ var ActionBox = React.createClass({
         <div className="panel-heading">Action</div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
-            {actionButton}
             <ResultPanel />
+            <div ref="openButton" className="openButton">
+              <div className="col-sm-3"></div>
+              <div className="col-sm-4">
+                {actionButton}
+              </div>
+              <div className="col-sm-4"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -412,7 +438,7 @@ var PointBar = React.createClass({
   selectPoint: function() {
     if (POKER.currentUser.role === 'Owner') {
       $.ajax({
-        url: '/rooms/' + POKER.room_id + '/set_story_point',
+        url: '/rooms/' + POKER.roomId + '/set_story_point',
         data: { point: this.props.point, story_id: POKER.story_id },
         method: 'post',
         dataType: 'json',
@@ -456,7 +482,7 @@ var Room = React.createClass({
     return (
       <div>
         <div className="col-md-12 name">
-          <StatusBar poker={POKER}/>
+          <StatusBar />
         </div>
         <div id="operationArea" className="col-md-8">
           <VoteBox poker={POKER}/>
@@ -474,7 +500,7 @@ var Room = React.createClass({
 
 function setupChannelSubscription() {
   // Subscribe to the public channel
-  window.channelName = ['/rooms', POKER.room_id, POKER.story_id].join('/')
+  window.channelName = ['/rooms', POKER.roomId, POKER.story_id].join('/')
   var public_subscription = client.subscribe(channelName, function(data) {
     console.log(data);
 
@@ -495,11 +521,11 @@ function setupChannelSubscription() {
 }
 
 $(document).on("page:change", function() {
-  var storyListUrl = "/rooms/"+POKER.room_id+"/story_list.json";
-  var peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
+  var storyListUrl = "/rooms/"+POKER.roomId+"/story_list.json";
+  var peopleListUrl = "/rooms/"+POKER.roomId+"/user_list.json";
 
-  POKER.storyListUrl = "/rooms/"+POKER.room_id+"/story_list.json";
-  POKER.peopleListUrl = "/rooms/"+POKER.room_id+"/user_list.json";
+  POKER.storyListUrl = "/rooms/"+POKER.roomId+"/story_list.json";
+  POKER.peopleListUrl = "/rooms/"+POKER.roomId+"/user_list.json";
   POKER.pointsRange = [0, 2, 3, 5, 8, 13, 20, 40, 100, 'coffee'];
   POKER.story_id = (function() {
     return $('.storyList ul li:first').data('id')
