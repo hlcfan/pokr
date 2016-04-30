@@ -508,16 +508,11 @@ $(document).on("page:change", function() {
   // Initialize sync result as false
   window.syncResult = false;
 
-  window.client = new Faye.Client('http://localhost:9292/faye');
+  window.client = new Faye.Client('/faye');
 
   ReactDOM.render(
     <Room poker={POKER} />,
     document.getElementById('room')
   );
-
-  POKER.nextStory = function() {
-    $('#story-' + POKER.story_id).fadeOut();
-    this.dispatch('storyListUpdated', { name: 'John' });
-  }
 
 });
