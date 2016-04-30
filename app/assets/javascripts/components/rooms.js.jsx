@@ -49,7 +49,9 @@ var VoteBox = React.createClass({
         // Remove all selected points
         $('.vote-list ul li input').removeClass('btn-info');
         node.toggleClass('btn-info');
-        if (true) {
+        // Publish results and re-draw point bars
+
+        if (window.syncResult) {
           publishResult();
         }
       },
@@ -185,7 +187,7 @@ var PeopleListBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadPeopleListFromServer(function(){
-      EventEmitter.dispatch("peopleListLoaded")
+      // EventEmitter.dispatch("peopleListLoaded")
     });
     // setInterval(this.loadPeopleListFromServer, this.props.pollInterval);
   },
@@ -246,27 +248,35 @@ var ActionBox = React.createClass({
     return { openYet: false };
   },
   handleClick: function(e) {
-    window.syncResult = true;
     this.setState({openYet: !this.state.openYet});
     $(this.refs.openButton).hide();
+    publishResult();
   },
   render: function() {
+    var that = this;
+    var actionButton = (function() {
+      if (POKER.currentUser.role === 'Owner') {
+        return (
+          <div ref="openButton" className="openButton">
+            <div className="col-sm-3"></div>
+            <div className="col-sm-4">
+              <a onClick={that.handleClick} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </a>
+            </div>
+            <div className="col-sm-4"></div>
+          </div>
+        );
+      };
+    })();
+
     return (
       <div className="panel panel-default">
         <div className="panel-heading">Action</div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
-            <div ref="openButton" className="openButton">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-4">
-                <a onClick={this.handleClick} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </a>
-              </div>
-              <div className="col-sm-4"></div>
-            </div>
-
-            <ResultPanel open={this.state.openYet}/>
+            {actionButton}
+            <ResultPanel />
           </div>
         </div>
       </div>
@@ -319,9 +329,8 @@ var ResultPanel = React.createClass({
       );
     });
 
-    var that = this;
     var resultChart = (function() {
-      if (that.props.open) {
+      if (this.syncResult) {
         return (
           <ul className="list-unstyled">
             {pointBars}
@@ -410,6 +419,7 @@ function setupChannelSubscription() {
     if (data.type === 'action') {
       window.syncResult = true;
       $('#show-result').show();
+      EventEmitter.dispatch("peopleListLoaded");
     } else {
       $('#u-' + data.person_id + ' .points').text(data.points);
       $('#u-' + data.person_id).attr('data-point', data.points);
@@ -437,29 +447,6 @@ $(document).on("page:change", function() {
     <Room poker={POKER} />,
     document.getElementById('room')
   );
-
-  // $('.vote-list ul li input').on('click', function(e){
-  //   var node = $(this);
-
-  //   $.ajax({
-  //     url: '/rooms/' + POKER.room_id + '/vote',
-  //     data: { points: node.val(), story_id: POKER.story_id },
-  //     method: 'post',
-  //     dataType: 'json',
-  //     cache: false,
-  //     success: function(data) {
-  //       // Remove all selected points
-  //       $('.vote-list ul li input').removeClass('btn-info');
-  //       node.toggleClass('btn-info');
-  //       if (syncResult) {
-  //         publishResult();
-  //       }
-  //     },
-  //     error: function(xhr, status, err) {
-  //       console.error(status, err.toString());
-  //     }
-  //   });
-  // })
 
   POKER.nextStory = function() {
     $('#story-' + POKER.story_id).fadeOut();
