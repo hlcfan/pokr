@@ -43,7 +43,7 @@ class RoomsController < ApplicationController
     @users = @room.users.to_a
     @users.each do |user|
       user.points = user.points_of_story cookies[:story_id]
-    end if current_user.owner? && params[:sync] == 'true'
+    end if params[:sync] == 'true'
   end
 
   # GET /rooms/1
