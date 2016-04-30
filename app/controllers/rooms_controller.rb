@@ -36,14 +36,14 @@ class RoomsController < ApplicationController
   end
 
   def story_list
-    @stories = @room.stories
+    @stories = @room.un_groomed_stories
   end
 
   def user_list
     @users = @room.users.to_a
     @users.each do |user|
       user.points = user.points_of_story cookies[:story_id]
-    end
+    end if current_user.owner? && params[:sync] == 'true'
   end
 
   # GET /rooms/1
@@ -113,10 +113,12 @@ class RoomsController < ApplicationController
   end
 
   def set_story_point
-    story = Story.find_by id: params[:story_id], room_id: params[:id]
-    if story
-      story.point = params[:point]
-      story.save!
+    if current_user.owner?
+      story = Story.find_by id: params[:story_id], room_id: params[:id]
+      if story
+        story.point = params[:point]
+        story.save!
+      end
     end
 
     render json: {success: true}
