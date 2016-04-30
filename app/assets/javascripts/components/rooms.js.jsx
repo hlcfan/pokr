@@ -24,6 +24,27 @@ function publishResult() {
   });
 }
 
+function refreshStories() {
+  client.publish(channelName, {
+    data: 'refresh-stories',
+    type: 'action'
+  });
+}
+
+function refreshPeople() {
+  client.publish(channelName, {
+    data: 'refresh-people',
+    type: 'action'
+  });
+}
+
+function resetActionBox() {
+  client.publish(channelName, {
+    data: 'reset-action-box',
+    type: 'action'
+  });
+}
+
 var StatusBar = React.createClass({
   render:function(){
     return (
@@ -49,8 +70,8 @@ var VoteBox = React.createClass({
         // Remove all selected points
         $('.vote-list ul li input').removeClass('btn-info');
         node.toggleClass('btn-info');
-        // Publish results and re-draw point bars
 
+        // Publish results and re-draw point bars
         if (window.syncResult) {
           publishResult();
         }
@@ -58,6 +79,11 @@ var VoteBox = React.createClass({
       error: function(xhr, status, err) {
         console.error(status, err.toString());
       }
+    });
+  },
+  componentDidMount: function() {
+    EventEmitter.subscribe("storySwitched", function(){
+      $('.vote-list ul li input').removeClass('btn-info');
     });
   },
   render:function() {
@@ -105,10 +131,14 @@ var StoryListBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  componentDidMount: function() {
+  updateStoryList: function() {
     this.loadStoryListFromServer(function(){
       setupChannelSubscription();
     });
+  },
+  componentDidMount: function() {
+    this.updateStoryList();
+    EventEmitter.subscribe("storySwitched", this.updateStoryList);
   },
   componentDidUpdate: function() {
     POKER.story_id = (function() {
@@ -130,6 +160,7 @@ var StoryListBox = React.createClass({
   }
 });
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var StoryList = React.createClass({
   render: function() {
     var storyNodes = this.props.data.map(function(story) {
@@ -140,7 +171,9 @@ var StoryList = React.createClass({
     return (
       <div className="storyList col-md-12">
         <ul>
-          {storyNodes}
+          <ReactCSSTransitionGroup transitionName="story" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            {storyNodes}
+          </ReactCSSTransitionGroup>
         </ul>
       </div>
     );
@@ -170,12 +203,14 @@ var Story = React.createClass({
 var PeopleListBox = React.createClass({
   loadPeopleListFromServer: function(callback) {
     $.ajax({
-      url: this.props.url,
+      url: this.props.url + '?sync=' + window.syncResult,
       dataType: 'json',
       cache: false,
       success: function(data) {
         this.setState({data: data});
-        callback();
+        if (callback) {
+          callback();
+        }
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -185,11 +220,15 @@ var PeopleListBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
+  beforeShown: function() {
+    this.loadPeopleListFromServer(function() {
+      EventEmitter.dispatch("resultShown");
+    })
+  },
   componentDidMount: function() {
-    this.loadPeopleListFromServer(function(){
-      // EventEmitter.dispatch("peopleListLoaded")
-    });
-    // setInterval(this.loadPeopleListFromServer, this.props.pollInterval);
+    this.loadPeopleListFromServer();
+    EventEmitter.subscribe("storySwitched", this.loadPeopleListFromServer);
+    EventEmitter.subscribe("beforeResultShown", this.beforeShown);
   },
   render: function() {
     return (
@@ -231,12 +270,23 @@ var Person = React.createClass({
       userIconClass = 'fa fa-user';
     }
 
+    var that = this;
+    var pointLabel = (function() {
+      if (window.syncResult) {
+        return(
+          <span className="points label label-success pull-right">
+            {that.props.points}
+          </span>
+        );
+      }
+    })();
+
     return (
       <li className="person" id={'u-' + this.props.id} data-point={this.props.points}>
         <i className={this.props.role + ' ' + userIconClass} aria-hidden="true"></i>
         <a href="javascript:;" className="person">
           {this.props.name}
-          <span className="points label label-success pull-right">{this.props.points}</span>
+          {pointLabel}
         </a>
       </li>
     );
@@ -252,10 +302,16 @@ var ActionBox = React.createClass({
     $(this.refs.openButton).hide();
     publishResult();
   },
+  resetActionBox: function() {
+    this.setState({ openYet: false });
+  },
+  componentDidMount: function() {
+    EventEmitter.subscribe("storySwitched", this.resetActionBox)
+  },
   render: function() {
     var that = this;
     var actionButton = (function() {
-      if (POKER.currentUser.role === 'Owner') {
+      if (!that.state.openYet && POKER.currentUser.role === 'Owner') {
         return (
           <div ref="openButton" className="openButton">
             <div className="col-sm-3"></div>
@@ -320,7 +376,8 @@ var ResultPanel = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("peopleListLoaded", this.readFromElement)
+    EventEmitter.subscribe("resultShown", this.readFromElement)
+    EventEmitter.subscribe("storySwitched", this.readFromElement)
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {
@@ -353,19 +410,23 @@ var ResultPanel = React.createClass({
 
 var PointBar = React.createClass({
   selectPoint: function() {
-    $.ajax({
-      url: '/rooms/' + POKER.room_id + '/set_story_point',
-      data: { point: this.props.point, story_id: POKER.story_id },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        alert('success');
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
-    });
+    if (POKER.currentUser.role === 'Owner') {
+      $.ajax({
+        url: '/rooms/' + POKER.room_id + '/set_story_point',
+        data: { point: this.props.point, story_id: POKER.story_id },
+        method: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          refreshStories();
+          refreshPeople();
+          resetActionBox();
+        },
+        error: function(xhr, status, err) {
+          console.error(status, err.toString());
+        }
+      });
+    }
   },
   render: function() {
     return (
@@ -416,10 +477,16 @@ function setupChannelSubscription() {
   window.channelName = ['/rooms', POKER.room_id, POKER.story_id].join('/')
   var public_subscription = client.subscribe(channelName, function(data) {
     console.log(data);
+
     if (data.type === 'action') {
-      window.syncResult = true;
-      $('#show-result').show();
-      EventEmitter.dispatch("peopleListLoaded");
+      if (data.data === 'open') {
+        window.syncResult = true;
+        $('#show-result').show();
+        EventEmitter.dispatch("beforeResultShown");
+      } else if (data.data === 'refresh-stories') {
+        window.syncResult = false;
+        EventEmitter.dispatch("storySwitched");
+      }
     } else {
       $('#u-' + data.person_id + ' .points').text(data.points);
       $('#u-' + data.person_id).attr('data-point', data.points);
