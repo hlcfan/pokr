@@ -7,7 +7,7 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :domain, '10.119.35.138'
 set :deploy_to, '/var/www/poker'
 set :app_path,  "#{deploy_to}/#{current_path}"
-set :repository, 'git@github.com:hlcfan/pokr.git'
+set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
 set :user, 'active'
 set :keep_releases, 5
