@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'react-rails', '~> 1.5.0'
 
-gem 'faye'
+gem 'faye-rails', '~> 2.0'
 
 gem 'thin'
 
