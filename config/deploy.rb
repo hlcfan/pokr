@@ -89,7 +89,7 @@ namespace :thin do
   set :thin_pid, "tmp/pids/thin.pid"
   set :start_thin, %{
     cd #{app_path}
-    bundle exec thin restart -C config/thin.yml
+    bundle exec thin start -C config/thin.yml
   }
 
 #                                                                    Start task
