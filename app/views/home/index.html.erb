@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pokr</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row header-section">
+      <div class="container">
+        <a class="logo" href="javascript:;">
+          <h1>Pokr</h1>
+        </a>
+        <!-- <a class="btn btn-success sign-in-btn" href="/sign_in">Sign In</a> -->
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="row neck">
+      <div class="slogan">
+        <h1>
+          Yet another poker
+        </h1>
+        <h6>We're trying to build a cool and modern poker for engineers, aim for improving the efficiency and user experience driven by making-thing-better.</h6>
+      </div>
+      <div class="sign-up">
+        <div class="ui big action input">
+          <div class="col-lg-4 middle">
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" value="" placeholder="The name of the room?">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Start a poker</button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div>
+      </div>
+    </div>
+    <div class="row footer">
+      <div class="container">
+        <div class="empower-reports">
+          <h2>We Empower Poker</h2>
+          <!-- <h5>We're just serious</h5> -->
+          <div class="row">
+            <div class="col-xs-6 col-md-4">
+              <div class="ui">
+                <span class="fa-stack fa-lg fa-5x">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-magic fa-stack-1x fa-inverse"></i>
+                </span>
+                <h3>What</h3>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-md-4">
+              <div class="ui">
+                <span class="fa-stack fa-lg fa-5x">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-lemon-o fa-stack-1x fa-inverse"></i>
+                </span>
+                <h3>Ever</h3>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-md-4">
+              <div class="ui">
+                <span class="fa-stack fa-lg fa-5x">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
+                </span>
+                <h3>Features</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
