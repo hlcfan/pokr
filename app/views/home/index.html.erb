@@ -27,14 +27,16 @@
       <div class="sign-up">
         <div class="ui big action input">
           <div class="col-lg-4 middle">
-            <div class="input-group input-group-lg">
-              <input type="text" class="form-control" value="" placeholder="The name of the room?">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Start a poker</button>
-              </span>
-            </div><!-- /input-group -->
-          </div><!-- /.col-lg-6 -->
-        </div>
+            <%= form_tag home_director_path, class: 'form-inline', method: :post do |f| %>
+              <div class="input-group input-group-lg">
+                <input type="text" name="name" class="form-control" value="" placeholder="The name of the room?">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">Start a poker</button>
+                </span>
+              </div>
+            <% end %>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
       </div>
     </div>
     <div class="row footer">

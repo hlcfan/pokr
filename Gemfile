@@ -19,6 +19,7 @@ gem 'normalize-rails'
 gem 'marked-rails'
 gem 'js_cookie_rails'
 gem 'font-awesome-rails'
+gem 'awesome_nested_fields', git: 'git://github.com/hlcfan/awesome_nested_fields.git'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

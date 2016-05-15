@@ -54,6 +54,7 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @room.stories.build
   end
 
   # GET /rooms/1/edit
@@ -132,7 +133,10 @@ class RoomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:name)
+      params.require(:room).permit(
+        :name,
+        stories_attributes: [:link, :desc]
+      )
     end
 
     def check_user_name

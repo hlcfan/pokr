@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'rooms/index'
+  post 'home/director'
 
   resources :rooms do
     member do

@@ -20,4 +20,5 @@
 //= require marked
 //= require js.cookie
 //= require components
+//= require jquery.nested-fields
 //= require_tree .
