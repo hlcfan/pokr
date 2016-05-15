@@ -1,0 +1,24 @@
+<section class="stories-section panel panel-primary" id="story-section">
+  <div class="panel-heading">Story</div>
+  <div class="panel-body" id="story-row">
+    <%= f.nested_fields_for :stories do |story| %>
+      <div class="row">
+        <div class="form-group col-xs-6 form-group-sm">
+          <%= story.label :link, 'Story Link', class: 'type-name' %>
+          <%= story.text_field :link, class: 'form-control', placeholder: 'link' %>
+        </div>
+        <div class="form-group col-xs-5 form-group-sm">
+          <%= story.label :desc, 'Story Description', class: 'type-name' %>
+          <%= story.text_area :desc, class: 'form-control', placeholder: 'desc' %>
+        </div>
+        
+        <div class="form-group col-xs-1 form-group-sm remove-btn">
+          <label>Delete</label>
+          <a href="javascript:;" class="remove"><i class="fa fa-trash-o fa-2x"></i></a>
+        </div>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :_destroy %>
+      </div>
+    <% end %>
+  </div>
+</section>

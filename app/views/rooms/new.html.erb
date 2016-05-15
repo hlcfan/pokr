@@ -1,5 +1,29 @@
-<h1>New Room</h1>
+<br />
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Create a room</h3>
+      </div>
+      <div class="panel-body">
+        <%= render partial: 'rooms/form' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
 
-<%= render 'form' %>
+<script type="text/javascript">
+$(document).on('ready page:load', function(event) {
+  $('.stories-section').nestedFields({
+    containerSelector: '#story-row',
+    itemSelector: '#story-row.row',
+    afterInsert: function(item, e) {
+      console.log(item + ' was added.');
+    }
+  });
 
-<%= link_to 'Back', rooms_path %>
+  
+});
+</script>
