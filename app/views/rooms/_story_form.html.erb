@@ -1,5 +1,5 @@
 <section class="stories-section panel panel-primary" id="story-section">
-  <div class="panel-heading">Story</div>
+  <div class="panel-heading">Stories</div>
   <div class="panel-body" id="story-row">
     <%= f.nested_fields_for :stories do |story| %>
       <div class="row">
@@ -8,7 +8,7 @@
           <%= story.text_field :link, class: 'form-control', placeholder: 'link' %>
         </div>
         <div class="form-group col-xs-5 form-group-sm">
-          <%= story.label :desc, 'Story Description', class: 'type-name' %>
+          <%= story.label :desc, 'Short Description', class: 'type-name' %>
           <%= story.text_area :desc, class: 'form-control', placeholder: 'desc' %>
         </div>
         
@@ -20,5 +20,10 @@
         <%= f.hidden_field :_destroy %>
       </div>
     <% end %>
+  </div>
+  <div class="form-group">
+    <button type="button" class="add btn btn-info">
+      <i class="fa fa-plus"></i>
+    </button>
   </div>
 </section>
