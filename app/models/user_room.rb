@@ -7,6 +7,10 @@ class UserRoom < ActiveRecord::Base
   PARTICIPANT = 1
   WATCHER = 2
 
+  def owner?
+    role == 0
+  end
+
   def display_role
     case self.role
     when 0

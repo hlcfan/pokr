@@ -103,7 +103,7 @@ class RoomsController < ApplicationController
   end
 
   def set_story_point
-    if current_user.owner?
+    if current_user.user_room.owner?
       story = Story.find_by id: params[:story_id], room_id: params[:id]
       if story
         story.point = params[:point]
