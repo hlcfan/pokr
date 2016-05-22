@@ -1,0 +1,37 @@
+<nav class="navbar navbar-default">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Pok<b>r</b></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link1 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link2</a></li>
+      </ul>
+      <% if current_user %>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.display_name %> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Settings</a></li>
+              <li><a href="#">History</a></li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <%= link_to('Sign out', destroy_user_session_path, method: :delete) %> 
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
