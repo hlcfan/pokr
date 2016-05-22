@@ -4,13 +4,13 @@ class RoomsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list]
+  before_action :enter_room, only: [:show]
 
   def index
     @rooms = Room.all
   end
 
   def show
-    
   end
 
   def vote
@@ -67,7 +67,7 @@ class RoomsController < ApplicationController
     @room = Room.new(room_params)
     respond_to do |format|
       if @room.save
-        set_user_room_role
+        set_user_room_owner
         format.html { redirect_to @room, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -127,11 +127,18 @@ class RoomsController < ApplicationController
       )
     end
 
-    def set_user_room_role
+    def set_user_room_owner
       user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-      binding.pry
       user_room.role = UserRoom::OWNER
       user_room.save!
+    end
+
+    def enter_room
+      user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
+      if user_room.new_record?
+        user_room.role = UserRoom::PARTICIPANT
+        user_room.save!
+      end
     end
 
 end
