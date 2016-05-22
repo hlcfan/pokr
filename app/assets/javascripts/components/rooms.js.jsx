@@ -302,7 +302,7 @@ var ActionBox = React.createClass({
     publishResult();
   },
   skipStory: function() {
-    if (POKER.currentUser.role === 'Owner') {
+    if (POKER.role === 'Owner') {
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/set_story_point',
         data: { point: 'null', story_id: POKER.story_id },
@@ -329,7 +329,7 @@ var ActionBox = React.createClass({
   render: function() {
     var that = this;
     var actionButton = (function() {
-      if (POKER.currentUser.role === 'Owner') {
+      if (POKER.role === 'Owner') {
         if (that.state.buttonState === 'open') {
           return (
             <a onClick={that.showResult} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
@@ -436,7 +436,7 @@ var ResultPanel = React.createClass({
 
 var PointBar = React.createClass({
   selectPoint: function() {
-    if (POKER.currentUser.role === 'Owner') {
+    if (POKER.role === 'Owner') {
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/set_story_point',
         data: { point: this.props.point, story_id: POKER.story_id },
