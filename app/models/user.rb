@@ -41,17 +41,6 @@ class User < ActiveRecord::Base
     save!
   end
 
-  def display_role
-    case self.role
-    when 0
-      'Owner'
-    when 1
-      'Participant'
-    else
-      'Watcher'
-    end
-  end
-
   def display_name
     name || email
   end
