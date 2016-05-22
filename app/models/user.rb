@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :name
 
-  has_many :user_rooms
+  has_one :user_room
   has_many :rooms, through: :user_rooms
 
   has_many :user_story_points
@@ -39,17 +39,6 @@ class User < ActiveRecord::Base
   def owner!
     self.role = 1
     save!
-  end
-
-  def display_role
-    case self.role
-    when 0
-      'Owner'
-    when 1
-      'Participant'
-    else
-      'Watcher'
-    end
   end
 
   def display_name

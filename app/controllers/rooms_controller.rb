@@ -2,15 +2,15 @@ class RoomsController < ApplicationController
 
   include ApplicationHelper
 
+  before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list]
-  before_action :validate_user
+  before_action :enter_room, only: [:show]
 
   def index
     @rooms = Room.all
   end
 
   def show
-    
   end
 
   def vote
@@ -42,8 +42,9 @@ class RoomsController < ApplicationController
   def user_list
     @users = @room.users.to_a
     @users.each do |user|
-      user.points = user.points_of_story cookies[:story_id]
-    end if params[:sync] == 'true'
+      user.display_role = user.user_room.display_role
+      user.points = user.points_of_story cookies[:story_id] if params[:sync] == 'true'
+    end
   end
 
   # GET /rooms/1
@@ -65,9 +66,9 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
-
     respond_to do |format|
       if @room.save
+        set_user_room_owner
         format.html { redirect_to @room, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -101,18 +102,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  def set_user_name
-    if request.post?
-      user = User.find_or_initialize_by name: params[:name]
-      if user.save
-        cookies[:user_id] = user.id
-        redirect_to params[:redirect] || '/'
-      else
-        redirect_to :back, message: 'User name has been taken'
-      end
-    end
-  end
-
   def set_story_point
     if current_user.owner?
       story = Story.find_by id: params[:story_id], room_id: params[:id]
@@ -139,27 +128,18 @@ class RoomsController < ApplicationController
       )
     end
 
-    def validate_user
-      cookies[:room_id] = params[:id]
-      if current_user.blank?
-        redirect_to "#{new_user_session_path}?redirect=#{request.path}" and return
-      else
-        user_room_story = UserRoom.find_or_initialize_by user_id: current_user.id, room_id: params[:id]
-        user_room_story.save
-        set_user_role
+    def set_user_room_owner
+      user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
+      user_room.role = UserRoom::OWNER
+      user_room.save!
+    end
+
+    def enter_room
+      user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
+      if user_room.new_record?
+        user_room.role = UserRoom::PARTICIPANT
+        user_room.save!
       end
     end
 
-    def set_user_role
-      if current_user.role.blank?
-        if @room.users.blank?
-          # if first user come into the room
-          # then he/she is the owner
-          current_user.role = 0
-        else
-          current_user.role = 1
-        end
-        current_user.save!
-      end
-    end
 end
