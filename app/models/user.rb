@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   has_many :user_story_points
 
+  after_initialize :default_values
+
   attr_accessor :points, :display_role
 
   OWNER = 0
@@ -52,6 +54,10 @@ class User < ActiveRecord::Base
 
   def display_name
     name || email
+  end
+
+  def default_values
+    self.name ||= email.split('@').first
   end
 
 end
