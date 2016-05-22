@@ -42,4 +42,6 @@ Rails.application.configure do
   config.react.variant = :development
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.faye_server = 'http://localhost:3000/faye'
 end
