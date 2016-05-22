@@ -8,13 +8,14 @@
   <script type="text/javascript" charset="utf-8">
     var POKER = window['POKER'] = function(){};
     <% if current_user %>
-      POKER.currentUser = { name: '<%= current_user.name %>', role: '<%= current_user.display_role %>' };
+      POKER.currentUser = { name: '<%= current_user.display_name %>', role: '<%= current_user.display_role %>' };
     <% end %>
 
   </script>
 </head>
 <body>
 <div class="container">
+  <%= flash_messages %>
   <%= yield %>
 </div>
 </body>

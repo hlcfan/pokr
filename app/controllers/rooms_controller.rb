@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   include ApplicationHelper
 
   before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list]
-  before_action :check_user_name, only: [:show]
+  before_action :validate_user
 
   def index
     @rooms = Room.all
@@ -139,10 +139,10 @@ class RoomsController < ApplicationController
       )
     end
 
-    def check_user_name
+    def validate_user
       cookies[:room_id] = params[:id]
       if current_user.blank?
-        redirect_to "/set_user_name?redirect=#{request.path}" and return
+        redirect_to "#{new_user_session_path}?redirect=#{request.path}" and return
       else
         user_room_story = UserRoom.find_or_initialize_by user_id: current_user.id, room_id: params[:id]
         user_room_story.save
