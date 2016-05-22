@@ -50,7 +50,7 @@ var StatusBar = React.createClass({
     return (
       <h3>
         {POKER.roomName}
-        <i className="pull-right">Yo, {POKER.currentUser.name}({POKER.currentUser.role})!</i>
+        <i className="pull-right">Yo, {POKER.currentUser.name}({POKER.role})!</i>
       </h3>
     );
   }

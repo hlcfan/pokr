@@ -2,6 +2,7 @@
   (function(){
     POKER.roomId = <%= @room.id %>;
     POKER.roomName = '<%= @room.name %>';
+    POKER.role = '<%= current_user.user_room.display_role %>'
     POKER.currentVote = '<%= current_user.points_of_story(cookies[:story_id]) %>';
   }());
 </script>

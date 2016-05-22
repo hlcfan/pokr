@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :name
 
-  has_many :user_rooms
+  has_one :user_room
   has_many :rooms, through: :user_rooms
 
   has_many :user_story_points
