@@ -2,11 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  after_filter :store_location
+  before_filter :store_location
 
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
-    return unless request.get? && params[:redirect].present? && current_user.blank?
+    return unless request.get?
     if (request.path != "/users/sign_in" &&
         request.path != "/users/sign_up" &&
         request.path != "/users/password/new" &&
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
         request.path != "/users/confirmation" &&
         request.path != "/users/sign_out" &&
         !request.xhr?) # don't store ajax calls
-      session[:previous_url] = params[:redirect]#request.fullpath
+      session[:previous_url] = request.fullpath
     end
   end
 
