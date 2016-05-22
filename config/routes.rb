@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   get 'rooms/index'
   post 'home/director'
 
@@ -11,8 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'set_user_name' => 'rooms#set_user_name'
-  post 'set_user_name' => 'rooms#set_user_name'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
