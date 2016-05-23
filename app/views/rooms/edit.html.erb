@@ -17,7 +17,7 @@
 $(document).on('ready page:load', function(event) {
   $('.stories-section').nestedFields({
     containerSelector: '#story-row',
-    itemSelector: '#story-row.row',
+    itemSelector: '#story-row .row',
     afterInsert: function(item, e) {
       console.log(item + ' was added.');
     }
