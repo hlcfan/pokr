@@ -519,26 +519,3 @@ function setupChannelSubscription() {
     }
   });
 }
-
-$(document).on("page:change", function() {
-  var storyListUrl = "/rooms/"+POKER.roomId+"/story_list.json";
-  var peopleListUrl = "/rooms/"+POKER.roomId+"/user_list.json";
-
-  POKER.storyListUrl = "/rooms/"+POKER.roomId+"/story_list.json";
-  POKER.peopleListUrl = "/rooms/"+POKER.roomId+"/user_list.json";
-  POKER.pointsRange = [0, 2, 3, 5, 8, 13, 20, 40, 100, 'coffee'];
-  POKER.story_id = (function() {
-    return $('.storyList ul li:first').data('id')
-  })();
-
-  // Initialize sync result as false
-  window.syncResult = false;
-
-  window.client = new Faye.Client('/faye');
-
-  ReactDOM.render(
-    <Room poker={POKER} />,
-    document.getElementById('room')
-  );
-
-});
