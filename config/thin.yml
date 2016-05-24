@@ -1,6 +1,4 @@
 --- 
-user: active
-group: active
 pid: tmp/pids/thin.pid
 port: 8080
 timeout: 30
