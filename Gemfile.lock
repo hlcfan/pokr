@@ -1,10 +1,3 @@
-GIT
-  remote: git://github.com/hlcfan/awesome_nested_fields.git
-  revision: 86a01f0694560f9792637131c6c026b485424a6a
-  specs:
-    awesome_nested_fields (0.6.4)
-      rails (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -45,6 +38,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     arel (6.0.3)
+    awesome_nested_fields (0.6.4)
+      rails (>= 3.0.0)
     babel-source (5.8.34)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -261,7 +256,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_nested_fields!
+  awesome_nested_fields
   coffee-rails (~> 4.1.0)
   devise
   faye-rails (~> 2.0)
