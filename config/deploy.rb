@@ -4,12 +4,12 @@ require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
-set :domain, '10.119.35.138'
-set :deploy_to, '/var/www/poker'
+set :domain, '188.166.212.80'
+set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{deploy_to}/#{current_path}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
-set :user, 'active'
+set :user, 'hlcfan'
 set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
@@ -34,7 +34,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.2.1@default]'
+  invoke :'rvm:use[ruby-2.2.0@default]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -86,7 +86,6 @@ end
 #                                                                       Unicorn
 # ==============================================================================
 namespace :thin do
-  set :thin_pid, "tmp/pids/thin.pid"
   set :start_thin, %{
     cd #{app_path}
     bundle exec thin start -C config/thin.yml
@@ -106,7 +105,7 @@ namespace :thin do
   task :stop do
     queue 'echo "-----> Stop Thin"'
     queue! %{
-      test -s "#{thin_pid}" && kill -QUIT `cat "#{thin_pid}"` && echo "Stop Ok" && exit 0
+      kill -9 `ps -ef | grep thin | grep -v grep | awk '{print $2}'` && echo "Stop Ok" && exit 0
       echo >&2 "Not running"
     }
   end
