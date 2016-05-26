@@ -1,16 +1,15 @@
---- 
-pid: tmp/pids/thin.pid
-port: 8080
+---
+#pid: tmp/pids/thin.8888.pid
+#port: 8888
 timeout: 30
 wait: 30
 log: log/thin.log
-max_conns: 512
+max_conns: 1024
 require: []
 environment: production
 max_persistent_conns: 512
-servers: 1
+servers: 3
 threaded: true
 daemonize: true
-# socket: tmp/sockets/thin.sock
-# chdir: /path/to/your/apps/root
-#tag: a-name-to-show-up-in-ps aux
+socket: /tmp/thin.sock
+# #tag: a-name-to-show-up-in-ps aux
