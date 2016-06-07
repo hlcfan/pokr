@@ -1,4 +1,4 @@
-# Pokr
+# Pokr https://pokr.tk
 
 Yet another poker.
 
