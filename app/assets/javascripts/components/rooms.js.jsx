@@ -189,7 +189,7 @@ var Story = React.createClass({
   render: function() {
     return (
       <li className="story" id={'story-' + this.props.id} data-id={this.props.id}>
-        <a href={this.props.link} className="storyLink">
+        <a href={this.props.link} className="storyLink" target="_blank">
           {this.props.link}
         </a>
         <p className="story-desc">
