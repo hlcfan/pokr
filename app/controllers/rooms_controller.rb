@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   include ApplicationHelper
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status]
   before_action :enter_room, only: [:show]
 
   def index
@@ -28,6 +28,12 @@ class RoomsController < ApplicationController
 
 
     render json: { success: false }
+  end
+
+  def set_room_status
+    status = params[:status] == 'open'
+    @room.update_attribute :status, status if @room.status.nil?
+    render nothing: true
   end
 
   def broadcast_user_point user_point
@@ -103,11 +109,13 @@ class RoomsController < ApplicationController
   end
 
   def set_story_point
-    if current_user.user_room.owner?
+    user_room = UserRoom.find_by(room_id: @room.id, user_id: current_user.id)
+
+    if user_room.owner?
       story = Story.find_by id: params[:story_id], room_id: params[:id]
       if story
-        story.point = params[:point]
-        story.save!
+        story.update_attribute :point, params[:point].to_i
+        @room.update_attribute :status, nil
       end
     end
 

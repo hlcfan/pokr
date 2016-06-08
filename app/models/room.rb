@@ -7,6 +7,12 @@ class Room < ActiveRecord::Base
   has_many :stories, dependent: :destroy
   accepts_nested_attributes_for :stories, allow_destroy: true
 
+  OPEN = 1
+
+  def open?
+    OPEN == self.status
+  end
+
   def un_groomed_stories
     stories.where(point: nil)
   end
