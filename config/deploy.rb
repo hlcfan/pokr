@@ -71,6 +71,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
+      invoke :'thin:stop'
       invoke :'thin:start'
     end
   end
