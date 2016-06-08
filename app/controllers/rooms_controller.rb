@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   include ApplicationHelper
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_room_status]
   before_action :enter_room, only: [:show]
 
   def index
@@ -28,6 +28,12 @@ class RoomsController < ApplicationController
 
 
     render json: { success: false }
+  end
+
+  def set_room_status
+    status = params[:status] == 'open'
+    @room.update_attribute :status, status if @room.status.nil?
+    render nothing: true
   end
 
   def broadcast_user_point user_point

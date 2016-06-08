@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get :story_list
       get :user_list
       post :set_story_point
+      post :set_room_status
     end
   end
 
