@@ -309,7 +309,7 @@ var Person = React.createClass({
 
 var ActionBox = React.createClass({
   getInitialState: function() {
-    return { buttonState: POKER.voteOpen ? 'open' : 'skip' };
+    return { buttonState: POKER.voteOpen ? 'skip' : 'open' };
   },
   showResult: function(e) {
     this.setState({buttonState: 'skip'});
