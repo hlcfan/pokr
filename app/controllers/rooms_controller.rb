@@ -42,7 +42,7 @@ class RoomsController < ApplicationController
   def user_list
     @users = @room.users.to_a
     @users.each do |user|
-      user.display_role = user.user_room.display_role
+      user.display_role = UserRoom.find_by(room_id: @room.id, user_id: user.id).display_role
       user.points = user.points_of_story cookies[:story_id] if params[:sync] == 'true'
     end
   end
