@@ -22,6 +22,20 @@ function publishResult() {
     data: 'open',
     type: 'action'
   });
+
+  $.ajax({
+    url: '/rooms/' + POKER.roomId + '/set_room_status',
+    data: { status: 'open' },
+    method: 'post',
+    dataType: 'json',
+    cache: false,
+    success: function(data) {
+      // pass
+    },
+    error: function(xhr, status, err) {
+      // pass
+    }
+  });
 }
 
 function refreshStories() {
@@ -295,7 +309,7 @@ var Person = React.createClass({
 
 var ActionBox = React.createClass({
   getInitialState: function() {
-    return { buttonState: 'open' };
+    return { buttonState: POKER.voteOpen ? 'open' : 'skip' };
   },
   showResult: function(e) {
     this.setState({buttonState: 'skip'});
@@ -324,7 +338,12 @@ var ActionBox = React.createClass({
     this.setState({ buttonState: 'open' });
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("storySwitched", this.resetActionBox)
+    EventEmitter.subscribe("storySwitched", this.resetActionBox);
+
+    if (POKER.voteOpen) {
+      this.setState({ buttonState: 'skip' });
+      showResultSection();
+    }
   },
   render: function() {
     var that = this;
@@ -507,8 +526,7 @@ function setupChannelSubscription() {
     if (data.type === 'action') {
       if (data.data === 'open') {
         window.syncResult = true;
-        $('#show-result').show();
-        EventEmitter.dispatch("beforeResultShown");
+        showResultSection();
       } else if (data.data === 'refresh-stories') {
         window.syncResult = false;
         EventEmitter.dispatch("storySwitched");
@@ -518,4 +536,9 @@ function setupChannelSubscription() {
       $('#u-' + data.person_id).attr('data-point', data.points);
     }
   });
+}
+
+function showResultSection() {
+  $('#show-result').show();
+  EventEmitter.dispatch("beforeResultShown");
 }
