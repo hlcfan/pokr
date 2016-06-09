@@ -71,7 +71,12 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    @room = Room.new(room_params)
+    if 'true' == params[:bulk]
+      params[:room][:stories_attributes] = bulk_import_params
+    end
+
+    @room = Room.new room_params
+
     respond_to do |format|
       if @room.save
         set_user_room_owner
@@ -123,31 +128,43 @@ class RoomsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_room
-      @room = Room.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_room
+    @room = Room.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def room_params
-      params.require(:room).permit(
-        :name,
-        stories_attributes: [:id, :link, :desc, :_destroy]
-      )
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def room_params
+    params.require(:room).permit(
+      :name,
+      stories_attributes: [:id, :link, :desc, :_destroy]
+    )
+  end
 
-    def set_user_room_owner
-      user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-      user_room.role = UserRoom::OWNER
+  def set_user_room_owner
+    user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
+    user_room.role = UserRoom::OWNER
+    user_room.save!
+  end
+
+  def enter_room
+    user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
+    if user_room.new_record?
+      user_room.role = UserRoom::PARTICIPANT
       user_room.save!
     end
+  end
 
-    def enter_room
-      user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-      if user_room.new_record?
-        user_room.role = UserRoom::PARTICIPANT
-        user_room.save!
-      end
+  def bulk_import_params
+    links = params[:bulk_links].split "\r\n"
+    return {} if links.blank?
+
+    stories_hash = {}
+    links.each_with_index do |story_link, index|
+      stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
     end
+
+    stories_hash
+  end
 
 end
