@@ -15,8 +15,44 @@
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <%= render partial: 'rooms/story_form', locals: { f: f } %>
+  <section class="stories-section panel panel-primary" id="story-section">
+    <div class="panel-heading">
+      Stories
+      <a class="pull-right import" href="javascript:;">Import from list</a>
+    </div>
+    <div class="panel-body" id="story-row">
+      <%= render partial: 'rooms/story_form', locals: { f: f } %>
+      <div class="row bulk-links" style="display: none;">
+        <%= hidden_field_tag :bulk %>
+        <%= text_area_tag :bulk_links, nil, class: 'form-control col-xs-10' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="button" class="add btn btn-info">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </section>
   <div class="actions form-group">
     <%= f.submit "Submit", class: 'btn btn-default' %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+$(document).on('ready page:load', function(event) {
+  $('.stories-section').nestedFields({
+    containerSelector: '#story-row',
+    itemSelector: '#story-row .row',
+    afterInsert: function(item, e) {
+      console.log(item + ' was added.');
+    }
+  });
+
+  $('.import').on("click", function(){
+    $('#story-row .row').hide();
+    $('.btn.add').hide();
+    $('.bulk-links').show();
+    $('#bulk').val(true);
+  });
+});
+</script>
