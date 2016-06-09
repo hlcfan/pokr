@@ -18,7 +18,10 @@
   <section class="stories-section panel panel-primary" id="story-section">
     <div class="panel-heading">
       Stories
-      <a class="pull-right import" href="javascript:;">Import from list</a>
+      <a class="pull-right import" href="javascript:;" data-status="input">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Import from list?
+      </a>
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
@@ -49,10 +52,19 @@ $(document).on('ready page:load', function(event) {
   });
 
   $('.import').on("click", function(){
-    $('#story-row .row').hide();
-    $('.btn.add').hide();
-    $('.bulk-links').show();
-    $('#bulk').val(true);
+    if ($('.import').data('status') == 'input') {
+      $('#story-row .row').hide();
+      $('.btn.add').hide();
+      $('.bulk-links').show();
+      $('#bulk').val(true);
+      $('.import').data('status', 'bulk');
+    } else {
+      $('#story-row .row').show();
+      $('.btn.add').show();
+      $('.bulk-links').hide();
+      $('#bulk').val(false);
+      $('.import').data('status', 'input');
+    }
   });
 });
 </script>
