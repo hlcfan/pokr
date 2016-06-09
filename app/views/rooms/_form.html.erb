@@ -25,10 +25,12 @@
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
-      <div class="row bulk-links" style="display: none;">
-        <%= hidden_field_tag :bulk %>
-        <%= text_area_tag :bulk_links, nil, class: 'form-control col-xs-10' %>
-      </div>
+      <% if @room.new_record? %>
+        <div class="row bulk-links" style="display: none;">
+          <%= hidden_field_tag :bulk %>
+          <%= text_area_tag :bulk_links, nil, class: 'form-control col-xs-10' %>
+        </div>
+      <% end %>
     </div>
     <div class="form-group">
       <button type="button" class="add btn btn-info">
