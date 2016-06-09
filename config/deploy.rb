@@ -106,7 +106,7 @@ namespace :thin do
   task :stop do
     queue 'echo "-----> Stop Thin"'
     queue! %{
-      kill -9 `ps -ef | grep thin | grep -v grep | awk '{print $2}'` && echo "Stop Ok" && exit 0
+      kill -9 `ps -ef | grep thin | grep -v grep | awk '{print $2}'` && echo "Stop Ok"
       echo >&2 "Not running"
     }
   end
