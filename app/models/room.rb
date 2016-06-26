@@ -17,4 +17,10 @@ class Room < ActiveRecord::Base
     stories.where(point: nil)
   end
 
+  def current_story_id
+    if current_story = un_groomed_stories.first
+      current_story.id
+    end
+  end
+
 end
