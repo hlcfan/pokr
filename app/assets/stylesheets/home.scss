@@ -1,3 +1,5 @@
+@import 'global_vars';
+
 $default_font_color: #1882a8;
 
 html {
@@ -77,13 +79,35 @@ body {
   background-image: image-url('texture.png');
   background-size: 450px 450px;
   background-color: #262626;
+
+  @media #{$tablet} {
+    height: 450px;
+  }
+
+  @media #{$mobile} {
+    height: 440px;
+  }
+
   .slogan {
     color: #FFFFFF;
     text-align: center;
     padding-top: 50px;
+
+    @media #{$tablet} {
+      padding-top: 30px;
+    }
+
+    @media #{$mobile} {
+      padding-top: 30px;
+    }
+
     h1 {
       font-size: 5rem;
       font-weight: 100;
+
+      @media #{$mobile} {
+        font-size: 4rem;
+      }
     }
     h6 {
       font-family: "Avenir Next","Avenir","brandon-grotesque","Helvetica Neue","Helvetica","Segoe UI","Calibri","Franklin Gothic Book","Verdana",sans-serif;
@@ -93,11 +117,27 @@ body {
       font-size: 2.5rem;
       font-weight: 100;
       line-height: 1.3;
+
+      @media #{$tablet} {
+        margin-top: 30px;
+      }
+
+      @media #{$mobile} {
+        margin-top: 30px; 
+      }
     }
   }
   .sign-up {
     .action {
       margin: 55px auto;
+
+      .get-started {
+        width: 400px;
+
+        @media #{$mobile} {
+          width: 290px;
+        }
+      }
     }
   }
 }

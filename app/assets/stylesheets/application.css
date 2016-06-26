@@ -11,7 +11,10 @@
  * file per style scope.
  *
  *= require normalize-rails
- *= require_tree .
+ *= require bootstrap_and_overrides
+ *= require nav
+ *= require home
+ *= require rooms
  *= require_self
  *= require font-awesome
  */
