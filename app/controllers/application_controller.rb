@@ -18,17 +18,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_story
-    @current_story ||= begin
-      story_id = cookies[:story_id]
-      Story.find story_id
-    rescue ActiveRecord::RecordNotFound => e
-      cookies.delete :story_id
-      nil
-    end
-  end
-  helper_method :current_story
-
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
   end
