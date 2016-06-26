@@ -3,7 +3,7 @@
     POKER.roomId = <%= @room.id %>;
     POKER.roomName = '<%= @room.name %>';
     POKER.role = '<%= UserRoom.find_by(room_id: @room.id, user_id: current_user.id).display_role %>';
-    POKER.currentVote = '<%= current_user.points_of_story(cookies[:story_id]) %>';
+    POKER.currentVote = '<%= current_user.points_of_story(@room.current_story_id) %>';
     POKER.voteOpen = <%= @room.open? %>;
   }());
 </script>

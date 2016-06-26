@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
 
-  include ApplicationHelper
+  include RoomsHelper
 
   before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status]
@@ -17,6 +17,7 @@ class RoomsController < ApplicationController
     points = params[:points].to_i
     # TODO: Need a valid vote list
     if points >= 0
+      binding.pry
       UserStoryPoint.vote(current_user.id,
                       params[:story_id],
                       points) do |user_story_point|
@@ -49,7 +50,7 @@ class RoomsController < ApplicationController
     @users = @room.users.to_a
     @users.each do |user|
       user.display_role = UserRoom.find_by(room_id: @room.id, user_id: user.id).display_role
-      user.points = user.points_of_story cookies[:story_id] if params[:sync] == 'true'
+      user.points = user.points_of_story(@room.current_story_id) if params[:sync] == 'true'
     end
   end
 
