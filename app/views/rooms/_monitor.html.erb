@@ -7,7 +7,7 @@
           <li id="p-<%= user.id %>" data-user-id="<%= user.id %>" data-name="<%= user.name %>">
             <span class="name"><%= user.name %>: </span>
             <span class="points">
-              <%= user.points_of_story cookies[:story_id] %>
+              <%= user.points_of_story @room.current_story_id %>
             </span>
           </li>
         <% end %>

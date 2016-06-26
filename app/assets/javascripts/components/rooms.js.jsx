@@ -158,7 +158,6 @@ var StoryListBox = React.createClass({
     POKER.story_id = (function() {
       return $('.storyList ul li:first').data('id')
     })();
-    Cookies.set('story_id', POKER.story_id);
   },
   render: function() {
     return (
