@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Pokr</title>
+  <meta name="description" content="Pokr, is an efficiency pointing poker or planning poker aim for improving the efficiency and user experience of agile teams">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -26,12 +29,12 @@
       </div>
       <div class="sign-up">
         <div class="ui big action input">
-          <div class="col-lg-4 middle">
+          <div class="get-started middle">
             <%= form_tag home_director_path, class: 'form-inline', method: :post do |f| %>
               <div class="input-group input-group-lg">
-                <input type="text" name="name" class="form-control" value="" placeholder="The name of the room?">
+                <input type="text" name="name" class="form-control" value="" placeholder="Name here">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Start a poker</button>
+                  <button class="btn btn-default" type="submit">Get started</button>
                 </span>
               </div>
             <% end %>
