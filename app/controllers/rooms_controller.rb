@@ -17,7 +17,6 @@ class RoomsController < ApplicationController
     points = params[:points].to_i
     # TODO: Need a valid vote list
     if points >= 0
-      binding.pry
       UserStoryPoint.vote(current_user.id,
                       params[:story_id],
                       points) do |user_story_point|
