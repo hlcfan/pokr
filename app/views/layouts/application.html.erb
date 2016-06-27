@@ -4,7 +4,7 @@
   <title><%= yield(:title) + ' | ' if content_for?(:title) %>Pokr</title>
 
   <meta name="description" content="<%= content_for?(:description_meta_content) ? content_for(:description_meta_content) : default_description %>">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
