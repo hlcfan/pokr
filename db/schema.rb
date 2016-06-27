@@ -11,62 +11,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160522072547) do
+ActiveRecord::Schema.define(version: 20160627082033) do
 
   create_table "rooms", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255, null: false
+    t.integer  "status",     limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "slug",       limit: 255
   end
 
+  add_index "rooms", ["name"], name: "index_rooms_on_name", using: :btree
+  add_index "rooms", ["slug"], name: "index_rooms_on_slug", unique: true, using: :btree
+
   create_table "stories", force: :cascade do |t|
-    t.integer  "room_id"
-    t.string   "link"
-    t.string   "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "point"
+    t.integer  "room_id",    limit: 4
+    t.string   "link",       limit: 255
+    t.string   "desc",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "point",      limit: 255
   end
 
   create_table "user_rooms", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "room_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "role"
+    t.integer  "user_id",    limit: 4, null: false
+    t.integer  "room_id",    limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "role",       limit: 4
   end
 
-  add_index "user_rooms", ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true
+  add_index "user_rooms", ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true, using: :btree
 
   create_table "user_story_points", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "story_id"
-    t.string   "points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",    limit: 4
+    t.integer  "story_id",   limit: 4
+    t.string   "points",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_index "user_story_points", ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
+  add_index "user_story_points", ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "role"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "name",                   limit: 255
+    t.integer  "role",                   limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
