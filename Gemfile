@@ -22,6 +22,7 @@ gem 'js_cookie_rails'
 gem 'font-awesome-rails'
 gem 'awesome_nested_fields'
 gem 'devise'
+gem 'ruby-pinyin'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
