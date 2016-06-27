@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627082033) do
+ActiveRecord::Schema.define(version: 20160627085919) do
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.integer  "status",     limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "slug",       limit: 255
+    t.string   "slug",       limit: 255, null: false
   end
 
   add_index "rooms", ["name"], name: "index_rooms_on_name", using: :btree
