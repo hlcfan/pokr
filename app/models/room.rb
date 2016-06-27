@@ -1,6 +1,6 @@
 class Room < ActiveRecord::Base
 
-  validates_presence_of :name
+  validates_presence_of :name, :slug
 
   has_many :user_rooms
   has_many :users, through: :user_rooms
@@ -26,7 +26,7 @@ class Room < ActiveRecord::Base
   end
 
   def slug!
-    permlink = PinYin.permlink name
+    permlink = PinYin.permlink(name).downcase
     if Room.find_by(slug: permlink).present?
       permlink = "#{permlink}-#{SecureRandom.random_number(100000)}"
     end
