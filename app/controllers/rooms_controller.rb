@@ -80,7 +80,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if @room.save
         set_user_room_owner
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
+        format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
         format.html { render :new }
