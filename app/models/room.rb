@@ -7,6 +7,8 @@ class Room < ActiveRecord::Base
   has_many :stories, dependent: :destroy
   accepts_nested_attributes_for :stories, allow_destroy: true
 
+  before_create :slug!
+
   OPEN = 1
 
   def open?
@@ -21,6 +23,15 @@ class Room < ActiveRecord::Base
     if current_story = un_groomed_stories.first
       current_story.id
     end
+  end
+
+  def slug!
+    permlink = PinYin.permlink name
+    if Room.find_by(slug: permlink).present?
+      permlink = "#{permlink}-#{SecureRandom.random_number(100000)}"
+    end
+
+    self.slug = permlink
   end
 
 end
