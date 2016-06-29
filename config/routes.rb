@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'profile' => 'profile#show'
+  get 'profile/edit' => 'profile#edit'
+  patch 'profile/update' => 'profile#update'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
