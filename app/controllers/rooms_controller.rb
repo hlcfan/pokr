@@ -117,7 +117,7 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by(room_id: @room.id, user_id: current_user.id)
 
     if user_room.owner?
-      story = Story.find_by id: params[:story_id], room_id: params[:id]
+      story = Story.find_by id: params[:story_id], room_id: @room.id
       if story
         story.update_attribute :point, params[:point].to_i
         @room.update_attribute :status, nil
