@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'react-rails', '~> 1.5.0'
 
 gem 'faye-rails', '~> 2.0'
-
+gem 'faye-redis'
 gem 'thin'
 
 # Use ActiveModel has_secure_password
