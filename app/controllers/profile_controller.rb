@@ -7,10 +7,6 @@ class ProfileController < ApplicationController
 
   end
 
-  def edit
-    
-  end
-
   def update
     if @user.update_attributes profile_params
       redirect_to profile_path, flash: { success: 'Your profile updated successfully' }
