@@ -1,1 +1,0 @@
-FAYE_TOKEN = "anything"
