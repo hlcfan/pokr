@@ -19,6 +19,18 @@ class ProfileController < ApplicationController
     end
   end
 
+  def update_password
+    if @user.valid_password? params[:user][:current_password]
+      if @user.update(password_params)
+        # Sign in the user by passing validation in case their password changed
+        sign_in @user, :bypass => true
+        redirect_to profile_path, flash: { success: 'Your password updated successfully' }
+      else
+        render :show
+      end
+    end
+  end
+
   private
 
   def set_user
@@ -27,6 +39,10 @@ class ProfileController < ApplicationController
 
   def profile_params
     params.require(:user).permit(:name)
+  end
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 
 end
