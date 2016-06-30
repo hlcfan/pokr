@@ -8,8 +8,8 @@ max_conns: 1024
 require: []
 environment: production
 max_persistent_conns: 512
-servers: 1
-threaded: true
+servers: 3
+threaded: false
 daemonize: true
 socket: /tmp/thin.sock
 # #tag: a-name-to-show-up-in-ps aux

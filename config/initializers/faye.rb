@@ -1,3 +1,3 @@
-Faye.ensure_reactor_running!
+# Faye.ensure_reactor_running!
 
 FAYE_TOKEN = "anything"
