@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates_uniqueness_of :name
+  validates_presence_of :name
 
   has_one :user_room
   has_many :rooms, through: :user_rooms
