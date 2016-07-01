@@ -527,24 +527,58 @@ var Board = React.createClass({
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
   },
+  loadStoryListFromServer: function(callback) {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
   getInitialState: function() {
     return { data: [] };
   },
+  componentDidMount: function() {
+    this.loadStoryListFromServer();
+    $('#board .modal').modal({keyboard: false, backdrop: 'static'});
+  },
   render: function() {
+    var dataNodes = this.state.data.map(function(story) {
+      return (
+        <tr key={story.id}>
+          <td>{story.link}</td>
+          <td>{story.point}</td>
+        </tr>
+      );
+    });
+
     return (
-      <div class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Modal title</h4>
+      <div className="modal fade" tabIndex="-1" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title">Vote Result</h4>
             </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
+            <div className="modal-body">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Story</th> <th>Point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataNodes}
+                </tbody>
+              </table>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -580,19 +614,9 @@ function showResultSection() {
 }
 
 function drawBoard() {
-  $.ajax({
-    url: ,
-    dataType: 'json',
-    cache: false,
-    success: function(data) {
-      // { id: 123, name: 'story 1', point: 13 }
-      ReactDOM.render(
-        <Board url='/rooms/' + POKER.roomId + '/draw_board.json' />,
-        document.getElementById('board')
-      );
-    },
-    error: function(xhr, status, err) {
-      console.error("draw_board", status, err.toString());
-    }
-  });
+  var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
+  ReactDOM.render(
+    <Board url={drawBoardUrl} />,
+    document.getElementById('board')
+  );
 }
