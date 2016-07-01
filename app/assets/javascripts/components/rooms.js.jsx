@@ -24,7 +24,7 @@ function publishResult() {
   });
 
   $.ajax({
-    url: '/rooms/' + POKER.roomId + '/set_room_status',
+    url: '/rooms/' + POKER.roomId + '/set_room_status.json',
     data: { status: 'open' },
     method: 'post',
     dataType: 'json',
@@ -75,7 +75,7 @@ var VoteBox = React.createClass({
     var node = $(e.target);
 
     $.ajax({
-      url: '/rooms/' + POKER.roomId + '/vote',
+      url: '/rooms/' + POKER.roomId + '/vote.json',
       data: { points: node.val(), story_id: POKER.story_id },
       method: 'post',
       dataType: 'json',
@@ -160,6 +160,7 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
+      drawBoard();
     }
   },
   render: function() {
@@ -320,7 +321,7 @@ var ActionBox = React.createClass({
   skipStory: function() {
     if (POKER.role === 'Owner') {
       $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point',
+        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: 'null', story_id: POKER.story_id },
         method: 'post',
         dataType: 'json',
@@ -458,8 +459,9 @@ var ResultPanel = React.createClass({
 var PointBar = React.createClass({
   selectPoint: function() {
     if (POKER.role === 'Owner') {
+      // debugger;
       $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point',
+        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: this.props.point, story_id: POKER.story_id },
         method: 'post',
         dataType: 'json',
@@ -468,6 +470,7 @@ var PointBar = React.createClass({
           refreshStories();
           refreshPeople();
           resetActionBox();
+          // debugger;
         },
         error: function(xhr, status, err) {
           console.error(status, err.toString());
@@ -519,6 +522,37 @@ var Room = React.createClass({
   }
 });
 
+var Board = React.createClass({
+  rawMarkup: function() {
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return { __html: rawMarkup };
+  },
+  getInitialState: function() {
+    return { data: [] };
+  },
+  render: function() {
+    return (
+      <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
 function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName = ['/rooms', POKER.roomId, POKER.story_id].join('/')
@@ -543,4 +577,22 @@ function setupChannelSubscription() {
 function showResultSection() {
   $('#show-result').show();
   EventEmitter.dispatch("beforeResultShown");
+}
+
+function drawBoard() {
+  $.ajax({
+    url: ,
+    dataType: 'json',
+    cache: false,
+    success: function(data) {
+      // { id: 123, name: 'story 1', point: 13 }
+      ReactDOM.render(
+        <Board url='/rooms/' + POKER.roomId + '/draw_board.json' />,
+        document.getElementById('board')
+      );
+    },
+    error: function(xhr, status, err) {
+      console.error("draw_board", status, err.toString());
+    }
+  });
 }
