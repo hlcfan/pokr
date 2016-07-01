@@ -156,7 +156,12 @@ var StoryListBox = React.createClass({
   },
   componentDidUpdate: function() {
     POKER.story_id = (function() {
-      return $('.storyList ul li:first').data('id')
+      $currentStory = $('.storyList ul li.story').not(".story-leave").first();
+      if($currentStory) {
+        return $currentStory.data('id');
+      } else {
+        return "";
+      }
     })();
   },
   render: function() {
