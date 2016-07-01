@@ -129,9 +129,6 @@ class RoomsController < ApplicationController
 
   def draw_board
     @stories = @room.groomed_stories
-    # @stories.map! do |story|
-    #   { id: story.id, link: story.link, point: story.point }
-    # end
   end
 
   private

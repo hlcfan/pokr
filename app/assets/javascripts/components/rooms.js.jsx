@@ -459,7 +459,6 @@ var ResultPanel = React.createClass({
 var PointBar = React.createClass({
   selectPoint: function() {
     if (POKER.role === 'Owner') {
-      // debugger;
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: this.props.point, story_id: POKER.story_id },
@@ -470,7 +469,6 @@ var PointBar = React.createClass({
           refreshStories();
           refreshPeople();
           resetActionBox();
-          // debugger;
         },
         error: function(xhr, status, err) {
           console.error(status, err.toString());
@@ -527,7 +525,7 @@ var Board = React.createClass({
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
   },
-  loadStoryListFromServer: function(callback) {
+  loadStoryListFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -569,7 +567,7 @@ var Board = React.createClass({
               <table className="table table-bordered">
                 <thead>
                   <tr>
-                    <th>Story</th> <th>Point</th>
+                    <th>Story</th><th>Point</th>
                   </tr>
                 </thead>
                 <tbody>
