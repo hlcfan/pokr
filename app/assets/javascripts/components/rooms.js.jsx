@@ -24,7 +24,7 @@ function publishResult() {
   });
 
   $.ajax({
-    url: '/rooms/' + POKER.roomId + '/set_room_status',
+    url: '/rooms/' + POKER.roomId + '/set_room_status.json',
     data: { status: 'open' },
     method: 'post',
     dataType: 'json',
@@ -75,7 +75,7 @@ var VoteBox = React.createClass({
     var node = $(e.target);
 
     $.ajax({
-      url: '/rooms/' + POKER.roomId + '/vote',
+      url: '/rooms/' + POKER.roomId + '/vote.json',
       data: { points: node.val(), story_id: POKER.story_id },
       method: 'post',
       dataType: 'json',
@@ -160,6 +160,7 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
+      drawBoard();
     }
   },
   render: function() {
@@ -320,7 +321,7 @@ var ActionBox = React.createClass({
   skipStory: function() {
     if (POKER.role === 'Owner') {
       $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point',
+        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: 'null', story_id: POKER.story_id },
         method: 'post',
         dataType: 'json',
@@ -459,7 +460,7 @@ var PointBar = React.createClass({
   selectPoint: function() {
     if (POKER.role === 'Owner') {
       $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point',
+        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: this.props.point, story_id: POKER.story_id },
         method: 'post',
         dataType: 'json',
@@ -519,6 +520,71 @@ var Room = React.createClass({
   }
 });
 
+var Board = React.createClass({
+  rawMarkup: function() {
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return { __html: rawMarkup };
+  },
+  loadStoryListFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    return { data: [] };
+  },
+  componentDidMount: function() {
+    this.loadStoryListFromServer();
+    $('#board .modal').modal({keyboard: false, backdrop: 'static'});
+  },
+  render: function() {
+    var dataNodes = this.state.data.map(function(story) {
+      return (
+        <tr key={story.id}>
+          <td>{story.link}</td>
+          <td>{story.point}</td>
+        </tr>
+      );
+    });
+
+    return (
+      <div className="modal fade" tabIndex="-1" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title">Vote Result</h4>
+            </div>
+            <div className="modal-body">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Story</th><th>Point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataNodes}
+                </tbody>
+              </table>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
 function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName = ['/rooms', POKER.roomId, POKER.story_id].join('/')
@@ -543,4 +609,12 @@ function setupChannelSubscription() {
 function showResultSection() {
   $('#show-result').show();
   EventEmitter.dispatch("beforeResultShown");
+}
+
+function drawBoard() {
+  var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
+  ReactDOM.render(
+    <Board url={drawBoardUrl} />,
+    document.getElementById('board')
+  );
 }

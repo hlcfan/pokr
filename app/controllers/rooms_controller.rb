@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   include RoomsHelper
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status, :draw_board]
   before_action :enter_room, only: [:show]
 
   def index
@@ -125,6 +125,10 @@ class RoomsController < ApplicationController
     end
 
     render json: { success: true }
+  end
+
+  def draw_board
+    @stories = @room.groomed_stories
   end
 
   private

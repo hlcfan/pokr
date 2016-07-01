@@ -19,6 +19,10 @@ class Room < ActiveRecord::Base
     stories.where(point: nil)
   end
 
+  def groomed_stories
+    stories.where "point IS NOT NULL"
+  end
+
   def current_story_id
     if current_story = un_groomed_stories.first
       current_story.id
