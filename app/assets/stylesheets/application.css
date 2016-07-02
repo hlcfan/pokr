@@ -15,6 +15,7 @@
  *= require nav
  *= require home
  *= require rooms
+ *= require dashboard
  *= require_self
  *= require font-awesome
  */
