@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
   def vote
     points = params[:points].to_i
     # TODO: Need a valid vote list
-    if points >= 0
+    if points >= 0 && params[:story_id].present?
       UserStoryPoint.vote(current_user.id,
                       params[:story_id],
                       points) do |user_story_point|
