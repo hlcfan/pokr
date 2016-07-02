@@ -1,4 +1,4 @@
-<div>
+<div class="dashboard">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
@@ -8,10 +8,26 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="created">
-      created
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <% @created_rooms.each do |room| %>
+              <li><%= room.name %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="participated">
-      participated
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <% @partipated_rooms.each do |room| %>
+              <li><%= room.name %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
