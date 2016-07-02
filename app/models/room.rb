@@ -10,9 +10,13 @@ class Room < ActiveRecord::Base
   before_create :slug!
 
   OPEN = 1
+  DRAW = 2
 
-  def open?
-    OPEN == self.status
+  def state
+    {
+      Room::OPEN => 'open',
+      Room::DRAW => 'draw'
+    }[self.status]
   end
 
   def un_groomed_stories
