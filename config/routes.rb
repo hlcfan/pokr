@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'profile/edit' => 'profile#edit'
   patch 'profile/update' => 'profile#update'
   patch 'profile/update_password' => 'profile#update_password'
+  resources :dashboard, only: [:index]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

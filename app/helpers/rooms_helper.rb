@@ -9,6 +9,14 @@ module RoomsHelper
     room_story_id.split('/')[1]
   end
 
+  def state_class room
+    if room.status == Room::DRAW
+      "label-default"
+    else
+      "label-success"
+    end
+  end
+
   private
 
   def faye_client

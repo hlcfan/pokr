@@ -5,6 +5,9 @@ class Room < ActiveRecord::Base
   has_many :user_rooms
   has_many :users, through: :user_rooms
   has_many :stories, dependent: :destroy
+
+  belongs_to :creator, class_name: "User", foreign_key: :created_by
+
   accepts_nested_attributes_for :stories, allow_destroy: true
 
   before_create :slug!
@@ -17,6 +20,14 @@ class Room < ActiveRecord::Base
       Room::OPEN => 'open',
       Room::DRAW => 'draw'
     }.fetch(self.status, 'not-open')
+  end
+
+  def display_state
+    if state != "draw"
+      "In Progress"
+    else
+      "Finished"
+    end
   end
 
   def un_groomed_stories
