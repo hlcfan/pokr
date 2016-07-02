@@ -15,7 +15,12 @@
             <div class="panel-body">
               <ul class="list-group">
                 <% @created_rooms.each do |room| %>
-                  <li class="list-group-item"><%= link_to room.name, room_path(room.slug), target: '_blank' %></li>
+                  <li class="list-group-item">
+                    <%= link_to room_path(room.slug), target: '_blank' do %>
+                      <%= room.name %>
+                      <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
+                    <% end %>
+                  </li>
                 <% end %>
               </ul>
             </div>
@@ -26,7 +31,12 @@
             <div class="panel-body">
               <ul class="list-group">
                 <% @partipated_rooms.each do |room| %>
-                  <li class="list-group-item"><%= link_to room.name, room_path(room.slug), target: '_blank' %></li>
+                  <li class="list-group-item">
+                    <%= link_to room_path(room.slug), target: '_blank' do %>
+                      <%= room.name %>
+                      <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
+                    <% end %>
+                  </li>
                 <% end %>
               </ul>
             </div>

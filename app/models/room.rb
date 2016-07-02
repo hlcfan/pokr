@@ -22,6 +22,14 @@ class Room < ActiveRecord::Base
     }.fetch(self.status, 'not-open')
   end
 
+  def display_state
+    if state != "draw"
+      "In Progress"
+    else
+      "Finished"
+    end
+  end
+
   def un_groomed_stories
     stories.where(point: nil)
   end
