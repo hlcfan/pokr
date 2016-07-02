@@ -16,7 +16,7 @@ class Room < ActiveRecord::Base
     {
       Room::OPEN => 'open',
       Room::DRAW => 'draw'
-    }[self.status]
+    }.fetch(self.status, 'not-open')
   end
 
   def un_groomed_stories
