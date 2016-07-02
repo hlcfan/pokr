@@ -160,6 +160,7 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
+      EventEmitter.dispatch("noStoriesLeft")
       drawBoard();
     }
   },
@@ -312,7 +313,7 @@ var Person = React.createClass({
 
 var ActionBox = React.createClass({
   getInitialState: function() {
-    return { buttonState: POKER.voteOpen ? 'skip' : 'open' };
+    return { buttonState: POKER.roomState };
   },
   showResult: function(e) {
     this.setState({buttonState: 'skip'});
@@ -340,13 +341,23 @@ var ActionBox = React.createClass({
   resetActionBox: function() {
     this.setState({ buttonState: 'open' });
   },
+  setToDrawBoard: function() {
+    this.setState({ buttonState: 'draw' });
+  },
+  showBoard: function() {
+    $('#board').html('');
+    drawBoard();
+  },
   componentDidMount: function() {
     EventEmitter.subscribe("storySwitched", this.resetActionBox);
-
-    if (POKER.voteOpen) {
+    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
+    if (POKER.roomState === 'open') {
       this.setState({ buttonState: 'skip' });
       showResultSection();
     }
+  },
+  componentDidUpdate: function() {
+    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
   },
   render: function() {
     var that = this;
@@ -362,6 +373,12 @@ var ActionBox = React.createClass({
           return (
             <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skip it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+          );
+        } else if (that.state.buttonState === 'draw') {
+          return (
+            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </a>
           );
         }
@@ -612,6 +629,20 @@ function showResultSection() {
 }
 
 function drawBoard() {
+  $.ajax({
+    url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+    data: { status: 'draw' },
+    method: 'post',
+    dataType: 'json',
+    cache: false,
+    success: function(data) {
+      // pass
+    },
+    error: function(xhr, status, err) {
+      // pass
+    }
+  });
+
   var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
   ReactDOM.render(
     <Board url={drawBoardUrl} />,
