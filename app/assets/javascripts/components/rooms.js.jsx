@@ -369,20 +369,20 @@ var ActionBox = React.createClass({
       if (POKER.role === 'Owner') {
         if (that.state.buttonState === 'not-open') {
           return (
-            <a onClick={that.showResult} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a onClick={that.showResult} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+              开？
             </a>
           );
         } else if (that.state.buttonState === 'open') {
           return (
-            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skip it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+              Skip it
             </a>
           );
         } else if (that.state.buttonState === 'draw') {
           return (
-            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+              Show board
             </a>
           );
         }
@@ -395,12 +395,10 @@ var ActionBox = React.createClass({
         <div className="panel-body row">
           <div id="actionBox" className="row">
             <ResultPanel />
-            <div ref="openButton" className="openButton">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-4">
+            <div ref="openButton" className="openButton container-fluid">
+              <div className="">
                 {actionButton}
               </div>
-              <div className="col-sm-4"></div>
             </div>
           </div>
         </div>
