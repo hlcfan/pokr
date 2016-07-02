@@ -316,7 +316,7 @@ var ActionBox = React.createClass({
     return { buttonState: POKER.roomState };
   },
   showResult: function(e) {
-    this.setState({buttonState: 'skip'});
+    this.setState({buttonState: 'open'});
     publishResult();
   },
   skipStory: function() {
@@ -339,7 +339,7 @@ var ActionBox = React.createClass({
     }
   },
   resetActionBox: function() {
-    this.setState({ buttonState: 'open' });
+    this.setState({ buttonState: 'not-open' });
   },
   setToDrawBoard: function() {
     this.setState({ buttonState: 'draw' });
@@ -352,7 +352,6 @@ var ActionBox = React.createClass({
     EventEmitter.subscribe("storySwitched", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
     if (POKER.roomState === 'open') {
-      this.setState({ buttonState: 'skip' });
       showResultSection();
     }
   },
@@ -363,13 +362,13 @@ var ActionBox = React.createClass({
     var that = this;
     var actionButton = (function() {
       if (POKER.role === 'Owner') {
-        if (that.state.buttonState === 'open') {
+        if (that.state.buttonState === 'not-open') {
           return (
             <a onClick={that.showResult} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </a>
           );
-        } else if (that.state.buttonState === 'skip') {
+        } else if (that.state.buttonState === 'open') {
           return (
             <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skip it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
