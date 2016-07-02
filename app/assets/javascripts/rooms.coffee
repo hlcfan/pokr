@@ -23,7 +23,7 @@ $(document).on 'page:change', ->
     POKER.story_id = do ->
       $('.storyList ul li:first').data 'id'
     # Initialize sync result as false
-    window.syncResult = POKER.voteOpen ? true : false
+    window.syncResult = (POKER.roomState == 'open') ? true : false
     window.client = new (Faye.Client)('/faye')
 
     element = React.createElement(Room, poker: POKER)
