@@ -73,32 +73,37 @@ var StatusBar = React.createClass({
 var VoteBox = React.createClass({
   onItemClick: function(e) {
     var node = $(e.target);
+    if (POKER.story_id) {
+      $.ajax({
+        url: '/rooms/' + POKER.roomId + '/vote.json',
+        data: { points: node.val(), story_id: POKER.story_id },
+        method: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          // Remove all selected points
+          $('.vote-list ul li input').removeClass('btn-info');
+          node.toggleClass('btn-info');
 
-    $.ajax({
-      url: '/rooms/' + POKER.roomId + '/vote.json',
-      data: { points: node.val(), story_id: POKER.story_id },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // Remove all selected points
-        $('.vote-list ul li input').removeClass('btn-info');
-        node.toggleClass('btn-info');
-
-        // Publish results and re-draw point bars
-        if (window.syncResult) {
-          publishResult();
+          // Publish results and re-draw point bars
+          if (window.syncResult) {
+            publishResult();
+          }
+        },
+        error: function(xhr, status, err) {
+          console.error(status, err.toString());
         }
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
-    });
+      });
+    }
+  },
+  disableVote: function() {
+    $('.vote-list ul li input').addClass('disabled');
   },
   componentDidMount: function() {
     EventEmitter.subscribe("storySwitched", function(){
       $('.vote-list ul li input').removeClass('btn-info');
     });
+    EventEmitter.subscribe("noStoriesLeft", this.disableVote);
   },
   render:function() {
     var currentVote = this.props.poker.currentVote;
@@ -160,7 +165,7 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
-      EventEmitter.dispatch("noStoriesLeft")
+      EventEmitter.dispatch("noStoriesLeft");
       drawBoard();
     }
   },
