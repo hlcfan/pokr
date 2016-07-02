@@ -31,8 +31,9 @@ class RoomsController < ApplicationController
   end
 
   def set_room_status
-    status = params[:status] == 'open'
-    @room.update_attribute :status, status if @room.status.nil?
+    if valid_room_status.present? && (@room.status != valid_room_status)
+      @room.update_attribute :status, valid_room_status
+    end
     render nothing: true
   end
 
@@ -169,6 +170,13 @@ class RoomsController < ApplicationController
     end
 
     stories_hash
+  end
+
+  def valid_room_status
+    {
+      'open' => Room::OPEN,
+      'draw' => Room::DRAW
+    }[params[:status]]
   end
 
 end

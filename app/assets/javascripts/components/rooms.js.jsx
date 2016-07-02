@@ -160,6 +160,7 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
+      EventEmitter.dispatch("noStoriesLeft")
       drawBoard();
     }
   },
@@ -312,10 +313,10 @@ var Person = React.createClass({
 
 var ActionBox = React.createClass({
   getInitialState: function() {
-    return { buttonState: POKER.voteOpen ? 'skip' : 'open' };
+    return { buttonState: POKER.roomState };
   },
   showResult: function(e) {
-    this.setState({buttonState: 'skip'});
+    this.setState({buttonState: 'open'});
     publishResult();
   },
   skipStory: function() {
@@ -338,30 +339,45 @@ var ActionBox = React.createClass({
     }
   },
   resetActionBox: function() {
-    this.setState({ buttonState: 'open' });
+    this.setState({ buttonState: 'not-open' });
+  },
+  setToDrawBoard: function() {
+    this.setState({ buttonState: 'draw' });
+  },
+  showBoard: function() {
+    $('#board').html('');
+    drawBoard();
   },
   componentDidMount: function() {
     EventEmitter.subscribe("storySwitched", this.resetActionBox);
-
-    if (POKER.voteOpen) {
-      this.setState({ buttonState: 'skip' });
+    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
+    if (POKER.roomState === 'open') {
       showResultSection();
     }
+  },
+  componentDidUpdate: function() {
+    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
   },
   render: function() {
     var that = this;
     var actionButton = (function() {
       if (POKER.role === 'Owner') {
-        if (that.state.buttonState === 'open') {
+        if (that.state.buttonState === 'not-open') {
           return (
             <a onClick={that.showResult} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </a>
           );
-        } else if (that.state.buttonState === 'skip') {
+        } else if (that.state.buttonState === 'open') {
           return (
             <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skip it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+          );
+        } else if (that.state.buttonState === 'draw') {
+          return (
+            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-success" href="javascript:;" role="button">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </a>
           );
         }
@@ -612,6 +628,20 @@ function showResultSection() {
 }
 
 function drawBoard() {
+  $.ajax({
+    url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+    data: { status: 'draw' },
+    method: 'post',
+    dataType: 'json',
+    cache: false,
+    success: function(data) {
+      // pass
+    },
+    error: function(xhr, status, err) {
+      // pass
+    }
+  });
+
   var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
   ReactDOM.render(
     <Board url={drawBoardUrl} />,
