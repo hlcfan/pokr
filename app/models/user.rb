@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :user_rooms
   has_many :rooms, through: :user_rooms
-
   has_many :user_story_points
+  has_many :created_rooms, class_name: "Room", foreign_key: :created_by
 
   after_initialize :default_values
 
