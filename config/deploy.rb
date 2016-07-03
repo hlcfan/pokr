@@ -1,10 +1,10 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-# require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-require 'mina/rvm'    # for rvm support. (http://rvm.io)
+require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
+# require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
-set :domain, '188.166.212.80'
+set :domain, '98.126.65.214'
 set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{deploy_to}/#{current_path}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
@@ -31,10 +31,10 @@ set :shared_paths, ['config/database.yml', 'log']
 task :environment do
   # If you're using rbenv, use this to load the rbenv environment.
   # Be sure to commit your .rbenv-version to your repository.
-  # invoke :'rbenv:load'
+  invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.2.0@default]'
+  # invoke :'rvm:use[ruby-2.2.0@default]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
