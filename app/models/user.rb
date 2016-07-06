@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   after_initialize :default_values
 
-  attr_accessor :points, :display_role
+  attr_accessor :points, :display_role, :voted
 
   OWNER = 0
   PARTICIPANT = 1
