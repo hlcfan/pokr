@@ -38,6 +38,13 @@ function publishResult() {
   });
 }
 
+function notifyVoted() {
+  client.publish(channelName, {
+    data: POKER.currentUser.name,
+    type: 'notify'
+  });
+}
+
 function refreshStories() {
   client.publish(channelName, {
     data: 'refresh-stories',
@@ -88,6 +95,8 @@ var VoteBox = React.createClass({
           // Publish results and re-draw point bars
           if (window.syncResult) {
             publishResult();
+          } else {
+            notifyVoted();
           }
         },
         error: function(xhr, status, err) {
@@ -271,7 +280,7 @@ var PeopleList = React.createClass({
   render: function() {
     var peopleNodes = this.props.data.map(function(person) {
       return (
-        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} />
+        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} voted={person.voted} />
       );
     });
     return (
@@ -304,8 +313,13 @@ var Person = React.createClass({
       }
     })();
 
+    var votedClass = '';
+    if (this.props.voted) {
+      votedClass = 'voted';
+    }
+
     return (
-      <li className="person" id={'u-' + this.props.id} data-point={this.props.points}>
+      <li className={'person ' + votedClass} id={'u-' + this.props.id} data-point={this.props.points}>
         <i className={this.props.role + ' ' + userIconClass} aria-hidden="true"></i>
         <a href="javascript:;" className="person">
           {this.props.name}
@@ -618,6 +632,14 @@ function setupChannelSubscription() {
         window.syncResult = false;
         EventEmitter.dispatch("storySwitched");
       }
+    } else if(data.type === 'notify') {
+      var userName = data.data;
+      $('.people-list li.person').each(function(i, personEle){
+        var $personElement = $(personEle);
+        if ($personElement.find('span').text() === userName) {
+          $personElement.addClass("voted")
+        }
+      });
     } else {
       $('#u-' + data.person_id + ' .points').text(data.points);
       $('#u-' + data.person_id).attr('data-point', data.points);
