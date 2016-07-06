@@ -38,6 +38,13 @@ function publishResult() {
   });
 }
 
+function notifyVoted() {
+  client.publish(channelName, {
+    data: POKER.currentUser.name,
+    type: 'notify'
+  });
+}
+
 function refreshStories() {
   client.publish(channelName, {
     data: 'refresh-stories',
@@ -88,6 +95,8 @@ var VoteBox = React.createClass({
           // Publish results and re-draw point bars
           if (window.syncResult) {
             publishResult();
+          } else {
+            notifyVoted();
           }
         },
         error: function(xhr, status, err) {
@@ -618,6 +627,14 @@ function setupChannelSubscription() {
         window.syncResult = false;
         EventEmitter.dispatch("storySwitched");
       }
+    } else if(data.type === 'notify') {
+      var userName = data.data;
+      $('.people-list li.person').each(function(i, personEle){
+        var $personElement = $(personEle);
+        if ($personElement.find('span').text() === userName) {
+          $personElement.addClass("voted")
+        }
+      });
     } else {
       $('#u-' + data.person_id + ' .points').text(data.points);
       $('#u-' + data.person_id).attr('data-point', data.points);
