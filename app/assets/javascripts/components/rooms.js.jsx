@@ -280,7 +280,7 @@ var PeopleList = React.createClass({
   render: function() {
     var peopleNodes = this.props.data.map(function(person) {
       return (
-        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} />
+        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} voted={person.voted} />
       );
     });
     return (
@@ -313,8 +313,13 @@ var Person = React.createClass({
       }
     })();
 
+    var votedClass = '';
+    if (this.props.voted) {
+      votedClass = 'voted';
+    }
+
     return (
-      <li className="person" id={'u-' + this.props.id} data-point={this.props.points}>
+      <li className={'person ' + votedClass} id={'u-' + this.props.id} data-point={this.props.points}>
         <i className={this.props.role + ' ' + userIconClass} aria-hidden="true"></i>
         <a href="javascript:;" className="person">
           {this.props.name}
