@@ -4,33 +4,34 @@
     <div class="dashboard">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
-        <li role="presentation"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
+        <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
+        <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
       </ul>
+
+      <div role="tabpanel" class="tab-pane active" id="participated">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <ul class="list-group">
+              <% @partipated_rooms.each do |room| %>
+                <li class="list-group-item">
+                  <%= link_to room_path(room.slug), target: '_blank' do %>
+                    <%= room.name %>
+                    <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="created">
+        <div role="tabpanel" class="tab-pane" id="created">
           <div class="panel panel-default">
             <div class="panel-body">
               <ul class="list-group">
                 <% @created_rooms.each do |room| %>
-                  <li class="list-group-item">
-                    <%= link_to room_path(room.slug), target: '_blank' do %>
-                      <%= room.name %>
-                      <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="participated">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <ul class="list-group">
-                <% @partipated_rooms.each do |room| %>
                   <li class="list-group-item">
                     <%= link_to room_path(room.slug), target: '_blank' do %>
                       <%= room.name %>
