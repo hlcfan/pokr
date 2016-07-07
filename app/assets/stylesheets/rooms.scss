@@ -55,6 +55,11 @@
   }
 
   li.voted {
+    -webkit-transition: all 0s linear;
+    -moz-transition: all 0s linear;
+    -o-transition: all 0s linear;
+    transition: all 0s linear;
+    opacity: 1;
     border-left: 4px solid #5bc0de;
   }
 

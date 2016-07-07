@@ -637,7 +637,13 @@ function setupChannelSubscription() {
       $('.people-list li.person').each(function(i, personEle){
         var $personElement = $(personEle);
         if ($personElement.find('span').text() === userName) {
-          $personElement.addClass("voted")
+          if ($personElement.hasClass('voted')) {
+            $personElement.removeClass("voted");
+          }
+
+          setTimeout(function(){
+            $personElement.addClass("voted", 100);
+          }, 200);
         }
       });
     } else {
