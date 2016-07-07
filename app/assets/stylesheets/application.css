@@ -12,6 +12,7 @@
  *
  *= require normalize-rails
  *= require bootstrap_and_overrides
+ *= require layout
  *= require nav
  *= require home
  *= require rooms
