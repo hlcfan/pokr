@@ -56,15 +56,15 @@ body {
 .header-section {
   background: #fff;
   .container {
+    text-align: center;
+
     a.logo {
       text-decoration: none;
       color: $default_font_color;
       font-size: 2em;
-      h1 {
-        width: 100px;
-        margin: 0 auto;
-        line-height: 60px;
-      }
+      width: 100px;
+      margin: 0 auto;
+      line-height: 60px;
     }
     a.sign-in-btn {
       position: absolute;
