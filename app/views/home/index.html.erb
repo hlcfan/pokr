@@ -17,6 +17,10 @@
         <a class="logo" href="javascript:;">
           Pokr
         </a>
+        <div class="header-actions pull-right">
+          <a href="<%= new_user_session_path %>" class="btn btn-default navbar-btn">Sign in</a>
+          <!-- <a href="<%= new_user_registration_path %>" class="btn btn-primary navbar-btn">Sign up</a> -->
+        </div>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -30,11 +34,11 @@
       <div class="sign-up">
         <div class="ui big action input">
           <div class="get-started middle">
-            <%= form_tag home_director_path, class: 'form-inline', method: :post do |f| %>
+            <%= form_tag home_sign_up_path, class: 'form-inline', method: :post do |f| %>
               <div class="input-group input-group-lg">
-                <input type="text" name="name" class="form-control" value="" placeholder="Name here">
+                <input type="email" name="email" class="form-control" value="" placeholder="Email address">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Get started</button>
+                  <button class="btn btn-default" type="submit">Sign up</button>
                 </span>
               </div>
             <% end %>
