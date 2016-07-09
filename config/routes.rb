@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'rooms/index'
-  post 'home/director'
+  post 'home/sign_up'
 
   resources :rooms do
     member do

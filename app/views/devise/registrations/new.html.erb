@@ -1,3 +1,9 @@
+<%
+  if resource.email.blank? && cookies[:email].present?
+    resource.email = cookies[:email]
+    cookies.delete :email
+  end
+%>
 <div class="row">   
   <div class="col-md-4"></div>
   <div class="col-md-4">
