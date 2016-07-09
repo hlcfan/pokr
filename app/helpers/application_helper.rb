@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def default_description
-    "Pokr, is an efficiency pointing poker or planning poker aim for improving the efficiency and user experience of agile teams"
+    "Pokr, is an efficiency pointing poker or planning poker aim for improving the efficiency and user experience of agile/scrum teams"
   end
 
   def flash_messages opts = {}
