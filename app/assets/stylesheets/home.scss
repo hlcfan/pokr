@@ -59,17 +59,18 @@ body {
     text-align: center;
 
     a.logo {
+      position: absolute;
       text-decoration: none;
       color: $default_font_color;
       font-size: 2em;
-      width: 100px;
-      margin: 0 auto;
       line-height: 60px;
+      left: 50%;
+      width: 70px;
+      margin-left: -35px;
     }
-    a.sign-in-btn {
-      position: absolute;
-      right: 0;
-      top: 20%;
+
+    .header-actions {
+      line-height: 60px;
     }
   }
 }
