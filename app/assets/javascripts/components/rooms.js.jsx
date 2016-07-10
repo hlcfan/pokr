@@ -81,6 +81,9 @@ var VoteBox = React.createClass({
   onItemClick: function(e) {
     var node = $(e.target);
     if (POKER.story_id) {
+      // Remove all selected points
+      $('.vote-list ul li input').removeClass('btn-info');
+      node.toggleClass('btn-info');
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/vote.json',
         data: { points: node.val(), story_id: POKER.story_id },
@@ -88,10 +91,6 @@ var VoteBox = React.createClass({
         dataType: 'json',
         cache: false,
         success: function(data) {
-          // Remove all selected points
-          $('.vote-list ul li input').removeClass('btn-info');
-          node.toggleClass('btn-info');
-
           // Publish results and re-draw point bars
           if (window.syncResult) {
             publishResult();
