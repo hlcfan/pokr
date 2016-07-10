@@ -61,6 +61,7 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @room.pv = @room.point_values.join(',')
     @room.stories.build
   end
 
