@@ -7,3 +7,7 @@ Array.prototype.clean = function(deleteValue) {
   }
   return this;
 };
+
+Array.prototype.remove = function(v) {
+  this.splice(this.indexOf(v) == -1 ? this.length : this.indexOf(v), 1);
+}
