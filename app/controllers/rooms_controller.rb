@@ -50,7 +50,7 @@ class RoomsController < ApplicationController
     @users = @room.users.to_a
     @users.each do |user|
       user_point = user.points_of_story(@room.current_story_id)
-      user.display_role = UserRoom.find_by(room_id: @room.id, user_id: user.id).display_role
+      user.display_role = UserRoom.find_by(user_id: user.id, room_id: @room.id).display_role
       user.points = user_point if params[:sync] == 'true'
       user.voted = !!user_point
     end
