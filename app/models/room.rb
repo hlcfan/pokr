@@ -11,6 +11,7 @@ class Room < ActiveRecord::Base
   accepts_nested_attributes_for :stories, allow_destroy: true
 
   before_create :slug!
+  before_save :sort_point_values
 
   OPEN = 1
   DRAW = 2
@@ -68,6 +69,12 @@ class Room < ActiveRecord::Base
     end
 
     self.slug = permlink
+  end
+
+  def sort_point_values
+    self.pv = self.pv.split(',').sort_by do |value|
+      DEFAULT_POINT_VALUES.index value
+    end.join(',')
   end
 
 end
