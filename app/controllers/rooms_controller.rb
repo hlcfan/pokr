@@ -117,10 +117,10 @@ class RoomsController < ApplicationController
   def set_story_point
     user_room = UserRoom.find_by(room_id: @room.id, user_id: current_user.id)
 
-    if user_room.owner?
+    if user_room.owner? && @room.valid_vote_point?(params[:point])
       story = Story.find_by id: params[:story_id], room_id: @room.id
       if story
-        story.update_attribute :point, params[:point].to_i
+        story.update_attribute :point, params[:point]
         @room.update_attribute :status, nil
       end
     end
