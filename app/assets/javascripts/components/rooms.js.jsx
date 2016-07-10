@@ -116,7 +116,7 @@ var VoteBox = React.createClass({
   render:function() {
     var currentVote = this.props.poker.currentVote;
     var that = this;
-    var pointsList = this.props.poker.pointsRange.map(function(point) {
+    var pointsList = this.props.poker.pointValues.map(function(point) {
       var currentVoteClassName = currentVote == point ? ' btn-info' : '';
       return (
         <li key={point}>
@@ -512,8 +512,8 @@ var PointBar = React.createClass({
     return (
       <li className="row" data-point={this.props.point}>
         <div className="row-container">
-          <div className="col-md-1 point">{this.props.point}</div>
-          <div className="col-md-10 bar">
+          <div className="col-md-2 point">{this.props.point}</div>
+          <div className="col-md-9 bar">
             <div onClick={this.selectPoint} style={{width: this.props.barWidth + '%', background: 'gray', color: '#fff', 'textAlign': 'center'}}>
               {this.props.count}
             </div>

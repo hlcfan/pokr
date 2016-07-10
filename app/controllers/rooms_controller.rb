@@ -14,18 +14,15 @@ class RoomsController < ApplicationController
   end
 
   def vote
-    points = params[:points].to_i
-    # TODO: Need a valid vote list
-    if points >= 0 && params[:story_id].present?
+    if valid_vote?
       UserStoryPoint.vote(current_user.id,
                       params[:story_id],
-                      points) do |user_story_point|
+                      params[:points]) do |user_story_point|
         broadcast_user_point user_story_point
       end
 
       render json: { success: true } and return
     end
-
 
     render json: { success: false }
   end
@@ -64,6 +61,7 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @room.pv = @room.point_values.join(',')
     @room.stories.build
   end
 
@@ -119,10 +117,10 @@ class RoomsController < ApplicationController
   def set_story_point
     user_room = UserRoom.find_by(room_id: @room.id, user_id: current_user.id)
 
-    if user_room.owner?
+    if user_room.owner? && @room.valid_vote_point?(params[:point])
       story = Story.find_by id: params[:story_id], room_id: @room.id
       if story
-        story.update_attribute :point, params[:point].to_i
+        story.update_attribute :point, params[:point]
         @room.update_attribute :status, nil
       end
     end
@@ -143,7 +141,7 @@ class RoomsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
     params.require(:room).permit(
-      :name,
+      :name, :pv,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
   end
@@ -179,6 +177,10 @@ class RoomsController < ApplicationController
       'open' => Room::OPEN,
       'draw' => Room::DRAW
     }[params[:status]]
+  end
+
+  def valid_vote?
+    @room.valid_vote_point?(params[:points]) && params[:story_id].present?
   end
 
 end

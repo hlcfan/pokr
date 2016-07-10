@@ -8,6 +8,7 @@
     POKER.role = '<%= UserRoom.find_by(room_id: @room.id, user_id: current_user.id).display_role %>';
     POKER.currentVote = '<%= current_user.points_of_story(@room.current_story_id) %>';
     POKER.roomState = '<%= @room.state %>';
+    POKER.pointValues = <%= @room.point_values.to_json.html_safe %>;
   }());
 </script>
 

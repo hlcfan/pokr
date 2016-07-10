@@ -15,13 +15,22 @@
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
+  <div class="form-group">
+    <%= f.label "Point values" %>
+    <%= f.hidden_field :pv, id: 'point-values' %>
+    <ul class="list-inline point-values">
+      <%= generate_point_values(@room.point_values) %>
+    </ul>
+  </div>
   <section class="stories-section panel panel-primary" id="story-section">
     <div class="panel-heading">
       Stories
-      <a class="pull-right import" href="javascript:;" data-status="input">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        Import from list?
-      </a>
+      <% if @room.new_record? %>
+        <a class="pull-right import" href="javascript:;" data-status="input">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          Import from list?
+        </a>
+      <% end %>
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
@@ -53,20 +62,26 @@ $(document).on('ready page:load', function(event) {
     }
   });
 
-  $('.import').on("click", function(){
-    if ($('.import').data('status') == 'input') {
-      $('#story-row .row').hide();
-      $('.btn.add').hide();
-      $('.bulk-links').show();
-      $('#bulk').val(true);
-      $('.import').data('status', 'bulk');
+  $('.point-values li input').on("click", function(){
+    if ($(this).hasClass('btn-info')) {
+      $(this).removeClass('btn-info');
+      $(this).addClass('btn-default');
     } else {
-      $('#story-row .row').show();
-      $('.btn.add').show();
-      $('.bulk-links').hide();
-      $('#bulk').val(false);
-      $('.import').data('status', 'input');
+      $(this).removeClass('btn-default');
+      $(this).addClass('btn-info');
     }
+    $pointValues = $('#point-values');
+    var currentValue = $(this).val();
+    var selectedPointValues = $pointValues.val();
+    var selectedPointValuesArray = selectedPointValues.split(',');
+    if (selectedPointValuesArray.indexOf(currentValue) < 0) {
+      selectedPointValuesArray.push(currentValue);
+    } else {
+      selectedPointValuesArray.remove(currentValue);
+    }
+    selectedPointValuesArray = selectedPointValuesArray.clean("")
+    selectedPointValues = selectedPointValuesArray.join(',');
+    $pointValues.val(selectedPointValues);
   });
 });
 </script>

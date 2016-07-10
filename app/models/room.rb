@@ -14,6 +14,7 @@ class Room < ActiveRecord::Base
 
   OPEN = 1
   DRAW = 2
+  DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
 
   def state
     {
@@ -43,6 +44,22 @@ class Room < ActiveRecord::Base
       current_story.id
     end
   end
+
+  def point_values
+    @point_values ||= begin
+      if self.pv.blank?
+        DEFAULT_POINT_VALUES
+      else
+        self.pv.split ','
+      end
+    end
+  end
+
+  def valid_vote_point? point
+    point_values.include? point
+  end
+
+  private
 
   def slug!
     permlink = PinYin.permlink(name).downcase

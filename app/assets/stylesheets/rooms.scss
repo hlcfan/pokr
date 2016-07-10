@@ -3,8 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .vote-list {
-  height: 200px;
-
   ul li input.btn {
     width: 100px;
     margin-bottom: 15px;
@@ -122,6 +120,13 @@
 
   .stories-section .bulk-links textarea {
     height: 200px;
+  }
+
+  .point-values {
+    li input {
+      width: 80px;
+      margin-bottom: 15px;
+    }
   }
 }
 

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
+//= require ext
 //= require faye
 //= require react
 //= require react_ujs
