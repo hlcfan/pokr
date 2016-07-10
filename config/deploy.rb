@@ -58,17 +58,8 @@ task :setup => :environment do
   }
 end
 
-task :env do
-  queue %{
-    echo "-----> Loading environment"
-    #{echo_cmd %[source ~/.local_env]}
-  }
-end
-
 desc "Deploys the current version to the server."
 task :deploy => :environment do
-  # invoke :env
-
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
@@ -98,11 +89,6 @@ end
 namespace :thin do
   set :start_thin, %{
     cd #{app_path}
-    printenv | grep SKYLIGHT_AUTHENTICATION
-    printenv | grep SECRET_KEY_BASE
-    source ~/.local_env
-    printenv | grep SKYLIGHT_AUTHENTICATION
-    printenv | grep SECRET_KEY_BASE
     bundle exec thin start -C config/thin.yml
   }
 
