@@ -58,8 +58,17 @@ task :setup => :environment do
   }
 end
 
+task :env do
+  queue %{
+    echo "-----> Loading environment"
+    #{echo_cmd %[source ~/.local_env]}
+  }
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
+  invoke :env
+
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
