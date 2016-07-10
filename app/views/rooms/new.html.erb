@@ -12,3 +12,28 @@
   </div>
   <div class="col-md-1"></div>
 </div>
+
+<script type="text/javascript">
+$(document).on('ready page:load', function(event) {
+  $('.import').on("click", function(){
+    if ($('.import').data('status') == 'input') {
+      $('#story-row .row').hide();
+      $('.btn.add').hide();
+      $('.bulk-links').show();
+      $('#bulk').val(true);
+      $('.import').data('status', 'bulk');
+    } else {
+      $('#story-row .row').show();
+      $('.btn.add').show();
+      $('.bulk-links').hide();
+      $('#bulk').val(false);
+      $('.import').data('status', 'input');
+    }
+  });
+
+  $('.point-values li input').on("click", function(){
+    $(this).toggleClass('btn-info');
+    $(this).attr('checked', true);
+  });
+});
+</script>
