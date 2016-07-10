@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
   <%= render 'layouts/favicon' %>
+  <meta name="msvalidate.01" content="45F405A67E63F229A3F534A29438ED15" />
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -37,7 +38,7 @@
               <div class="input-group input-group-lg">
                 <input type="email" name="email" class="form-control email" value="" placeholder="Email address">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Sign up</button>
+                  <button class="btn btn-info" type="submit">Sign up</button>
                 </span>
               </div>
             <% end %>
@@ -47,42 +48,47 @@
     </div>
     <div class="row footer">
       <div class="container">
-        <div class="empower-reports">
-          <h2>We Empower Poker</h2>
+        <div class="empower">
           <!-- <h5>We're just serious</h5> -->
           <div class="row">
             <div class="col-xs-6 col-md-4">
-              <div class="ui">
+              <div class="tab-first">
+                <span class="fa-stack fa-lg fa-5x">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-flash fa-stack-1x fa-inverse"></i>
+                </span>
+                <h3>Fast</h3>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-md-4">
+              <div class="tab-second">
                 <span class="fa-stack fa-lg fa-5x">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-magic fa-stack-1x fa-inverse"></i>
                 </span>
-                <h3>What</h3>
+                <h3>Simple</h3>
               </div>
             </div>
 
             <div class="col-xs-6 col-md-4">
-              <div class="ui">
+              <div class="tab-third">
                 <span class="fa-stack fa-lg fa-5x">
                   <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-lemon-o fa-stack-1x fa-inverse"></i>
+                  <i class="fa fa-diamond fa-stack-1x fa-inverse"></i>
                 </span>
-                <h3>Ever</h3>
-              </div>
-            </div>
-
-            <div class="col-xs-6 col-md-4">
-              <div class="ui">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Features</h3>
+                <h3>Elegant</h3>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="tail">
+      <!-- Place this tag in your head or just before your close body tag. -->
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+      <!-- Place this tag where you want the button to render. -->
+      <a class="github-button" href="https://github.com/hlcfan/pokr" data-count-href="/hlcfan/pokr/stargazers" data-count-api="/repos/hlcfan/pokr#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star hlcfan/pokr on GitHub">Star me!</a>
     </div>
   </div>
 </body>
