@@ -8,18 +8,6 @@ $(document).on 'page:change', ->
     peopleListUrl = '/rooms/' + POKER.roomId + '/user_list.json'
     POKER.storyListUrl = '/rooms/' + POKER.roomId + '/story_list.json'
     POKER.peopleListUrl = '/rooms/' + POKER.roomId + '/user_list.json'
-    POKER.pointsRange = [
-      0
-      2
-      3
-      5
-      8
-      13
-      20
-      40
-      100
-      'coffee'
-    ]
     POKER.story_id = do ->
       $('.storyList ul li:first').data 'id'
     # Initialize sync result as false

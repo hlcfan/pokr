@@ -116,7 +116,7 @@ var VoteBox = React.createClass({
   render:function() {
     var currentVote = this.props.poker.currentVote;
     var that = this;
-    var pointsList = this.props.poker.pointsRange.map(function(point) {
+    var pointsList = this.props.poker.pointValues.map(function(point) {
       var currentVoteClassName = currentVote == point ? ' btn-info' : '';
       return (
         <li key={point}>

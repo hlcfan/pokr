@@ -44,6 +44,13 @@ class Room < ActiveRecord::Base
     end
   end
 
+  def point_values
+    self.pv ||= '0,2,3,5,8,13,20,40,100,coffee'
+    self.pv.split ','
+  end
+
+  private
+
   def slug!
     permlink = PinYin.permlink(name).downcase
     if Room.find_by(slug: permlink).present?
