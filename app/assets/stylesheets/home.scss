@@ -1,6 +1,6 @@
 @import 'global_vars';
 
-$default_font_color: #1882a8;
+$default_font_color: #46b8da;
 
 html {
   background-color: transparent;
@@ -157,21 +157,46 @@ body {
     }
   }
 }
+
 .footer {
   background: #fff;
   color: $default_font_color;
   text-shadow: none;
+
   .container {
-    padding: 30px 0;
+    padding: 120px 0;
     text-align: center;
-    .empower-reports {
-      h2 {
-        color: #FFFFFF;
-        margin-bottom: 40px;
-        font-size: 3.5rem;
-        font-weight: 100;
-        line-height: 1;
+    .empower {
+      .tab-first {
+        .fa-circle {
+          color: #E59866;
+        }
+
+        h3 {
+          color: #767676;
+        }
       }
+
+      .tab-second {
+        .fa-circle {
+          color: #34495E;
+        }
+
+        h3 {
+          color: #767676;
+        }
+      }
+
+      .tab-third {
+        .fa-circle {
+          color: #1ABC9C;
+        }
+
+        h3 {
+          color: #767676;
+        }
+      }
+
       h5 {
         margin-top: 10px;
         color: #c2e2f2;
@@ -185,16 +210,18 @@ body {
         font-weight: 400;
         line-height: 1;
         padding-right: .55em;
+        padding-left: .55em;
       }
     }
   }
 }
 
-.main-container {
-  width: 1080px;
-  margin:20px auto;
-  .user-action {
-    width: 50%;
-    margin: 0 auto !important;
+.tail {
+  background-color: #f5f5f5;
+  text-align: center;
+  padding-top: 5px;
+
+  a {
+    color: #333;
   }
 }
