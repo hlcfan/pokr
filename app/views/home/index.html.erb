@@ -15,9 +15,11 @@
     <div class="row header-section">
       <div class="container">
         <a class="logo" href="javascript:;">
-          <h1>Pokr</h1>
+          Pokr
         </a>
-        <!-- <a class="btn btn-success sign-in-btn" href="/sign_in">Sign In</a> -->
+        <div class="header-actions pull-right">
+          <a href="<%= new_user_session_path %>" class="btn btn-default navbar-btn">Sign in</a>
+        </div>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -28,14 +30,14 @@
         </h1>
         <h6>We're trying to build a cool and modern poker for engineers, aim for improving the efficiency and user experience driven by making-thing-better.</h6>
       </div>
-      <div class="sign-up">
-        <div class="ui big action input">
-          <div class="get-started middle">
-            <%= form_tag home_director_path, class: 'form-inline', method: :post do |f| %>
+      <div class="sign-up container">
+        <div class="row action input">
+          <div class="get-started col-md-12">
+            <%= form_tag home_sign_up_path, class: 'form-inline text-center', method: :post do |f| %>
               <div class="input-group input-group-lg">
-                <input type="text" name="name" class="form-control" value="" placeholder="Name here">
+                <input type="email" name="email" class="form-control email" value="" placeholder="Email address">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Get started</button>
+                  <button class="btn btn-default" type="submit">Sign up</button>
                 </span>
               </div>
             <% end %>

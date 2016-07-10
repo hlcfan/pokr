@@ -5,13 +5,9 @@ class HomeController < ApplicationController
     render layout: false
   end
 
-  def director
-    room = Room.find_by(slug: params[:name])
-    if room.present?
-      redirect_to room_path(room)
-    else
-      redirect_to new_room_path
-    end
+  def sign_up
+    cookies[:email] = params[:email]
+    redirect_to new_user_registration_path
   end
 
 end
