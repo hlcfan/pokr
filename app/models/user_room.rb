@@ -22,4 +22,10 @@ class UserRoom < ActiveRecord::Base
     end
   end
 
+  def self.find_by_with_cache *args
+    Rails.cache.fetch args do
+      find_by *args
+    end
+  end
+
 end
