@@ -132,11 +132,26 @@ body {
     .action {
       margin: 55px auto;
 
-      .get-started {
-        width: 400px;
+      .email {
+        width: 300px;
+
+        @media #{$tablet} {
+          width: 100%;
+        }
 
         @media #{$mobile} {
-          width: 290px;
+          width: 100%;
+        }
+      }
+
+      form {
+        @media #{$tablet} {
+          margin: 0 auto;
+          width: 400px;
+        }
+
+        @media #{$mobile} {
+
         }
       }
     }
