@@ -19,27 +19,18 @@
     <%= f.label "Point values" %>
     <%= f.hidden_field :pv, id: 'point-values' %>
     <ul class="list-inline point-values">
-      <li><input name="" class="btn btn-default" type="button" value="0"></li>
-      <li><input class="btn btn-default" type="button" value="1"></li>
-      <li><input class="btn btn-default" type="button" value="2"></li>
-      <li><input class="btn btn-default" type="button" value="3"></li>
-      <li><input class="btn btn-default" type="button" value="5"></li>
-      <li><input class="btn btn-default" type="button" value="8"></li>
-      <li><input class="btn btn-default" type="button" value="13"></li>
-      <li><input class="btn btn-default" type="button" value="20"></li>
-      <li><input class="btn btn-default" type="button" value="40"></li>
-      <li><input class="btn btn-default" type="button" value="100"></li>
-      <li><input class="btn btn-default" type="button" value="?"></li>
-      <li><input class="btn btn-default" type="button" value="coffee"></li>
+      <%= generate_point_values(@room.point_values) %>
     </ul>
   </div>
   <section class="stories-section panel panel-primary" id="story-section">
     <div class="panel-heading">
       Stories
-      <a class="pull-right import" href="javascript:;" data-status="input">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        Import from list?
-      </a>
+      <% if @room.new_record? %>
+        <a class="pull-right import" href="javascript:;" data-status="input">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          Import from list?
+        </a>
+      <% end %>
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
@@ -72,20 +63,25 @@ $(document).on('ready page:load', function(event) {
   });
 
   $('.point-values li input').on("click", function(){
-    $(this).toggleClass('btn-info');
     if ($(this).hasClass('btn-info')) {
-      $(this).attr('checked', true);
-      $pointValues = $('#point-values');
-      var currentValue = $(this).val();
-      var selectedPointValues = $pointValues.val();
-      var selectedPointValuesArray = selectedPointValues.split(',');
-      if (selectedPointValuesArray.indexOf(currentValue) < 0) {
-        selectedPointValuesArray.push(currentValue);
-      }
-      selectedPointValuesArray = selectedPointValuesArray.clean("")
-      selectedPointValues = selectedPointValuesArray.join(',');
-      $pointValues.val(selectedPointValues);
+      $(this).removeClass('btn-info');
+      $(this).addClass('btn-default');
+    } else {
+      $(this).removeClass('btn-default');
+      $(this).addClass('btn-info');
     }
+    $pointValues = $('#point-values');
+    var currentValue = $(this).val();
+    var selectedPointValues = $pointValues.val();
+    var selectedPointValuesArray = selectedPointValues.split(',');
+    if (selectedPointValuesArray.indexOf(currentValue) < 0) {
+      selectedPointValuesArray.push(currentValue);
+    } else {
+      selectedPointValuesArray.remove(currentValue);
+    }
+    selectedPointValuesArray = selectedPointValuesArray.clean("")
+    selectedPointValues = selectedPointValuesArray.join(',');
+    $pointValues.val(selectedPointValues);
   });
 });
 </script>

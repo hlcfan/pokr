@@ -14,6 +14,7 @@ class Room < ActiveRecord::Base
 
   OPEN = 1
   DRAW = 2
+  DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
 
   def state
     {
@@ -45,8 +46,13 @@ class Room < ActiveRecord::Base
   end
 
   def point_values
-    self.pv ||= '0,2,3,5,8,13,20,40,100,coffee'
-    self.pv.split ','
+    @point_values ||= begin
+      if self.pv.blank?
+        DEFAULT_POINT_VALUES
+      else
+        self.pv.split ','
+      end
+    end
   end
 
   def valid_vote_point? point
