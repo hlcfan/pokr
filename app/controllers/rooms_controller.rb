@@ -14,18 +14,15 @@ class RoomsController < ApplicationController
   end
 
   def vote
-    points = params[:points].to_i
-    # TODO: Need a valid vote list
-    if points >= 0 && params[:story_id].present?
+    if valid_vote?
       UserStoryPoint.vote(current_user.id,
                       params[:story_id],
-                      points) do |user_story_point|
+                      params[:points]) do |user_story_point|
         broadcast_user_point user_story_point
       end
 
       render json: { success: true } and return
     end
-
 
     render json: { success: false }
   end
@@ -179,6 +176,10 @@ class RoomsController < ApplicationController
       'open' => Room::OPEN,
       'draw' => Room::DRAW
     }[params[:status]]
+  end
+
+  def valid_vote?
+    @room.valid_vote_point?(params[:points]) && params[:story_id].present?
   end
 
 end

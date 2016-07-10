@@ -49,6 +49,10 @@ class Room < ActiveRecord::Base
     self.pv.split ','
   end
 
+  def valid_vote_point? point
+    point_values.include? point
+  end
+
   private
 
   def slug!
