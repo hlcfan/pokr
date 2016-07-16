@@ -1,4 +1,5 @@
-<%= form_for @room, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
+<% form_url = @room.new_record? ? "/rooms" : room_path(@room.slug) %>
+<%= form_for @room, url: form_url, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
   <% if @room.errors.any? %>
     <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
 
