@@ -23,19 +23,21 @@ function publishResult() {
     type: 'action'
   });
 
-  $.ajax({
-    url: '/rooms/' + POKER.roomId + '/set_room_status.json',
-    data: { status: 'open' },
-    method: 'post',
-    dataType: 'json',
-    cache: false,
-    success: function(data) {
-      // pass
-    },
-    error: function(xhr, status, err) {
-      // pass
-    }
-  });
+  if (POKER.role === 'Owner' && POKER.roomState !== 'open') {
+    $.ajax({
+      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+      data: { status: 'open' },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      complete: function() {
+        POKER.roomState = 'open';
+      },
+      error: function(xhr, status, err) {
+        // pass
+      }
+    });
+  }
 }
 
 function notifyVoted() {
