@@ -5,9 +5,9 @@ God.watch do |w|
 
   w.name = "thin"
   w.interval = 60.seconds
-  w.start = "bundle exec thin start -C config/thin.yml"
-  w.stop = "kill -9 `ps -ef | grep thin | grep -v grep | awk '{print $2}'`"
-  w.restart = "bundle exec thin restart -C config/thin.yml"
+  w.start = "cd #{RAILS_ROOT} && bundle exec thin start -C config/thin.yml"
+  w.stop = "cd #{RAILS_ROOT} && bundle exec thin stop -C config/thin.yml"
+  w.restart = "#{RAILS_ROOT} && bundle exec thin restart -C config/thin.yml"
   w.start_grace = 20.seconds
   w.restart_grace = 20.seconds
   w.pid_file = pid_file
@@ -18,8 +18,9 @@ God.watch do |w|
   w.start_if do |start|
     start.condition(:process_running) do |c|
       # We want to check if deamon is running every ten seconds
-      # and start it if itsn't running
+      # and start it if isn't running
       c.interval = 10.seconds
       c.running = false
     end
   end
+end
