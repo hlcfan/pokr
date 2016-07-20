@@ -1,4 +1,4 @@
-# Pokr https://pokr.tk
+# Pokr https://pokrex.com
 
 Yet another pointing poker.
 
