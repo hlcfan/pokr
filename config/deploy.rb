@@ -120,6 +120,26 @@ namespace :thin do
   end
 end
 
+namespace :god do
+  desc "Start God"
+  task :start => :environment do
+    queue 'echo "-----> Start God"'
+    queue! %{
+      cd #{app_path}
+      bundle exec god -c config/thin.god
+    }
+  end
+
+  desc "Stop God"
+  task :stop do
+    queue 'echo "-----> Stop God"'
+    queue! %{
+      cd #{app_path}
+      bundle exec god stop thin
+    }
+  end
+end
+
 # For help in making your deploy script, see the Mina documentation:
 #
 #  - http://nadarei.co/mina
