@@ -65,5 +65,6 @@ end
 
 group :production do
   gem 'skylight'
+  gem 'god'
 end
 

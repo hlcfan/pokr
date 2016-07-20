@@ -106,6 +106,7 @@ GEM
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    god (0.13.2)
     hiredis (0.6.1)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
@@ -292,6 +293,7 @@ DEPENDENCIES
   faye-rails (~> 2.0)
   faye-redis
   font-awesome-rails
+  god
   jbuilder (~> 2.0)
   jquery-rails
   js_cookie_rails
