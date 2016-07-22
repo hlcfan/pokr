@@ -17,9 +17,9 @@ God.watch do |w|
   # When to start?
   w.start_if do |start|
     start.condition(:process_running) do |c|
-      # We want to check if deamon is running every ten seconds
+      # We want to check if deamon is running every 5 seconds
       # and start it if isn't running
-      c.interval = 10.seconds
+      c.interval = 5.seconds
       c.running = false
     end
   end
