@@ -65,8 +65,8 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.smtp_settings = {
-    :user_name => ENV['mailer_user'],
-    :password => ENV['mailer_password'],
+    :user_name => ENV['MAILER_USERNAME'],
+    :password => ENV['MAILER_PASSWORD'],
     :domain => 'pokrex.com',
     :address => 'smtp.sendgrid.net',
     :port => 587,
