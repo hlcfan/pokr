@@ -72,9 +72,11 @@ class Room < ActiveRecord::Base
   end
 
   def sort_point_values
-    self.pv = self.pv.split(',').sort_by do |value|
-      DEFAULT_POINT_VALUES.index value
-    end.join(',')
+    if self.pv_changed?
+      self.pv = self.pv.split(',').sort_by do |value|
+        DEFAULT_POINT_VALUES.index value
+      end.join(',')
+    end
   end
 
 end
