@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :store_location
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
     return unless request.get?
@@ -20,6 +22,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     session[:previous_url] || root_path
+  end
+
+  private
+
+  def record_not_found
+    render file: "#{Rails.root}/public/404.html", layout: true, status: 404
   end
 
 end

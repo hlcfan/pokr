@@ -1,67 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+<%= stylesheet_link_tag "404" %>
 
-  div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
-
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
-    </div>
-    <p>If you are the application owner check the logs for more information.</p>
+<div id="top"><span></span></div>
+<div id="container">  
+  <div id="content">
+    <h2 id="title">Ooooops...</h2>
+    <p id="subtitle"><strong>404</strong> Page not found :-|</p>
   </div>
-</body>
-</html>
+  <span id="case" class="scroll"></span>
+  <span id="dino" class="reverse scroll"></span>
+  <span id="m1" class="scroll"></span>
+  <span id="m2" class="scroll"></span>
+  <span id="m3" class="scroll"></span>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("body, html").mousemove(function(e) {
+    var offset = $(this).offset();
+    var xPos = e.pageX - offset.left;
+    var xPercent = Math.round(xPos / $(window).width() * 100);
+    $(".scroll").each(function(){
+      xMax = $(this).data("xMax");
+      xMin = $(this).data("xMin");
+      if ($(this).hasClass("reverse")) {
+        xPosition = xMax-((xMax-xMin)*xPercent/100);
+      } else {
+        xPosition = xMin+((xMax-xMin)*xPercent/100);
+      }
+      $(this).css({"left":xPosition+"px"});
+    });
+  });
+  $("#case").data("xMin",300);
+  $("#case").data("xMax",310);
+  $("#dino").data("xMin",356);
+  $("#dino").data("xMax",376);
+  $("#m1").data("xMin",316);
+  $("#m1").data("xMax",320);
+  $("#m2").data("xMin",730);
+  $("#m2").data("xMax",750);
+  $("#m3").data("xMin",619);
+  $("#m3").data("xMax",668);
+});
+</script>

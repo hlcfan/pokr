@@ -136,6 +136,7 @@ class RoomsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_room
     @room = Room.find_by(slug: params[:id])
+    raise ActiveRecord::RecordNotFound if @room.nil?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
