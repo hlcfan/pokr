@@ -4,6 +4,9 @@ var ActionBox = React.createClass({
   },
   showResult: function(e) {
     this.setState({buttonState: 'open'});
+    if (!Cookies.get('showTip')) {
+      Cookies.set('showTip', true);
+    }
     publishResult();
   },
   skipStory: function() {
@@ -70,12 +73,27 @@ var ActionBox = React.createClass({
         }
       }
     })();
+    var tip = (function(){
+      // already decided point
+      if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Owner') {
+        Cookies.set('adp', true);
+        return (
+          <div className="container-fluid" style={{clear: 'both', width: '90%'}}>
+            <div className="alert alert-success alert-dismissible" role="alert">
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Tip!</strong> Click the bar below to decide the point.
+            </div>
+          </div>
+        )
+      }
+    })();
 
     return (
       <div className="panel panel-default">
         <div className="panel-heading">Action</div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
+            {tip}
             <ResultPanel />
             <div ref="openButton" className="openButton container-fluid">
               <div className="">
