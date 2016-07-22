@@ -76,7 +76,7 @@ class RoomsController < ApplicationController
       params[:room][:stories_attributes] = bulk_import_params
     end
 
-    @room = Room.new room_params
+    @room = Room.new(room_params.merge(created_by: current_user.id))
 
     respond_to do |format|
       if @room.save
