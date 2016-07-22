@@ -2,10 +2,23 @@
 
 Yet another pointing poker.
 
-The network environment in China sucks, the online poker doesn't work smoothly. I'm trying to build a poker and have it deployed in LAN.
+## Why Pokr?
+
++ The network environment in China sucks, the online poker doesn't work smoothly.
++ The online poker is easy much to use.
++ I got spare time :wink:
 
 ## Building with
 
 + Rails 4
-+ React
++ MySQL
 + Faye
++ React
++ Bootstrap
++ FontAwesome
++ Thin
+
+## Contribution
+
+Your contribution is very welcomed!
+Please create pull request or issue.
