@@ -1,0 +1,43 @@
+<%= stylesheet_link_tag "404" %>
+
+<div id="top"><span></span></div>
+<div id="container">  
+  <div id="content">
+    <h2 id="title">Ooooops...</h2>
+    <p id="subtitle"><strong>404</strong> Page not found :-|</p>
+  </div>
+  <span id="case" class="scroll"></span>
+  <span id="dino" class="reverse scroll"></span>
+  <span id="m1" class="scroll"></span>
+  <span id="m2" class="scroll"></span>
+  <span id="m3" class="scroll"></span>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("body, html").mousemove(function(e) {
+    var offset = $(this).offset();
+    var xPos = e.pageX - offset.left;
+    var xPercent = Math.round(xPos / $(window).width() * 100);
+    $(".scroll").each(function(){
+      xMax = $(this).data("xMax");
+      xMin = $(this).data("xMin");
+      if ($(this).hasClass("reverse")) {
+        xPosition = xMax-((xMax-xMin)*xPercent/100);
+      } else {
+        xPosition = xMin+((xMax-xMin)*xPercent/100);
+      }
+      $(this).css({"left":xPosition+"px"});
+    });
+  });
+  $("#case").data("xMin",300);
+  $("#case").data("xMax",310);
+  $("#dino").data("xMin",356);
+  $("#dino").data("xMax",376);
+  $("#m1").data("xMin",316);
+  $("#m1").data("xMax",320);
+  $("#m2").data("xMin",730);
+  $("#m2").data("xMax",750);
+  $("#m3").data("xMin",619);
+  $("#m3").data("xMax",668);
+});
+</script>
