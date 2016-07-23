@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   patch 'profile/update_password' => 'profile#update_password'
   resources :dashboard, only: [:index]
 
+  match "/404" => "errors#not_found", via: [ :get, :post, :patch, :delete ]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
