@@ -224,4 +224,21 @@ body {
   a {
     color: #333;
   }
+
+  .item {
+    width: 60px;
+    display: inline-block;
+  }
+
+  .fb-share-button {
+    span {
+      vertical-align: inherit !important;
+    }
+  }
+
+  .github {
+    display: inline-block;
+    width: 60px;
+    margin-left: 2px;
+  }
 }
