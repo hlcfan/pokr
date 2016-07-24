@@ -5,6 +5,12 @@
   <meta name="description" content="<%= default_description %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+  <meta property="og:url" content="https://pokrex.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pokr" />
+  <meta property="og:description" content="<%= default_description %>" />
+  <meta property="og:image" content="/apple-icon-180x180.png" />
+</head>
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -24,7 +30,7 @@
   <div class="container-fluid">
     <div class="row header-section">
       <div class="container">
-        <a class="logo" href="#">
+        <a class="logo" href="/">
           Pokr
         </a>
         <div class="header-actions pull-right">
@@ -38,7 +44,7 @@
         <h1>
           Yet another poker
         </h1>
-        <h2>We're trying to build a cool and modern pointing poker for engineers, aim at improving the efficiency and user experience driven by making-thing-better.</h2>
+        <h2>We're trying to build a cool and modern pointing/planning poker for engineers, aim at improving the efficiency and user experience driven by making-thing-better.</h2>
       </div>
       <div class="sign-up container">
         <div class="row action input">
@@ -94,10 +100,8 @@
       </div>
     </div>
     <div class="row tail">
-      <!-- Place this tag in your head or just before your close body tag. -->
-      <script async defer src="https://buttons.github.io/buttons.js"></script>
-      <!-- Place this tag where you want the button to render. -->
-      <a class="github-button" href="https://github.com/hlcfan/pokr" data-count-href="/hlcfan/pokr/stargazers" data-count-api="/repos/hlcfan/pokr#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star hlcfan/pokr on GitHub">Star me!</a>
+      <%= render 'layouts/social' %>
+    </div>
     </div>
   </div>
   <script>
