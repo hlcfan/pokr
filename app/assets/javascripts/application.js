@@ -19,7 +19,7 @@
 //= require react
 //= require react_ujs
 //= require marked
-//= require js.cookie
+//= require libs
 //= require components
 //= require jquery.nested-fields
 //= require_tree .
