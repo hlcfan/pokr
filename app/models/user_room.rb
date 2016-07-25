@@ -1,4 +1,4 @@
-class UserRoom < ActiveRecord::Base
+class UserRoom < ApplicationRecord
 
   belongs_to :user
   belongs_to :room
