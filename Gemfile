@@ -14,7 +14,6 @@ gem 'coffee-rails', '~> 4.2.1'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-# gem "less-rails", '~> 2.7.0'
 gem 'normalize-rails'
 gem 'marked-rails'
 gem 'font-awesome-rails'
@@ -60,7 +59,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  # gem "rspec-rails"
 end
 
 group :production do
