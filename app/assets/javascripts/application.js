@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require faye
 //= require react
 //= require react_ujs
 //= require marked
