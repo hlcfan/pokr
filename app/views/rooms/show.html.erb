@@ -11,6 +11,6 @@
     POKER.pointValues = <%= @room.point_values.to_json.html_safe %>;
   }());
 </script>
-
+<%= action_cable_meta_tag %>
 <div class="room" id="room"></div>
 <div id="board"></div>
