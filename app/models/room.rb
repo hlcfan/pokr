@@ -1,4 +1,4 @@
-class Room < ApplicationRecord
+class Room < ActiveRecord::Base
 
   validates_presence_of :name
 
