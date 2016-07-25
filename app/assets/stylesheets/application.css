@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require normalize-rails
+ *= require libs
  *= require bootstrap_and_overrides
  *= require layout
  *= require nav

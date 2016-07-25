@@ -12,14 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require turbolinks
+//= require libs
 //= require ext
 //= require faye
 //= require react
 //= require react_ujs
 //= require marked
-//= require libs
 //= require components
 //= require jquery.nested-fields
 //= require_tree .
