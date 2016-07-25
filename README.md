@@ -10,13 +10,13 @@ Yet another pointing poker.
 
 ## Building with
 
-+ Rails 4
++ Rails 5
 + MySQL
-+ Faye
++ ActionCable
 + React
 + Bootstrap
 + FontAwesome
-+ Thin
++ Puma
 
 ## Contribution
 
