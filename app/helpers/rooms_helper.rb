@@ -1,10 +1,5 @@
 module RoomsHelper
 
-  def broadcast(channel, message)
-    faye_client.publish channel, message
-  end
-
-
   def story_id room_story_id
     room_story_id.split('/')[1]
   end
@@ -25,12 +20,6 @@ module RoomsHelper
         tag(:input, class: btn_class, type: 'button', value: value)
       end
     end
-  end
-
-  private
-
-  def faye_client
-    @faye_client ||= Faye::Client.new(Rails.configuration.faye_server)
   end
 
 end
