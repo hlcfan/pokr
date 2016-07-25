@@ -76,8 +76,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (7.1.0)
-    autoprefixer-rails (6.3.7)
-      execjs
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -85,9 +83,6 @@ GEM
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap (4.0.0.alpha3)
-      autoprefixer-rails (>= 6.0.3)
-      sass (>= 3.4.19)
     builder (3.2.2)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -285,7 +280,6 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_nested_fields!
-  bootstrap (~> 4.0.0.alpha3)
   coffee-rails (~> 4.2.1)
   devise
   faye-rails (~> 2.0)

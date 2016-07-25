@@ -15,7 +15,6 @@ gem 'coffee-rails', '~> 4.2.1'
 gem 'therubyracer', platforms: :ruby
 
 # gem "less-rails", '~> 2.7.0'
-gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'normalize-rails'
 gem 'marked-rails'
 gem 'font-awesome-rails'
