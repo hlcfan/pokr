@@ -1,4 +1,4 @@
-class UserStoryPoint < ApplicationRecord
+class UserStoryPoint < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :story

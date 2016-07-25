@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).on 'turbolinks:load', ->
+$(document).on 'page:change', ->
   if POKER? && POKER.roomId?
     storyListUrl = '/rooms/' + POKER.roomId + '/story_list.json'
     peopleListUrl = '/rooms/' + POKER.roomId + '/user_list.json'
