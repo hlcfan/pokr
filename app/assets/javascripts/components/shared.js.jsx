@@ -72,7 +72,7 @@ function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName = ['/rooms', POKER.roomId, POKER.story_id].join('/')
   var public_subscription = client.subscribe(channelName, function(data) {
-    console.log(data);
+    // console.log(data);
 
     if (data.type === 'action') {
       if (data.data === 'open') {

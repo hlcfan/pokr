@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
     if valid_room_status.present? && (@room.status != valid_room_status)
       @room.update_attribute :status, valid_room_status
     end
-    render nothing: true
+    head 200
   end
 
   def broadcast_user_point user_point
