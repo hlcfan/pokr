@@ -2,6 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
+require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
 set :domain, '98.126.65.214'
@@ -56,6 +57,10 @@ task :setup => :environment do
   queue! %{
     mkdir -p "#{deploy_to}/shared/tmp/pids"
   }
+
+  queue! %{
+    mkdir -p "#{deploy_to}/shared/tmp/sockets"
+  }
 end
 
 desc "Deploys the current version to the server."
@@ -71,8 +76,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      invoke :'thin:stop'
-      invoke :'thin:start'
+      invoke :'puma:puma:phased_restart'
     end
   end
 end
@@ -82,42 +86,6 @@ task :seed => :environment do
   queue "cd #{deploy_to}/#{current_path}/"
   queue "bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   queue  %[echo "-----> Rake Seeding Completed."]
-end
-
-#                                                                       Unicorn
-# ==============================================================================
-namespace :thin do
-  set :start_thin, %{
-    cd #{app_path}
-    bundle exec thin start -C config/thin.yml
-  }
-
-#                                                                    Start task
-# ------------------------------------------------------------------------------
-  desc "Start thin"
-  task :start => :environment do
-    queue 'echo "-----> Start Thin"'
-    queue! start_thin
-  end
-
-#                                                                     Stop task
-# ------------------------------------------------------------------------------
-  desc "Stop thin"
-  task :stop do
-    queue 'echo "-----> Stop Thin"'
-    queue! %{
-      kill -9 `ps -ef | grep thin | grep -v grep | awk '{print $2}'` && echo "Stop Ok"
-      echo >&2 "Not running"
-    }
-  end
-
-#                                                                  Restart task
-# ------------------------------------------------------------------------------
-  desc "Restart thin using 'upgrade'"
-  task :restart => :environment do
-    invoke 'thin:stop'
-    invoke 'thin:start'
-  end
 end
 
 namespace :god do

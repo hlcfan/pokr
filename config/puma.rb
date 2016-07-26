@@ -4,8 +4,15 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i
-threads threads_count, threads_count
+app_root = File.dirname(File.dirname(__FILE__))
+
+pidfile "#{app_root}/tmp/pids/puma.pid"
+state_path "#{app_root}/tmp/pids/puma.state"
+bind 'unix:/tmp/puma.sock'
+daemonize true
+workers 4
+threads 8, 16
+preload_app!
 
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
@@ -14,6 +21,16 @@ port        ENV.fetch("PORT") { 3000 }
 # Specifies the `environment` that Puma will run in.
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
+
+on_worker_boot do
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.establish_connection
+  end
+end
+
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect!
+end
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
