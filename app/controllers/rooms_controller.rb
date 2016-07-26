@@ -20,23 +20,24 @@ class RoomsController < ApplicationController
                       params[:points]) do |user_story_point|
         broadcast_user_point user_story_point
       end
-
-      render json: { success: true } and return
+    else
+      head :bad_request
     end
-
-    render json: { success: false }
   end
 
   def set_room_status
     if valid_room_status.present? && (@room.status != valid_room_status)
       @room.update_attribute :status, valid_room_status
     end
-    head 200
+    head :no_content
   end
 
   def broadcast_user_point user_point
-    broadcast "/rooms/#{@room.id}/#{user_point.story_id}",
-              {person_id: user_point.user_id, story_id: user_point.story_id, points: user_point.points}
+    ActionCable.server.broadcast "rooms/#{@room.slug}",
+        person_id: user_point.user_id,
+        story_id: user_point.story_id,
+        points: user_point.points
+    head :no_content
   end
 
   def story_list

@@ -18,7 +18,8 @@ var EventEmitter = {
 };
 
 function publishResult() {
-  client.publish(channelName, {
+  App.rooms.perform('room_action', {
+    roomId: POKER.roomId,
     data: 'open',
     type: 'action'
   });
@@ -41,28 +42,32 @@ function publishResult() {
 }
 
 function notifyVoted() {
-  client.publish(channelName, {
+  App.rooms.perform('room_action', {
+    roomId: POKER.roomId,
     data: POKER.currentUser.name,
     type: 'notify'
   });
 }
 
 function refreshStories() {
-  client.publish(channelName, {
+  App.rooms.perform('room_action', {
+    roomId: POKER.roomId,
     data: 'refresh-stories',
     type: 'action'
   });
 }
 
 function refreshPeople() {
-  client.publish(channelName, {
+  App.rooms.perform('room_action', {
+    roomId: POKER.roomId,
     data: 'refresh-people',
     type: 'action'
   });
 }
 
 function resetActionBox() {
-  client.publish(channelName, {
+  App.rooms.perform('room_action', {
+    roomId: POKER.roomId,
     data: 'reset-action-box',
     type: 'action'
   });
@@ -70,35 +75,39 @@ function resetActionBox() {
 
 function setupChannelSubscription() {
   // Subscribe to the public channel
-  window.channelName = ['/rooms', POKER.roomId, POKER.story_id].join('/')
-  var public_subscription = client.subscribe(channelName, function(data) {
-    // console.log(data);
-
-    if (data.type === 'action') {
-      if (data.data === 'open') {
-        window.syncResult = true;
-        showResultSection();
-      } else if (data.data === 'refresh-stories') {
-        window.syncResult = false;
-        EventEmitter.dispatch("storySwitched");
-      }
-    } else if(data.type === 'notify') {
-      var userName = data.data;
-      $('.people-list li.person').each(function(i, personEle){
-        var $personElement = $(personEle);
-        if ($personElement.find('span').text() === userName) {
-          if ($personElement.hasClass('voted')) {
-            $personElement.removeClass("voted");
-          }
-
-          setTimeout(function(){
-            $personElement.addClass("voted", 100);
-          }, 200);
+  window.channelName =['rooms', POKER.roomId].join('/');
+  App.rooms = App.cable.subscriptions.create('RoomsChannel', {
+    connected: function(){
+      this.perform('follow', {room_id: POKER.roomId});
+    },
+    received: function(data) {
+      // console.log("received: " + data);
+      if (data.type === 'action') {
+        if (data.data === 'open') {
+          window.syncResult = true;
+          showResultSection();
+        } else if (data.data === 'refresh-stories') {
+          window.syncResult = false;
+          EventEmitter.dispatch("storySwitched");
         }
-      });
-    } else {
-      $('#u-' + data.person_id + ' .points').text(data.points);
-      $('#u-' + data.person_id).attr('data-point', data.points);
+      } else if(data.type === 'notify') {
+        var userName = data.data;
+        $('.people-list li.person').each(function(i, personEle){
+          var $personElement = $(personEle);
+          if ($personElement.find('a.person').text() === userName) {
+            if ($personElement.hasClass('voted')) {
+              $personElement.removeClass("voted");
+            }
+
+            setTimeout(function(){
+              $personElement.addClass("voted", 100);
+            }, 200);
+          }
+        });
+      } else {
+        $('#u-' + data.person_id + ' .points').text(data.points);
+        $('#u-' + data.person_id).attr('data-point', data.points);
+      }
     }
   });
 }

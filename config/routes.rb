@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'rooms/index'
   post 'home/sign_up'
 
+  mount ActionCable.server => '/cable'
+
   resources :rooms do
     member do
       post :vote

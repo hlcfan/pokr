@@ -1,4 +1,4 @@
-source 'https://gems.ruby-china.org'
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0'
@@ -31,14 +31,11 @@ gem 'jbuilder', '~> 2.0'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'react-rails', '~> 1.8.0'
-
-gem 'faye-rails', '~> 2.0'
-gem 'faye-redis'
-gem 'thin'
+gem 'puma'
 gem 'redis-rack', github: 'redis-store/redis-rack', branch: 'master'
 gem 'redis-actionpack', github: 'redis-store/redis-actionpack', branch: 'master'
 gem 'redis-rails', github: 'redis-store/redis-rails', branch: 'master'
-
+gem 'mina-puma', require: false
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

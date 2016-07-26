@@ -11,8 +11,6 @@ module Poker
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.middleware.delete Rack::Lock
-    config.middleware.use FayeRails::Middleware, mount: '/faye', engine: {type: Faye::Redis, host: 'localhost'}, :timeout => 45
     require Rails.root.join("lib/custom_public_exceptions")
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 

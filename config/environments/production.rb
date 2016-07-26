@@ -76,7 +76,8 @@ Rails.application.configure do
 
   config.react.variant = :production
 
-  config.faye_server = 'http://localhost/faye'
+  config.action_cable.url = '/cable'
+  config.action_cable.allowed_request_origins = [ 'https://pokrex.com' ]
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
