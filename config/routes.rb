@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, path_names: { sign_in: 'sign-in', sign_up: 'sign-up' }
+  devise_for :users
 
   get 'rooms/index'
   post 'home/sign_up'
