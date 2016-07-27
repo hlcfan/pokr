@@ -94,7 +94,7 @@ namespace :god do
     queue 'echo "-----> Start God"'
     queue! %{
       cd #{app_path}
-      bundle exec god -c config/thin.god
+      bundle exec god -c config/puma.god
     }
   end
 
@@ -103,7 +103,7 @@ namespace :god do
     queue 'echo "-----> Stop God"'
     queue! %{
       cd #{app_path}
-      bundle exec god stop thin
+      bundle exec god stop puma
     }
   end
 end
