@@ -54,7 +54,7 @@
 <% end %>
 
 <script type="text/javascript">
-$(document).on('ready page:load', function(event) {
+$(document).on('turbolinks:load', function(event) {
   $('.stories-section').nestedFields({
     containerSelector: '#story-row',
     itemSelector: '#story-row .row',

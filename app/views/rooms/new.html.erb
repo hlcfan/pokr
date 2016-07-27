@@ -14,7 +14,7 @@
 </div>
 
 <script type="text/javascript">
-$(document).on('ready page:load', function(event) {
+$(document).on('turbolinks:load', function(event) {
   $('.import').on("click", function(){
     if ($('.import').data('status') == 'input') {
       $('#story-row .row').hide();
