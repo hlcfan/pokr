@@ -11,7 +11,7 @@ state_path "tmp/pids/puma.state"
 bind 'unix:/tmp/puma.sock'
 daemonize true
 workers 1
-threads 8, 16
+threads 0, 16
 preload_app!
 
 # Specifies the `environment` that Puma will run in.
