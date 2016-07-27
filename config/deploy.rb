@@ -9,6 +9,7 @@ set :domain, '98.126.65.214'
 set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{deploy_to}/#{current_path}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
+set :puma_config, "#{app_path}/config/puma_web.rb"
 set :branch, 'master'
 set :user, 'hlcfan'
 set :keep_releases, 5
