@@ -91,6 +91,7 @@ namespace :puma do
     queue! %{
       cd #{current_path}
       RAILS_ENV=#{rails_env}
+      chmod +x bin/puma.sh
       bin/puma.sh start
     }
   end
@@ -101,6 +102,7 @@ namespace :puma do
     queue! %{
       cd #{current_path}
       RAILS_ENV=#{rails_env}
+      chmod +x bin/puma.sh
       bin/puma.sh stop
     }
   end
@@ -111,6 +113,7 @@ namespace :puma do
     queue! %{
       cd #{current_path}
       RAILS_ENV=#{rails_env}
+      chmod +x bin/puma.sh
       bin/puma.sh restart
     }
   end
