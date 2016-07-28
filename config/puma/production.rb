@@ -6,8 +6,8 @@
 #
 app_root = File.dirname(File.dirname(__FILE__))
 
-pidfile "tmp/pids/puma.pid"
-state_path "tmp/pids/puma.state"
+pidfile "/tmp/puma.pid"
+state_path "/tmp/puma.state"
 bind 'unix:/tmp/puma.sock'
 daemonize true
 workers 1
