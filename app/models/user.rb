@@ -21,8 +21,8 @@ class User < ApplicationRecord
 
   def points_of_story story_id
     return nil if story_id.blank?
-    point = user_story_points.where(story_id: story_id).first
-    point.points if point
+    point = user_story_points.where(story_id: story_id).pluck(:points).first
+    point if point
   end
 
   def owner?
