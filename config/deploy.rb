@@ -119,7 +119,7 @@ end
 namespace :god do
   desc "Start God"
   task :start => :environment do
-    queue 'echo "-----> Start God"'
+    queue 'echo "------> Start God"'
     queue! %{
       cd #{app_path}
       bundle exec god -c config/puma.god
@@ -128,7 +128,7 @@ namespace :god do
 
   desc "Stop God"
   task :stop do
-    queue 'echo "-----> Stop God"'
+    queue 'echo "------> Stop God"'
     queue! %{
       cd #{app_path}
       bundle exec god stop puma
