@@ -1,7 +1,7 @@
 var EventEmitter = {
   _events: {},
   dispatch: function (event, data) {
-    if (!this._events[event]) { // 没有监听事件
+    if (!this._events[event]) {
       return;
     }
     for (var i = 0; i < this._events[event].length; i++) {
@@ -9,7 +9,6 @@ var EventEmitter = {
     }
   },
   subscribe: function (event, callback) {
-    // 创建一个新事件数组
     if (!this._events[event]) {
       this._events[event] = [];
     }
