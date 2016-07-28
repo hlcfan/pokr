@@ -25,10 +25,16 @@ var Board = React.createClass({
   },
   render: function() {
     var dataNodes = this.state.data.map(function(story) {
+      var point;
+      if ('null' === story.point) {
+        point = 'skipped';
+      } else {
+        point = story.point;
+      }
       return (
         <tr key={story.id}>
           <td>{story.link}</td>
-          <td>{story.point}</td>
+          <td>{point}</td>
         </tr>
       );
     });
