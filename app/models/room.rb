@@ -57,7 +57,7 @@ class Room < ApplicationRecord
   end
 
   def valid_vote_point? point
-    point_values.include? point
+    ("null" == point) || point_values.include?(point)
   end
 
   private
