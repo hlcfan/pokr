@@ -10,7 +10,7 @@ RSpec.describe "rooms/edit", type: :view do
   it "renders the edit room form" do
     render
 
-    assert_select "form[action=?][method=?]", room_path(@room), "post" do
+    assert_select "form[action=?][method=?]", room_path(@room.slug), "post" do
 
       assert_select "input#room_name[name=?]", "room[name]"
     end

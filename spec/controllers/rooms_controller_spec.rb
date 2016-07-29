@@ -35,7 +35,7 @@ RSpec.describe RoomsController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # RoomsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-
+  login_user
   describe "GET #index" do
     it "assigns all rooms as @rooms" do
       room = Room.create! valid_attributes
