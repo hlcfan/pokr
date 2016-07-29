@@ -25,10 +25,10 @@ class Room < ApplicationRecord
   end
 
   def display_state
-    if state != "draw"
-      "In Progress"
-    else
+    if state == "draw"
       "Finished"
+    else
+      "In Progress"
     end
   end
 
@@ -41,8 +41,8 @@ class Room < ApplicationRecord
   end
 
   def current_story_id
-    if current_story = un_groomed_stories.first
-      current_story.id
+    if story_id = un_groomed_stories.pluck(:id).first
+      story_id
     end
   end
 
