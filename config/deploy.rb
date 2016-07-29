@@ -2,6 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
+require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
 set :domain, '98.126.65.214'
@@ -72,7 +73,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      invoke :'puma:restart'
+      invoke :'puma:phased_restart'
     end
   end
 end
@@ -82,41 +83,6 @@ task :seed => :environment do
   queue "cd #{deploy_to}/#{current_path}/"
   queue "bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   queue  %[echo "-----> Rake Seeding Completed."]
-end
-
-namespace :puma do
-  desc "Start the application"
-  task :start => :environment do
-    queue 'echo "-----> Start Puma"'
-    queue! %{
-      cd #{current_path}
-      RAILS_ENV=#{rails_env}
-      chmod +x bin/puma.sh
-      bin/puma.sh start
-    }
-  end
- 
-  desc "Stop the application"
-  task :stop => :environment do
-    queue 'echo "-----> Stop Puma"'
-    queue! %{
-      cd #{current_path}
-      RAILS_ENV=#{rails_env}
-      chmod +x bin/puma.sh
-      bin/puma.sh stop
-    }
-  end
- 
-  desc "Restart the application"
-  task :restart => :environment do
-    queue 'echo "-----> Restart Puma"'
-    queue! %{
-      cd #{current_path}
-      RAILS_ENV=#{rails_env}
-      chmod +x bin/puma.sh
-      bin/puma.sh restart
-    }
-  end
 end
 
 namespace :god do
