@@ -6,7 +6,7 @@
 #
 rails_env = "production"
 
-if rails_env == RAILS_ENV
+if rails_env == ENV["RAILS_ENV"]
   app_root = File.dirname(File.dirname(__FILE__))
 
   pidfile "tmp/puma.pid"
