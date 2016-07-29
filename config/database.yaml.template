@@ -1,0 +1,28 @@
+# MySQL database. See the README file for instructions on setting up your
+# local versions.
+development: &default_settings
+  adapter: mysql2
+  encoding: utf8
+  host: localhost
+  database: poker_development #a3_int_db
+  username: root
+  password: 
+  # timeout: 50000
+
+test: &test
+  adapter: mysql2
+  encoding: utf8
+  database: poker_test
+  username: travis
+  password: 
+  timeout: 50000
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  host: localhost
+  database: poker_production
+  username: root
+  password: 
+  timeout: 500000
+  pool: 10

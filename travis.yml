@@ -1,0 +1,20 @@
+language: ruby
+env:
+  - USE_OFFICIAL_GEM_SOURCE=1
+
+addons:
+  postgresql: "9.4"
+
+services:
+  - mysql
+  - redis-server
+
+rvm:
+  - 2.3.0
+
+before_script:
+  - mysql -e 'create database poker_test;'
+  - cp config/database.yml.template config/database.yml
+  - RAILS_ENV=test bundle exec rake db:migrate
+
+script: RAILS_ENV=test bundle exec rspec
