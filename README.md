@@ -1,14 +1,16 @@
 # Pokr https://pokrex.com
 
-Yet another pointing poker.
+Yet another pointing poker, aiming at efficiency & user experience.
 
-## Why Pokr?
+[![Build Status](https://travis-ci.org/hlcfan/pokr.svg?branch=master)](https://travis-ci.org/hlcfan/pokr)
+
+## ❓ Why Pokr?
 
 + The network environment in China sucks, the online poker doesn't work smoothly.
 + The online poker is easy much to use.
 + I got spare time :wink:
 
-## Building with
+## 🚀 Building with
 
 + Rails 5
 + MySQL
@@ -18,7 +20,7 @@ Yet another pointing poker.
 + FontAwesome
 + Puma
 
-## Contribution
+## 🔧 Contribution
 
 Your contribution is very welcomed!
 Please create pull request or issue.
