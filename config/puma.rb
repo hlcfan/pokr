@@ -4,8 +4,9 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
+rails_env = "production"
 
-if Rails.env.production?
+if rails_env == RAILS_ENV
   app_root = File.dirname(File.dirname(__FILE__))
 
   pidfile "tmp/puma.pid"
@@ -18,7 +19,7 @@ if Rails.env.production?
 
   # Specifies the `environment` that Puma will run in.
   #
-  environment ENV.fetch("RAILS_ENV") { "production" }
+  environment ENV.fetch("RAILS_ENV") { rails_env }
 
   on_worker_boot do
     ActiveSupport.on_load(:active_record) do
