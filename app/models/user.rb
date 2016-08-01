@@ -37,11 +37,6 @@ class User < ApplicationRecord
     role == 2
   end
 
-  def owner!
-    self.role = 1
-    save!
-  end
-
   def display_name
     name || email
   end

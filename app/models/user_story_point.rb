@@ -6,7 +6,7 @@ class UserStoryPoint < ApplicationRecord
   def self.vote user_id, story_id, points
     user_point = UserStoryPoint.find_or_initialize_by user_id: user_id, story_id: story_id
     if user_point.update points: points
-      yield user_point
+      yield user_point if block_given?
     end
   end
 
