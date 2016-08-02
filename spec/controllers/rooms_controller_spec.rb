@@ -6,7 +6,7 @@ RSpec.describe RoomsController, type: :controller do
   # Room. As you add validations to Room, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { name: "room name", pv: "1,3,5", stories_attributes: [{ link: "http://jira.com/123" }]}
+    { name: "room name", pv: "1,3,5,13", stories_attributes: [{ link: "http://jira.com/123" }]}
   }
 
   let(:invalid_attributes) {
@@ -139,4 +139,96 @@ RSpec.describe RoomsController, type: :controller do
     end
   end
 
+  describe "POST #vote" do
+    let(:room) { Room.create! valid_attributes }
+    let(:story){ room.stories.first }
+
+    it "votes a point per user per story if valid vote" do
+      post :vote, params: {:id => room.slug, story_id: story.id, points: "13"}, session: valid_session
+      latest_vote = UserStoryPoint.last
+      expect(latest_vote.story_id).to eq story.id
+      expect(latest_vote.points).to eq "13"
+      # TODO
+      # expect(ActionCable.server).to receive(:broadcast)
+    end
+
+    it "returns bad_request header info if invalid vote" do
+      post :vote, params: {:id => room.slug, story_id: story.id, points: "7"}, session: valid_session
+      latest_vote = UserStoryPoint.last
+      expect(response.status).to eq 400
+    end
+  end
+
+  describe "POST #set_room_status" do
+    it "updates room status if status changed" do
+      room = Room.create! valid_attributes
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      expect(Room.last.status).to eq Room::OPEN
+      expect(Room.last.status).to eq 1
+      expect(response.status).to eq 204
+    end
+
+    it "doesnt update room status if status parameter is invalid" do
+      room = Room.create! valid_attributes
+      post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session
+      expect(Room.last.status).to eq nil
+      expect(Room.last.updated_at).to eq room.updated_at
+      expect(response.status).to eq 204
+    end
+
+    it "doesnt update room status if status parameter same with room status" do
+      room = Room.create! valid_attributes.merge(status: 1)
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      expect(Room.last.updated_at).to eq room.updated_at
+      expect(response.status).to eq 204
+    end
+
+  end
+
+  describe "GET #story_list" do
+    let!(:room) { Room.create! valid_attributes }
+    let!(:story){ room.stories.first }
+
+    it "gets un-groomed stories" do
+      get :story_list, format: :json, params: {:id => room.slug}, session: valid_session
+      expect(assigns(:stories)).to eq [story]
+    end
+  end
+
+  describe "GET #user_list" do
+    let!(:room) { Room.create! valid_attributes }
+    let(:user) { User.find_by email: 'a@a.com' }
+    let!(:user_room) { UserRoom.create user_id: user.id, room_id: room.id }
+
+    it "gets users in room" do
+      get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
+
+      expect(assigns(:users)).to eq [user]
+    end
+  end
+
+  describe "POST #set_story_point" do
+    let!(:room) { Room.create! valid_attributes }
+    let!(:story){ room.stories.first }
+    let(:user) { User.find_by email: 'a@a.com' }
+    let!(:user_room) { UserRoom.create user_id: user.id, room_id: room.id, role: 0 }
+
+    it "sets point for story(final)" do
+      post :set_story_point, params: {:id => room.slug, story_id: story.id, point: "13"}, session: valid_session
+
+      expect(Story.last.point).to eq "13"
+      expect(Room.last.status).to be_nil
+    end
+  end
+
+  describe "GET #draw_board" do
+    let!(:room) { Room.create! valid_attributes }
+    let!(:story){ room.stories.first }
+
+    it "gets groomed stories" do
+      story.update_attribute :point, 13
+      get :draw_board, format: :json, params: {:id => room.slug}, session: valid_session
+      expect(assigns(:stories)).to eq [story]
+    end
+  end
 end
