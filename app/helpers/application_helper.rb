@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def title(title)
-    content_for(:title, title)
+  def title title
+    content_for :title, title
   end
 
   def description description
