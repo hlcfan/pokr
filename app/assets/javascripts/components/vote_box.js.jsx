@@ -48,7 +48,7 @@ var VoteBox = React.createClass({
 
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Vote</div>
+        <div className="panel-heading">Deck</div>
         <div className="vote-list panel-body row">
           <div className="col-md-12">
             <ul className="list-inline">
