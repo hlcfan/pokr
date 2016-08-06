@@ -1,15 +1,28 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the RoomsHelper. For example:
-#
-# describe RoomsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe RoomsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#state_class" do
+    it "returns label-default if room.status is draw" do
+      room = double(status: Room::DRAW)
+      expect(state_class(room)).to eq "label-default"
+    end
+
+    it "returns label-success if room.status is not draw" do
+      room = double(status: nil)
+      expect(state_class(room)).to eq "label-success"
+    end
+  end
+
+  describe "#generate_point_values" do
+    it "generates form input tag with different button styles for point values of rooms" do
+      html = generate_point_values %w(1 5 13)
+      expect(html).to include '<input class="btn btn-default" type="button" value="0" />'
+      expect(html).to include '<input class="btn btn-info" type="button" value="1" />'
+      expect(html).to include '<input class="btn btn-default" type="button" value="2" />'
+      expect(html).to include '<input class="btn btn-info" type="button" value="5" />'
+      expect(html).to include '<input class="btn btn-default" type="button" value="8" />'
+      expect(html).to include '<input class="btn btn-info" type="button" value="13" />'
+      expect(html).to include '<input class="btn btn-default" type="button" value="20" />'
+    end
+  end
 end
