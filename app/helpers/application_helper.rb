@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def title(title)
-    content_for(:title, title)
+  def title title
+    content_for :title, title
   end
 
   def description description
@@ -15,10 +15,12 @@ module ApplicationHelper
 
   def flash_messages opts = {}
     flash.each do |msg_type, message|
-      concat(content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type)} fade in") do 
-              concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' })
-              concat message 
-            end)
+      concat(
+        content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type)} fade in") do
+          concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' })
+          concat message
+        end
+      )
     end
     nil
   end
