@@ -88,6 +88,11 @@ function setupChannelSubscription() {
         } else if (data.data === 'refresh-stories') {
           window.syncResult = false;
           EventEmitter.dispatch("storySwitched");
+        } else if (data.data === 'refresh-users') {
+          if ($("#u-" + data.user_id).length <= 0) {
+            console.log("===New user joined, welcome!");
+            EventEmitter.dispatch("refreshUsers");
+          }
         }
       } else if(data.type === 'notify') {
         var userName = data.data;

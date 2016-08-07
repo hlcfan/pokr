@@ -1,7 +1,5 @@
 class RoomsController < ApplicationController
 
-  include RoomsHelper
-
   before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status, :draw_board]
   before_action :enter_room, only: [:show]
@@ -33,7 +31,7 @@ class RoomsController < ApplicationController
   end
 
   def broadcast_user_point user_point
-    ActionCable.server.broadcast "rooms/#{@room.slug}",
+    broadcaster "rooms/#{@room.slug}",
         person_id: user_point.user_id,
         story_id: user_point.story_id,
         points: user_point.points
@@ -160,6 +158,11 @@ class RoomsController < ApplicationController
       user_room.role = UserRoom::PARTICIPANT
       user_room.save!
     end
+
+    broadcaster "rooms/#{@room.slug}",
+        user_id: current_user.id,
+        data: 'refresh-users',
+        type: 'action'
   end
 
   def bulk_import_params
@@ -183,6 +186,10 @@ class RoomsController < ApplicationController
 
   def valid_vote?
     @room.valid_vote_point?(params[:points]) && params[:story_id].present?
+  end
+
+  def broadcaster channel, *message
+    ActionCable.server.broadcast channel, *message
   end
 
 end

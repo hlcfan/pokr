@@ -26,6 +26,7 @@ var PeopleListBox = React.createClass({
   componentDidMount: function() {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("storySwitched", this.loadPeopleListFromServer);
+    EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
     EventEmitter.subscribe("beforeResultShown", this.beforeShown);
   },
   render: function() {
