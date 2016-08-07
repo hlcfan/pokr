@@ -9,3 +9,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.1.1] - 2016-08-07
 ### Changed
 - Owner -> Moderator, to be more professional.
+
+### Added
+- Refresh people list when new user joins
