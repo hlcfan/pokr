@@ -8,9 +8,6 @@ class RoomsController < ApplicationController
     redirect_to dashboard_index_path
   end
 
-  def show
-  end
-
   def vote
     if valid_vote?
       UserStoryPoint.vote(current_user.id,
