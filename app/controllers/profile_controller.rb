@@ -19,7 +19,7 @@ class ProfileController < ApplicationController
     if @user.valid_password? params[:user][:current_password]
       if @user.update(password_params)
         # Sign in the user by passing validation in case their password changed
-        sign_in @user, :bypass => true
+        bypass_sign_in @user
         redirect_to profile_path, flash: { success: 'Your password updated successfully' }
       else
         render :show
