@@ -160,6 +160,11 @@ class RoomsController < ApplicationController
       user_room.role = UserRoom::PARTICIPANT
       user_room.save!
     end
+
+    ActionCable.server.broadcast "rooms/#{@room.slug}",
+        user_id: current_user.id,
+        data: 'refresh-users',
+        type: 'action'
   end
 
   def bulk_import_params
