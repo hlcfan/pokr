@@ -300,7 +300,6 @@ DEPENDENCIES
   rspec-rails (~> 3.5)
   ruby-pinyin
   sass-rails (~> 5.0)
-  simplecov
   skylight
   spring
   therubyracer
