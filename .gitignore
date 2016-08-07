@@ -17,6 +17,7 @@
 /log/*
 !/log/.keep
 /tmp
+/coverage
 
 config/database.yml
 .ruby-version
