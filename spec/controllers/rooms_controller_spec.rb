@@ -22,7 +22,7 @@ RSpec.describe RoomsController, type: :controller do
     it "assigns all rooms as @rooms" do
       room = Room.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(assigns(:rooms)).to eq([room])
+      expect(response).to redirect_to dashboard_index_path
     end
   end
 

@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
   before_action :enter_room, only: [:show]
 
   def index
-    @rooms = Room.all
+    redirect_to dashboard_index_path
   end
 
   def show

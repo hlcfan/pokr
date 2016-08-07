@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  get 'rooms/index'
   post 'home/sign_up'
 
   mount ActionCable.server => '/cable'
