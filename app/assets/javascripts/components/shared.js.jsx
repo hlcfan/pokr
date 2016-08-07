@@ -23,7 +23,7 @@ function publishResult() {
     type: 'action'
   });
 
-  if (POKER.role === 'Owner' && POKER.roomState !== 'open') {
+  if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
     $.ajax({
       url: '/rooms/' + POKER.roomId + '/set_room_status.json',
       data: { status: 'open' },

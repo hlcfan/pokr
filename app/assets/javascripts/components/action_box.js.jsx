@@ -10,7 +10,7 @@ var ActionBox = React.createClass({
     publishResult();
   },
   skipStory: function() {
-    if (POKER.role === 'Owner') {
+    if (POKER.role === 'Moderator') {
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: 'null', story_id: POKER.story_id },
@@ -51,7 +51,7 @@ var ActionBox = React.createClass({
   render: function() {
     var that = this;
     var actionButton = (function() {
-      if (POKER.role === 'Owner') {
+      if (POKER.role === 'Moderator') {
         if (that.state.buttonState === 'not-open') {
           return (
             <a onClick={that.showResult} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
@@ -75,7 +75,7 @@ var ActionBox = React.createClass({
     })();
     var tip = (function(){
       // already decided point
-      if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Owner') {
+      if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Moderator') {
         Cookies.set('adp', true);
         return (
           <div className="container-fluid" style={{clear: 'both', width: '90%'}}>

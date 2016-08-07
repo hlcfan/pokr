@@ -1,6 +1,6 @@
 var PointBar = React.createClass({
   selectPoint: function() {
-    if (POKER.role === 'Owner') {
+    if (POKER.role === 'Moderator') {
       $.ajax({
         url: '/rooms/' + POKER.roomId + '/set_story_point.json',
         data: { point: this.props.point, story_id: POKER.story_id },
