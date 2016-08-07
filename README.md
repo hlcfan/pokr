@@ -3,6 +3,7 @@
 Yet another pointing poker, aiming at efficiency & user experience.
 
 [![Build Status](https://travis-ci.org/hlcfan/pokr.svg?branch=master)](https://travis-ci.org/hlcfan/pokr)
+[![Code Climate](https://codeclimate.com/github/hlcfan/pokr/badges/gpa.svg)](https://codeclimate.com/github/hlcfan/pokr)
 
 ## ❓ Why Pokr?
 
