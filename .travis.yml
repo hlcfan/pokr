@@ -1,6 +1,7 @@
 language: ruby
 env:
   - USE_OFFICIAL_GEM_SOURCE=1
+  - COVERAGE=true
 
 services:
   - mysql
