@@ -18,5 +18,5 @@ $(document).on 'turbolinks:load', ->
 
     element = React.createElement(Room, poker: POKER)
     ReactDOM.render(element, document.getElementById('room'))
-    setupChannelSubscription();
+    setupChannelSubscription()
     return
