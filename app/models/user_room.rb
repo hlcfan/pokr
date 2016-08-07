@@ -3,18 +3,18 @@ class UserRoom < ApplicationRecord
   belongs_to :user
   belongs_to :room
 
-  OWNER = 0
+  MODERATOR = 0
   PARTICIPANT = 1
   WATCHER = 2
 
-  def owner?
+  def moderator?
     role == 0
   end
 
   def display_role
     case self.role
     when 0
-      'Owner'
+      'Moderator'
     when 1
       'Participant'
     else

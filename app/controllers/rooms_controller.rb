@@ -81,7 +81,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       if @room.save
-        set_user_room_owner
+        set_user_room_moderator
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -118,7 +118,7 @@ class RoomsController < ApplicationController
   def set_story_point
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    if user_room.owner? && @room.valid_vote_point?(params[:point])
+    if user_room.moderator? && @room.valid_vote_point?(params[:point])
       story = Story.find_by id: params[:story_id], room_id: @room.id
       if story
         story.update_attribute :point, params[:point]
@@ -148,9 +148,9 @@ class RoomsController < ApplicationController
     )
   end
 
-  def set_user_room_owner
+  def set_user_room_moderator
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-    user_room.role = UserRoom::OWNER
+    user_room.role = UserRoom::MODERATOR
     user_room.save!
   end
 

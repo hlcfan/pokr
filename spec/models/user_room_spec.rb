@@ -3,17 +3,17 @@ require 'rails_helper'
 RSpec.describe UserRoom, type: :model do
   subject(:user_room) { UserRoom.new }
 
-  describe "#owner?" do
+  describe "#moderator?" do
     it "is true if role equals 0" do
       user_room.role = 0
-      expect(user_room.owner?).to be true
+      expect(user_room.moderator?).to be true
     end
   end
 
   describe "#display_role" do
-    it "is Owner when role equals 0" do
+    it "is Moderator when role equals 0" do
       user_room.role = 0
-      expect(user_room.display_role).to eq "Owner"
+      expect(user_room.display_role).to eq "Moderator"
     end
     it "is Participant when role equals 1" do
       user_room.role = 1
