@@ -159,12 +159,11 @@ class RoomsController < ApplicationController
     if user_room.new_record?
       user_room.role = UserRoom::PARTICIPANT
       user_room.save!
-    end
-
-    broadcaster "rooms/#{@room.slug}",
+      broadcaster "rooms/#{@room.slug}",
         user_id: current_user.id,
         data: 'refresh-users',
         type: 'action'
+    end
   end
 
   def bulk_import_params
