@@ -41,9 +41,13 @@ class RoomsController < ApplicationController
 
   def user_list
     @users = @room.users.to_a
+    user_rooms = {}
+    UserRoom.where(user_id: @users, room_id: @room.id).select(:user_id, :role).each do |user_room|
+      user_rooms.update({user_room.user_id => user_room.display_role})
+    end
     @users.each do |user|
       user_point = user.points_of_story(@room.current_story_id)
-      user.display_role = UserRoom.find_by_with_cache(user_id: user.id, room_id: @room.id).display_role
+      user.display_role = user_rooms[user.id]
       user.points = user_point if params[:sync] == 'true'
       user.voted = !!user_point
     end
