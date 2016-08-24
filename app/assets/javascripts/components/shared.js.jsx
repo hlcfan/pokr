@@ -77,7 +77,6 @@ function setupChannelSubscription() {
   window.channelName =['rooms', POKER.roomId].join('/');
   App.rooms = App.cable.subscriptions.create('RoomsChannel', {
     connected: function(){
-      this.perform('follow', {room_id: POKER.roomId});
     },
     received: function(data) {
       // console.log("received: " + data);
