@@ -15,12 +15,17 @@ set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
 
+set :puma_socket, '/tmp/puma.sock'
+set :puma_pid, 'tmp/puma.pid'
+set :puma_state, 'tmp/puma.state'
+set :pumactl_socket, 'tmp/pumactl.sock'
+
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets']
+set :shared_paths, ['config/database.yml', 'log']
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
