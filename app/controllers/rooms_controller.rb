@@ -52,6 +52,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+    cookies[:room_id] = @room.slug
   end
 
   # GET /rooms/new
