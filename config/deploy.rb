@@ -18,7 +18,6 @@ set :rails_env, 'production'
 set :puma_socket, '/tmp/puma.sock'
 set :puma_pid, 'tmp/puma.pid'
 set :puma_state, 'tmp/puma.state'
-set :pumactl_socket, 'tmp/pumactl.sock'
 
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
@@ -59,10 +58,10 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
 
-  queue! %{
-    mkdir -p "#{deploy_to}/shared/tmp/pids"
-    mkdir -p "#{deploy_to}/shared/tmp/sockets"
-  }
+  # queue! %{
+  #   mkdir -p "#{deploy_to}/shared/tmp/pids"
+  #   mkdir -p "#{deploy_to}/shared/tmp/sockets"
+  # }
 end
 
 desc "Deploys the current version to the server."
