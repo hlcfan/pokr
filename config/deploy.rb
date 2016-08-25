@@ -16,15 +16,15 @@ set :term_mode, :system
 set :rails_env, 'production'
 
 set :puma_socket, '/tmp/puma.sock'
-set :puma_pid, 'tmp/puma.pid'
-set :puma_state, 'tmp/puma.state'
+set :puma_pid, 'tmp/pids/puma.pid'
+set :puma_state, 'tmp/sockets/puma.state'
 
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log']
+set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets']
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
@@ -58,10 +58,10 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
 
-  # queue! %{
-  #   mkdir -p "#{deploy_to}/shared/tmp/pids"
-  #   mkdir -p "#{deploy_to}/shared/tmp/sockets"
-  # }
+  queue! %{
+    mkdir -p "#{deploy_to}/shared/tmp/pids"
+    mkdir -p "#{deploy_to}/shared/tmp/sockets"
+  }
 end
 
 desc "Deploys the current version to the server."
