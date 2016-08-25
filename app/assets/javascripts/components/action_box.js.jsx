@@ -55,7 +55,7 @@ var ActionBox = React.createClass({
         if (that.state.buttonState === 'not-open') {
           return (
             <a onClick={that.showResult} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
-              开？
+              开
             </a>
           );
         } else if (that.state.buttonState === 'open') {
