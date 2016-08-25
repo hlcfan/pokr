@@ -53,14 +53,6 @@ function refreshStories() {
   EventEmitter.dispatch("storySwitched");
 }
 
-function refreshPeople() {
-  App.rooms.perform('action', {
-    roomId: POKER.roomId,
-    data: 'refresh-people',
-    type: 'action'
-  });
-}
-
 function resetActionBox() {
   App.rooms.perform('action', {
     roomId: POKER.roomId,

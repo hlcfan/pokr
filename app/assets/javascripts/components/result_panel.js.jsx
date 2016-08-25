@@ -35,8 +35,8 @@ var ResultPanel = React.createClass({
   },
   componentDidMount: function() {
     EventEmitter.subscribe("userListLoaded", this.readFromElement);
-    EventEmitter.subscribe("resultShown", this.readFromElement)
-    EventEmitter.subscribe("storySwitched", this.readFromElement)
+    EventEmitter.subscribe("resultShown", this.readFromElement);
+    EventEmitter.subscribe("storySwitched", this.readFromElement);
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {
