@@ -75,7 +75,7 @@ function resetActionBox() {
 function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName =['rooms', POKER.roomId].join('/');
-  App.rooms = App.cable.subscriptions.create('RoomsChannel', {
+  App.rooms = App.cable.subscriptions.create({channel: 'RoomsChannel', room: POKER.roomId}, {
     connected: function(){
     },
     received: function(data) {
@@ -107,6 +107,7 @@ function setupChannelSubscription() {
           }
         });
       } else {
+        debugger;
         $('#u-' + data.person_id + ' .points').text(data.points);
         $('#u-' + data.person_id).attr('data-point', data.points);
       }

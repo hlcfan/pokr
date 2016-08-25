@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :store_location
 
   def after_sign_in_path_for(resource)
+    cookies.signed[:user_id] = current_user.id
     session[:previous_url] || root_path
   end
 
