@@ -1,6 +1,7 @@
 <%
   title @room.name
 %>
+<%= javascript_include_tag "components", "rooms" %>
 <script type="text/javascript" charset="utf-8">
   (function(){
     POKER.roomId = '<%= @room.slug %>';
