@@ -6,13 +6,14 @@ class RoomsChannel < ApplicationCable::Channel
     stream_from "rooms/#{params[:room]}"
   end
 
-  def room_action data
+  def action data
     ActionCable.server.broadcast "rooms/#{data['roomId']}", data
   end
 
   def vote data
     payload = data["data"]
     room_id = data["roomId"]
+    # TODO: find from cache
     @room = Room.find_by slug: room_id
     if valid_vote? payload
       UserStoryPoint.vote(current_user.id,
