@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'react-rails', '~> 1.8.0'
+gem 'react-rails', '~> 1.8.2'
 gem 'puma'
 gem 'redis-rack', github: 'redis-store/redis-rack', branch: 'master'
 gem 'redis-actionpack', github: 'redis-store/redis-actionpack', branch: 'master'

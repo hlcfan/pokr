@@ -190,7 +190,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.2.2)
-    react-rails (1.8.1)
+    react-rails (1.8.2)
       babel-transpiler (>= 0.7.0)
       coffee-script-source (~> 1.8)
       connection_pool
@@ -293,7 +293,7 @@ DEPENDENCIES
   puma
   rails (= 5.0.0)
   rails-controller-testing
-  react-rails (~> 1.8.0)
+  react-rails (~> 1.8.2)
   redis-actionpack!
   redis-rack!
   redis-rails!
