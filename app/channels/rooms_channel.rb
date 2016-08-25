@@ -12,14 +12,17 @@ class RoomsChannel < ApplicationCable::Channel
 
   def vote data
     payload = data["data"]
+    room_id = data["roomId"]
+    @room = Room.find_by slug: room_id
     if valid_vote? payload
       UserStoryPoint.vote(current_user.id,
                       payload["story_id"],
                       payload["points"]) do |user_story_point|
         broadcaster "rooms/#{@room.slug}",
-                    person_id: user_point.user_id,
-                    story_id: user_point.story_id,
-                    points: user_point.points
+                    type: "notify",
+                    person_id: user_story_point.user_id,
+                    story_id: user_story_point.story_id,
+                    points: user_story_point.points
       end
     end
   end
@@ -27,7 +30,7 @@ class RoomsChannel < ApplicationCable::Channel
   private
 
   def valid_vote? payload
-    current_room.valid_vote_point?(payload[:points]) && payload[:story_id].present?
+    @room.valid_vote_point?(payload["points"]) && payload["story_id"].present?
   end
 
   def broadcaster channel, *message
