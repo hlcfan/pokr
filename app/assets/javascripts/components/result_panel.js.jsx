@@ -34,6 +34,7 @@ var ResultPanel = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
+    EventEmitter.subscribe("userListLoaded", this.readFromElement);
     EventEmitter.subscribe("resultShown", this.readFromElement)
     EventEmitter.subscribe("storySwitched", this.readFromElement)
   },

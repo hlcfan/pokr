@@ -6,6 +6,7 @@ var PeopleListBox = React.createClass({
       cache: false,
       success: function(data) {
         this.setState({data: data});
+        EventEmitter.dispatch("userListLoaded");
         if (callback) {
           callback();
         }
@@ -18,18 +19,10 @@ var PeopleListBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  beforeShown: function() {
-    this.loadPeopleListFromServer(function() {
-      EventEmitter.dispatch("resultShown");
-    });
-  },
   componentDidMount: function() {
-    if (!window.syncResult) {
-      this.loadPeopleListFromServer();
-    }
+    this.loadPeopleListFromServer();
     EventEmitter.subscribe("storySwitched", this.loadPeopleListFromServer);
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
-    EventEmitter.subscribe("beforeResultShown", this.beforeShown);
   },
   render: function() {
     return (

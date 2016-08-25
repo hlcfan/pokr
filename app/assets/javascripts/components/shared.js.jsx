@@ -17,7 +17,7 @@ var EventEmitter = {
 };
 
 function publishResult() {
-  App.rooms.perform('room_action', {
+  App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: 'open',
     type: 'action'
@@ -41,7 +41,7 @@ function publishResult() {
 }
 
 function notifyVoted() {
-  App.rooms.perform('room_action', {
+  App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: POKER.currentUser.name,
     type: 'notify'
@@ -49,7 +49,7 @@ function notifyVoted() {
 }
 
 function refreshStories() {
-  App.rooms.perform('room_action', {
+  App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: 'refresh-stories',
     type: 'action'
@@ -57,7 +57,7 @@ function refreshStories() {
 }
 
 function refreshPeople() {
-  App.rooms.perform('room_action', {
+  App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: 'refresh-people',
     type: 'action'
@@ -65,7 +65,7 @@ function refreshPeople() {
 }
 
 function resetActionBox() {
-  App.rooms.perform('room_action', {
+  App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: 'reset-action-box',
     type: 'action'
@@ -79,7 +79,7 @@ function setupChannelSubscription() {
     connected: function(){
     },
     received: function(data) {
-      // console.log("received: " + data);
+      console.dir(data);
       if (data.type === 'action') {
         if (data.data === 'open') {
           window.syncResult = true;
@@ -93,18 +93,20 @@ function setupChannelSubscription() {
           }
         }
       } else if(data.type === 'notify') {
-        debugger;
-        var $personElement = $('#u-' + data.person_id)
+        var $personElement = $('#u-' + data.person_id);
         if ($personElement.hasClass('voted')) {
           $personElement.removeClass("voted");
         }
+
+        // TODO: read whether-should-show-point flag and decide show or not
+        $('#u-' + data.person_id + ' .points').text(data.points);
+        $('#u-' + data.person_id).attr('data-point', data.points);
+        EventEmitter.dispatch("userListLoaded");
         setTimeout(function(){
           $personElement.addClass("voted", 100);
         }, 200);
       } else {
-        debugger;
-        $('#u-' + data.person_id + ' .points').text(data.points);
-        $('#u-' + data.person_id).attr('data-point', data.points);
+
       }
     }
   });
@@ -112,7 +114,7 @@ function setupChannelSubscription() {
 
 function showResultSection() {
   $('#show-result').show();
-  EventEmitter.dispatch("beforeResultShown");
+  EventEmitter.dispatch("resultShown");
 }
 
 function drawBoard() {
