@@ -93,19 +93,14 @@ function setupChannelSubscription() {
           }
         }
       } else if(data.type === 'notify') {
-        var userName = data.data;
-        $('.people-list li.person').each(function(i, personEle){
-          var $personElement = $(personEle);
-          if ($personElement.find('a.person').text() === userName) {
-            if ($personElement.hasClass('voted')) {
-              $personElement.removeClass("voted");
-            }
-
-            setTimeout(function(){
-              $personElement.addClass("voted", 100);
-            }, 200);
-          }
-        });
+        debugger;
+        var $personElement = $('#u-' + data.person_id)
+        if ($personElement.hasClass('voted')) {
+          $personElement.removeClass("voted");
+        }
+        setTimeout(function(){
+          $personElement.addClass("voted", 100);
+        }, 200);
       } else {
         debugger;
         $('#u-' + data.person_id + ' .points').text(data.points);
