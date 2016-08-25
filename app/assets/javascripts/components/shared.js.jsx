@@ -49,11 +49,8 @@ function notifyVoted() {
 }
 
 function refreshStories() {
-  App.rooms.perform('action', {
-    roomId: POKER.roomId,
-    data: 'refresh-stories',
-    type: 'action'
-  });
+  window.syncResult = false;
+  EventEmitter.dispatch("storySwitched");
 }
 
 function refreshPeople() {
@@ -84,9 +81,6 @@ function setupChannelSubscription() {
         if (data.data === 'open') {
           window.syncResult = true;
           showResultSection();
-        } else if (data.data === 'refresh-stories') {
-          window.syncResult = false;
-          EventEmitter.dispatch("storySwitched");
         } else if (data.data === 'refresh-users') {
           if ($("#u-" + data.user_id).length <= 0) {
             EventEmitter.dispatch("refreshUsers");
