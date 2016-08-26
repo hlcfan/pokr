@@ -48,6 +48,13 @@ function notifyVoted() {
   });
 }
 
+function nextStory() {
+  window.syncResult = false;
+  EventEmitter.dispatch("refreshUsers");
+  EventEmitter.dispatch("refreshStories");
+  EventEmitter.dispatch("resetActionBox");
+}
+
 function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName =['rooms', POKER.roomId].join('/');
@@ -65,9 +72,7 @@ function setupChannelSubscription() {
             EventEmitter.dispatch("refreshUsers");
           }
         } else if(data.data === "next-story") {
-          window.syncResult = false;
-          EventEmitter.dispatch("refreshUsers");
-          EventEmitter.dispatch("refreshStories");
+          nextStory();
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);

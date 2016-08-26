@@ -18,8 +18,7 @@ var ActionBox = React.createClass({
         dataType: 'json',
         cache: false,
         success: function(data) {
-          refreshStories();
-          resetActionBox();
+          nextStory();
         },
         error: function(xhr, status, err) {
           console.error(status, err.toString());
