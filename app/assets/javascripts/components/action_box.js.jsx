@@ -11,18 +11,9 @@ var ActionBox = React.createClass({
   },
   skipStory: function() {
     if (POKER.role === 'Moderator') {
-      $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
-        data: { point: 'null', story_id: POKER.story_id },
-        method: 'post',
-        dataType: 'json',
-        cache: false,
-        success: function(data) {
-          nextStory();
-        },
-        error: function(xhr, status, err) {
-          console.error(status, err.toString());
-        }
+      App.rooms.perform('set_story_point', {
+        roomId: POKER.roomId,
+        data: { point: 'null', story_id: POKER.story_id }
       });
     }
   },
