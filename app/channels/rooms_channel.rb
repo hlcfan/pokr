@@ -26,7 +26,7 @@ class RoomsChannel < ApplicationCable::Channel
     end
   end
 
-  def set_story_point
+  def set_story_point data
     payload = data["data"]
     set_room data["roomId"]
 
@@ -39,9 +39,7 @@ class RoomsChannel < ApplicationCable::Channel
         @room.update_attribute :status, nil
         broadcaster "rooms/#{@room.slug}",
                     type: "action",
-                    person_id: user_story_point.user_id,
-                    story_id: user_story_point.story_id,
-                    points: user_story_point.points
+                    data: "next-story"
       end
     end
   end
