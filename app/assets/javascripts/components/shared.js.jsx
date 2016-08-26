@@ -48,19 +48,6 @@ function notifyVoted() {
   });
 }
 
-function refreshStories() {
-  window.syncResult = false;
-  EventEmitter.dispatch("storySwitched");
-}
-
-function resetActionBox() {
-  App.rooms.perform('action', {
-    roomId: POKER.roomId,
-    data: 'reset-action-box',
-    type: 'action'
-  });
-}
-
 function setupChannelSubscription() {
   // Subscribe to the public channel
   window.channelName =['rooms', POKER.roomId].join('/');
@@ -77,6 +64,10 @@ function setupChannelSubscription() {
           if ($("#u-" + data.user_id).length <= 0) {
             EventEmitter.dispatch("refreshUsers");
           }
+        } else if(data.data === "next-story") {
+          window.syncResult = false;
+          EventEmitter.dispatch("refreshUsers");
+          EventEmitter.dispatch("storySwitched");
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);
@@ -87,7 +78,7 @@ function setupChannelSubscription() {
         // TODO: read whether-should-show-point flag and decide show or not
         $('#u-' + data.person_id + ' .points').text(data.points);
         $('#u-' + data.person_id).attr('data-point', data.points);
-        EventEmitter.dispatch("userListLoaded");
+        EventEmitter.dispatch("showResultPanel");
         setTimeout(function(){
           $personElement.addClass("voted", 100);
         }, 200);

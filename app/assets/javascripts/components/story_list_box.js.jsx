@@ -15,12 +15,9 @@ var StoryListBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  updateStoryList: function() {
-    this.loadStoryListFromServer();
-  },
   componentDidMount: function() {
-    this.updateStoryList();
-    EventEmitter.subscribe("storySwitched", this.updateStoryList);
+    this.loadStoryListFromServer();
+    EventEmitter.subscribe("storySwitched", this.loadStoryListFromServer);
   },
   componentDidUpdate: function() {
     $currentStory = $('.storyList ul li.story').not(".story-leave").first();

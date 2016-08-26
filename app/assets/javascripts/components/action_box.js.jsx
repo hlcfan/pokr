@@ -19,7 +19,6 @@ var ActionBox = React.createClass({
         cache: false,
         success: function(data) {
           refreshStories();
-          refreshPeople();
           resetActionBox();
         },
         error: function(xhr, status, err) {
@@ -39,7 +38,7 @@ var ActionBox = React.createClass({
     drawBoard();
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("storySwitched", this.resetActionBox);
+    EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
     if (POKER.roomState === 'open') {
       showResultSection();

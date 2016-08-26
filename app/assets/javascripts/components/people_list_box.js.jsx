@@ -6,7 +6,7 @@ var PeopleListBox = React.createClass({
       cache: false,
       success: function(data) {
         this.setState({data: data});
-        EventEmitter.dispatch("userListLoaded");
+        EventEmitter.dispatch("showResultPanel");
         if (callback) {
           callback();
         }
@@ -21,7 +21,6 @@ var PeopleListBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadPeopleListFromServer();
-    EventEmitter.subscribe("storySwitched", this.loadPeopleListFromServer);
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
   },
   render: function() {

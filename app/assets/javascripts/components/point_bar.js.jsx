@@ -3,7 +3,7 @@ var PointBar = React.createClass({
     if (POKER.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
         roomId: POKER.roomId,
-        data: { point: this.props.point, story_id: POKER.story_id },
+        data: { point: this.props.point, story_id: POKER.story_id }
       });
       // $.ajax({
       //   url: '/rooms/' + POKER.roomId + '/set_story_point.json',
