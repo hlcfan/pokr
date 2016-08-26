@@ -35,7 +35,6 @@ var ResultPanel = React.createClass({
   },
   componentDidMount: function() {
     EventEmitter.subscribe("showResultPanel", this.readFromElement);
-    EventEmitter.subscribe("resultShown", this.readFromElement);
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {

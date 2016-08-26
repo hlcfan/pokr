@@ -87,7 +87,7 @@ function setupChannelSubscription() {
 function showResultSection() {
   $('#show-result').show();
   EventEmitter.dispatch("refreshUsers");
-  EventEmitter.dispatch("resultShown");
+  EventEmitter.dispatch("showResultPanel");
 }
 
 function drawBoard() {
