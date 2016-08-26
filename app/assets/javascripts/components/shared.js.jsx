@@ -17,25 +17,11 @@ var EventEmitter = {
 };
 
 function publishResult() {
-  App.rooms.perform('action', {
-    roomId: POKER.roomId,
-    data: 'open',
-    type: 'action'
-  });
-
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
-    $.ajax({
-      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
-      data: { status: 'open' },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      complete: function() {
-        POKER.roomState = 'open';
-      },
-      error: function(xhr, status, err) {
-        // pass
-      }
+    App.rooms.perform('action', {
+      roomId: POKER.roomId,
+      data: 'open',
+      type: 'action'
     });
   }
 }
@@ -66,6 +52,7 @@ function setupChannelSubscription() {
       if (data.type === 'action') {
         if (data.data === 'open') {
           window.syncResult = true;
+          POKER.roomState = 'open';
           showResultSection();
         } else if (data.data === 'refresh-users') {
           if ($("#u-" + data.user_id).length <= 0) {

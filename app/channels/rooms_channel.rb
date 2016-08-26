@@ -7,6 +7,10 @@ class RoomsChannel < ApplicationCable::Channel
   end
 
   def action data
+    if data["data"] == "open"
+      set_room data["roomId"]
+      @room.update_attribute(:status, Room::OPEN) if @room
+    end
     ActionCable.server.broadcast "rooms/#{data['roomId']}", data
   end
 
@@ -22,7 +26,7 @@ class RoomsChannel < ApplicationCable::Channel
                     person_id: user_story_point.user_id,
                     story_id: user_story_point.story_id,
                     points: user_story_point.points,
-                    sync: @room.state == 'open'
+                    sync: @room.state == "open"
       end
     end
   end
