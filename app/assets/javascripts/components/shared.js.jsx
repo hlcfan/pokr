@@ -36,6 +36,7 @@ function notifyVoted() {
 
 function nextStory() {
   window.syncResult = false;
+  POKER.roomState = "not-open"
   EventEmitter.dispatch("refreshUsers");
   EventEmitter.dispatch("refreshStories");
   EventEmitter.dispatch("resetActionBox");

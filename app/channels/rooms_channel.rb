@@ -1,8 +1,6 @@
 class RoomsChannel < ApplicationCable::Channel  
 
   def subscribed
-    # called every time a
-    # client-side subscription is initiated
     stream_from "rooms/#{params[:room]}"
   end
 

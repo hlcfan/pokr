@@ -36,8 +36,6 @@ var ResultPanel = React.createClass({
   componentDidMount: function() {
     EventEmitter.subscribe("showResultPanel", this.readFromElement);
     EventEmitter.subscribe("resultShown", this.readFromElement);
-    // ? why switch story needs to read from element
-    // EventEmitter.subscribe("storySwitched", this.readFromElement);
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {
