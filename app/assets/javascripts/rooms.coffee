@@ -12,8 +12,8 @@ $(document).on 'turbolinks:load', ->
     POKER.story_id = do ->
       $('.storyList ul li:first').data 'id'
     # Initialize sync result as false
-    # window.syncResult = (POKER.roomState == 'open') ? true : false
-    window.syncResult = true
+    window.syncResult = (POKER.roomState == 'open') ? true : false
+    # window.syncResult = true
 
     element = React.createElement(Room, poker: POKER)
     ReactDOM.render(element, document.getElementById('room'))

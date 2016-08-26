@@ -21,7 +21,8 @@ class RoomsChannel < ApplicationCable::Channel
                     type: "notify",
                     person_id: user_story_point.user_id,
                     story_id: user_story_point.story_id,
-                    points: user_story_point.points
+                    points: user_story_point.points,
+                    sync: @room.state == 'open'
       end
     end
   end

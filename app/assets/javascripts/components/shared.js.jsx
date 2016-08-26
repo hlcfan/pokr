@@ -79,14 +79,16 @@ function setupChannelSubscription() {
         if ($personElement.hasClass('voted')) {
           $personElement.removeClass("voted");
         }
-
-        // TODO: read whether-should-show-point flag and decide show or not
-        $('#u-' + data.person_id + ' .points').text(data.points);
-        $('#u-' + data.person_id).attr('data-point', data.points);
-        EventEmitter.dispatch("showResultPanel");
         setTimeout(function(){
           $personElement.addClass("voted", 100);
         }, 200);
+
+        window.syncResult = data.sync;
+        if (syncResult) {
+          $('#u-' + data.person_id + ' .points').text(data.points);
+          $('#u-' + data.person_id).attr('data-point', data.points);
+        }
+        EventEmitter.dispatch("showResultPanel");
       } else {
 
       }
@@ -96,6 +98,7 @@ function setupChannelSubscription() {
 
 function showResultSection() {
   $('#show-result').show();
+  EventEmitter.dispatch("refreshUsers");
   EventEmitter.dispatch("resultShown");
 }
 
