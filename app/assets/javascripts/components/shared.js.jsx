@@ -67,7 +67,7 @@ function setupChannelSubscription() {
         } else if(data.data === "next-story") {
           window.syncResult = false;
           EventEmitter.dispatch("refreshUsers");
-          EventEmitter.dispatch("storySwitched");
+          EventEmitter.dispatch("refreshStories");
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);

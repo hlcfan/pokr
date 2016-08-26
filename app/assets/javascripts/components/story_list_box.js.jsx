@@ -17,7 +17,7 @@ var StoryListBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadStoryListFromServer();
-    EventEmitter.subscribe("storySwitched", this.loadStoryListFromServer);
+    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
   },
   componentDidUpdate: function() {
     $currentStory = $('.storyList ul li.story').not(".story-leave").first();

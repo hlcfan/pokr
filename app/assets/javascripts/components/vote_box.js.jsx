@@ -15,7 +15,7 @@ var VoteBox = React.createClass({
     $('.vote-list ul li input').addClass('disabled');
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("storySwitched", function(){
+    EventEmitter.subscribe("refreshStories", function(){
       $('.vote-list ul li input').removeClass('btn-info');
     });
     EventEmitter.subscribe("noStoriesLeft", this.disableVote);
