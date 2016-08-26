@@ -43,8 +43,9 @@ function nextStory() {
 }
 
 function setupChannelSubscription() {
-  // Subscribe to the public channel
-  window.channelName =['rooms', POKER.roomId].join('/');
+  if (POKER.roomState === "draw") {
+    return false;
+  }
   App.rooms = App.cable.subscriptions.create({channel: 'RoomsChannel', room: POKER.roomId}, {
     connected: function(){
     },
