@@ -34,6 +34,7 @@ class ProfileController < ApplicationController
   end
 
   def profile_params
+    params[:user][:name] = params[:user][:name][0..20]
     params.require(:user).permit(:name)
   end
 
