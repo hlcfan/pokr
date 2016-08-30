@@ -34,8 +34,7 @@ var ResultPanel = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("resultShown", this.readFromElement)
-    EventEmitter.subscribe("storySwitched", this.readFromElement)
+    EventEmitter.subscribe("showResultPanel", this.readFromElement);
   },
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {

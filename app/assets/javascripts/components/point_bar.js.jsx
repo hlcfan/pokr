@@ -1,20 +1,9 @@
 var PointBar = React.createClass({
   selectPoint: function() {
     if (POKER.role === 'Moderator') {
-      $.ajax({
-        url: '/rooms/' + POKER.roomId + '/set_story_point.json',
-        data: { point: this.props.point, story_id: POKER.story_id },
-        method: 'post',
-        dataType: 'json',
-        cache: false,
-        success: function(data) {
-          refreshStories();
-          refreshPeople();
-          resetActionBox();
-        },
-        error: function(xhr, status, err) {
-          console.error(status, err.toString());
-        }
+      App.rooms.perform('set_story_point', {
+        roomId: POKER.roomId,
+        data: { point: this.props.point, story_id: POKER.story_id }
       });
     }
   },

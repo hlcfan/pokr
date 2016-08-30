@@ -5,23 +5,9 @@ var VoteBox = React.createClass({
       // Remove all selected points
       $('.vote-list ul li input').removeClass('btn-info');
       node.toggleClass('btn-info');
-      $.ajax({
-        url: '/rooms/' + POKER.roomId + '/vote.json',
+      App.rooms.perform('vote', {
+        roomId: POKER.roomId,
         data: { points: node.val(), story_id: POKER.story_id },
-        method: 'post',
-        dataType: 'json',
-        cache: false,
-        success: function(data) {
-          // Publish results and re-draw point bars
-          if (window.syncResult) {
-            publishResult();
-          } else {
-            notifyVoted();
-          }
-        },
-        error: function(xhr, status, err) {
-          console.error(status, err.toString());
-        }
       });
     }
   },
@@ -29,7 +15,7 @@ var VoteBox = React.createClass({
     $('.vote-list ul li input').addClass('disabled');
   },
   componentDidMount: function() {
-    EventEmitter.subscribe("storySwitched", function(){
+    EventEmitter.subscribe("refreshStories", function(){
       $('.vote-list ul li input').removeClass('btn-info');
     });
     EventEmitter.subscribe("noStoriesLeft", this.disableVote);
