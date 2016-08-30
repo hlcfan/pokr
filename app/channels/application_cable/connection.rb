@@ -11,11 +11,9 @@ module ApplicationCable
     protected
 
     def find_verified_user
-      # session isn't accessible here
       if current_user = User.find(cookies.signed[:user_id])
         current_user
       else
-        # writes a log and raises an exception
         reject_unauthorized_connection
       end
     end

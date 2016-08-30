@@ -54,7 +54,6 @@ class RoomsController < ApplicationController
       user_point = user_story_points[user.id]
       user.display_role = user_rooms[user.id]
       user.points = user_point if params[:sync] == 'true'
-      # binding.pry
       user.voted = !!user_point
     end
   end
