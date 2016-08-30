@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :store_location
+  before_action :store_location, :set_user_id
 
   def after_sign_in_path_for(resource)
     cookies.signed[:user_id] = current_user.id
@@ -24,6 +24,13 @@ class ApplicationController < ActionController::Base
     )
     if !dont_store_paths.include?(request.path) && !request.xhr?
       session[:previous_url] = request.fullpath
+    end
+  end
+
+  # Will be removed some day
+  def set_user_id
+    if request.get? && current_user & cookies.signed[:user_id].blank?
+      cookies.signed[:user_id] = current_user.id
     end
   end
 
