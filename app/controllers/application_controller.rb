@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   # Will be removed some day
   def set_user_id
-    if request.get? && current_user & cookies.signed[:user_id].blank?
+    if request.get? && current_user && cookies.signed[:user_id].blank?
       cookies.signed[:user_id] = current_user.id
     end
   end
