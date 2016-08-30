@@ -50,7 +50,7 @@ function setupChannelSubscription() {
     connected: function(){
     },
     received: function(data) {
-      console.dir(data);
+      // console.dir(data);
       if (data.type === 'action') {
         if (data.data === 'open') {
           window.syncResult = true;
