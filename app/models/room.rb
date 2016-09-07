@@ -68,6 +68,14 @@ class Room < ApplicationRecord
       permlink = "#{permlink}-#{SecureRandom.random_number(100000)}"
     end
 
+    # Solution 2:
+    # self.slug = loop do
+    #   token = SecureRandom.hex(10)
+    #   unless Room.find_by(slug: permlink).exists?
+    #     break token
+    #   end
+    # end
+
     self.slug = permlink
   end
 
