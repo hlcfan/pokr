@@ -16,6 +16,21 @@ var EventEmitter = {
   }
 };
 
+var barColors = [
+  "#000532",
+  "#376182",
+  "#5e6370",
+  "#a4a0a2",
+  "#ff4265",
+  "#07adeb",
+  "#acdfe8",
+  "#78bac2",
+  "#b4eeb4",
+  "#cbf3ad",
+  "#ffc0cb",
+  "#ffe4e1"
+];
+
 function publishResult() {
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
     App.rooms.perform('action', {

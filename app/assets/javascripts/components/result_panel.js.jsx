@@ -1,7 +1,11 @@
 var ResultPanel = React.createClass({
   readFromElement: function() {
     var pointHash = {};
-    $('.people-list ul li').each(function(i, ele) {
+    var $peopleList = $('.people-list ul li');
+    if ($peopleList.length <= 0) {
+      return false;
+    }
+    $peopleList.each(function(i, ele) {
       var point = $(ele).attr('data-point')
       if (point) {
         var pointCount = pointHash[point] || 0;
@@ -19,14 +23,16 @@ var ResultPanel = React.createClass({
     keys = Object.keys(pointHash),
     len = keys.length;
 
-    keys.sort();
+    keys.sort(function(a, b) {
+      return parseInt(a) - parseInt(b)
+    });
 
     var pointArray = [];
-    for (i = len; i >= 0; i--) {
+    for (i = (len-1), j=0; i >= 0; i--, j++) {
       point = keys[i];
       count = pointHash[point];
       barWidth = count/maxPointCount * 100;
-      pointArray.push({point: point, count: count, barWidth: barWidth})
+      pointArray.push({point: point, count: count, barWidth: barWidth, color: barColors[j]})
     }
     this.setState({data: pointArray});
   },
@@ -39,7 +45,7 @@ var ResultPanel = React.createClass({
   render: function() {
     var pointBars = this.state.data.map(function(pointBar) {
       return (
-        <PointBar key={pointBar.point+ '-' +pointBar.count} point={pointBar.point} count={pointBar.count} barWidth={pointBar.barWidth} />
+        <PointBar key={pointBar.point+ '-' +pointBar.count} point={pointBar.point} count={pointBar.count} barWidth={pointBar.barWidth} color={pointBar.color} />
       );
     });
 
