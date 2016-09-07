@@ -7,10 +7,8 @@ Rails.application.routes.draw do
 
   resources :rooms do
     member do
-      post :vote
       get :story_list
       get :user_list
-      post :set_story_point
       post :set_room_status
       get :draw_board
     end

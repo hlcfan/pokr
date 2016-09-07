@@ -139,26 +139,6 @@ RSpec.describe RoomsController, type: :controller do
     end
   end
 
-  describe "POST #vote" do
-    let(:room) { Room.create! valid_attributes }
-    let(:story){ room.stories.first }
-
-    it "votes a point per user per story if valid vote" do
-      post :vote, params: {:id => room.slug, story_id: story.id, points: "13"}, session: valid_session
-      latest_vote = UserStoryPoint.last
-      expect(latest_vote.story_id).to eq story.id
-      expect(latest_vote.points).to eq "13"
-      # TODO
-      # expect(ActionCable.server).to receive(:broadcast)
-    end
-
-    it "returns bad_request header info if invalid vote" do
-      post :vote, params: {:id => room.slug, story_id: story.id, points: "7"}, session: valid_session
-      latest_vote = UserStoryPoint.last
-      expect(response.status).to eq 400
-    end
-  end
-
   describe "POST #set_room_status" do
     it "updates room status if status changed" do
       room = Room.create! valid_attributes
@@ -204,20 +184,6 @@ RSpec.describe RoomsController, type: :controller do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
       expect(assigns(:users)).to eq [user]
-    end
-  end
-
-  describe "POST #set_story_point" do
-    let!(:room) { Room.create! valid_attributes }
-    let!(:story){ room.stories.first }
-    let(:user) { User.find_by email: 'a@a.com' }
-    let!(:user_room) { UserRoom.create user_id: user.id, room_id: room.id, role: 0 }
-
-    it "sets point for story(final)" do
-      post :set_story_point, params: {:id => room.slug, story_id: story.id, point: "13"}, session: valid_session
-
-      expect(Story.last.point).to eq "13"
-      expect(Room.last.status).to be_nil
     end
   end
 

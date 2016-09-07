@@ -1,37 +1,17 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :vote, :story_list, :user_list, :set_story_point, :set_room_status, :draw_board]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board]
   before_action :enter_room, only: [:show]
 
   def index
     redirect_to dashboard_index_path
   end
 
-  def vote
-    if valid_vote?
-      UserStoryPoint.vote(current_user.id,
-                      params[:story_id],
-                      params[:points]) do |user_story_point|
-        broadcast_user_point user_story_point
-      end
-    else
-      head :bad_request
-    end
-  end
-
   def set_room_status
     if valid_room_status.present? && (@room.status != valid_room_status)
       @room.update_attribute :status, valid_room_status
     end
-    head :no_content
-  end
-
-  def broadcast_user_point user_point
-    broadcaster "rooms/#{@room.slug}",
-        person_id: user_point.user_id,
-        story_id: user_point.story_id,
-        points: user_point.points
     head :no_content
   end
 
@@ -120,20 +100,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  def set_story_point
-    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
-    if user_room.moderator? && @room.valid_vote_point?(params[:point])
-      story = Story.find_by id: params[:story_id], room_id: @room.id
-      if story
-        story.update_attribute :point, params[:point]
-        @room.update_attribute :status, nil
-      end
-    end
-
-    render json: { success: true }
-  end
-
   def draw_board
     @stories = @room.groomed_stories
   end
@@ -188,10 +154,6 @@ class RoomsController < ApplicationController
       'open' => Room::OPEN,
       'draw' => Room::DRAW
     }[params[:status]]
-  end
-
-  def valid_vote?
-    @room.valid_vote_point?(params[:points]) && params[:story_id].present?
   end
 
   def broadcaster channel, *message
