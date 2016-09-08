@@ -55,7 +55,7 @@ class RoomsChannel < ApplicationCable::Channel
   end
 
   def valid_vote? payload
-    @room.valid_vote_point?(payload["points"]) && payload["story_id"].present?
+    @room.valid_vote_point?(payload["points"].to_s) && payload["story_id"].present?
   end
 
   def broadcaster channel, *message
