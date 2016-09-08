@@ -29,7 +29,7 @@ var Board = React.createClass({
       if ('null' === story.point) {
         point = 'skipped';
       } else {
-        point = story.point;
+        point = pointEmojis[story.point] || story.point;
       }
       return (
         <tr key={story.id}>
