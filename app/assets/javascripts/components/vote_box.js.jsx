@@ -7,7 +7,7 @@ var VoteBox = React.createClass({
       node.toggleClass('btn-info');
       App.rooms.perform('vote', {
         roomId: POKER.roomId,
-        data: { points: node.val(), story_id: POKER.story_id },
+        data: { points: node.data("point"), story_id: POKER.story_id },
       });
     }
   },
@@ -25,9 +25,11 @@ var VoteBox = React.createClass({
     var that = this;
     var pointsList = this.props.poker.pointValues.map(function(point) {
       var currentVoteClassName = currentVote == point ? ' btn-info' : '';
+      var displayPoint = pointEmojis[point] || point;
+
       return (
         <li key={point}>
-          <input className={'btn btn-default btn-lg' + currentVoteClassName } type="button" onClick={that.onItemClick} value={point} />
+          <input className={'btn btn-default btn-lg' + currentVoteClassName } type="button" onClick={that.onItemClick} data-point={point} value={displayPoint} />
         </li>
       )
     });

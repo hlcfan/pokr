@@ -8,10 +8,12 @@ var PointBar = React.createClass({
     }
   },
   render: function() {
+    var pointIndicator = pointEmojis[this.props.point] || this.props.point;
+
     return (
       <li className="row" data-point={this.props.point}>
         <div className="row-container">
-          <div className="col-md-2 point">{this.props.point}</div>
+          <div className="col-md-2 point">{pointIndicator}</div>
           <div className="col-md-9 bar">
             <div onClick={this.selectPoint} style={{width: this.props.barWidth + '%', background: this.props.color, color: '#fff', 'textAlign': 'center'}}>
               {this.props.count}

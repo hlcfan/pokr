@@ -31,6 +31,11 @@ var barColors = [
   "#ffe4e1"
 ];
 
+var pointEmojis = {
+  "coffee": "☕",
+  "?": "⁉️"
+}
+
 function publishResult() {
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
     App.rooms.perform('action', {
