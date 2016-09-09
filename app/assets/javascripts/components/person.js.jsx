@@ -11,7 +11,7 @@ var Person = React.createClass({
     var pointLabel = (function() {
       if (window.syncResult) {
         return(
-          <span className="points label label-info pull-right">
+          <span className="points pull-right">
             {pointEmojis[that.props.points] || that.props.points}
           </span>
         );
