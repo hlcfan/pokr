@@ -20,3 +20,4 @@
 //= require react_ujs
 //= require marked
 //= require jquery.nested-fields
+//= require feedback

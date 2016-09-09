@@ -10,4 +10,25 @@ class HomeController < ApplicationController
     redirect_to new_user_registration_path
   end
 
+  def feedback
+    message = params[:feedback]
+    if message.present? && client_email_address.present?
+      FeedbackMailer.feedback(email: client_email_address, message: message).deliver_later
+    end
+
+    head :no_content
+  end
+
+  private
+
+  def client_email_address
+    @client_email_address ||= begin
+      if current_user
+        current_user.email
+      else
+        params[:email]
+      end
+    end
+  end
+
 end

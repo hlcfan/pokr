@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   post 'home/sign_up'
+  post 'home/feedback'
 
   mount ActionCable.server => '/cable'
 

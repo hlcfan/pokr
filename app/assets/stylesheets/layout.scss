@@ -15,3 +15,28 @@
 .turbolinks-progress-bar {
   background-color: #5bc0de;
 }
+
+.feedback-holder {
+  float: right;
+  background-color: #e94e1b;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 5px 0 0 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.btn-feedback {
+  color: #fff;
+  background-color: #e94e1b;
+  border-color: #e94e1b;
+
+  &:hover, &:focus, &:active {
+    background-color: #e94e1b !important;
+    border-color: #e94e1b !important;
+  }
+}
+    
