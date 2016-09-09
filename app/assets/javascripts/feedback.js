@@ -7,9 +7,15 @@ $(document).on('turbolinks:load', function(event) {
   });
 
   $("#feedback .submit").on("click", function(e) {
+    var message = $('#feedback #message').val();
+    var email = $('#feedback input[name=email]').val();
+
+    if (message.length === 0 && email.length === 0) {
+      return false
+    }
     var formData = {
-      'email'    : $('#feedback input[name=email]').val(),
-      'feedback' : $('#feedback #message').val()
+      'email'    : email,
+      'feedback' : message
     };
 
     $.ajax({
