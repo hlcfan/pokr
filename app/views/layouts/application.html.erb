@@ -32,23 +32,30 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Please say something to us</h4>
+          <h4 class="modal-title new-form">Please say something to us</h4>
+          <h4 class="modal-title submitted-form">Thank you!</h4>
         </div>
         <div class="modal-body">
-          <%= form_tag "url", method: "post", class: 'form', role: 'form' do |f| %>
-            <% unless current_user %>
-              <div class="form-group">
-                <%= f.label :email %>
-                <%= f.text_field :email, class: 'form-control' %>
+          <%= form_tag home_feedback_path, method: "post", class: 'form', role: 'form' do |f| %>
+            <div class="new-form">
+              <% unless current_user %>
+                <div class="form-group">
+                  <%= f.label :email %>
+                  <%= f.text_field :email, class: 'form-control' %>
+                </div>
+              <% end %>
+              <div class="form-group clearfix">
+                <%= text_area_tag :message, nil, rows: "5", cols: "50", class: 'form-control col-xs-10' %>
               </div>
-            <% end %>
-            <div class="form-group clearfix">
-              <%= text_area_tag :feedback, nil, rows: "5", cols: "50", class: 'form-control col-xs-10' %>
+            </div>
+            <div class="submitted-form">
+              <h2>✅ ❤️💙💚💛💜😘</h2>
             </div>
           <% end %>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+          <button type="button" class="submit new-form btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-default submitted-form" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
