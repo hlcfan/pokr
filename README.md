@@ -22,6 +22,9 @@ Yet another pointing poker, aiming at efficiency & user experience.
 + FontAwesome
 + Puma
 
+## Screenshot
+![Pokr](./screenshot.png)
+
 ## 🔧 Contribution
 
 Your contribution is very welcomed!

@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.0] - 2016-09-09
+### Changed
+- Support Emoji for some of the points, like coffee, question
+- Change color scheme a bit, switch most green(success) to light blue(info)
+- Colorize point bar from dark to light, as larger point to smaller one
+
 ## [0.2.0] - 2016-08-30
 ### Changed
 - Switch most of communications from HTTP to WS
