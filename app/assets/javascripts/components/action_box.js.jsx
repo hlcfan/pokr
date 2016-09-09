@@ -43,19 +43,19 @@ var ActionBox = React.createClass({
       if (POKER.role === 'Moderator') {
         if (that.state.buttonState === 'not-open') {
           return (
-            <a onClick={that.showResult} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+            <a onClick={that.showResult} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
               开
             </a>
           );
         } else if (that.state.buttonState === 'open') {
           return (
-            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
               Skip it
             </a>
           );
         } else if (that.state.buttonState === 'draw') {
           return (
-            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-success btn-block" href="javascript:;" role="button">
+            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
               Show board
             </a>
           );
