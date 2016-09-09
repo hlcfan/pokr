@@ -16,6 +16,8 @@ class HomeController < ApplicationController
     if message.present? && email.present?
       FeedbackMailer.feedback(@user).deliver_later
     end
+
+    head :no_content
   end
 
 end
