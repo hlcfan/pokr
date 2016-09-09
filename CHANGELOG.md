@@ -8,6 +8,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Change color scheme a bit, switch most green(success) to light blue(info)
 - Colorize point bar from dark to light, as larger point to smaller one
 
+### Added
+- Feedback box - looking forward to more feedbacks!
+
 ## [0.2.0] - 2016-08-30
 ### Changed
 - Switch most of communications from HTTP to WS
