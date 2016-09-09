@@ -36,16 +36,15 @@
           <h4 class="modal-title submitted-form">Thank you!</h4>
         </div>
         <div class="modal-body">
-          <%= form_tag home_feedback_path, method: "post", class: 'form', role: 'form' do |f| %>
+          <%= form_tag home_feedback_path, method: "post", class: 'form', role: 'form' do %>
             <div class="new-form">
               <% unless current_user %>
                 <div class="form-group">
-                  <%= f.label :email %>
-                  <%= f.text_field :email, class: 'form-control' %>
+                  <%= text_field_tag :email, nil, class: 'form-control', placeholder: "Email address" %>
                 </div>
               <% end %>
               <div class="form-group clearfix">
-                <%= text_area_tag :message, nil, rows: "5", cols: "50", class: 'form-control col-xs-10' %>
+                <%= text_area_tag :message, nil, rows: "5", cols: "50", class: 'form-control col-xs-10', placeholder: "Your words here..." %>
               </div>
             </div>
             <div class="submitted-form">
