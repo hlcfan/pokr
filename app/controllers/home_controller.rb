@@ -10,4 +10,12 @@ class HomeController < ApplicationController
     redirect_to new_user_registration_path
   end
 
+  def feedback
+    message = params[:feedback]
+    email = params[:email] || current_user.email
+    if message.present? && email.present?
+      FeedbackMailer.feedback(@user).deliver_later
+    end
+  end
+
 end
