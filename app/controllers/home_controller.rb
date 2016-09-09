@@ -14,7 +14,7 @@ class HomeController < ApplicationController
     message = params[:feedback]
     email = params[:email] || current_user.email
     if message.present? && email.present?
-      FeedbackMailer.feedback(@user).deliver_later
+      FeedbackMailer.feedback(email: email, message: message).deliver_later
     end
 
     head :no_content

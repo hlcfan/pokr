@@ -1,6 +1,6 @@
 class FeedbackMailer < ApplicationMailer
 
-  def feedback message, email
+  def feedback email:, message:
     @message = message
     @email = email
     mail(to: "hlcfan.yan@gmail.com", subject: '[Feedback] Pokrex')
