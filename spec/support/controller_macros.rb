@@ -6,8 +6,4 @@ module ControllerMacros
       sign_in user
     end
   end
-
-  def method_name
-    
-  end
 end
