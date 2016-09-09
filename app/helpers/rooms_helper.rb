@@ -4,7 +4,7 @@ module RoomsHelper
     if room.status == Room::DRAW
       "label-default"
     else
-      "label-success"
+      "label-info"
     end
   end
 

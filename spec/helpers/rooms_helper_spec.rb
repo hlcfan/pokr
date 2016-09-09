@@ -7,9 +7,9 @@ RSpec.describe RoomsHelper, type: :helper do
       expect(state_class(room)).to eq "label-default"
     end
 
-    it "returns label-success if room.status is not draw" do
+    it "returns label-info if room.status is not draw" do
       room = double(status: nil)
-      expect(state_class(room)).to eq "label-success"
+      expect(state_class(room)).to eq "label-info"
     end
   end
 
