@@ -1,9 +1,13 @@
 $(document).on('turbolinks:load', function(event) {
-  $(".feedback-holder").on("click", function() {
+  $(".feedback-holder span").on("click", function() {
     $("#feedback #message").val("");
     $("#feedback .new-form").show();
     $("#feedback .submitted-form").hide();
     $("#feedback .modal").modal({keyboard: false, backdrop: 'static'});
+  });
+
+  $(".feedback-holder .close").on("click", function() {
+    $(".feedback-holder").hide();
   });
 
   $("#feedback .submit").on("click", function(e) {
