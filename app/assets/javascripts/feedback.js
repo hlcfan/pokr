@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function(event) {
   $("#sign-up-btn").on("click", function(e) {
     e.preventDefault();
     var email = $('.get-started input[name=email]').val();
-    if (email == null) {
+    if ($.isEmptyObject(email)) {
       window.location = "/users/sign_up";
     } else {
       window.location = "/users/sign_up?email=" + email;
