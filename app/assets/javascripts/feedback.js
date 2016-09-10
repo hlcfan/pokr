@@ -1,9 +1,10 @@
 $(document).on('turbolinks:load', function(event) {
+  var modalOptions = {keyboard: false, backdrop: 'static'};
   $(".feedback-holder span").on("click", function() {
     $("#feedback #message").val("");
     $("#feedback .new-form").show();
     $("#feedback .submitted-form").hide();
-    $("#feedback .modal").modal({keyboard: false, backdrop: 'static'});
+    $("#feedback .modal").modal(modalOptions);
   });
 
   $(".feedback-holder .close").on("click", function() {
@@ -35,20 +36,19 @@ $(document).on('turbolinks:load', function(event) {
 
   $("#sign-up-btn").on("click", function(e) {
     e.preventDefault();
+    $("#sign-up-form .modal").modal(modalOptions);
     var email = $('.get-started input[name=email]').val();
-    if ($.isEmptyObject(email)) {
-      window.location = "/users/sign_up";
-    } else {
-      window.location = "/users/sign_up?email=" + email;
+    if (!$.isEmptyObject(email)) {
+      $("#sign-up-form form #user_email").val(email)  ;
     }
   });
 
   $('.get-started input[name=email]').keypress(function (e) {
-     var key = e.which;
-     if(key == 13) {
-        $("#sign-up-btn").trigger("click");
-        return false;
-      }
-    });
+    var key = e.which;
+    if(key == 13) {
+      $("#sign-up-btn").trigger("click");
+      return false;
+    }
+  });
 });
 
