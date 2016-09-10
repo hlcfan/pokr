@@ -1,8 +1,7 @@
 <%
   title "Sign up"
-  if resource.email.blank? && cookies[:email].present?
-    resource.email = cookies[:email]
-    cookies.delete :email
+  if resource.email.blank? && params[:email].present?
+    resource.email = params[:email]
   end
 %>
 <div class="row">
