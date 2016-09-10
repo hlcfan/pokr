@@ -39,29 +39,22 @@ var ActionBox = React.createClass({
   },
   render: function() {
     var that = this;
-    var actionButton = (function() {
-      if (POKER.role === 'Moderator') {
-        if (that.state.buttonState === 'not-open') {
-          return (
-            <a onClick={that.showResult} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
-              开
-            </a>
-          );
-        } else if (that.state.buttonState === 'open') {
-          return (
-            <a onClick={that.skipStory} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
-              Skip it
-            </a>
-          );
-        } else if (that.state.buttonState === 'draw') {
-          return (
-            <a onClick={that.showBoard} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
-              Show board
-            </a>
-          );
-        }
+    var onClickName;
+    var buttonText;
+    
+    if (POKER.role === 'Moderator') {
+      if (that.state.buttonState === 'not-open') {
+        onClickName = that.showResult;
+        buttonText = "Flip";
+      } else if (that.state.buttonState === 'open') {
+        onClickName = that.skipStory;
+        buttonText = "Skip it";
+      } else if (that.state.buttonState === 'draw') {
+        onClickName = that.showBoard;
+        buttonText = "Show board";
       }
-    })();
+    }
+    
     var tip = (function(){
       // already decided point
       if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Moderator') {
@@ -86,7 +79,9 @@ var ActionBox = React.createClass({
             <ResultPanel />
             <div ref="openButton" className="openButton container-fluid">
               <div className="">
-                {actionButton}
+                <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
+                  {buttonText}
+                </a>
               </div>
             </div>
           </div>
