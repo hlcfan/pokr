@@ -5,11 +5,6 @@ class HomeController < ApplicationController
     render layout: false
   end
 
-  def sign_up
-    cookies[:email] = params[:email]
-    redirect_to new_user_registration_path
-  end
-
   def feedback
     message = params[:feedback]
     if message.present? && client_email_address.present?

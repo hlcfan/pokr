@@ -28,14 +28,6 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe "GET #sign_up" do
-    it "redirects user to registration page and set cookies" do
-      get :sign_up, params: { email: 'a@a.com' }
-      expect(cookies[:email]).to eq "a@a.com"
-      expect(response).to redirect_to new_user_registration_path
-    end
-  end
-
   describe "POST #feedback" do
     context "when user is not signed in" do
       it "collects feedback and send to me" do
