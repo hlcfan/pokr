@@ -47,15 +47,13 @@
       </div>
       <div class="sign-up container">
         <div class="row action input">
-          <div class="get-started col-md-12">
-            <%= form_tag home_sign_up_path, class: 'form-inline text-center', method: :post do |f| %>
+          <div class="get-started col-md-5">
               <div class="input-group input-group-lg">
                 <input type="email" name="email" class="form-control email" value="" placeholder="Email address">
-                <span class="input-group-btn">
-                  <button class="btn btn-info" type="submit">Sign up</button>
-                </span>
+                <a class="input-group-btn" href="<%= new_user_registration_path %>" target="_blank">
+                  <button class="btn btn-info" type="button">Sign up</button>
+                </a>
               </div>
-            <% end %>
           </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
       </div>

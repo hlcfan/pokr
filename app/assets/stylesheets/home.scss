@@ -131,10 +131,12 @@ body {
   .sign-up {
     .action {
       margin: 55px auto;
-
+      .get-started {
+        text-align: center;
+        float: none;
+        margin: 0 auto;
+      }
       .email {
-        width: 300px;
-
         @media #{$tablet} {
           width: 100%;
         }
