@@ -18,7 +18,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe "#default_description" do
     it "returns default description" do
-      expect(helper.default_description).to eq "Pokr, is an efficient pointing poker or planning poker aim at improving the efficiency and user experience for agile/scrum teams."
+      expect(helper.default_description).to eq "Pokr, is an efficient planning poker or pointing poker aim at improving the efficiency and user experience for agile/scrum teams."
     end
   end
 
