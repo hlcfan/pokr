@@ -19,7 +19,7 @@
 .feedback-holder {
   float: right;
   background-color: #e94e1b;
-  padding: 10px 20px;
+  padding: 10px 0 10px 20px;
   color: #fff;
   font-size: 18px;
   border-radius: 5px 0 0 0;
@@ -30,6 +30,7 @@
 
   .close {
     margin-top: 3px;
+    padding-right: 15px;
   }
 }
 
