@@ -41,6 +41,7 @@ var ActionBox = React.createClass({
     var that = this;
     var onClickName;
     var buttonText;
+    var buttonHtml;
     
     if (POKER.role === 'Moderator') {
       if (that.state.buttonState === 'not-open') {
@@ -54,7 +55,15 @@ var ActionBox = React.createClass({
         buttonText = "Show board";
       }
     }
-    
+    buttonHtml = (function() {
+      if (onClickName && buttonText) {
+        return (
+          <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
+            {buttonText}
+          </a>
+        )
+      }
+    })();
     var tip = (function(){
       // already decided point
       if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Moderator') {
@@ -79,9 +88,7 @@ var ActionBox = React.createClass({
             <ResultPanel />
             <div ref="openButton" className="openButton container-fluid">
               <div className="">
-                <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
-                  {buttonText}
-                </a>
+                {buttonHtml}
               </div>
             </div>
           </div>
