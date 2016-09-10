@@ -145,17 +145,6 @@ body {
           width: 100%;
         }
       }
-
-      form {
-        @media #{$tablet} {
-          margin: 0 auto;
-          width: 400px;
-        }
-
-        @media #{$mobile} {
-
-        }
-      }
     }
   }
 }
@@ -242,5 +231,11 @@ body {
     display: inline-block;
     width: 60px;
     margin-left: 2px;
+  }
+}
+
+#sign-up-form .modal-dialog {
+  @media #{$desktop} {
+    width: 30%;
   }
 }
