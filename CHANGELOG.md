@@ -2,7 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.2.0] - 2016-09-09
+## [0.2.2] - 2016-09-10
+### Changed
+- Widen and enlarge room status
+- Change 开 to Flip on the action button
+- Change the sort to created date DESC of room list in dashboard page
+
+### Added
+- User can directly sign up on home page without redirecting to sign up page
+  by opening a modal
+
+## [0.2.1] - 2016-09-09
 ### Changed
 - Support Emoji for some of the points, like coffee, question
 - Change color scheme a bit, switch most green(success) to light blue(info)
