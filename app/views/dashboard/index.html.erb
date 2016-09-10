@@ -2,8 +2,8 @@
   title "Dashboard"
 %>
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <div class="dashboard">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
@@ -16,16 +16,9 @@
         <div role="tabpanel" class="tab-pane active" id="participated">
           <div class="panel panel-default">
             <div class="panel-body">
-              <ul class="list-group">
-                <% @partipated_rooms.each do |room| %>
-                  <li class="list-group-item">
-                    <%= link_to room_path(room.slug), target: '_blank' do %>
-                      <%= room.name %>
-                      <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
+              <div class="list-group">
+                <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
+              </div>
             </div>
           </div>
         </div>
@@ -33,21 +26,14 @@
         <div role="tabpanel" class="tab-pane" id="created">
           <div class="panel panel-default">
             <div class="panel-body">
-              <ul class="list-group">
-                <% @created_rooms.each do |room| %>
-                  <li class="list-group-item">
-                    <%= link_to room_path(room.slug), target: '_blank' do %>
-                      <%= room.name %>
-                      <span class="points label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
+              <div class="list-group">
+                <%= render partial: "dashboard/room_item", collection: @created_rooms, as: :room %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4"></div>
+  <div class="col-md-2"></div>
 </div>

@@ -1,0 +1,11 @@
+<a class="list-group-item" href="<%= room_path(room.slug) %>", , target="_blank">
+  <h4 class="list-group-item-heading"><%= room.name %></h4>
+  <p class="list-group-item-text">
+    <span><%= room.users.count %> participants</span>
+    <span class="divider">·</span>
+    <span><%= room.stories.count %> stories</span>
+    <span class="divider">·</span>
+    <span><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
+  </p>
+  <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
+</a>
