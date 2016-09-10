@@ -32,5 +32,23 @@ $(document).on('turbolinks:load', function(event) {
       $("#feedback .submitted-form").show();
     });
   });
+
+  $("#sign-up-btn").on("click", function(e) {
+    e.preventDefault();
+    var email = $('.get-started input[name=email]').val();
+    if (email == null) {
+      window.location = "/users/sign_up";
+    } else {
+      window.location = "/users/sign_up?email=" + email;
+    }
+  });
+
+  $('.get-started input[name=email]').keypress(function (e) {
+     var key = e.which;
+     if(key == 13) {
+        $("#sign-up-btn").trigger("click");
+        return false;
+      }
+    });
 });
 
