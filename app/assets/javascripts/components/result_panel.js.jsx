@@ -32,7 +32,7 @@ var ResultPanel = React.createClass({
       point = keys[i];
       count = pointHash[point];
       barWidth = count/maxPointCount * 100;
-      pointArray.push({point: point, count: count, barWidth: barWidth, color: barColors[j]})
+      pointArray.push({point: point, count: count, barWidth: barWidth, color: barColors[point]})
     }
     this.setState({data: pointArray});
   },
