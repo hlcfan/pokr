@@ -60,6 +60,10 @@ class Room < ApplicationRecord
     ("null" == point) || point_values.include?(point)
   end
 
+  def timer_interval
+    (timer || 1) * 60
+  end
+
   private
 
   def slug!
