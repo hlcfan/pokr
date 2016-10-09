@@ -64,8 +64,10 @@ var ActionBox = React.createClass({
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
     EventEmitter.subscribe("noStoriesLeft", this.disableTimer);
-    EventEmitter.subscribe("resetTimer", this.resetTimer);
-    this.resetTimer();
+    if (POKER.timerInterval > 0) {
+      EventEmitter.subscribe("resetTimer", this.resetTimer);
+      this.resetTimer();      
+    }
     if (POKER.roomState === 'open') {
       showResultSection();
     }
