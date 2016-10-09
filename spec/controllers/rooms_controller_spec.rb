@@ -6,7 +6,7 @@ RSpec.describe RoomsController, type: :controller do
   # Room. As you add validations to Room, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { name: "room name", pv: "1,3,5,13", stories_attributes: [{ link: "http://jira.com/123" }]}
+    { name: "room name", timer: 1, pv: "1,3,5,13", stories_attributes: [{ link: "http://jira.com/123" }]}
   }
 
   let(:invalid_attributes) {

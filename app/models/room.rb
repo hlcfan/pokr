@@ -69,11 +69,11 @@ class Room < ApplicationRecord
     end
   end
 
+  private
+
   def has_timer?
     !!timer
   end
-
-  private
 
   def slug!
     permlink = PinYin.permlink(name).downcase
