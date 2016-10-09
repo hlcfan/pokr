@@ -61,7 +61,8 @@ class Room < ApplicationRecord
   end
 
   def timer_interval
-    (timer || 1) * 60
+    # unit in minute, defaults to 1 minute
+    (timer || 1).to_i * 60
   end
 
   private
