@@ -28,7 +28,7 @@ var ActionBox = React.createClass({
     drawBoard();
   },
   resetTimer: function() {
-    if (!$.isEmptyObject(POKER.timer)) {
+    if (POKER.timer > 0) {
       clearInterval(POKER.timer);
     }
 
