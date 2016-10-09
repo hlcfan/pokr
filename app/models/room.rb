@@ -60,7 +60,20 @@ class Room < ApplicationRecord
     ("null" == point) || point_values.include?(point)
   end
 
+  def timer_interval
+    if has_timer?
+      # unit in minute, defaults to 1 minute
+      (timer || 1).to_i * 60
+    else
+      0
+    end
+  end
+
   private
+
+  def has_timer?
+    !!timer
+  end
 
   def slug!
     permlink = PinYin.permlink(name).downcase

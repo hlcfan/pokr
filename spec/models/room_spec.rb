@@ -137,4 +137,16 @@ RSpec.describe Room, type: :model do
       expect(room.pv).to eq %w(3 8 13 20 40).join(',')
     end
   end
+
+  describe "#timer_interval" do
+    it "returns timer interval in seconds when timer set" do
+      room.timer = 1
+      expect(room.timer_interval).to be 60
+    end
+
+    it "returns 0 when timer not set" do
+      room.timer = nil
+      expect(room.timer_interval).to be 0
+    end
+  end
 end

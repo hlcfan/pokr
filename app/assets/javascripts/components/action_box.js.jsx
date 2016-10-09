@@ -27,9 +27,47 @@ var ActionBox = React.createClass({
     $('#board').html('');
     drawBoard();
   },
+  resetTimer: function() {
+    if (POKER.timer > 0) {
+      clearInterval(POKER.timer);
+    }
+    $(".timer").show();
+    $(".timer .counter").text(POKER.timerInterval);
+    var tick = POKER.timerInterval;
+    POKER.timer = setInterval(function() {
+      var $icon = $(".timer .fa");
+      if (tick <= 0) {
+        if (!$icon.hasClass("fa-bell-o")) {
+          $(".timer .counter").text("Time up");
+          $icon.attr("class", "fa fa-bell-o");
+        }
+        $icon.animate({
+          'font-size': '8px'
+        }, 500, "swing", function() {
+          $(this).animate({
+            'font-size': '16px'
+          }, 500)
+        });
+      } else {
+        if (!$icon.hasClass("fa-clock-o")) {
+          $icon.attr("class", "fa fa-clock-o")
+        }
+        tick -= 1;
+        $(".timer .counter").text(tick);
+      }
+    }, 1000);
+  },
+  disableTimer: function() {
+    $(".timer").remove();
+  },
   componentDidMount: function() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
+    EventEmitter.subscribe("noStoriesLeft", this.disableTimer);
+    if (POKER.timerInterval > 0) {
+      EventEmitter.subscribe("resetTimer", this.resetTimer);
+      this.resetTimer();      
+    }
     if (POKER.roomState === 'open') {
       showResultSection();
     }
@@ -81,7 +119,14 @@ var ActionBox = React.createClass({
 
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Action</div>
+        <div className="panel-heading">
+          Action
+          <span className="timer pull-right" style={{display: 'none'}}>
+            <i className="fa fa-clock-o"></i>
+            &nbsp;
+            <i className="counter">{POKER.timerInterval}</i>
+          </span>
+        </div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
             {tip}
