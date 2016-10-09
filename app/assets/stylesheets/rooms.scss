@@ -91,6 +91,16 @@
   }
 }
 
+.timer {
+  .counter {
+    font-style: normal;
+  }
+
+  .fa.fa-bell-o {
+    color: red;
+  }
+}
+
 #actionBox li.row {
   margin-bottom: 5px;
 }
