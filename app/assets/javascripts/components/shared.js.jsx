@@ -61,6 +61,7 @@ function nextStory() {
   EventEmitter.dispatch("refreshUsers");
   EventEmitter.dispatch("refreshStories");
   EventEmitter.dispatch("resetActionBox");
+  EventEmitter.dispatch("resetTimer");
 }
 
 function setupChannelSubscription() {

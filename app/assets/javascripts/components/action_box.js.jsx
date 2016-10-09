@@ -27,9 +27,23 @@ var ActionBox = React.createClass({
     $('#board').html('');
     drawBoard();
   },
+  resetTimer: function() {
+    if (!$.isEmptyObject(POKER.timer)) {
+      clearInterval(POKER.timer);
+    }
+
+    $(".timer").text(POKER.timerInterval);
+    var tick = POKER.timerInterval;
+    POKER.timer = setInterval(function() {
+      tick -= 1;
+      $(".timer").text(tick);
+    },1000);
+  },
   componentDidMount: function() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
+    EventEmitter.subscribe("resetTimer", this.resetTimer);
+    this.resetTimer();
     if (POKER.roomState === 'open') {
       showResultSection();
     }
@@ -81,7 +95,7 @@ var ActionBox = React.createClass({
 
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Action</div>
+        <div className="panel-heading">Action<span className="timer pull-right">{POKER.timerInterval}</span></div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
             {tip}
