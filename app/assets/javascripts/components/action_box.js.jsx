@@ -48,7 +48,7 @@ var ActionBox = React.createClass({
         }
       } else {
         if (!$icon.hasClass("sandglass")) {
-          $icon.attr("class", "fa sandglass").text("⌛");
+          $icon.attr("class", "fa sandglass").text("⌛").show();
         }
         tick -= 1;
         $(".timer .counter").text(tick);
