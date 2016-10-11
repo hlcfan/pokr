@@ -34,23 +34,21 @@ var ActionBox = React.createClass({
     $(".timer").show();
     $(".timer .counter").text(POKER.timerInterval);
     var tick = POKER.timerInterval;
+    var $icon = $(".timer .fa");
+
     POKER.timer = setInterval(function() {
-      var $icon = $(".timer .fa");
       if (tick <= 0) {
-        if (!$icon.hasClass("fa-bell-o")) {
+        if (!$icon.hasClass("warning")) {
           $(".timer .counter").text("Time up");
-          $icon.attr("class", "fa fa-bell-o");
+          $icon.attr("class", "fa warning").text("⚠️");
         }
-        $icon.animate({
-          'font-size': '8px'
-        }, 500, "swing", function() {
-          $(this).animate({
-            'font-size': '16px'
-          }, 500)
-        });
+        var $warning = $(".warning");
+        if(!$warning.is(':animated')) {
+          $warning.fadeToggle("fast");
+        }
       } else {
-        if (!$icon.hasClass("fa-clock-o")) {
-          $icon.attr("class", "fa fa-clock-o")
+        if (!$icon.hasClass("sandglass")) {
+          $icon.attr("class", "fa sandglass").text("⌛").show();
         }
         tick -= 1;
         $(".timer .counter").text(tick);
@@ -64,7 +62,7 @@ var ActionBox = React.createClass({
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
     EventEmitter.subscribe("noStoriesLeft", this.disableTimer);
-    if (POKER.timerInterval > 0) {
+    if (POKER.roomState !== "draw" && POKER.timerInterval > 0) {
       EventEmitter.subscribe("resetTimer", this.resetTimer);
       this.resetTimer();      
     }
@@ -122,7 +120,7 @@ var ActionBox = React.createClass({
         <div className="panel-heading">
           Action
           <span className="timer pull-right" style={{display: 'none'}}>
-            <i className="fa fa-clock-o"></i>
+            <i className="fa sandglass">⌛</i>
             &nbsp;
             <i className="counter">{POKER.timerInterval}</i>
           </span>

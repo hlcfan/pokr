@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.4] - 2016-10-11
+### Changed
+- Newly added egg timer is just fuckin ugly, replace icons with emojis,
+  anyway the user experience of this is still shitty.
+
 ## [0.2.3] - 2016-10-09
 ### Added
 - Add egg timer to ensure that discussion is structured
