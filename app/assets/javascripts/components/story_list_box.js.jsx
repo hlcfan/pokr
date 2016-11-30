@@ -44,10 +44,10 @@ var StoryListBox = React.createClass({
           </ul>
           <div className="tab-content">
             <div role="tabpanel" className="row storyListBox tab-pane active" id="grooming-list">
-              <StoryList data={this.state.data} />
+              <StoryList data={this.state.data.ungroomed || []} tab="ungroomed" />
             </div>
             <div role="tabpanel" className="tab-pane" id="groomed-list">
-              Wut?
+              <StoryList data={this.state.data.groomed || []} tab="groomed" />
             </div>
           </div>
         </div>
