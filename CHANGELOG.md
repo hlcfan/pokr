@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.5] - 2016-11-30
+### Added
+- Can now switch groomed and un-groomed stories via tabs.
+- Allow moderator to re-vote a story.
+
 ## [0.2.4] - 2016-10-11
 ### Changed
 - Newly added egg timer is just fuckin ugly, replace icons with emojis,
