@@ -66,6 +66,10 @@ function nextStory() {
   }
 }
 
+function revote() {
+  nextStory();
+}
+
 function setupChannelSubscription() {
   if (POKER.roomState === "draw") {
     return false;
@@ -86,6 +90,8 @@ function setupChannelSubscription() {
           }
         } else if(data.data === "next-story") {
           nextStory();
+        } else if(data.data === "revote") {
+          revote();
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);

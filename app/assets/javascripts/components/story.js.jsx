@@ -3,7 +3,15 @@ var Story = React.createClass({
   //   var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
   //   return { __html: rawMarkup };
   // },
-
+  revote: function(e) {
+    var revoteStoryId = $(e.target).parents("li").data("id");
+    if (POKER.role === 'Moderator') {
+      App.rooms.perform('revote', {
+        roomId: POKER.roomId,
+        data: { story_id: revoteStoryId }
+      });
+    }
+  },
   render: function() {
     var that = this;
     var revoteIcon;
