@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
   end
 
   def story_list
-    @stories = @room.un_groomed_stories
+    @stories = @room.grouped_stories
   end
 
   def user_list

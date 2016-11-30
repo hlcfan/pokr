@@ -32,6 +32,14 @@ class Room < ApplicationRecord
     end
   end
 
+  def grouped_stories
+    stories_grouped = stories.group_by do |story|
+      story.point.present?
+    end
+
+    { groomed: stories_grouped[true], un_groomed: stories_grouped[false] }
+  end
+
   def un_groomed_stories
     stories.where(point: nil)
   end
