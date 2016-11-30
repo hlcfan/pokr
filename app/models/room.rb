@@ -37,7 +37,7 @@ class Room < ApplicationRecord
       story.point.present?
     end
 
-    { groomed: stories_grouped[true], un_groomed: stories_grouped[false] }
+    { groomed: stories_grouped[true], ungroomed: stories_grouped[false] }
   end
 
   def un_groomed_stories

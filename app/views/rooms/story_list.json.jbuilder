@@ -5,7 +5,7 @@ json.groomed do
 end
 
 json.ungroomed do
-  json.array!(@stories[:un_groomed]) do |story|
+  json.array!(@stories[:ungroomed]) do |story|
     json.extract! story, :id, :link, :desc
   end
 end
