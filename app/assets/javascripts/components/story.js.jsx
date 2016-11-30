@@ -14,7 +14,7 @@ var Story = React.createClass({
   },
   render: function() {
     var that = this;
-    var revoteIcon;
+    var revoteIcon, liElementClass;
     revoteIcon = function() {
       if (POKER.role === 'Moderator' && that.props.tab === "groomed") {
         return(
@@ -25,8 +25,16 @@ var Story = React.createClass({
       }
     }();
 
+    liElementClass = function() {
+      if (that.props.tab === "groomed") {
+        return("story story__groomed");
+      } else {
+        return("story story__ungroomed");
+      }
+    }();
+
     return (
-      <li className="story" id={'story-' + this.props.id} data-id={this.props.id}>
+      <li className={liElementClass} id={'story-' + this.props.id} data-id={this.props.id}>
         <a href={this.props.link} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>

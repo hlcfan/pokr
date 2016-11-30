@@ -20,7 +20,7 @@ var StoryListBox = React.createClass({
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
   },
   componentDidUpdate: function() {
-    $currentStory = $('.storyList ul li.story').not(".story-leave").first();
+    $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
     if($currentStory.length) {
       POKER.story_id = $currentStory.data('id');
     } else {
