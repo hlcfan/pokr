@@ -38,7 +38,7 @@ var Story = React.createClass({
         <a href={this.props.link} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>
-        <span className="label label-info story--voted-point">{this.props.point}</span>
+        <span className="label label-info story--voted-point">{pointEmojis[this.props.point] || this.props.point}</span>
         {revoteIcon}
         <p className="story-desc">
           {this.props.desc}
