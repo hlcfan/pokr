@@ -33,7 +33,7 @@ class Room < ApplicationRecord
   end
 
   def grouped_stories
-    stories_grouped = stories.group_by do |story|
+    stories_grouped = desc_sorted_stories.group_by do |story|
       story.point.present?
     end
 
@@ -78,6 +78,10 @@ class Room < ApplicationRecord
   end
 
   private
+
+  def desc_sorted_stories
+    stories.order("updated_at DESC")
+  end
 
   def has_timer?
     !!timer
