@@ -46,6 +46,13 @@
 
   .storyList {
     margin-top: 10px;
+
+    .story {
+      .revote {
+        margin-left: 10px;
+        color: #555;
+      }
+    }
   }
 
   .nav-tabs {
@@ -53,6 +60,7 @@
       margin-left: 15px;
     }
   }
+
 }
 
 .people-list ul {
