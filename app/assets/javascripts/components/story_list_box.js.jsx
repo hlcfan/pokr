@@ -34,8 +34,21 @@ var StoryListBox = React.createClass({
       <div className="panel panel-default">
         <div className="panel-heading">Stories</div>
         <div id="storyListArea" className="panel-body row">
-          <div className="storyListBox">
-            <StoryList data={this.state.data} />
+          <ul className="nav nav-tabs" role="tablist">
+            <li role="presentation" className="active">
+              <a href="#grooming-list" aria-controls="home" role="tab" data-toggle="tab">Groom list</a>
+            </li>
+            <li role="presentation">
+              <a href="#groomed-list" aria-controls="profile" role="tab" data-toggle="tab">Groomed list</a>
+            </li>
+          </ul>
+          <div className="tab-content">
+            <div role="tabpanel" className="row storyListBox tab-pane active" id="grooming-list">
+              <StoryList data={this.state.data} />
+            </div>
+            <div role="tabpanel" className="tab-pane" id="groomed-list">
+              Wut?
+            </div>
           </div>
         </div>
       </div>

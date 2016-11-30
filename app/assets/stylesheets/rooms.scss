@@ -43,6 +43,16 @@
     opacity: 0.01;
     transition: opacity 300ms ease-in;
   }
+
+  .storyList {
+    margin-top: 10px;
+  }
+
+  .nav-tabs {
+    li:first-child {
+      margin-left: 15px;
+    }
+  }
 }
 
 .people-list ul {
