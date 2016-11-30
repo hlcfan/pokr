@@ -16,7 +16,7 @@ var Story = React.createClass({
     var that = this;
     var revoteIcon, liElementClass;
     revoteIcon = function() {
-      if (POKER.role === 'Moderator' && that.props.tab === "groomed") {
+      if (POKER.role === 'Moderator' && that.props.tab === "groomed" && POKER.roomState !== "draw") {
         return(
           <a href="javascript:;" className="revote" onClick={that.revote}>
             <i className="fa fa-refresh"></i>
