@@ -5,7 +5,7 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
-set :domain, '98.126.65.214'
+set :domain, 'pokrex.com'
 set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{deploy_to}/#{current_path}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
@@ -15,7 +15,7 @@ set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
 
-set :puma_socket, '/tmp/puma.sock'
+set :puma_socket, '/tmp/puma_pokr.sock'
 set :puma_pid, 'tmp/pids/puma.pid'
 set :puma_state, 'tmp/sockets/puma.state'
 

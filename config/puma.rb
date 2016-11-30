@@ -11,7 +11,7 @@ if rails_env == ENV["RAILS_ENV"]
 
   pidfile "tmp/pids/puma.pid"
   state_path "tmp/sockets/puma.state"
-  bind 'unix:/tmp/puma.sock'
+  bind 'unix:/tmp/puma_pokr.sock'
   daemonize true
   workers 1
   threads 0, 16
