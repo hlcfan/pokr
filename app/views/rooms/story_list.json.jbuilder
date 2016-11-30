@@ -1,6 +1,6 @@
 json.groomed do
   json.array!(@stories[:groomed]) do |story|
-    json.extract! story, :id, :link, :desc
+    json.extract! story, :id, :link, :desc, :point
   end
 end
 

@@ -16,7 +16,7 @@ var Story = React.createClass({
     var that = this;
     var revoteIcon;
     revoteIcon = function() {
-      if (that.props.tab === "groomed") {
+      if (POKER.role === 'Moderator' && that.props.tab === "groomed") {
         return(
           <a href="javascript:;" className="revote" onClick={that.revote}>
             <i className="fa fa-refresh"></i>
@@ -30,6 +30,7 @@ var Story = React.createClass({
         <a href={this.props.link} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>
+        <span className="label label-info story--voted-point">{this.props.point}</span>
         {revoteIcon}
         <p className="story-desc">
           {this.props.desc}

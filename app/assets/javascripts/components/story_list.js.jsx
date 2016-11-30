@@ -4,7 +4,7 @@ var StoryList = React.createClass({
     var tab = this.props.tab;
     var storyNodes = this.props.data.map(function(story) {
       return (
-        <Story key={story.id} id={story.id} link={story.link} desc={story.desc} tab={tab} />
+        <Story key={story.id} id={story.id} link={story.link} desc={story.desc} point={story.point} tab={tab} />
       );
     });
     return (
