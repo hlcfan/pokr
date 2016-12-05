@@ -171,7 +171,7 @@ RSpec.describe RoomsController, type: :controller do
 
     it "gets un-groomed stories" do
       get :story_list, format: :json, params: {:id => room.slug}, session: valid_session
-      expect(assigns(:stories)).to eq [story]
+      expect(assigns(:stories)).to eq({ groomed: nil, ungroomed: [story] })
     end
   end
 

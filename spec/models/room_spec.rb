@@ -149,4 +149,20 @@ RSpec.describe Room, type: :model do
       expect(room.timer_interval).to be 0
     end
   end
+
+  describe "#grouped_stories" do
+    let!(:story_1) { Story.create(link: "link_1", room_id: 1) }
+    let!(:story_2) { Story.create(link: "link_2", room_id: 1) }
+    let!(:story_3) { Story.create(link: "link_3", room_id: 1, point: 3) }
+
+    it "returns stories grouped by whether it has point or not" do
+      sleep 1
+      story_2.touch
+      room.id = 1
+      expect(room.grouped_stories.size).to eq 2
+      expect(room.grouped_stories[:groomed].size).to eq 1
+      expect(room.grouped_stories[:ungroomed].size).to eq 2
+      expect(room.grouped_stories[:ungroomed].first.link).to eq "link_2"
+    end
+  end
 end

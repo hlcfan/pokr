@@ -43,6 +43,28 @@
     opacity: 0.01;
     transition: opacity 300ms ease-in;
   }
+
+  .storyList {
+    margin-top: 10px;
+
+    .story {
+      .story--voted-point {
+        margin-left: 10px;
+      }
+
+      .revote {
+        margin-left: 10px;
+        color: #555;
+      }
+    }
+  }
+
+  .nav-tabs {
+    li:first-child {
+      margin-left: 15px;
+    }
+  }
+
 }
 
 .people-list ul {
