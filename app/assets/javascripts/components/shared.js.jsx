@@ -34,7 +34,8 @@ var barColors = {
 
 var pointEmojis = {
   "coffee": "☕",
-  "?": "⁉️"
+  "?": "⁉️",
+  "null" : "skipped"
 }
 
 function publishResult() {
@@ -68,6 +69,7 @@ function nextStory() {
 
 function revote() {
   nextStory();
+  $('.vote-list ul li input').removeClass('disabled');
 }
 
 function setupChannelSubscription() {
