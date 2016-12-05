@@ -32,9 +32,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'react-rails', '~> 1.8.2'
 gem 'puma'
-gem 'redis-rack', github: 'redis-store/redis-rack', branch: 'master'
-gem 'redis-actionpack', github: 'redis-store/redis-actionpack', branch: 'master'
-gem 'redis-rails', github: 'redis-store/redis-rails', branch: 'master'
+gem 'redis-rails', '~> 5.0.1'
 gem 'mina-puma', require: false
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

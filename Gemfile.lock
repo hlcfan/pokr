@@ -1,33 +1,4 @@
 GIT
-  remote: git://github.com/redis-store/redis-actionpack.git
-  revision: ff0b0a2882315853242ee461c392f526c573bb2e
-  branch: master
-  specs:
-    redis-actionpack (5.0.0)
-      actionpack (>= 4.0.0, < 6)
-      redis-rack (~> 2.0.0.pre)
-      redis-store (~> 1.2.0.pre)
-
-GIT
-  remote: git://github.com/redis-store/redis-rack.git
-  revision: d995d3332ef670dc3faed113fd58239855003d94
-  branch: master
-  specs:
-    redis-rack (2.0.0)
-      rack (~> 2.0)
-      redis-store (~> 1.2.0)
-
-GIT
-  remote: git://github.com/redis-store/redis-rails.git
-  revision: bcecc6c2f95cb1243b3d4573d76f36ddba05fc65
-  branch: master
-  specs:
-    redis-rails (5.0.1)
-      redis-actionpack (~> 5.0.0)
-      redis-activesupport (~> 5.0.0)
-      redis-store (~> 1.2.0)
-
-GIT
   remote: https://github.com/hlcfan/awesome_nested_fields.git
   revision: 7deb24256f0e51ddae4f00cbdc80127ffebe2cf5
   specs:
@@ -198,8 +169,19 @@ GEM
       railties (>= 3.2)
       tilt
     redis (3.3.1)
+    redis-actionpack (5.0.0)
+      actionpack (>= 4.0.0, < 6)
+      redis-rack (~> 2.0.0.pre)
+      redis-store (~> 1.2.0.pre)
     redis-activesupport (5.0.1)
       activesupport (>= 3, < 6)
+      redis-store (~> 1.2.0)
+    redis-rack (2.0.0.pre)
+      rack (> 1.5, < 3)
+      redis-store (~> 1.2.0.pre)
+    redis-rails (5.0.1)
+      redis-actionpack (~> 5.0.0)
+      redis-activesupport (~> 5.0.0)
       redis-store (~> 1.2.0)
     redis-store (1.2.0)
       redis (>= 2.2)
@@ -294,9 +276,7 @@ DEPENDENCIES
   rails (= 5.0.0.1)
   rails-controller-testing
   react-rails (~> 1.8.2)
-  redis-actionpack!
-  redis-rack!
-  redis-rails!
+  redis-rails (~> 5.0.1)
   rspec-rails (~> 3.5)
   ruby-pinyin
   sass-rails (~> 5.0)
