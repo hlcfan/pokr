@@ -21,3 +21,4 @@
 //= require marked
 //= require jquery.nested-fields
 //= require feedback
+//= require dashboard
