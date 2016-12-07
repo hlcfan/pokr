@@ -42,3 +42,8 @@
   </div>
   <div class="col-md-2"></div>
 </div>
+
+<script type="text/javascript">
+  var chartLabels = <%= raw current_user.rooms.map(&:created_at_in_short).to_json %>;
+  var chartData = <%= raw current_user.rooms.map{|room|room.users.length}.to_json %>;
+</script>

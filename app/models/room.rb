@@ -77,6 +77,10 @@ class Room < ApplicationRecord
     end
   end
 
+  def created_at_in_short
+    created_at.strftime("%b %d")
+  end
+
   private
 
   def desc_sorted_stories

@@ -2,10 +2,10 @@ $(document).on('turbolinks:load', function(event) {
   var ctx = document.getElementById("myChart");
 
   var data = {
-    labels : ["January","February","March","April","May","June","July"],
+    labels : chartLabels,
     datasets : [{
             label: '# of Votes',
-            data: [12, 1, 3, 5, 2, 3],
+            data: chartData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
