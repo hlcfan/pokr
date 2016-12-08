@@ -61,4 +61,15 @@
   .panel-body {
     padding-top: 0;
   }
+
+  .stats {
+    .panel-heading {
+      padding-bottom: 0;
+    }
+
+    .stats--data {
+      font-size: 3em;
+      margin-bottom: 0;
+    }
+  }
 }
