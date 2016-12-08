@@ -7,7 +7,7 @@
     color: #333;
   }
 
-  .tab-content a.room-list-item {
+  .tab-content a.room-list-item, a.story-list-item {
     display: block;
     text-decoration: none;
     padding-left: 15px;
@@ -20,12 +20,12 @@
       top: 26%;
     }
 
-    .room-list-item-heading {
+    .room-list-item-heading, .story-list-item-heading {
       color: #333;
       margin-bottom: 20px;
     }
 
-    .room-list-item-text {
+    .room-list-item-text, .story-list-item-text {
       margin-bottom: 15px;
 
       span {
@@ -39,5 +39,17 @@
         padding-right: 5px;
       }
     }
+
+    .story-list-item-heading{
+      margin-bottom: 10px;
+    }
+
+    .story-list-item-text {
+      margin-bottom: 10px;
+    }
+  }
+
+  a.story-list-item {
+    padding-left: 5px;
   }
 }

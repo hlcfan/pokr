@@ -25,9 +25,7 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="participated">
-                  
-                    <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
-                  
+                  <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="created">
@@ -45,10 +43,10 @@
             <div class="panel-body">
               <div class="list-group">
                 <% @stories.each do |story| %>
-                  <a class="list-group-item" href="<%= story.link %>", target="_blank">
-                    <h4 class="list-group-item-heading"><%= story.link %></h4>
-                    <p class="list-group-item-text">
-                      Point: <%= story.point %>
+                  <a class="story-list-item" href="<%= show_story_link(story.link) %>", target="_blank">
+                    <h5 class="story-list-item-heading"><%= story.link %></h5>
+                    <p class="story-list-item-text">
+                      <span>Point: <%= story.point %></span>
                     </p>
                   </a>
                 <% end %>
