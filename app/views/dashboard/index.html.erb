@@ -13,8 +13,8 @@
       </div>
       <div class="row">
         <div class="col-md-7">
-          <div class="panel panel-default">
-            <div class="panel-heading">Rooms</div>
+          <div class="panel">
+            <div class="panel-heading"><h5>Rooms</h5></div>
             <div class="panel-body">
               <!-- Nav tabs -->
               <ul class="nav nav-tabs" role="tablist">
@@ -38,8 +38,8 @@
           </div>
         </div>
         <div class="col-md-5">
-          <div class="panel panel-default">
-            <div class="panel-heading">Stories you recently groomed</div>
+          <div class="panel">
+            <div class="panel-heading"><h5>Stories recently groomed</h5></div>
             <div class="panel-body">
               <div class="list-group">
                 <%= render partial: "dashboard/story_item", collection: @stories, as: :story %>

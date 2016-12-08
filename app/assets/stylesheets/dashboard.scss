@@ -40,7 +40,7 @@
       }
     }
 
-    .story-list-item-heading{
+    .story-list-item-heading {
       margin-bottom: 10px;
     }
 
@@ -51,5 +51,14 @@
 
   a.story-list-item {
     padding-left: 5px;
+
+    span.label {
+      font-size: 75%;
+      color: #fff;
+    }
+  }
+
+  .panel-body {
+    padding-top: 0;
   }
 }
