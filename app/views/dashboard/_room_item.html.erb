@@ -6,6 +6,10 @@
     <span><%= room.stories.count %> stories</span>
     <span class="divider">·</span>
     <span><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
+    <% if room.time_duration.present? %>
+      <span class="divider">·</span>
+      <span>Took <%= distance_of_time_in_words(room.time_duration) %></span>
+    <% end %>
   </p>
   <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
 </a>

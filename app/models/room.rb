@@ -1,5 +1,7 @@
 class Room < ApplicationRecord
 
+  include ActionView::Helpers::DateHelper
+
   validates_presence_of :name
 
   has_many :user_rooms
@@ -79,6 +81,25 @@ class Room < ApplicationRecord
 
   def created_at_in_short
     created_at.strftime("%b %d")
+  end
+
+  def time_duration
+    @time_duration ||= begin
+      all_stories = desc_sorted_stories.to_a
+      first_story = all_stories.first
+      last_story = all_stories.last
+
+      if first_story.present? && last_story.present?
+        user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").to_a
+        if user_votes.present?
+          first_story_vote = user_votes.first
+          last_story_vote = user_votes.last
+          duration = (last_story_vote.updated_at - first_story_vote.updated_at).abs
+
+          duration
+        end
+      end
+    end
   end
 
   private
