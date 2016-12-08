@@ -42,14 +42,7 @@
             <div class="panel-heading">Stories you recently groomed</div>
             <div class="panel-body">
               <div class="list-group">
-                <% @stories.each do |story| %>
-                  <a class="story-list-item" href="<%= show_story_link(story.link) %>", target="_blank">
-                    <h5 class="story-list-item-heading"><%= story.link %></h5>
-                    <p class="story-list-item-text">
-                      <span>Point: <%= story.point %></span>
-                    </p>
-                  </a>
-                <% end %>
+                <%= render partial: "dashboard/story_item", collection: @stories, as: :story %>
               </div>
             </div>
           </div>
