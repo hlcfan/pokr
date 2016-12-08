@@ -7,7 +7,7 @@ $(document).on('turbolinks:load', function(event) {
     var data = {
       labels : chartLabels,
       datasets : [{
-        label: "Story",
+        label: "# of stories",
         fill: false,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
