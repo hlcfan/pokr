@@ -7,20 +7,27 @@
     color: #333;
   }
 
-  .tab-content a.list-group-item {
+  .tab-content a.room-list-item {
     display: block;
+    text-decoration: none;
+    padding-left: 15px;
+    border-bottom: 1px dashed #ddd;
+    position: relative;
 
     .status {
       position: absolute;
       right: 10px;
-      top: 40%;
+      top: 26%;
     }
 
-    .list-group-item-heading {
+    .room-list-item-heading {
+      color: #333;
       margin-bottom: 20px;
     }
 
-    .list-group-item-text {
+    .room-list-item-text {
+      margin-bottom: 15px;
+
       span {
         font-size: 13px;
         color: #777;

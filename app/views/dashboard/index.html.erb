@@ -2,38 +2,56 @@
   title "Dashboard"
 %>
 <div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
     <div class="dashboard">
-      <div class="panel panel-1">
+      <div class="panel">
         <div class="panel-heading"><h5>History</h5></div>
         <div class="panel-body">
           <canvas id="myChart" width="400" height="260"></canvas>
         </div>
       </div>
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
-        <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="participated">
+      <div class="row">
+        <div class="col-md-7">
           <div class="panel panel-default">
+            <div class="panel-heading">Rooms</div>
             <div class="panel-body">
-              <div class="list-group">
-                <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
+                <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="participated">
+                  
+                    <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
+                  
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="created">
+                  <div class="list-group">
+                    <%= render partial: "dashboard/room_item", collection: @created_rooms, as: :room %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div role="tabpanel" class="tab-pane" id="created">
+        <div class="col-md-5">
           <div class="panel panel-default">
+            <div class="panel-heading">Stories you recently groomed</div>
             <div class="panel-body">
               <div class="list-group">
-                <%= render partial: "dashboard/room_item", collection: @created_rooms, as: :room %>
+                <% @stories.each do |story| %>
+                  <a class="list-group-item" href="<%= story.link %>", target="_blank">
+                    <h4 class="list-group-item-heading"><%= story.link %></h4>
+                    <p class="list-group-item-text">
+                      Point: <%= story.point %>
+                    </p>
+                  </a>
+                <% end %>
               </div>
             </div>
           </div>
@@ -41,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-1"></div>
 </div>
 
 <script type="text/javascript">

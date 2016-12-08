@@ -1,15 +1,17 @@
-<a class="list-group-item" href="<%= room_path(room.slug) %>", , target="_blank">
-  <h4 class="list-group-item-heading"><%= room.name %></h4>
-  <p class="list-group-item-text">
-    <span><%= room.users.count %> participants</span>
-    <span class="divider">·</span>
-    <span><%= room.stories.count %> stories</span>
-    <span class="divider">·</span>
-    <span data-toggle="tooltip" data-placement="top" title="<%= l(room.created_at, format: :short) %>"><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
-    <% if room.time_duration.present? %>
+<dl>
+  <a class="room-list-item" href="<%= room_path(room.slug) %>", , target="_blank">
+    <dt><h4 class="room-list-item-heading"><%= room.name %></h4></dt>
+    <dd class="room-list-item-text">
+      <span><%= room.users.count %> participants</span>
       <span class="divider">·</span>
-      <span>Took <%= distance_of_time_in_words(room.time_duration) %></span>
-    <% end %>
-  </p>
-  <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
-</a>
+      <span><%= room.stories.count %> stories</span>
+      <span class="divider">·</span>
+      <span data-toggle="tooltip" data-placement="top" title="<%= l(room.created_at, format: :short) %>"><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
+      <% if room.time_duration.present? %>
+        <span class="divider">·</span>
+        <span>Took <%= distance_of_time_in_words(room.time_duration) %></span>
+      <% end %>
+    </dd>
+    <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
+  </a>
+</dl>
