@@ -3,9 +3,10 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @created_rooms = current_user.created_rooms.order("created_at DESC")
-    @partipated_rooms = current_user.rooms.order("created_at DESC")
-    room_ids = @partipated_rooms.where(status: Room::DRAW).map(&:id)
+    user = UserPresenter.new(current_user)
+    @created_rooms = user.created_rooms
+    @partipated_rooms = user.participated_room
+    room_ids = user.recent_rooms.map(&:id)
     @stories = Story.where(room_id: room_ids).limit(10)
   end
 
