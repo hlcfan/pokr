@@ -51,12 +51,12 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="participated">
-                  <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
+                  <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room %>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="created">
                   <div class="list-group">
-                    <%= render partial: "dashboard/room_item", collection: @created_rooms, as: :room %>
+                    <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room %>
                   </div>
                 </div>
               </div>
@@ -68,7 +68,7 @@
             <div class="panel-heading"><h5>Stories recently groomed</h5></div>
             <div class="panel-body">
               <div class="list-group">
-                <%= render partial: "dashboard/story_item", collection: @stories, as: :story %>
+                <%= render partial: "dashboard/story_item", collection: @user.recent_stories, as: :story %>
               </div>
             </div>
           </div>
