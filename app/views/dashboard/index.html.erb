@@ -80,6 +80,6 @@
 </div>
 
 <script type="text/javascript">
-  var chartLabels = <%= raw current_user.rooms.map(&:created_at_in_short).to_json %>;
-  var chartData = <%= raw current_user.rooms.map{|room|room.stories.count}.to_json %>;
+  var chartLabels = <%= raw @user.timestamp_for_line_chart.to_json %>;
+  var chartData = <%= raw @user.story_size_for_line_chart.to_json %>;
 </script>

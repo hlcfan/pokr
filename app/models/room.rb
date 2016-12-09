@@ -79,10 +79,6 @@ class Room < ApplicationRecord
     end
   end
 
-  def created_at_in_short
-    created_at.strftime("%b %d")
-  end
-
   def time_duration
     @time_duration ||= begin
       all_stories = desc_sorted_stories.to_a
@@ -105,7 +101,7 @@ class Room < ApplicationRecord
   private
 
   def desc_sorted_stories
-    stories.order("updated_at DESC")
+    @desc_sorted_stories ||= stories.order("updated_at DESC")
   end
 
   def has_timer?
