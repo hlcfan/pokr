@@ -165,4 +165,17 @@ RSpec.describe Room, type: :model do
       expect(room.grouped_stories[:ungroomed].first.link).to eq "link_2"
     end
   end
+
+  describe "#time_duration" do
+    let!(:story_1) { Story.create(link: "link_1", room_id: 1) }
+    let!(:story_2) { Story.create(link: "link_2", room_id: 1) }
+
+    it "returns time duration" do
+      room.id = 1
+      UserStoryPoint.create(user_id: 1, story_id: story_1.id, points: 1)
+      sleep 1
+      UserStoryPoint.create(user_id: 1, story_id: story_2.id, points: 3)
+      expect(room.time_duration).to eq 1.0
+    end
+  end
 end
