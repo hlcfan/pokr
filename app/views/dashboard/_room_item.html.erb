@@ -3,16 +3,12 @@
     <dt><h4 class="room-list-item-heading"><%= room.name %></h4></dt>
     <dd class="room-list-item-text">
       <span>
-        <% cache ["user_count", room] do %>
-          <%= room.users.count %>
-        <% end %>
+        <%= room.user_rooms.size %>
         participants
       </span>
       <span class="divider">·</span>
       <span>
-        <% cache ["story_count", room] do %>
-          <%= room.stories.count %>
-        <% end %>
+        <%= room.stories.size %>
         stories
       </span>
       <span class="divider">·</span>
