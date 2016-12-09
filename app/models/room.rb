@@ -85,14 +85,16 @@ class Room < ApplicationRecord
       first_story = all_stories.first
       last_story = all_stories.last
 
-      if first_story.present? && last_story.present?
-        user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").to_a
-        if user_votes.present?
-          first_story_vote = user_votes.first
-          last_story_vote = user_votes.last
-          duration = (last_story_vote.updated_at - first_story_vote.updated_at).abs
+      Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
+        if first_story.present? && last_story.present?
+          user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").to_a
+          if user_votes.present?
+            first_story_vote = user_votes.first
+            last_story_vote = user_votes.last
+            duration = (last_story_vote.updated_at - first_story_vote.updated_at).abs
 
-          duration
+            duration
+          end
         end
       end
     end
