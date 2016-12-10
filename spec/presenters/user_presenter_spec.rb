@@ -62,4 +62,26 @@ RSpec.describe UserPresenter do
       expect(user_presented.story_size_for_line_chart).to eq [1, 1]
     end
   end
+
+  describe "#time_spent" do
+    let!(:room_1) { Room.create(name: "room 1") }
+    let!(:room_2) { Room.create(name: "room 2") }
+    let!(:story_1) { Story.create(link: "link_1", room_id: room_1.id) }
+    let!(:story_2) { Story.create(link: "link_2", room_id: room_1.id) }
+    let!(:story_3) { Story.create(link: "link_3", room_id: room_2.id) }
+    let!(:story_4) { Story.create(link: "link_4", room_id: room_2.id) }
+
+    it "calculates time spent on grooming" do
+      UserRoom.create(user_id: user.id, room_id: room_1.id)
+      UserRoom.create(user_id: user.id, room_id: room_2.id)
+      UserStoryPoint.create(user_id: user.id, story_id: story_1.id, points: 1)
+      sleep 1
+      UserStoryPoint.create(user_id: user.id, story_id: story_2.id, points: 3)
+      UserStoryPoint.create(user_id: user.id, story_id: story_3.id, points: 8)
+      sleep 1
+      UserStoryPoint.create(user_id: user.id, story_id: story_4.id, points: 13)
+
+      expect(user_presented.time_spent).to eq 2.0
+    end
+  end
 end

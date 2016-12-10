@@ -53,12 +53,4 @@ class User < ApplicationRecord
     @stories_groomed_count ||= UserStoryPoint.where(user_id: id).count
   end
 
-  def time_spent
-    @time_spent ||= begin
-      rooms.inject(0) do |total, room|
-        total += (room.time_duration || 0)
-      end
-    end
-  end
-
 end

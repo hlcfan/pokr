@@ -26,4 +26,13 @@ class UserPresenter < SimpleDelegator
     Story.where.not(point: nil).order("updated_at DESC").limit(10)
   end
 
+
+  def time_spent
+    @time_spent ||= begin
+      participated_rooms.inject(0) do |total, room|
+        total += (room.time_duration || 0)
+      end
+    end
+  end
+
 end
