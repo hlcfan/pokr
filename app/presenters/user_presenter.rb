@@ -35,4 +35,14 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  def skip_rate
+    points_array = Story.joins(:user_story_points).where("user_story_points.user_id = ?", id).where("point IS NOT NULL").pluck(:point)
+    if points_array.size > 0
+      skipped_count = points_array.count { |point| point == "null" }
+      (skipped_count / points_array.size.to_f).round(2)*100
+    else
+      0
+    end
+  end
+
 end
