@@ -18,7 +18,7 @@
           <div class="panel">
             <div class="panel-heading"><h5>Time spent</h5></div>
             <div class="panel-body">
-              <p class="lead stats--data"><%= distance_of_time_in_words current_user.time_spent %></p>
+              <p class="lead stats--data"><%= distance_of_time_in_words @user.time_spent %></p>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
           <div class="panel">
             <div class="panel-heading"><h5>Average per story</h5></div>
             <div class="panel-body">
-              <p class="lead stats--data"><%= distance_of_time_in_words(current_user.time_spent/current_user.stories_groomed_count) %></p>
+              <p class="lead stats--data"><%= distance_of_time_in_words(@user.time_spent/current_user.stories_groomed_count) %></p>
             </div>
           </div>
         </div>
