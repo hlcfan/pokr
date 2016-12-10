@@ -1,7 +1,5 @@
 class Room < ApplicationRecord
 
-  include ActionView::Helpers::DateHelper
-
   validates_presence_of :name
 
   has_many :user_rooms
