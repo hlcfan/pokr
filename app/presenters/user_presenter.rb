@@ -29,7 +29,7 @@ class UserPresenter
   end
 
   def recent_stories
-    Story.order("updated_at DESC").limit(10)
+    Story.where.not(point: nil).order("updated_at DESC").limit(10)
   end
 
 end
