@@ -23,7 +23,10 @@ class UserPresenter < SimpleDelegator
   end
 
   def recent_stories
-    Story.where.not(point: nil).order("updated_at DESC").limit(10)
+    Story.joins(:user_story_points)
+      .where("user_story_points.user_id = ?", id)
+      .where("point IS NOT NULL")
+      .order("updated_at DESC").limit(10)
   end
 
 
