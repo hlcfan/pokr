@@ -1,93 +1,88 @@
 <%
   title "Dashboard"
 %>
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
-    <div class="dashboard">
-      <div class="row stats">
-        <div class="col-md-3">
-          <div class="panel">
-            <div class="panel-heading"><h5>Stories groomed</h5></div>
-            <div class="panel-body">
-              <p class="lead stats--data"><%= @user.stories_groomed_count %></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="panel">
-            <div class="panel-heading"><h5>Time spent</h5></div>
-            <div class="panel-body">
-              <p class="lead stats--data"><%= (@user.time_spent/60).round(2) %> Mins</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="panel">
-            <div class="panel-heading"><h5>Average per story</h5></div>
-            <div class="panel-body">
-              <p class="lead stats--data">
-                <%= @user.avg_per_story %>
-                Secs
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="panel">
-            <div class="panel-heading"><h5>Skip rate</h5></div>
-            <div class="panel-body">
-              <p class="lead stats--data"><%= number_to_percentage @user.skip_rate, precision: 2 %></p>
-            </div>
-          </div>
-        </div>
-      </div>
+
+<div class="dashboard">
+  <div class="row stats">
+    <div class="col-md-3">
       <div class="panel">
-        <div class="panel-heading"><h5>History</h5></div>
+        <div class="panel-heading"><h5>Stories groomed</h5></div>
         <div class="panel-body">
-          <canvas id="myChart" width="400" height="260"></canvas>
+          <p class="lead stats--data"><%= @user.stories_groomed_count %></p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-7">
-          <div class="panel">
-            <div class="panel-heading"><h5>Rooms</h5></div>
-            <div class="panel-body">
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
-                <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
-              </ul>
-
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="participated">
-                  <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room, cache: true %>
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="created">
-                  <div class="list-group">
-                    <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room, cache: true %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel">
+        <div class="panel-heading"><h5>Time spent</h5></div>
+        <div class="panel-body">
+          <p class="lead stats--data"><%= (@user.time_spent/60).round(2) %> Mins</p>
         </div>
-        <div class="col-md-5">
-          <div class="panel">
-            <div class="panel-heading"><h5>Stories recently groomed</h5></div>
-            <div class="panel-body">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel">
+        <div class="panel-heading"><h5>Average per story</h5></div>
+        <div class="panel-body">
+          <p class="lead stats--data">
+            <%= @user.avg_per_story %>
+            Secs
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel">
+        <div class="panel-heading"><h5>Skip rate</h5></div>
+        <div class="panel-body">
+          <p class="lead stats--data"><%= number_to_percentage @user.skip_rate, precision: 2 %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-heading"><h5>History</h5></div>
+    <div class="panel-body">
+      <canvas id="myChart" width="400" height="260"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="panel">
+        <div class="panel-heading"><h5>Rooms</h5></div>
+        <div class="panel-body">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
+            <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="participated">
+              <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room, cache: true %>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="created">
               <div class="list-group">
-                <%= render partial: "dashboard/story_item", collection: @user.recent_stories, as: :story %>
+                <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room, cache: true %>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="col-md-5">
+      <div class="panel">
+        <div class="panel-heading"><h5>Stories recently groomed</h5></div>
+        <div class="panel-body">
+          <div class="list-group">
+            <%= render partial: "dashboard/story_item", collection: @user.recent_stories, as: :story %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-md-1"></div>
 </div>
 
 <script type="text/javascript">

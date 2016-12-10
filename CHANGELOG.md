@@ -11,6 +11,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   + Add recently groomed stories
   + Add skip rate in stats
 
+### Changed
+- Expand width of dashboard
+
 ## [0.2.5] - 2016-11-30
 ### Added
 - Can now switch groomed and un-groomed stories via tabs.
