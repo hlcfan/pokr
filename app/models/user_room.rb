@@ -1,7 +1,7 @@
 class UserRoom < ApplicationRecord
 
   belongs_to :user
-  belongs_to :room, touch: true, counter_cache: true
+  belongs_to :room, counter_cache: true
 
   MODERATOR = 0
   PARTICIPANT = 1
