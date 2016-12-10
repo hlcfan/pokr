@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   + History: show a line chart of grooming history
   + Shrink rooms width
   + Add recently groomed stories
+  + Add skip rate in stats
 
 ## [0.2.5] - 2016-11-30
 ### Added
