@@ -23,6 +23,8 @@ class UserPresenter < SimpleDelegator
   end
 
   def recent_stories
+    # TODO: optimize it
+    # Push mode: implement a worker to pre-pop the cache?
     Story.joins(:user_story_points)
       .where("user_story_points.user_id = ?", id)
       .where("point IS NOT NULL")
@@ -39,7 +41,10 @@ class UserPresenter < SimpleDelegator
   end
 
   def skip_rate
-    points_array = Story.joins(:user_story_points).where("user_story_points.user_id = ?", id).where("point IS NOT NULL").pluck(:point)
+    # TODO: same as #recent_stories
+    points_array = Story.joins(:user_story_points)
+      .where("user_story_points.user_id = ?", id)
+      .where("point IS NOT NULL").pluck(:point)
     if points_array.size > 0
       skipped_count = points_array.count { |point| point == "null" }
       (skipped_count / points_array.size.to_f).round(2)*100
