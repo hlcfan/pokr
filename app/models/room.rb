@@ -82,17 +82,9 @@ class Room < ApplicationRecord
       all_stories = desc_sorted_stories.to_a
       first_story = all_stories.first
       last_story = all_stories.last
-
-      Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
-        if first_story.present? && last_story.present?
-          user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").to_a
-          if user_votes.present?
-            first_story_vote = user_votes.first
-            last_story_vote = user_votes.last
-            duration = (last_story_vote.updated_at - first_story_vote.updated_at).abs
-
-            duration
-          end
+      if first_story.present? && last_story.present?
+        Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
+          calc_duration_between first_story, last_story
         end
       end
     end
@@ -130,6 +122,13 @@ class Room < ApplicationRecord
       self.pv = self.pv.split(',').sort_by do |value|
         DEFAULT_POINT_VALUES.index value
       end.join(',')
+    end
+  end
+
+  def calc_duration_between first_story, last_story
+    user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").pluck(:updated_at)
+    if user_votes.present?
+      (user_votes.first - user_votes.last).abs
     end
   end
 
