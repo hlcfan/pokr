@@ -34,14 +34,14 @@ gem 'react-rails', '~> 1.8.2'
 gem 'puma'
 gem 'redis-rails', '~> 5.0.1'
 gem 'mina-puma', require: false
+gem 'multi_fetch_fragments'
+
+# gem 'rack-mini-profiler'
+# gem 'flamegraph'
+# gem 'stackprof'     # For Ruby MRI 2.1+
+# gem 'fast_stack'    # For Ruby MRI 2.0
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   gem "pry"

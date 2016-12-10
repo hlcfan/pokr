@@ -62,12 +62,12 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="participated">
-                  <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room %>
+                  <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room, cache: true %>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="created">
                   <div class="list-group">
-                    <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room %>
+                    <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room, cache: true %>
                   </div>
                 </div>
               </div>
