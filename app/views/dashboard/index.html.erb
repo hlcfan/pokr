@@ -27,11 +27,7 @@
             <div class="panel-heading"><h5>Average per story</h5></div>
             <div class="panel-body">
               <p class="lead stats--data">
-                <% if @user.stories_groomed_count > 0 %>
-                  <%= (@user.time_spent/@user.stories_groomed_count).round(2) %>
-                <% else %>
-                  0
-                <% end %>
+                <%= @user.avg_per_story %>
                 Secs
               </p>
             </div>

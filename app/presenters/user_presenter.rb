@@ -48,4 +48,12 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  def avg_per_story
+    if stories_groomed_count > 0
+      (time_spent/stories_groomed_count).round(2)
+    else
+      0
+    end
+  end
+
 end
