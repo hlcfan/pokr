@@ -6,7 +6,7 @@
   <div class="col-md-10">
     <div class="dashboard">
       <div class="row stats">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="panel">
             <div class="panel-heading"><h5>Stories groomed</h5></div>
             <div class="panel-body">
@@ -14,19 +14,34 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="panel">
             <div class="panel-heading"><h5>Time spent</h5></div>
             <div class="panel-body">
-              <p class="lead stats--data"><%= distance_of_time_in_words @user.time_spent %></p>
+              <p class="lead stats--data"><%= (@user.time_spent/60).round(2) %> Mins</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="panel">
             <div class="panel-heading"><h5>Average per story</h5></div>
             <div class="panel-body">
-              <p class="lead stats--data"><%= distance_of_time_in_words(@user.time_spent/@user.stories_groomed_count) %></p>
+              <p class="lead stats--data">
+                <% if @user.stories_groomed_count > 0 %>
+                  <%= (@user.time_spent/@user.stories_groomed_count).round(2) %>
+                <% else %>
+                  0
+                <% end %>
+                Secs
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="panel">
+            <div class="panel-heading"><h5>Skip rate</h5></div>
+            <div class="panel-body">
+              <p class="lead stats--data"><%= number_to_percentage @user.skip_rate, precision: 2 %></p>
             </div>
           </div>
         </div>
