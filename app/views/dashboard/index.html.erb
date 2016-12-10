@@ -2,32 +2,73 @@
   title "Dashboard"
 %>
 <div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
     <div class="dashboard">
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
-        <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="participated">
-          <div class="panel panel-default">
+      <div class="row stats">
+        <div class="col-md-4">
+          <div class="panel">
+            <div class="panel-heading"><h5>Stories groomed</h5></div>
             <div class="panel-body">
-              <div class="list-group">
-                <%= render partial: "dashboard/room_item", collection: @partipated_rooms, as: :room %>
+              <p class="lead stats--data"><%= current_user.stories_groomed_count %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel">
+            <div class="panel-heading"><h5>Time spent</h5></div>
+            <div class="panel-body">
+              <p class="lead stats--data"><%= distance_of_time_in_words @user.time_spent %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel">
+            <div class="panel-heading"><h5>Average per story</h5></div>
+            <div class="panel-body">
+              <p class="lead stats--data"><%= distance_of_time_in_words(@user.time_spent/current_user.stories_groomed_count) %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><h5>History</h5></div>
+        <div class="panel-body">
+          <canvas id="myChart" width="400" height="260"></canvas>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7">
+          <div class="panel">
+            <div class="panel-heading"><h5>Rooms</h5></div>
+            <div class="panel-body">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
+                <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="participated">
+                  <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room %>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="created">
+                  <div class="list-group">
+                    <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div role="tabpanel" class="tab-pane" id="created">
-          <div class="panel panel-default">
+        <div class="col-md-5">
+          <div class="panel">
+            <div class="panel-heading"><h5>Stories recently groomed</h5></div>
             <div class="panel-body">
               <div class="list-group">
-                <%= render partial: "dashboard/room_item", collection: @created_rooms, as: :room %>
+                <%= render partial: "dashboard/story_item", collection: @user.recent_stories, as: :story %>
               </div>
             </div>
           </div>
@@ -35,5 +76,10 @@
       </div>
     </div>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-1"></div>
 </div>
+
+<script type="text/javascript">
+  var chartLabels = <%= raw @user.timestamp_for_line_chart.to_json %>;
+  var chartData = <%= raw @user.story_size_for_line_chart.to_json %>;
+</script>

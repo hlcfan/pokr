@@ -121,15 +121,13 @@ class RoomsController < ApplicationController
 
   def set_user_room_moderator
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-    user_room.role = UserRoom::MODERATOR
-    user_room.save!
+    user_room.update!(role: UserRoom::MODERATOR)
   end
 
   def enter_room
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
     if user_room.new_record?
-      user_room.role = UserRoom::PARTICIPANT
-      user_room.save!
+      user_room.update!(role: UserRoom::PARTICIPANT)
       broadcaster "rooms/#{@room.slug}",
         user_id: current_user.id,
         data: 'refresh-users',

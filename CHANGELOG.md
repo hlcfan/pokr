@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.6] - 2016-12-10
+### Added
+- Dashboard now looks like a dashboard
+  + Stats: Stories groomed, Time spent, Average per story
+  + History: show a line chart of grooming history
+  + Shrink rooms width
+  + Add recently groomed stories
+
 ## [0.2.5] - 2016-11-30
 ### Added
 - Can now switch groomed and un-groomed stories via tabs.

@@ -49,4 +49,8 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def stories_groomed_count
+    @stories_groomed_count ||= UserStoryPoint.where(user_id: id).count
+  end
+
 end

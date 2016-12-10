@@ -59,4 +59,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "#stories_groomed_count" do
+    it "simply returns stories user voted" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      UserStoryPoint.create(user_id: user.id, story_id: 1, points: 1)
+      UserStoryPoint.create(user_id: user.id, story_id: 2, points: 13)
+      expect(user.stories_groomed_count).to eq 2
+    end
+  end
+
 end
