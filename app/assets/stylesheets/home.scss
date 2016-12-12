@@ -61,13 +61,17 @@ body {
     a.logo {
       position: absolute;
       text-decoration: none;
-      color: $default_font_color;
+      color: #848484;
       font-size: 3rem;
       line-height: 90px;
       left: 50%;
       width: 90px;
       margin-left: -35px;
       font-weight: 300;
+
+      span {
+        color: $default_font_color;
+      }
     }
 
     .header-actions {
