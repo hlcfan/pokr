@@ -170,59 +170,39 @@ body {
   }
 }
 
-.footer {
+.view-section {
   background: #fff;
   color: $default_font_color;
   text-shadow: none;
 
   .container {
-    padding: 120px 0;
+    padding: 80px 0;
     text-align: center;
-    .empower {
-      .tab-first {
-        .fa-circle {
-          color: #E59866;
-        }
+    .image-section {
+      img {
+        width: 80%;
+        box-shadow: 1px 1px 10px #bbb;
+      }
+    }
 
-        h3 {
-          color: #767676;
-        }
+    .text-section {
+      text-align: left;
+      font-size: 1.2em;
+
+      p {
+        color: #848484;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        margin-top: 20px;
       }
 
-      .tab-second {
-        .fa-circle {
-          color: #34495E;
+      ul {
+        li {
+          padding: 3px 0;
+          .fa {
+            margin-right: 5px;
+          }
         }
-
-        h3 {
-          color: #767676;
-        }
-      }
-
-      .tab-third {
-        .fa-circle {
-          color: #1ABC9C;
-        }
-
-        h3 {
-          color: #767676;
-        }
-      }
-
-      h5 {
-        margin-top: 10px;
-        color: #c2e2f2;
-        font-size: 2rem;
-        font-weight: normal;
-        line-height: 1;
-      }
-      h3 {
-        margin-top: 10px;
-        font-size: 3rem;
-        font-weight: 400;
-        line-height: 1;
-        padding-right: .55em;
-        padding-left: .55em;
       }
     }
   }

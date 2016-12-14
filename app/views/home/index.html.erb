@@ -1,3 +1,4 @@
+<%# cache do %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,41 +62,36 @@
         </div><!-- /.col-lg-6 -->
       </div>
     </div>
-    <div class="row footer">
+    <div class="row view-section">
       <div class="container">
-        <div class="empower">
-          <!-- <h5>We're just serious</h5> -->
-          <div class="row">
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-first">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-flash fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Efficient</h3>
-              </div>
-            </div>
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "room.png" %>
+        </div>
 
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-second">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-magic fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Easy</h3>
-              </div>
-            </div>
-
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-third">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-diamond fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Elegant</h3>
-              </div>
-            </div>
-          </div>
+        <div class="col-xs-4 col-md-4 text-section">
+          <h3>Room</h3>
+          <p>In a room, will be a round of planning or grooming. Participants can easily join by opening the link, the UI is pretty clean.</p>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i>Easy to use</li>
+            <li><i class="fa fa-check"></i>Automatically switch story/card</li>
+            <li><i class="fa fa-check"></i>Elegant way to show vote status</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row view-section">
+      <div class="container">
+        <div class="col-xs-4 col-md-4 text-section">
+          <h3>Dashboard</h3>
+          <p>A dashboard, is where you can see all your data status, including statistics, history, all planning/groomming rooms and recent stories/cards.</p>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i>Know how planning/grooming meetings go</li>
+            <li><i class="fa fa-check"></i>Acknowledge the history or frequency</li>
+            <li><i class="fa fa-check"></i>Quick check recent stories/cards point</li>
+          </ul>
+        </div>
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "dashboard.png" %>
         </div>
       </div>
     </div>
@@ -158,3 +154,4 @@
   </script>
 </body>
 </html>
+<%# end %>
