@@ -1,20 +1,34 @@
 @import 'global_vars';
 
 $default_font_color: #46b8da;
+@font-face {
+  font-family: 'Open Sans';
+  src: asset-url("Light/OpenSans-Light.eot?v=1.1.0");
+  src: url("Light/OpenSans-Light.eot?#iefix&v=1.1.0") format("embedded-opentype"), url("Light/OpenSans-Light.woff2?v=1.1.0") format("woff2"), url("Light/OpenSans-Light.woff?v=1.1.0") format("woff"), url("Light/OpenSans-Light.ttf?v=1.1.0") format("truetype"), url("Light/OpenSans-Light.svg?v=1.1.0#Light") format("svg");
+  font-weight: 300;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("Regular/OpenSans-Regular.eot?v=1.1.0");
+  src: url("Regular/OpenSans-Regular.eot?#iefix&v=1.1.0") format("embedded-opentype"), url("Regular/OpenSans-Regular.woff2?v=1.1.0") format("woff2"), url("Regular/OpenSans-Regular.woff?v=1.1.0") format("woff"), url("Regular/OpenSans-Regular.ttf?v=1.1.0") format("truetype"), url("Regular/OpenSans-Regular.svg?v=1.1.0#Regular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("Semibold/OpenSans-Semibold.eot?v=1.1.0");
+  src: url("Semibold/OpenSans-Semibold.eot?#iefix&v=1.1.0") format("embedded-opentype"), url("Semibold/OpenSans-Semibold.woff2?v=1.1.0") format("woff2"), url("Semibold/OpenSans-Semibold.woff?v=1.1.0") format("woff"), url("Semibold/OpenSans-Semibold.ttf?v=1.1.0") format("truetype"), url("Semibold/OpenSans-Semibold.svg?v=1.1.0#Semibold") format("svg");
+  font-weight: 600;
+  font-style: normal; }
 
 html {
   background-color: transparent;
   // background-image: image-url('/assets/bg.png');
+  body.home {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
 }
-
-/*
-body {
-  font-family: "Helvetica Neue",Helvetica,Tahoma,Arial,STXihei,"Microsoft YaHei","微软雅黑",sans-serif;
-  font-size: 1em;
-  line-height: 1.5em;
-  color: #333;
-}
-*/
 
 .middle {
   float: none;
@@ -61,16 +75,45 @@ body {
     a.logo {
       position: absolute;
       text-decoration: none;
-      color: $default_font_color;
-      font-size: 2em;
-      line-height: 60px;
+      color: #848484;
+      font-size: 4rem;
+      line-height: 90px;
       left: 50%;
-      width: 70px;
+      width: 90px;
       margin-left: -35px;
+      font-weight: 300;
+
+      span {
+        color: $default_font_color;
+      }
     }
 
     .header-actions {
-      line-height: 60px;
+      line-height: 90px;
+
+      .link {
+        font-weight: 300;
+        font-size: 1.8rem;
+        color: #848484;
+        vertical-align: middle;
+
+        &.login {
+          font-size: 1.9rem;
+          margin-right: 3px;
+          text-decoration: none;
+          padding: 6px 12px;
+        }
+      }
+      .btn-reg {
+        color: #46b8da;
+        border: 1px solid #46b8da;
+
+        &:hover {
+          color: #fff;
+          background: #46b8da;
+          border: 1px solid #46b8da;
+        }
+      }
     }
   }
 }
@@ -111,7 +154,6 @@ body {
       }
     }
     h2 {
-      font-family: "Avenir Next","Avenir","brandon-grotesque","Helvetica Neue","Helvetica","Segoe UI","Calibri","Franklin Gothic Book","Verdana",sans-serif;
       color: #a4acb1;
       margin:0 auto;
       max-width: 60%;
@@ -149,76 +191,65 @@ body {
   }
 }
 
-.footer {
+.view-section {
   background: #fff;
-  color: $default_font_color;
+  color: #2e3033;
   text-shadow: none;
+  font-weight: 300;
+  letter-spacing: .9px;
 
   .container {
-    padding: 120px 0;
+    padding: 80px 0;
     text-align: center;
-    .empower {
-      .tab-first {
-        .fa-circle {
-          color: #E59866;
-        }
+    .image-section {
+      img {
+        width: 80%;
+        box-shadow: 1px 1px 10px #bbb;
+      }
+    }
 
-        h3 {
-          color: #767676;
-        }
+    .text-section {
+      text-align: left;
+      font-size: 1.2em;
+
+      p {
+        color: #848484;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        margin-top: 20px;
       }
 
-      .tab-second {
-        .fa-circle {
-          color: #34495E;
+      ul {
+        li {
+          padding: 3px 0;
+          .fa {
+            margin-right: 5px;
+          }
         }
-
-        h3 {
-          color: #767676;
-        }
-      }
-
-      .tab-third {
-        .fa-circle {
-          color: #1ABC9C;
-        }
-
-        h3 {
-          color: #767676;
-        }
-      }
-
-      h5 {
-        margin-top: 10px;
-        color: #c2e2f2;
-        font-size: 2rem;
-        font-weight: normal;
-        line-height: 1;
-      }
-      h3 {
-        margin-top: 10px;
-        font-size: 3rem;
-        font-weight: 400;
-        line-height: 1;
-        padding-right: .55em;
-        padding-left: .55em;
       }
     }
   }
 }
 
-.tail {
-  background-color: #f5f5f5;
+.footer {
+  background-color: #222;
+  color: #fff;
   text-align: center;
-  padding-top: 5px;
+  line-height: 30px;
+  padding: 10px 0;
 
-  a {
-    color: #333;
-  }
+  .text-section {
+    border-left: 1px solid #fff;
 
-  .item {
-    width: 60px;
-    display: inline-block;
+    p {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 4px
+    }
   }
 
   .fb-share-button {

@@ -1,13 +1,14 @@
+<% cache do %>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Planning Poker | Pokr</title>
+  <title>Planning Poker | Pokrex</title>
   <meta name="description" content="<%= default_description %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
   <meta property="og:url" content="https://pokrex.com" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Pokr" />
+  <meta property="og:title" content="Pokrex" />
   <meta property="og:description" content="<%= default_description %>" />
   <meta property="og:image" content="/apple-icon-180x180.png" />
 </head>
@@ -19,21 +20,22 @@
     {
       "@context": "http://schema.org",
       "@type": "WebSite",
-      "name": "Pokr",
+      "name": "Pokrex",
       "alternateName": "Planning Poker",
       "url": "https://pokrex.com"
     }
   </script>
 </head>
-<body>
+<body class="home">
   <div class="container-fluid">
     <div class="row header-section">
       <div class="container">
         <a class="logo" href="/">
-          Pokr
+          Pokre<span>x</span>
         </a>
         <div class="header-actions pull-right">
-          <a href="<%= new_user_session_path %>" class="btn btn-default navbar-btn">Sign in</a>
+          <a href="<%= new_user_session_path %>" class="link login navbar-btn">Login</a>
+          <a href="<%= new_user_registration_path %>" class="link sign-up btn btn-reg navbar-btn">Sign up</a>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -60,50 +62,45 @@
         </div><!-- /.col-lg-6 -->
       </div>
     </div>
-    <div class="row footer">
+    <div class="row view-section">
       <div class="container">
-        <div class="empower">
-          <!-- <h5>We're just serious</h5> -->
-          <div class="row">
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-first">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-flash fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Efficient</h3>
-              </div>
-            </div>
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "room.png" %>
+        </div>
 
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-second">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-magic fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Easy</h3>
-              </div>
-            </div>
-
-            <div class="col-xs-6 col-md-4">
-              <div class="tab-third">
-                <span class="fa-stack fa-lg fa-5x">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-diamond fa-stack-1x fa-inverse"></i>
-                </span>
-                <h3>Elegant</h3>
-              </div>
-            </div>
-          </div>
+        <div class="col-xs-4 col-md-4 text-section">
+          <h3>Room</h3>
+          <p>In a room, will be a round of planning or grooming. Participants can easily join by opening the link.</p>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i>Easy to use</li>
+            <li><i class="fa fa-check"></i>Automatically switch story/card</li>
+            <li><i class="fa fa-check"></i>Elegant way to show vote status</li>
+          </ul>
         </div>
       </div>
     </div>
-    <div class="row tail">
+    <div class="row view-section">
+      <div class="container">
+        <div class="col-xs-4 col-md-4 text-section">
+          <h3>Dashboard</h3>
+          <p>A dashboard, is where you can see all your data status, including statistics, history, all planning/groomming rooms and recent stories/cards.</p>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i>Quick stats</li>
+            <li><i class="fa fa-check"></i>Know planning/grooming meeting status</li>
+            <li><i class="fa fa-check"></i>Acknowledge history and frequency</li>
+            <li><i class="fa fa-check"></i>Quick check recent stories/cards point</li>
+          </ul>
+        </div>
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "dashboard.png" %>
+        </div>
+      </div>
+    </div>
+    <div class="row footer">
       <%= render 'layouts/social' %>
     </div>
     </div>
   </div>
-  <%= render 'layouts/feedback' %>
   <div id="sign-up-form">
     <div class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -157,3 +154,4 @@
   </script>
 </body>
 </html>
+<% end %>
