@@ -1,4 +1,4 @@
-<% cache do %>
+<% cache Rails.application.assets.find_asset('application.js').digest do %>
 <!DOCTYPE html>
 <html>
 <head>
