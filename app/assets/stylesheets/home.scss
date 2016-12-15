@@ -236,28 +236,21 @@ body {
   background-color: #222;
   color: #fff;
   text-align: center;
-  line-height: 50px;
-  height: 50px;
-
-  .social-section {
-    padding-top: 5px;
-  }
+  line-height: 30px;
+  padding: 10px 0;
 
   .text-section {
     border-left: 1px solid #fff;
+
     p {
       margin-bottom: 0;
     }
+
     a {
       color: #fff;
       text-decoration: none;
       letter-spacing: 4px
     }
-  }
-
-  .item {
-    width: 60px;
-    display: inline-block;
   }
 
   .fb-share-button {
