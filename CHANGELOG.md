@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.7] - 2016-12-15
+### Changed
+- New home page, new look
+
 ## [0.2.6] - 2016-12-10
 ### Added
 - Dashboard now looks like a dashboard
