@@ -25,19 +25,10 @@ $default_font_color: #46b8da;
 html {
   background-color: transparent;
   // background-image: image-url('/assets/bg.png');
-  body {
+  body.home {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }
-
-/*
-body {
-  font-family: "Helvetica Neue",Helvetica,Tahoma,Arial,STXihei,"Microsoft YaHei","微软雅黑",sans-serif;
-  font-size: 1em;
-  line-height: 1.5em;
-  color: #333;
-}
-*/
 
 .middle {
   float: none;
