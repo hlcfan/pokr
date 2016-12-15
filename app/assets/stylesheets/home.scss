@@ -76,7 +76,7 @@ html {
       position: absolute;
       text-decoration: none;
       color: #848484;
-      font-size: 3rem;
+      font-size: 4rem;
       line-height: 90px;
       left: 50%;
       width: 90px;
@@ -91,10 +91,18 @@ html {
     .header-actions {
       line-height: 90px;
 
-      .btn {
+      .link {
         font-weight: 300;
         font-size: 1.8rem;
         color: #848484;
+        vertical-align: middle;
+
+        &.login {
+          font-size: 1.9rem;
+          margin-right: 3px;
+          text-decoration: none;
+          padding: 6px 12px;
+        }
       }
       .btn-reg {
         color: #46b8da;
