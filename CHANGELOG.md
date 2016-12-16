@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.2.7] - 2016-12-15
 ### Changed
 - New home page, new look
+- Rename Pokr to Pokrex
 
 ## [0.2.6] - 2016-12-10
 ### Added

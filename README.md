@@ -15,7 +15,7 @@ Yet another planning poker, aiming at efficiency & user experience.
 ## 🚀 Building with
 
 + Rails 5
-+ MySQL 5.6+
++ MySQL
 + ActionCable
 + React
 + Bootstrap
@@ -23,7 +23,7 @@ Yet another planning poker, aiming at efficiency & user experience.
 + Puma
 
 ## Screenshot
-![Pokrex](./screenshot.png)
+![Pokrex](./app/assets/images/room.png)
 
 ## 🔧 Contribution
 
