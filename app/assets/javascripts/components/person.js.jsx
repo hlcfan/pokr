@@ -1,12 +1,5 @@
 var Person = React.createClass({
   render: function() {
-    var userIconClass;
-    if (this.props.role === 'watcher') {
-      userIconClass = 'fa fa-user fa-user-secret';
-    } else {
-      userIconClass = 'fa fa-user';
-    }
-
     var that = this;
     var pointLabel = (function() {
       if (window.syncResult) {
@@ -24,8 +17,10 @@ var Person = React.createClass({
     }
 
     return (
-      <li className={'person ' + votedClass} id={'u-' + this.props.id} data-point={this.props.points}>
-        <i className={this.props.role + ' ' + userIconClass} aria-hidden="true"></i>
+      <li className={this.props.role + ' ' + 'person ' + votedClass} id={'u-' + this.props.id} data-point={this.props.points}>
+        <i className="person--avatar">
+          <img src={this.props.avatar} />
+        </i>
         <a href="javascript:;" className="person">
           {this.props.name}
           {pointLabel}

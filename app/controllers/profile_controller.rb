@@ -35,7 +35,7 @@ class ProfileController < ApplicationController
 
   def profile_params
     params[:user][:name] = params[:user][:name][0..20]
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :avatar)
   end
 
   def password_params

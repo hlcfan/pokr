@@ -35,6 +35,7 @@ class RoomsController < ApplicationController
       user.display_role = user_rooms[user.id]
       user.points = user_point if params[:sync] == 'true'
       user.voted = !!user_point
+      user.avatar_thumb = user.letter_avatar
     end
   end
 

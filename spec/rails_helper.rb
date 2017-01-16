@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'devise'
 require 'support/controller_macros'
 require 'simplecov'
+require "paperclip/matchers"
 
 SimpleCov.start
 if ENV["COVERAGE"]
@@ -16,6 +17,10 @@ if ENV["COVERAGE"]
 end
 
 ActiveJob::Base.queue_adapter = :test
+
+RSpec.configure do |config|
+  config.include Paperclip::Shoulda::Matchers
+end
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

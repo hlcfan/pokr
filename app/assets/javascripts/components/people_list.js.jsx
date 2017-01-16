@@ -2,7 +2,7 @@ var PeopleList = React.createClass({
   render: function() {
     var peopleNodes = this.props.data.map(function(person) {
       return (
-        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} voted={person.voted} />
+        <Person key={person.id} name={person.name} id={person.id} role={person.display_role.toLowerCase()} points={person.points} voted={person.voted} avatar={person.avatar_thumb} />
       );
     });
     return (
