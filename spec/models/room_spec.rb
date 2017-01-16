@@ -43,17 +43,6 @@ RSpec.describe Room, type: :model do
     end
   end
 
-  describe "un_groomed_stories" do
-    let!(:story_1) { Story.create(link: "link_1", room_id: 1) }
-    let!(:story_2) { Story.create(link: "link_2", room_id: 1) }
-    let!(:story_3) { Story.create(link: "link_3", room_id: 1, point: 3) }
-
-    it "returns stories without point set" do
-      room.id = 1
-      expect(room.un_groomed_stories).to eq [story_1, story_2]
-    end
-  end
-
   describe "groomed_stories" do
     let!(:story_1) { Story.create(link: "link_1", room_id: 1) }
     let!(:story_2) { Story.create(link: "link_2", room_id: 1, point: 'null') }
@@ -74,6 +63,13 @@ RSpec.describe Room, type: :model do
       room.id = 1
       expect(room.current_story_id).to eq story_1.id
     end
+
+    it "returns first un groomed story's id by updated_at DESC" do
+      sleep 1
+      story_2.touch
+      room.id = 1
+      expect(room.current_story_id).to eq story_2.id
+    end    
   end
 
   describe "#point_values" do

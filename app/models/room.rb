@@ -40,10 +40,6 @@ class Room < ApplicationRecord
     { groomed: stories_grouped[true], ungroomed: stories_grouped[false] }
   end
 
-  def un_groomed_stories
-    stories.where(point: nil)
-  end
-
   def groomed_stories
     stories.where "point IS NOT NULL"
   end
@@ -132,6 +128,10 @@ class Room < ApplicationRecord
       # throw away the duration if larger than 5 hours
       duration_in_seconds < 18000 ? duration_in_seconds : 0
     end
+  end
+
+  def un_groomed_stories
+    stories.where(point: nil).order("updated_at DESC")
   end
 
 end
