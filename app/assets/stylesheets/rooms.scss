@@ -100,16 +100,20 @@
     font-weight: 400;
   }
 
-  li i.moderator {
-    color: red;
+  li i.person--avatar {
+    img {
+      height: 24px;
+      width: 24px;
+      border-radius: 15px;
+    }
+  }
+
+  li.moderator img {
+    border: 3px solid black;
   }
 
   li i.watcher {
     color: #FFD700;
-  }
-
-  li span.icon, span.glyphicon {
-    margin-right: 5px;
   }
 }
 
@@ -161,4 +165,3 @@
     }
   }
 }
-
