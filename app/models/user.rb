@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_attached_file :avatar, styles: { medium: "100x100", thumb: "30x30" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   validates_attachment_size :avatar, :in => 0.megabytes..2.megabytes
+  after_validation -> { errors.delete(:avatar) }
+
   validates_presence_of :name
 
   has_many :user_rooms
