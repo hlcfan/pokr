@@ -5,6 +5,7 @@ var PeopleListBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
+        this.setState({data: []});
         this.setState({data: data});
         EventEmitter.dispatch("showResultPanel");
         if (callback) {
