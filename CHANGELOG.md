@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [0.2.8] - 2017-01-16
+### Added
+- Display default avatar based on user name
+- Allow user to upload avatar
+
 ## [0.2.7] - 2016-12-15
 ### Changed
 - New home page, new look
