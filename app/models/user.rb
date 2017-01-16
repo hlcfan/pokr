@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  include LetterAvatar::AvatarHelper
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -15,7 +18,7 @@ class User < ApplicationRecord
 
   after_initialize :default_values
 
-  attr_accessor :points, :display_role, :voted
+  attr_accessor :points, :display_role, :voted, :avatar_thumb
 
   OWNER = 0
   PARTICIPANT = 1
@@ -53,6 +56,24 @@ class User < ApplicationRecord
 
   def stories_groomed_count
     @stories_groomed_count ||= UserStoryPoint.where(user_id: id).count
+  end
+
+  def letter_avatar size=:thumb
+    if avatar?
+      avatar.url size
+    else
+      letter_avatar_url name_in_letter, 100
+    end
+  end
+
+  private
+
+  def name_in_letter
+    unless name =~ /[a-zA-Z0-9]+/
+      PinYin.abbr name
+    else
+      name
+    end
   end
 
 end
