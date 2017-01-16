@@ -14,7 +14,6 @@ gem 'coffee-rails', '~> 4.2.1'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-gem 'normalize-rails'
 gem 'marked-rails'
 gem 'font-awesome-rails'
 gem 'awesome_nested_fields', git: 'https://github.com/hlcfan/awesome_nested_fields.git'
