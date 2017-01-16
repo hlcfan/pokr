@@ -70,7 +70,7 @@ class User < ApplicationRecord
   private
 
   def name_in_letter
-    unless name =~ /[a-zA-Z0-9]+/
+    unless name =~ /^[a-zA-Z0-9]+/
       PinYin.abbr name
     else
       name
