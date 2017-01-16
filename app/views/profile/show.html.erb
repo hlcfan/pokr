@@ -27,7 +27,10 @@
           <div class="form-group user--avatar">
             <%= f.label :avatar %>
             <%= image_tag @user.avatar.url(:medium)%>
-            <%= f.file_field :avatar %>
+            <div class="btn btn-default avatar--file">
+              <%= f.file_field :avatar %>
+              选择图片
+            </div>
           </div>
           <div class="form-group">
             <%= f.label :email %>
