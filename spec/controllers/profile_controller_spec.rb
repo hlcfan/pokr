@@ -25,7 +25,7 @@ RSpec.describe ProfileController, type: :controller do
     context "when user logged in" do
       login_user
       it "successfully updates user profile, only name" do
-        patch :update, params: { user: { name: 'name-to-be', email: 'b@b.com' } }
+        patch :update, params: { user: { name: 'name-to-be', email: 'b@b.com', avatar_file_name: 'avatar.png', avatar_content_type: 'image/jpeg' } }
         expect(User.last.name).to eq "name-to-be"
         expect(User.last.email).to eq "a@a.com"
         expect(response).to redirect_to profile_path
