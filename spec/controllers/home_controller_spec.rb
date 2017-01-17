@@ -69,4 +69,12 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
+  describe "GET #sign_up_form" do
+    it "renders sign up form without layout" do
+      get :sign_up_form
+      binding.pry
+      expect(response).to_not render_template(layout: "application")
+    end
+  end
+
 end
