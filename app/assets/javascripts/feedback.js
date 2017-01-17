@@ -39,7 +39,7 @@ $(document).on('turbolinks:load', function(event) {
     $("#sign-up-form .modal").modal(modalOptions);
     var email = $('.get-started input[name=email]').val();
     if (!$.isEmptyObject(email)) {
-      $("#sign-up-form form #user_email").val(email)  ;
+      $("#sign-up-form form #user_email").val(email);
     }
   });
 
@@ -51,4 +51,3 @@ $(document).on('turbolinks:load', function(event) {
     }
   });
 });
-
