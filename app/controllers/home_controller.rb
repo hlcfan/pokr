@@ -14,6 +14,10 @@ class HomeController < ApplicationController
     head :no_content
   end
 
+  def sign_up_form
+    render layout: false
+  end
+
   private
 
   def client_email_address
