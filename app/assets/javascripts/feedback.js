@@ -34,6 +34,8 @@ $(document).on('turbolinks:load', function(event) {
     });
   });
 
+  $("#sign-up-form .modal-body").load("/home/sign_up_form");
+
   $("#sign-up-btn").on("click", function(e) {
     e.preventDefault();
     $("#sign-up-form .modal").modal(modalOptions);
