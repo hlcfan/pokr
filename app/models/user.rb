@@ -7,7 +7,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_attached_file :avatar, styles: { medium: "100x100", thumb: "30x30" }
+  has_attached_file :avatar, styles: { medium: "300x300", thumb: "100x100" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   validates_attachment_size :avatar, :in => 0.megabytes..2.megabytes
   after_validation -> { errors.delete(:avatar) }
