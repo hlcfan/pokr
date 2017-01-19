@@ -3,7 +3,7 @@ $(document).on('turbolinks:load', function(event) {
 
   if (typeof chartLabels !== "undefined") {
     var ctx = document.getElementById("myChart");
-
+    ctx.innerHTML = "";
     var data = {
       labels : chartLabels,
       datasets : [{
