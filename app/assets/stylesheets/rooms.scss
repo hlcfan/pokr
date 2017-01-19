@@ -46,6 +46,31 @@
 
   .storyList {
     margin-top: 10px;
+    ul {
+      list-style: none;
+      margin-left: 0;
+      padding-left: 1em;
+      text-indent: 0.5em;
+
+      li:before {
+        content: "•";
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 0em;
+        margin-right: 10px;
+      }
+
+      li.story__ungroomed:first-child {
+        font-weight: 500;
+        &:before {
+          content: "\25BA";
+          font-weight: bolder;
+          font-size: 12px;
+          margin-right: 10px;
+          line-height: 0em;
+        }
+      }
+    }
 
     .story {
       .story--voted-point {
