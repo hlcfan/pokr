@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Larger size of avatar
 - Append 👑 for moderator instead of black circle
+- Show story link if it's a story
+- Show ongoing indicator to help tell which story is ongoing
 
 ## [0.2.9] - 2017-01-17
 ### Changed
