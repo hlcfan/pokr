@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.2.10] - 2017-01-19
+### Changed
+- Larger size of avatar
+- Append 👑 for moderator instead of black circle
+
+## [0.2.9] - 2017-01-17
+### Changed
+- Fix current story id when re-vote story
+- Fix user point(people list) not refresh issue
+- Fix landing page sign up form 500 error
+
 ## [0.2.8] - 2017-01-16
 ### Added
 - Display default avatar based on user name
