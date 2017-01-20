@@ -27,6 +27,10 @@ class Room < ApplicationRecord
     end.fetch(self.status, 'not-open')
   end
 
+  def free_style?
+    FREESTYLE == self.style
+  end
+
   def display_state
     if state == "draw"
       "Finished"
