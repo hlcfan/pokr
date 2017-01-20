@@ -25,8 +25,10 @@ var StoryListBox = React.createClass({
       POKER.story_id = $currentStory.data('id');
     } else {
       POKER.story_id = "";
-      EventEmitter.dispatch("noStoriesLeft");
-      drawBoard();
+      if (!POKER.freeStyle) {
+        EventEmitter.dispatch("noStoriesLeft");
+        drawBoard();
+      }
     }
   },
   render: function() {

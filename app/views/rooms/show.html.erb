@@ -11,6 +11,7 @@
     POKER.roomState = '<%= @room.state %>';
     POKER.pointValues = <%= @room.point_values.to_json.html_safe %>;
     POKER.timerInterval = parseFloat('<%= @room.timer_interval %>');
+    POKER.freeStyle = <%= @room.free_style? %>;
   }());
 </script>
 <%= action_cable_meta_tag %>

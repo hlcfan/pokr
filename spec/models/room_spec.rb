@@ -28,6 +28,12 @@ RSpec.describe Room, type: :model do
 
     it "is not-open if status not equals 1 or 2" do
       room.status = nil
+      room.style = 1
+      expect(room.state).to eq "not-open"
+    end
+
+    it "defautls to not-open if free style" do
+      room.status = nil
       expect(room.state).to eq "not-open"
     end
   end
@@ -172,6 +178,17 @@ RSpec.describe Room, type: :model do
       sleep 1
       UserStoryPoint.create(user_id: 1, story_id: story_2.id, points: 3)
       expect(room.time_duration).to eq 1.0
+    end
+  end
+
+  describe "#free_style?" do
+    it "is true if style equals 1" do
+      room.style = 1
+      expect(room.free_style?).to be_truthy
+    end
+
+    it "is true if style equals 1" do
+      expect(room.free_style?).to be_falsy
     end
   end
 end
