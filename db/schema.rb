@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116042110) do
+ActiveRecord::Schema.define(version: 20170120051027) do
 
   create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name",                        null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170116042110) do
     t.float    "timer",            limit: 24
     t.integer  "stories_count"
     t.integer  "user_rooms_count"
+    t.integer  "style"
     t.index ["created_by"], name: "index_rooms_on_created_by", using: :btree
     t.index ["name"], name: "index_rooms_on_name", using: :btree
     t.index ["slug"], name: "index_rooms_on_slug", unique: true, using: :btree
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170116042110) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "point"
+    t.integer  "ordering"
   end
 
   create_table "user_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
