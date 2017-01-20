@@ -40,6 +40,9 @@ class RoomsChannel < ApplicationCable::Channel
       if story
         story_point = @room.free_style? ? nil : payload["point"]
         story.update_attribute :point, story_point
+        if @room.free_style?
+          UserStoryPoint.where(story_id: story.id).destroy_all
+        end
         @room.update_attribute :status, nil
         broadcaster "rooms/#{@room.slug}",
                     type: "action",
