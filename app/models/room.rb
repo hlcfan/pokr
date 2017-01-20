@@ -17,11 +17,14 @@ class Room < ApplicationRecord
   DRAW = 2
   DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
 
+  FREESTYLE = 1
+
   def state
-    {
-      Room::OPEN => 'open',
-      Room::DRAW => 'draw'
-    }.fetch(self.status, 'not-open')
+    if FREESTYLE == self.style
+      { Room::OPEN => 'open' }
+    else
+      { Room::OPEN => 'open', Room::DRAW => 'draw' }
+    end.fetch(self.status, 'not-open')
   end
 
   def display_state
