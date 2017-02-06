@@ -17,5 +17,6 @@
 //= require bootstrap
 //= require turbolinks
 //= require jquery.nested-fields
+//= require page_init
 //= require feedback
 //= require dashboard
