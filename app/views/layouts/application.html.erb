@@ -8,9 +8,10 @@
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => "reload" %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+  <%= yield :page_js if content_for? :page_js %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body data-controller-name="<%= controller_name%>" data-action-name="<%= action_name %>">
 <%= render 'layouts/nav' %>
 <div class="container">
   <%= flash_messages %>
