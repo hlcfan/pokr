@@ -9,6 +9,7 @@
 <input type="hidden" id="roomState" value="<%= @room.state %>" />
 <input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
 <input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
+<input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
 <%= action_cable_meta_tag %>
 <div class="room" id="room"></div>
 <div id="board"></div>

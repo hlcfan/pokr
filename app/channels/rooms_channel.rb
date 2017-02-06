@@ -38,7 +38,11 @@ class RoomsChannel < ApplicationCable::Channel
     if user_room.moderator? && @room.valid_vote_point?(payload["point"])
       story = Story.find_by id: payload["story_id"], room_id: @room.id
       if story
-        story.update_attribute :point, payload["point"]
+        story_point = @room.free_style? ? nil : payload["point"]
+        story.update_attribute :point, story_point
+        if @room.free_style?
+          UserStoryPoint.where(story_id: story.id).destroy_all
+        end
         @room.update_attribute :status, nil
         broadcaster "rooms/#{@room.slug}",
                     type: "action",

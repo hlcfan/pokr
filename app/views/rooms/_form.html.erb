@@ -26,6 +26,12 @@
       </div>    
     </div>
   </div>
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :style %>
+      Free Style? (aka. one story mode, is old-style way which only focus on vote.)
+    </label>
+  </div>
   <div class="form-group">
     <%= f.label "Point values" %>
     <%= f.hidden_field :pv, id: 'point-values' %>
@@ -64,13 +70,16 @@
 <% end %>
 
 <script type="text/javascript">
-$(document).on('turbolinks:load', function(event) {
   $('.stories-section').nestedFields({
     containerSelector: '#story-row',
     itemSelector: '#story-row .row',
     afterInsert: function(item, e) {
       // console.log(item + ' was added.');
     }
+  });
+
+  $("#room_style").on("click", function() {
+    $(".add.btn").toggle();
   });
 
   $('.point-values li input').on("click", function(){
@@ -94,5 +103,4 @@ $(document).on('turbolinks:load', function(event) {
     selectedPointValues = selectedPointValuesArray.join(',');
     $pointValues.val(selectedPointValues);
   });
-});
 </script>
