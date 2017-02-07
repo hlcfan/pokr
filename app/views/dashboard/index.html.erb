@@ -46,10 +46,10 @@
       <canvas id="myChart" width="400" height="260"></canvas>
     </div>
     <script type="text/javascript">
-        document.addEventListener("turbolinks:before-cache", function() {
-          console.log("===Reseting")
-          $(".history canvas").remove();
-          $(".history .panel-body").append('<canvas id="myChart" width="400" height="260"><canvas>');
+      document.addEventListener("turbolinks:before-cache", function() {
+        // console.log("===Reseting")
+        $(".history canvas").remove();
+        $(".history .panel-body").append('<canvas id="myChart" width="400" height="260"><canvas>');
       });
       </script>
   </div>
