@@ -11,7 +11,7 @@
   <%= yield :page_js if content_for? :page_js %>
   <%= csrf_meta_tags %>
 </head>
-<body data-controller-name="<%= controller_name%>" data-action-name="<%= action_name %>">
+<body class="<%= "#{controller_name} #{action_name}" %>" data-controller-name="<%= controller_name %>" data-action-name="<%= action_name %>">
 <%= render 'layouts/nav' %>
 <div class="container">
   <%= flash_messages %>
