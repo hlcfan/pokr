@@ -1,9 +1,9 @@
 <%
   title @room.name
 %>
-<% content_for(:page_js) do %>
-  <%= javascript_include_tag "rooms" %>
-<% end %>
+
+<%= javascript_include_tag "room_init" %>
+
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
 <input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />

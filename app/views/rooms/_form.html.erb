@@ -68,39 +68,3 @@
     <%= f.submit "Submit", class: 'btn btn-default' %>
   </div>
 <% end %>
-
-<script type="text/javascript">
-  $('.stories-section').nestedFields({
-    containerSelector: '#story-row',
-    itemSelector: '#story-row .row',
-    afterInsert: function(item, e) {
-      // console.log(item + ' was added.');
-    }
-  });
-
-  $("#room_style").on("click", function() {
-    $(".add.btn").toggle();
-  });
-
-  $('.point-values li input').on("click", function(){
-    if ($(this).hasClass('btn-info')) {
-      $(this).removeClass('btn-info');
-      $(this).addClass('btn-default');
-    } else {
-      $(this).removeClass('btn-default');
-      $(this).addClass('btn-info');
-    }
-    $pointValues = $('#point-values');
-    var currentValue = $(this).val();
-    var selectedPointValues = $pointValues.val();
-    var selectedPointValuesArray = selectedPointValues.split(',');
-    if (selectedPointValuesArray.indexOf(currentValue) < 0) {
-      selectedPointValuesArray.push(currentValue);
-    } else {
-      selectedPointValuesArray.remove(currentValue);
-    }
-    selectedPointValuesArray = selectedPointValuesArray.clean("")
-    selectedPointValues = selectedPointValuesArray.join(',');
-    $pointValues.val(selectedPointValues);
-  });
-</script>
