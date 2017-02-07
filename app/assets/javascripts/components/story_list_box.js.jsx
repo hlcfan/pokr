@@ -23,7 +23,7 @@ var StoryListBox = React.createClass({
     $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
     if($currentStory.length) {
       POKER.story_id = $currentStory.data('id');
-    } else {
+    } else if($('.storyList ul li').length) {
       POKER.story_id = "";
       if (!POKER.freeStyle) {
         EventEmitter.dispatch("noStoriesLeft");
