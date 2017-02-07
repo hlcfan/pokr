@@ -1,5 +1,3 @@
 //= require jquery
-//= require libs
-//= require bootstrap
-//= require turbolinks
+//= require libs/bootstrap.min
 //= require feedback
