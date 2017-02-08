@@ -129,7 +129,7 @@ var ActionBox = React.createClass({
           <div id="actionBox" className="row">
             {tip}
             <ResultPanel />
-            <div ref="openButton" className="openButton container-fluid">
+            <div className="openButton container-fluid">
               <div className="">
                 {buttonHtml}
               </div>
