@@ -1,8 +1,5 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-$(document).on "turbolinks:load", ->
-  $(".rooms.new").ready ->
+class Rooms
+  init: ->
     $('.import').on 'click', ->
       if $('.import').data('status') == 'input'
         $('#story-row .row').hide()
@@ -16,7 +13,6 @@ $(document).on "turbolinks:load", ->
         $('.bulk-links').hide()
         $('#bulk').val false
         $('.import').data 'status', 'input'
-      return
 
     $('.stories-section').nestedFields
       containerSelector: '#story-row'
@@ -24,9 +20,11 @@ $(document).on "turbolinks:load", ->
       afterInsert: (item, e) ->
         # console.log(item + ' was added.');
         return
+
     $('#room_style').on 'click', ->
       $('.add.btn').toggle()
       return
+
     $('.point-values li input').on 'click', ->
       if $(this).hasClass('btn-info')
         $(this).removeClass 'btn-info'
@@ -46,3 +44,8 @@ $(document).on "turbolinks:load", ->
       selectedPointValues = selectedPointValuesArray.join(',')
       $pointValues.val selectedPointValues
       return
+
+$(document).on "turbolinks:load", ->
+  $(".rooms.new").ready ->
+    rooms = new Rooms
+    rooms.init()

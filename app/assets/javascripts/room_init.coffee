@@ -2,7 +2,7 @@
 #= require react
 #= require react_ujs
 #= require marked
-#= require components
+#= require_tree ./components
 
 $(document).on "turbolinks:load", ->
   $(".rooms.show").ready ->
