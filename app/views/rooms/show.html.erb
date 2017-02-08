@@ -2,7 +2,10 @@
   title @room.name
 %>
 
-<%= javascript_include_tag "room_init" %>
+<% content_for(:page_head) do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+  <%= javascript_include_tag "room_init" %>
+<% end %>
 
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
