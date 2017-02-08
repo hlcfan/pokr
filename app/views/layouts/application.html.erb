@@ -8,6 +8,7 @@
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => "reload" %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+  <%= yield :page_head if content_for? :page_head %>
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= "#{controller_name} #{action_name}" %>">
