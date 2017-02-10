@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.2.11] - 2017-02-10
+### Changed
+- Correct Turbolinks usage
+- Reduce home page size(remove unused js files)
+- Fix room status change(to closed) when go back/forward across pages
+- Open room in current tab instead new tab
+
 ## [0.2.10] - 2017-01-19
 ### Changed
 - Larger size of avatar
