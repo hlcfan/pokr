@@ -16,9 +16,8 @@
 //= require ext
 //= require bootstrap
 //= require turbolinks
-//= require react
-//= require react_ujs
-//= require marked
 //= require jquery.nested-fields
+//= require page_init
+//= require rooms
 //= require feedback
 //= require dashboard

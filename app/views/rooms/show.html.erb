@@ -1,19 +1,20 @@
 <%
   title @room.name
 %>
-<%= javascript_include_tag "components", "rooms" %>
-<script type="text/javascript" charset="utf-8">
-  (function() {
-    POKER.roomId = '<%= @room.slug %>';
-    POKER.roomName = '<%= @room.name %>';
-    POKER.role = '<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>';
-    POKER.currentVote = '<%= current_user.points_of_story(@room.current_story_id) %>';
-    POKER.roomState = '<%= @room.state %>';
-    POKER.pointValues = <%= @room.point_values.to_json.html_safe %>;
-    POKER.timerInterval = parseFloat('<%= @room.timer_interval %>');
-    POKER.freeStyle = <%= @room.free_style? %>;
-  }());
-</script>
+
+<% content_for(:page_head) do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+  <%= javascript_include_tag "room_init" %>
+<% end %>
+
+<input type="hidden" id="roomId" value="<%= @room.slug %>" />
+<input type="hidden" id="roomName" value="<%= @room.name %>" />
+<input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />
+<input type="hidden" id="currentVote" value="<%= current_user.points_of_story(@room.current_story_id) %>" />
+<input type="hidden" id="roomState" value="<%= @room.state %>" />
+<input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
+<input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
+<input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
 <%= action_cable_meta_tag %>
 <div class="room" id="room"></div>
 <div id="board"></div>

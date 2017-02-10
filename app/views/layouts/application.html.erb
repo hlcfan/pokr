@@ -8,15 +8,10 @@
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => "reload" %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+  <%= yield :page_head if content_for? :page_head %>
   <%= csrf_meta_tags %>
-  <script type="text/javascript" charset="utf-8">
-    var POKER = window['POKER'] = function(){};
-    <% if current_user %>
-      POKER.currentUser = { name: '<%= current_user.display_name %>', role: '<%= current_user.display_role %>' };
-    <% end %>
-  </script>
 </head>
-<body>
+<body class="<%= "#{controller_name} #{action_name}" %>">
 <%= render 'layouts/nav' %>
 <div class="container">
   <%= flash_messages %>
