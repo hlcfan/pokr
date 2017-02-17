@@ -1,30 +1,24 @@
 var StatusBar = React.createClass({
   openRoom: function() {
-    $.ajax({
-      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
-      data: { status: 'open' },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // pass
-      },
-      error: function(xhr, status, err) {
-      }
-    });
+    // Disable re-open yet
+    // $.ajax({
+    //   url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+    //   data: { status: 'open' },
+    //   method: 'post',
+    //   dataType: 'json',
+    //   cache: false,
+    //   success: function(data) {
+    //     EventEmitter.dispatch("roomStatusChange");
+    //   },
+    //   error: function(xhr, status, err) {
+    //   }
+    // });
   },
   closeRoom: function() {
-    $.ajax({
-      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
-      data: { status: 'close' },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // pass
-      },
-      error: function(xhr, status, err) {
-      }
+    App.rooms.perform('action', {
+      roomId: POKER.roomId,
+      data: "close-room",
+      type: 'action'
     });
   },
   render:function() {
