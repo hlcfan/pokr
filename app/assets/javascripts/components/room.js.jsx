@@ -8,10 +8,8 @@ var Room = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <div className="col-md-12 name">
-          <StatusBar />
-        </div>
+      <div className="row">
+        <StatusBar />
         <div id="operationArea" className="col-md-8">
           <VoteBox poker={POKER}/>
           <StoryListBox url={this.props.poker.storyListUrl} />
