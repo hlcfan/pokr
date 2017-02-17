@@ -40,7 +40,7 @@ var StatusBar = React.createClass({
     }();
 
     var operationButtons = function() {
-      if (POKER.role === 'Moderator') {
+      if (POKER.role === 'Moderator' && POKER.roomState !== "draw") {
         return(
           <div className="btn-group pull-right" role="group">
             <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
