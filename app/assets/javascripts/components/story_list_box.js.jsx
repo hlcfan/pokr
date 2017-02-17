@@ -27,7 +27,6 @@ var StoryListBox = React.createClass({
       POKER.story_id = "";
       if (!POKER.freeStyle) {
         EventEmitter.dispatch("roomClosed");
-        drawBoard();
       }
     }
   },
