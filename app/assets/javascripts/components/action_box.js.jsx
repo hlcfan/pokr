@@ -21,6 +21,7 @@ var ActionBox = React.createClass({
     this.setState({ buttonState: 'not-open' });
   },
   setToDrawBoard: function() {
+    console.log("set to draw")
     this.setState({ buttonState: 'draw' });
   },
   showBoard: function() {
@@ -71,7 +72,7 @@ var ActionBox = React.createClass({
     }
   },
   componentDidUpdate: function() {
-    EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
+    // EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
   },
   render: function() {
     var that = this;
