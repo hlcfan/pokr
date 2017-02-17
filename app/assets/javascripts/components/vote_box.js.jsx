@@ -18,7 +18,7 @@ var VoteBox = React.createClass({
     EventEmitter.subscribe("refreshStories", function(){
       $('.vote-list ul li input').removeClass('btn-info');
     });
-    EventEmitter.subscribe("noStoriesLeft", this.disableVote);
+    EventEmitter.subscribe("roomClosed", this.disableVote);
   },
   render:function() {
     var currentVote = this.props.poker.currentVote;

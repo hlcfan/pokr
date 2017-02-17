@@ -26,7 +26,7 @@ var StoryListBox = React.createClass({
     } else if($('.storyList ul li').length) {
       POKER.story_id = "";
       if (!POKER.freeStyle) {
-        EventEmitter.dispatch("noStoriesLeft");
+        EventEmitter.dispatch("roomClosed");
         drawBoard();
       }
     }
