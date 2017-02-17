@@ -1,16 +1,47 @@
 var StatusBar = React.createClass({
-  render:function(){
+  openRoom: function() {
+    $.ajax({
+      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+      data: { status: 'open' },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        // pass
+      },
+      error: function(xhr, status, err) {
+      }
+    });
+  },
+  closeRoom: function() {
+    $.ajax({
+      url: '/rooms/' + POKER.roomId + '/set_room_status.json',
+      data: { status: 'close' },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        // pass
+      },
+      error: function(xhr, status, err) {
+      }
+    });
+  },
+  render:function() {
+    var that = this;
     var roomStatusButton = function() {
-      var buttonText, buttonClassName;
+      var buttonText, buttonClassName, onClickHandler;
       if (POKER.roomState === "draw") {
         buttonText = "Re-open it";
-        buttonClassName = "btn-warning open-room";  
+        buttonClassName = "btn-warning open-room";
+        onClickHandler = that.openRoom;
       } else {
         buttonText = "Close it";
-        buttonClassName = "btn-warning close-room"; 
+        buttonClassName = "btn-warning close-room";
+        onClickHandler = that.closeRoom;
       }
       return (
-        <button type="button" className={"btn btn-default " + buttonClassName}>{buttonText}</button>
+        <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
       )
     }();
 
