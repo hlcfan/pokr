@@ -13,6 +13,7 @@ var Room = React.createClass({
   },
   componentDidMount: function() {
     if (POKER.roomState === "draw") {
+      EventEmitter.dispatch("roomClosed");
       drawBoard();
     } else {
       EventEmitter.subscribe("roomClosed", this.roomClosed);
