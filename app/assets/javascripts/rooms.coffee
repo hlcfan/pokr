@@ -18,7 +18,6 @@ class Rooms
       containerSelector: '#story-row'
       itemSelector: '#story-row .row'
       afterInsert: (item, e) ->
-        # console.log(item + ' was added.');
         return
 
     $('#room_style').on 'click', ->

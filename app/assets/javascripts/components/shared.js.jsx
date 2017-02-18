@@ -95,7 +95,6 @@ function setupChannelSubscription() {
         } else if(data.data === "revote") {
           revote();
         } else if(data.data === "close-room") {
-          console.log("===Close room")
           EventEmitter.dispatch("roomClosed");
         }
       } else if(data.type === 'notify') {

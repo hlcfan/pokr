@@ -21,7 +21,6 @@ var ActionBox = React.createClass({
     this.setState({ buttonState: 'not-open' });
   },
   setToDrawBoard: function() {
-    console.log("set to draw")
     this.setState({ buttonState: 'draw' });
   },
   showBoard: function() {

@@ -7,7 +7,6 @@ var Room = React.createClass({
     return { storyListUrl: this.props.poker.storyListUrl, peopleListUrl: this.props.poker.peopleListUrl };
   },
   roomClosed: function() {
-    console.log("closed");
     POKER.roomState = "draw";
     drawBoard();
   },

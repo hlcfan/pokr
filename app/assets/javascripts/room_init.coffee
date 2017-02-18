@@ -7,7 +7,6 @@
 
 $(".rooms.show").ready ->
   POKER.roomId = $('#roomId').val()
-  console.log("===Room ID:" + POKER.roomId)
   POKER.roomName = $('#roomName').val()
   POKER.role = $('#role').val()
   POKER.currentVote = $('#currentVote').val()
