@@ -9,7 +9,7 @@ var StatusBar = React.createClass({
     });
   },
   removeOperationButtons: function() {
-    $(".btn-group").remove();
+    $(".room-operation").remove();
   },
   componentDidMount: function() {
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
@@ -17,16 +17,10 @@ var StatusBar = React.createClass({
   render:function() {
     var that = this;
     var roomStatusButton = function() {
-      var buttonText, buttonClassName, onClickHandler;
-      if (POKER.roomState === "draw") {
-        buttonText = "Re-open it";
-        buttonClassName = "btn-warning open-room";
-        onClickHandler = that.openRoom;
-      } else {
-        buttonText = "Close it";
-        buttonClassName = "btn-warning close-room";
-        onClickHandler = that.closeRoom;
-      }
+      var buttonText = "Close it";
+      var buttonClassName = "btn-warning close-room";
+      var varonClickHandler = that.closeRoom;
+      
       return (
         <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
       )
@@ -35,7 +29,7 @@ var StatusBar = React.createClass({
     var operationButtons = function() {
       if (POKER.role === 'Moderator' && POKER.roomState !== "draw") {
         return(
-          <div className="btn-group pull-right" role="group">
+          <div className="btn-group pull-right room-operation" role="group">
             <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
             {roomStatusButton}
           </div>
