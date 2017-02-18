@@ -19,7 +19,7 @@ var StatusBar = React.createClass({
     var roomStatusButton = function() {
       var buttonText = "Close it";
       var buttonClassName = "btn-warning close-room";
-      var varonClickHandler = that.closeRoom;
+      var onClickHandler = that.closeRoom;
       
       return (
         <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
