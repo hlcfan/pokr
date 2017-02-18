@@ -1,18 +1,5 @@
 var StatusBar = React.createClass({
   openRoom: function() {
-    // Disable re-open yet
-    // $.ajax({
-    //   url: '/rooms/' + POKER.roomId + '/set_room_status.json',
-    //   data: { status: 'open' },
-    //   method: 'post',
-    //   dataType: 'json',
-    //   cache: false,
-    //   success: function(data) {
-    //     EventEmitter.dispatch("roomStatusChange");
-    //   },
-    //   error: function(xhr, status, err) {
-    //   }
-    // });
   },
   closeRoom: function() {
     App.rooms.perform('action', {
@@ -20,6 +7,12 @@ var StatusBar = React.createClass({
       data: "close-room",
       type: 'action'
     });
+  },
+  removeOperationButtons: function() {
+    $(".btn-group").remove();
+  },
+  componentDidMount: function() {
+    EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
   },
   render:function() {
     var that = this;
