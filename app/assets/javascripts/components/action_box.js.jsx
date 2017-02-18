@@ -70,9 +70,6 @@ var ActionBox = React.createClass({
       showResultSection();
     }
   },
-  componentDidUpdate: function() {
-    // EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
-  },
   render: function() {
     var that = this;
     var onClickName;
