@@ -46,6 +46,6 @@ class Rooms
       return
 
 $(document).on "turbolinks:load", ->
-  $(".rooms.new").ready ->
+  $(".rooms.new, .rooms.edit").ready ->
     rooms = new Rooms
     rooms.init()
