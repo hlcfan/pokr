@@ -69,13 +69,6 @@ RSpec.describe Room, type: :model do
       room.id = 1
       expect(room.current_story_id).to eq story_1.id
     end
-
-    it "returns first un groomed story's id by updated_at DESC" do
-      sleep 1
-      story_2.touch
-      room.id = 1
-      expect(room.current_story_id).to eq story_2.id
-    end    
   end
 
   describe "#point_values" do
@@ -164,7 +157,7 @@ RSpec.describe Room, type: :model do
       expect(room.grouped_stories.size).to eq 2
       expect(room.grouped_stories[:groomed].size).to eq 1
       expect(room.grouped_stories[:ungroomed].size).to eq 2
-      expect(room.grouped_stories[:ungroomed].first.link).to eq "link_2"
+      expect(room.grouped_stories[:ungroomed].first.link).to eq "link_1"
     end
   end
 
