@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.12] - 2017-02-22
+### Added
+- Allow moderator to edit/close a room
+- Reduce height of status bar to leave more space for content area
 
 ## [0.2.11] - 2017-02-10
 ### Changed
