@@ -6,12 +6,22 @@ var Room = React.createClass({
   getInitialState: function() {
     return { storyListUrl: this.props.poker.storyListUrl, peopleListUrl: this.props.poker.peopleListUrl };
   },
+  roomClosed: function() {
+    POKER.roomState = "draw";
+    drawBoard();
+  },
+  componentDidMount: function() {
+    if (POKER.roomState === "draw") {
+      EventEmitter.dispatch("roomClosed");
+      drawBoard();
+    } else {
+      EventEmitter.subscribe("roomClosed", this.roomClosed);
+    }
+  },
   render: function() {
     return (
-      <div>
-        <div className="col-md-12 name">
-          <StatusBar />
-        </div>
+      <div className="row">
+        <StatusBar />
         <div id="operationArea" className="col-md-8">
           <VoteBox poker={POKER}/>
           <StoryListBox url={this.props.poker.storyListUrl} />

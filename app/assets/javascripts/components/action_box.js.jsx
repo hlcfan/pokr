@@ -60,8 +60,8 @@ var ActionBox = React.createClass({
   },
   componentDidMount: function() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
-    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
-    EventEmitter.subscribe("noStoriesLeft", this.disableTimer);
+    EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
+    EventEmitter.subscribe("roomClosed", this.disableTimer);
     if (POKER.roomState !== "draw" && POKER.timerInterval > 0) {
       EventEmitter.subscribe("resetTimer", this.resetTimer);
       this.resetTimer();      
@@ -69,9 +69,6 @@ var ActionBox = React.createClass({
     if (POKER.roomState === 'open') {
       showResultSection();
     }
-  },
-  componentDidUpdate: function() {
-    EventEmitter.subscribe("noStoriesLeft", this.setToDrawBoard);
   },
   render: function() {
     var that = this;

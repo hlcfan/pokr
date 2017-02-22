@@ -18,7 +18,6 @@ class Rooms
       containerSelector: '#story-row'
       itemSelector: '#story-row .row'
       afterInsert: (item, e) ->
-        # console.log(item + ' was added.');
         return
 
     $('#room_style').on 'click', ->
@@ -46,6 +45,6 @@ class Rooms
       return
 
 $(document).on "turbolinks:load", ->
-  $(".rooms.new").ready ->
+  $(".rooms.new, .rooms.edit").ready ->
     rooms = new Rooms
     rooms.init()

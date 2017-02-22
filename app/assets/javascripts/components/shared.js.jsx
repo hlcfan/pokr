@@ -94,6 +94,8 @@ function setupChannelSubscription() {
           nextStory();
         } else if(data.data === "revote") {
           revote();
+        } else if(data.data === "close-room") {
+          EventEmitter.dispatch("roomClosed");
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);

@@ -40,7 +40,7 @@ class Room < ApplicationRecord
   end
 
   def grouped_stories
-    stories_grouped = desc_sorted_stories.group_by do |story|
+    stories_grouped = stories.group_by do |story|
       story.point.present?
     end
 
@@ -82,7 +82,7 @@ class Room < ApplicationRecord
 
   def time_duration
     @time_duration ||= begin
-      all_stories = desc_sorted_stories.to_a
+      all_stories = stories.to_a
       first_story = all_stories.first
       last_story = all_stories.last
       if first_story.present? && last_story.present?
@@ -94,10 +94,6 @@ class Room < ApplicationRecord
   end
 
   private
-
-  def desc_sorted_stories
-    @desc_sorted_stories ||= stories.order("updated_at DESC")
-  end
 
   def has_timer?
     !!timer
@@ -138,7 +134,7 @@ class Room < ApplicationRecord
   end
 
   def un_groomed_stories
-    stories.where(point: nil).order("updated_at DESC")
+    stories.where(point: nil)
   end
 
 end
