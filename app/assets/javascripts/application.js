@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require libs
 //= require ext
+//= require common
 //= require bootstrap
 //= require turbolinks
 //= require jquery.nested-fields

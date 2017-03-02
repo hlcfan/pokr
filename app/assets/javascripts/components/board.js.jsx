@@ -28,7 +28,7 @@ var Board = React.createClass({
       var point = pointEmojis[story.point] || story.point;
       return (
         <tr key={story.id}>
-          <td>{story.link}</td>
+          <td><a href={storyLinkHref(story.link)} target="_blank">{story.link}</a></td>
           <td>{point}</td>
         </tr>
       );
