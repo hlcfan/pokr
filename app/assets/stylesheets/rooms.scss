@@ -196,4 +196,12 @@
 
 #board .modal-header {
   border-bottom: none;
+
+  h4 {
+    font-size: 20px;
+  }
+}
+
+#board .modal-body {
+  padding-top: 0;
 }
