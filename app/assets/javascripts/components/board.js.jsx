@@ -40,16 +40,12 @@ var Board = React.createClass({
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">Vote Result</h4>
+              <h4 className="modal-title">C'est la vie</h4>
             </div>
             <div className="modal-body">
               <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Story</th><th>Point</th>
-                  </tr>
-                </thead>
                 <tbody>
+                  <tr><th>Story</th><th>Point</th></tr>
                   {dataNodes}
                 </tbody>
               </table>
