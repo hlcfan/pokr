@@ -33,17 +33,9 @@ var Story = React.createClass({
       }
     }();
 
-    storyLink = function() {
-      if (that.props.link.isValidUrl()) {
-        return that.props.link
-      } else {
-        return "javascript:;"
-      }
-    }();
-
     return (
       <li className={liElementClass} id={'story-' + this.props.id} data-id={this.props.id}>
-        <a href={storyLink} className="storyLink" rel="noreferrer" target="_blank">
+        <a href={storyLinkHref(that.props.link)} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>
         <span className="label label-info story--voted-point">{pointEmojis[this.props.point] || this.props.point}</span>
