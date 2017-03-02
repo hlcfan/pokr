@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.13] - 2017-03-02
+### Changed
+- Cleaner result panel
+
 ## [0.2.12] - 2017-02-22
 ### Added
 - Allow moderator to edit/close a room
