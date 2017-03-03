@@ -1,9 +1,13 @@
 $serifFont: Georgia, Times, "Times New Roman", serif;
 
-.about {
+.about, .faq {
   h1 {
     font-family: $serifFont;
     margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: $serifFont;
   }
 
   p {
