@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post 'home/feedback'
   get 'home/sign_up_form'
   get 'about', to: 'site#about'
+  get 'faq', to: 'site#faq'
 
   mount ActionCable.server => '/cable'
 
