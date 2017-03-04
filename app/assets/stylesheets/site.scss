@@ -1,0 +1,19 @@
+$serifFont: Georgia, Times, "Times New Roman", serif;
+
+.about, .faq {
+  h1 {
+    font-family: $serifFont;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: $serifFont;
+  }
+
+  p {
+    font-family: $serifFont;
+    font-size: 18px;
+    line-height: 35px;
+    margin-bottom: 20px;
+  }
+}
