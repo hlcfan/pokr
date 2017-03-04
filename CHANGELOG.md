@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.14] - 2017-03-04
+### Changed
+- Redo footer
+
 ## [0.2.13] - 2017-03-02
 ### Changed
 - Cleaner result panel
