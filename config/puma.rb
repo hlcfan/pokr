@@ -13,7 +13,7 @@ if rails_env == ENV["RAILS_ENV"]
   state_path "tmp/sockets/puma.state"
   bind 'unix:/tmp/puma_pokr.sock'
   daemonize true
-  workers 1
+  # workers 1
   threads 0, 16
   # preload_app!
 
