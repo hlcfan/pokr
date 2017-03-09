@@ -19,18 +19,26 @@
         <%= f.text_field :name, class: 'form-control' %>
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-2">
       <div class="form-group">
         <%= f.label :timer, "Egg Timer" %>
-        <%= f.select :timer, {"1 min" => 1, "2 min" => 2, "3 min" => 3, "4 min" => 4, "5 min" => 5}, { include_blank: "I don't need an egg timer", selected: f.object.timer.to_i }, class: 'form-control' %>
-      </div>    
+        <%= f.select :timer, {"1 min" => 1, "2 min" => 2, "3 min" => 3, "4 min" => 4, "5 min" => 5}, { include_blank: "No timer", selected: f.object.timer.to_i }, class: 'form-control' %>
+      </div>
     </div>
-  </div>
-  <div class="checkbox">
-    <label>
-      <%= f.check_box :style %>
-      Free Style? (aka. one story mode, is old-style way which only focus on vote.)
-    </label>
+    <div class="col-xs-2">
+      <div class="form-group">
+        <label>
+          Style
+        </label>
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :style %>
+            Free Style?
+            <i class="fa fa-info-circle room--style--icon" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Free Style? (aka. one story mode, is old-style way which only focus on vote.)"></i>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <%= f.label "Point values" %>
