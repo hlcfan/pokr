@@ -43,6 +43,7 @@ class Rooms
       selectedPointValues = selectedPointValuesArray.join(',')
       $pointValues.val selectedPointValues
       return
+    $('.room--style--icon').popover();
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->

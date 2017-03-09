@@ -172,6 +172,10 @@
 }
 
 .room form {
+  .room--style--icon {
+    cursor: pointer;
+  }
+
   button.add {
     margin-left: 15px;
     margin-bottom: 15px;
