@@ -36,6 +36,9 @@ gem 'puma'
 gem 'redis-rails', '~> 5.0.1'
 gem 'mina-puma', require: false
 gem 'multi_fetch_fragments'
+gem 'sitemap_generator'
+gem 'whenever', :require => false
+gem 'mina-sitemap_generator', :require => false
 
 # gem 'rack-mini-profiler'
 # gem 'flamegraph'
