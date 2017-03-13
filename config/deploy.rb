@@ -4,6 +4,7 @@ require 'mina/git'
 require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
+require 'mina/sitemap_generator'
 
 set :domain, 'pokrex.com'
 set :deploy_to, '/home/hlcfan/pokr'
@@ -78,6 +79,8 @@ task :deploy => :environment do
 
     to :launch do
       invoke :'puma:phased_restart'
+      invoke :'whenever:update'
+      invoke :'sitemap:create'
     end
   end
 end
