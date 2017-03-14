@@ -15,7 +15,7 @@ if rails_env == ENV["RAILS_ENV"]
   daemonize true
   # workers 1
   threads 0, 16
-  # preload_app!
+  prune_bundler
 
   # Specifies the `environment` that Puma will run in.
   #
@@ -46,7 +46,7 @@ if rails_env == ENV["RAILS_ENV"]
   # you need to make sure to reconnect any threads in the `on_worker_boot`
   # block.
   #
-  preload_app!
+  # preload_app!
 
   # The code in the `on_worker_boot` will be called if you are using
   # clustered mode by specifying a number of `workers`. After each worker
