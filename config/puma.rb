@@ -16,6 +16,7 @@ if rails_env == ENV["RAILS_ENV"]
   workers 1
   threads 0, 16
   prune_bundler
+  preload_app!
 
   # Specifies the `environment` that Puma will run in.
   #
