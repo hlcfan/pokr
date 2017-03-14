@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.16] - 2017-03-14
+### Changed
+- Add page descriptions for sign up/in, about, faq pages
+- Update landing page title from **Planning Poker** to **Online Planning Poker**
+- Add meta language to html tag on landing page
+
+## [0.2.16] - 2017-03-13
+### Added
+- Add robots/sitemap [#90](https://github.com/hlcfan/pokr/pull/90)
+
 ## [0.2.15] - 2017-03-09
 ### Changed
 - Intact room form [#89](https://github.com/hlcfan/pokr/pull/89)
