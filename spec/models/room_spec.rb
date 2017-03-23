@@ -184,4 +184,32 @@ RSpec.describe Room, type: :model do
       expect(room.free_style?).to be_falsy
     end
   end
+
+  describe "#user_list" do
+    it "lists users without points, with vote status in a room" do
+      user1 = User.create(email: 'a@a.com', password: 'password')
+      user2 = User.create(email: 'b@b.com', password: 'password')
+      room = Room.create(name: 'test slug')
+      UserRoom.create(user_id: user2.id, room_id: room.id)
+      sleep 1
+      UserRoom.create(user_id: user1.id, room_id: room.id)
+      Story.create(link: "link_1", room_id: room.id)
+
+      expect(room.user_list({}).map(&:id)).to eq([user2.id, user1.id])
+    end
+
+    it "lists users with points and vote status in a room" do
+      user1 = User.create(email: 'a@a.com', password: 'password')
+      user2 = User.create(email: 'b@b.com', password: 'password')
+      room = Room.create(name: 'test slug')
+      UserRoom.create(user_id: user2.id, room_id: room.id)
+      sleep 1
+      UserRoom.create(user_id: user1.id, room_id: room.id)
+      story = Story.create(link: "link_1", room_id: room.id)
+      UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
+      UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
+
+      expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
+    end
+  end
 end
