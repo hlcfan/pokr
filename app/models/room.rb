@@ -93,6 +93,25 @@ class Room < ApplicationRecord
     end
   end
 
+  def user_list params
+    room_users = users.to_a
+    user_rooms = {}
+    UserRoom.where(user_id: room_users, room_id: id).order(:created_at).select(:user_id, :role).each do |user_room|
+      user_rooms.update({user_room.user_id => user_room.display_role})
+    end
+
+    user_story_points = {}
+    UserStoryPoint.where(user_id: room_users, story_id: current_story_id).each do |user_story_point|
+      user_story_points.update({user_story_point.user_id => user_story_point.points})
+    end if params[:sync] == 'true'
+
+    room_users.sort_by! do |user|
+      build_room_user user, user_story_points[user.id], user_rooms[user.id]
+
+      user_rooms.keys.index user.id
+    end
+  end
+
   private
 
   def has_timer?
@@ -135,6 +154,15 @@ class Room < ApplicationRecord
 
   def un_groomed_stories
     stories.where(point: nil)
+  end
+
+  def build_room_user user, user_point, user_role
+    user.display_role = user_role
+    user.points = user_point || ""
+    user.voted = !!user_point
+    user.avatar_thumb = user.letter_avatar
+
+    user
   end
 
 end

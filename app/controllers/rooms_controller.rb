@@ -20,23 +20,7 @@ class RoomsController < ApplicationController
   end
 
   def user_list
-    @users = @room.users.to_a
-    user_rooms = {}
-    UserRoom.where(user_id: @users, room_id: @room.id).select(:user_id, :role).each do |user_room|
-      user_rooms.update({user_room.user_id => user_room.display_role})
-    end
-
-    user_story_points = {}
-    UserStoryPoint.where(user_id: @users, story_id: @room.current_story_id).each do |user_story_point|
-      user_story_points.update({user_story_point.user_id => user_story_point.points})
-    end
-    @users.each do |user|
-      user_point = user_story_points[user.id]
-      user.display_role = user_rooms[user.id]
-      user.points = user_point if params[:sync] == 'true'
-      user.voted = !!user_point
-      user.avatar_thumb = user.letter_avatar
-    end
+    @users = @room.user_list params
   end
 
   # GET /rooms/1
