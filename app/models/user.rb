@@ -33,18 +33,6 @@ class User < ApplicationRecord
     point if point
   end
 
-  def owner?
-    role == 0
-  end
-
-  def participant?
-    role == 1
-  end
-
-  def watcher?
-    role == 2
-  end
-
   def display_name
     name || email
   end
