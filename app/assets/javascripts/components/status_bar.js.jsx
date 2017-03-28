@@ -14,6 +14,18 @@ var StatusBar = React.createClass({
   componentDidMount: function() {
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
   },
+  beWatcher: function() {
+    if (POKER.role === "Watcher")
+      return
+
+    alert("Be watcher")
+  },
+  beParticipant: function() {
+    if (POKER.role === "Participant")
+      return
+
+    alert("Be participant")
+  },
   render:function() {
     var that = this;
     var roomStatusButton = function() {
@@ -37,6 +49,17 @@ var StatusBar = React.createClass({
       }
     }();
 
+    var userRoleClassName = function(role) {
+      if(POKER.role === "Moderator")
+        return
+
+      if (POKER.role === role ) {
+        return "disabled";
+      } else {
+        return "";
+      }
+    };
+
     return (
       <div className="name">
         <div className="col-md-8">
@@ -50,8 +73,8 @@ var StatusBar = React.createClass({
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Be watcher 😎</a></li>
-              <li><a href="#">Be participant 👷</a></li>
+              <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 😎</a></li>
+              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>
               <li role="separator" className="divider"></li>
               <li><a href="#">Quit</a></li>
             </ul>
