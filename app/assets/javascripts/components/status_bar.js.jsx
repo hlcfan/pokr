@@ -44,7 +44,18 @@ var StatusBar = React.createClass({
           {operationButtons}
         </div>
         <div className="col-md-4">
-          <h3><i className="pull-right">Yo, {POKER.currentUser.name}({POKER.role})!</i></h3>
+          <div className="dropdown pull-right">
+            <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              🤖&nbsp; {POKER.role} &nbsp;
+              <span className="caret"></span>
+            </button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="#">Be watcher 😎</a></li>
+              <li><a href="#">Be participant 👷</a></li>
+              <li role="separator" className="divider"></li>
+              <li><a href="#">Quit</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     );
