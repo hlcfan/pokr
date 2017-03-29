@@ -12,7 +12,14 @@ var StatusBar = React.createClass({
     $(".room-operation").remove();
   },
   componentDidMount: function() {
-    $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area"});
+    var originalTitle = "Copy to clipboard";
+    $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
+      .on("click", function() {
+        $(this).attr("title", "Copied!").tooltip("fixTitle").tooltip("show");
+      }).mouseleave(function() {
+        $(this).attr("title", originalTitle).tooltip("fixTitle");
+      });
+
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
   },
   render:function() {
@@ -33,7 +40,6 @@ var StatusBar = React.createClass({
       aField.value    = window.location.href;
       aField.select();
       document.execCommand("copy");
-      // alert("Following text has been copied to the clipboard.\n\n" + aField.value);
       aField.hidden = true;
     }
 
@@ -43,7 +49,7 @@ var StatusBar = React.createClass({
           <div className="btn-group pull-right room-operation" role="group">
             {roomStatusButton}
             <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
-            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-trigger="click" title="Click to copy room link">Share link</button>
+            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">Share link</button>
           </div>
         )
       }
