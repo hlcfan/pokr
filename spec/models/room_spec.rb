@@ -186,37 +186,52 @@ RSpec.describe Room, type: :model do
   end
 
   describe "#user_list" do
-    it "lists users without points, with vote status in a room" do
-      user1 = User.create(email: 'a@a.com', password: 'password')
-      user2 = User.create(email: 'b@b.com', password: 'password')
-      room = Room.create(name: 'test slug')
-      UserRoom.create(user_id: user2.id, room_id: room.id)
-      sleep 1
-      UserRoom.create(user_id: user1.id, room_id: room.id)
-      story = Story.create(link: "link_1", room_id: room.id)
-      UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
-      UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
+    context "when sync=true" do
+      it "lists users with points and vote status in a room if sync=true" do
+        user1 = User.create(email: 'a@a.com', password: 'password')
+        user2 = User.create(email: 'b@b.com', password: 'password')
+        room = Room.create(name: 'test slug')
+        UserRoom.create(user_id: user2.id, room_id: room.id)
+        sleep 1
+        UserRoom.create(user_id: user1.id, room_id: room.id)
+        story = Story.create(link: "link_1", room_id: room.id)
+        UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
+        UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-      expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
-      expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
+        expect(room.user_list.map(&:voted)).to eq([true, true])
+      end
     end
 
-    it "lists users with points and vote status in a room" do
-      user1 = User.create(email: 'a@a.com', password: 'password')
-      user2 = User.create(email: 'b@b.com', password: 'password')
-      room = Room.create(name: 'test slug')
-      UserRoom.create(user_id: user2.id, room_id: room.id)
-      sleep 1
-      UserRoom.create(user_id: user1.id, room_id: room.id)
-      story = Story.create(link: "link_1", room_id: room.id)
-      UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
-      UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
+    context "when sync=false" do
+      it "lists users without points, with vote status in a room if someone voted" do
+        user1 = User.create(email: 'a@a.com', password: 'password')
+        user2 = User.create(email: 'b@b.com', password: 'password')
+        room = Room.create(name: 'test slug')
+        UserRoom.create(user_id: user2.id, room_id: room.id)
+        sleep 1
+        UserRoom.create(user_id: user1.id, room_id: room.id)
+        story = Story.create(link: "link_1", room_id: room.id)
+        UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
+        UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-      expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
-      expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
+        expect(room.user_list.map(&:voted)).to eq([true, true])
+      end
+
+      it "lists users without points and without vote status in a room if no one voted" do
+        user1 = User.create(email: 'a@a.com', password: 'password')
+        user2 = User.create(email: 'b@b.com', password: 'password')
+        room = Room.create(name: 'test slug')
+        UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
+        UserRoom.create(user_id: user1.id, room_id: room.id, role: 2)
+
+        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
+        expect(room.user_list.map(&:voted)).to eq([false, false])
+      end
     end
 
-    it "lists users with points and vote status in a room partitioned by user role" do
+    it "lists users in a room partitioned by user role" do
       user1 = User.create(email: 'a@a.com', password: 'password')
       user2 = User.create(email: 'b@b.com', password: 'password')
       watcher = User.create(email: 'w@tcher.com', password: 'password')
