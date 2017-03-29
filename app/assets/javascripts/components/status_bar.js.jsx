@@ -119,7 +119,7 @@ var StatusBar = React.createClass({
 
     var currentRoleEmoji = function() {
       if (POKER.role === "Moderator") {
-        return "🤖";
+        return "👑";
       } else if (POKER.role === "Participant") {
         return "👷";
       } else {
