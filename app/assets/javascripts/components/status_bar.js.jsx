@@ -2,11 +2,13 @@ var StatusBar = React.createClass({
   openRoom: function() {
   },
   closeRoom: function() {
-    App.rooms.perform('action', {
-      roomId: POKER.roomId,
-      data: "close-room",
-      type: 'action'
-    });
+    if(confirm("Do you want to close this room? It can not be undo!")) {
+      App.rooms.perform('action', {
+        roomId: POKER.roomId,
+        data: "close-room",
+        type: 'action'
+      });
+    }
   },
   removeOperationButtons: function() {
     $(".room-operation").remove();
