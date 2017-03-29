@@ -142,10 +142,7 @@ var StatusBar = React.createClass({
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
               <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 👲</a></li>
-              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>
-              <li role="separator" className="divider"></li>
-              <li><a href="#">Quit</a></li>
-            </ul>
+              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
           </div>
         </div>
         <input type="text" id="hiddenField" className="room--share-link" />
