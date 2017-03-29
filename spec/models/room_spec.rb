@@ -193,9 +193,12 @@ RSpec.describe Room, type: :model do
       UserRoom.create(user_id: user2.id, room_id: room.id)
       sleep 1
       UserRoom.create(user_id: user1.id, room_id: room.id)
-      Story.create(link: "link_1", room_id: room.id)
+      story = Story.create(link: "link_1", room_id: room.id)
+      UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
+      UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-      expect(room.user_list({}).map(&:id)).to eq([user2.id, user1.id])
+      expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
+      expect(room.user_list.map(&:voted)).to eq([true, true])
     end
 
     it "lists users with points and vote status in a room" do
@@ -210,6 +213,7 @@ RSpec.describe Room, type: :model do
       UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
       expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
+      expect(room.user_list.map(&:voted)).to eq([true, true])
     end
 
     it "lists users with points and vote status in a room partitioned by user role" do
@@ -222,7 +226,7 @@ RSpec.describe Room, type: :model do
       sleep 1
       UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
 
-      expect(room.user_list().map(&:id)).to eq([user2.id, user1.id, watcher.id])
+      expect(room.user_list.map(&:id)).to eq([user2.id, user1.id, watcher.id])
     end
   end
 end
