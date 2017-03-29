@@ -111,15 +111,23 @@ var StatusBar = React.createClass({
     }();
 
     var userRoleClassName = function(role) {
-      if(POKER.role === "Moderator")
-        return
-
-      if (POKER.role === role ) {
+      // Dont allow moderator to switch role at the moment
+      if (POKER.role === role || POKER.role === "Moderator" ) {
         return "disabled";
       } else {
         return "";
       }
     };
+
+    var currentRoleEmoji = function() {
+      if (POKER.role === "Moderator") {
+        return "🤖";
+      } else if (POKER.role === "Participant") {
+        return "👷";
+      } else {
+        return "👲";
+      }
+    }();
 
     return (
       <div className="name">
@@ -131,7 +139,7 @@ var StatusBar = React.createClass({
         <div className="col-md-4">
           <div className="dropdown pull-right">
             <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              🤖&nbsp; {POKER.role} &nbsp;
+              {currentRoleEmoji} &nbsp;{POKER.role} &nbsp;
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
