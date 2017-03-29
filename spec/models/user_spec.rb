@@ -26,27 +26,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#owner?" do
-    it "returns true if role equals 0" do
-      user.role = 0
-      expect(user.owner?).to be true
-    end
-  end
-
-  describe "#participant?" do
-    it "returns true if role equals 1" do
-      user.role = 1
-      expect(user.participant?).to be true
-    end
-  end
-
-  describe "#watcher?" do
-    it "returns true if role equals 2" do
-      user.role = 2
-      expect(user.watcher?).to be true
-    end
-  end
-
   describe "#display_name" do
     it "prefers email user name" do
       user.name = 'nickname'
