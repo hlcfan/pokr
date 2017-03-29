@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get :user_list
       post :set_room_status
       get :draw_board
+      post :switch_role
     end
   end
 
