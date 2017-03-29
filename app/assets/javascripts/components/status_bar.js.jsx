@@ -26,7 +26,7 @@ var StatusBar = React.createClass({
     var that = this;
     var roomStatusButton = function() {
       if(POKER.role === 'Moderator') {
-        var buttonText = "Close it";
+        var buttonText = "🏁 Close it";
         var buttonClassName = "btn-warning close-room";
         var onClickHandler = that.closeRoom;
 
@@ -39,7 +39,7 @@ var StatusBar = React.createClass({
     var editButton = function() {
       if(POKER.role === 'Moderator') {
         return(
-          <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
+          <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">✏️ Edit room</a>
         )
       }
     }();
@@ -59,7 +59,7 @@ var StatusBar = React.createClass({
           <div className="btn-group pull-right room-operation" role="group">
             {roomStatusButton}
             {editButton}
-            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">Share link</button>
+            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
           </div>
         )
       }
