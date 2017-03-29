@@ -171,6 +171,16 @@
   margin-top: 10px;
 }
 
+.room .room--share-link {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .room form {
   .room--style--icon {
     cursor: pointer;
