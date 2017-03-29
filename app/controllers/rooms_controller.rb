@@ -91,7 +91,9 @@ class RoomsController < ApplicationController
 
   def switch_role
     role = params[:role].to_i
-    return unless [UserRoom::PARTICIPANT, UserRoom::WATCHER].include? role
+    unless [UserRoom::PARTICIPANT, UserRoom::WATCHER].include? role
+      head :bad_request and return
+    end
 
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
     if user_room && !user_room.moderator?
