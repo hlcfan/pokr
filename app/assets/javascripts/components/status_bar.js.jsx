@@ -1,4 +1,7 @@
 var StatusBar = React.createClass({
+  getInitialState: function() {
+    return { role: POKER.role };
+  },
   openRoom: function() {
   },
   closeRoom: function() {
@@ -24,7 +27,9 @@ var StatusBar = React.createClass({
       type: 'POST',
       data: {role: WATCHER_ROLE},
       success: function(data) {
-        console.log("Switch role success!");
+        console.log("Switch role to watcher!");
+        POKER.role = "Watcher";
+        this.setState({role: "Watcher"});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error("Switch role failed!");
@@ -41,7 +46,9 @@ var StatusBar = React.createClass({
       type: 'POST',
       data: {role: PARTICIPANT_ROLE},
       success: function(data) {
-        console.log("Switch role success!");
+        console.log("Switch role to participant!");
+        POKER.role = "Participant";
+        this.setState({role: "Participant"});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error("Switch role failed!");
