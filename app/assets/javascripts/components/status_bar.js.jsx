@@ -18,13 +18,35 @@ var StatusBar = React.createClass({
     if (POKER.role === "Watcher")
       return
 
-    alert("Be watcher")
+    $.ajax({
+      url: "/rooms/"+POKER.roomId+"/switch_role",
+      cache: false,
+      type: 'POST',
+      data: {role: WATCHER_ROLE},
+      success: function(data) {
+        console.log("Switch role success!");
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("Switch role failed!");
+      }.bind(this)
+    });
   },
   beParticipant: function() {
     if (POKER.role === "Participant")
       return
 
-    alert("Be participant")
+    $.ajax({
+      url: "/rooms/"+POKER.roomId+"/switch_role",
+      cache: false,
+      type: 'POST',
+      data: {role: PARTICIPANT_ROLE},
+      success: function(data) {
+        console.log("Switch role success!");
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("Switch role failed!");
+      }.bind(this)
+    });
   },
   render:function() {
     var that = this;

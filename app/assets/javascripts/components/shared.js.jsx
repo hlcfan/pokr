@@ -1,3 +1,7 @@
+var MODERATOR_ROLE = 0;
+var PARTICIPANT_ROLE = 1;
+var WATCHER_ROLE = 2;
+
 var EventEmitter = {
   _events: {},
   dispatch: function (event, data) {
