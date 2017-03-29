@@ -93,7 +93,7 @@ class Room < ApplicationRecord
     end
   end
 
-  def user_list params
+  def user_list params={}
     room_users = users.to_a
     user_rooms = {}
     UserRoom.where(user_id: room_users, room_id: id).order(:created_at).select(:user_id, :role).each do |user_room|
@@ -109,7 +109,9 @@ class Room < ApplicationRecord
       build_room_user user, user_story_points[user.id], user_rooms[user.id]
 
       user_rooms.keys.index user.id
-    end
+    end.partition do |room_user|
+      room_user.display_role != "Watcher"
+    end.flatten
   end
 
   private

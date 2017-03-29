@@ -211,5 +211,18 @@ RSpec.describe Room, type: :model do
 
       expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
     end
+
+    it "lists users with points and vote status in a room partitioned by user role" do
+      user1 = User.create(email: 'a@a.com', password: 'password')
+      user2 = User.create(email: 'b@b.com', password: 'password')
+      watcher = User.create(email: 'w@tcher.com', password: 'password')
+      room = Room.create(name: 'test slug')
+      UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
+      UserRoom.create(user_id: watcher.id, room_id: room.id, role: 2)
+      sleep 1
+      UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
+
+      expect(room.user_list().map(&:id)).to eq([user2.id, user1.id, watcher.id])
+    end
   end
 end
