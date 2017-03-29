@@ -91,13 +91,15 @@ class RoomsController < ApplicationController
 
   def switch_role
     role = params[:role].to_i
-    # binding.pry
     return unless [UserRoom::PARTICIPANT, UserRoom::WATCHER].include? role
 
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
     if user_room && !user_room.moderator?
       user_room.update(role: role)
+      broadcaster "rooms/#{@room.slug}",
+        user_id: current_user.id,
+        data: 'switch-roles',
+        type: 'action'
       head :ok
     else
       head :bad_request

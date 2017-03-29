@@ -38,7 +38,6 @@ var StatusBar = React.createClass({
       data: {role: WATCHER_ROLE},
       success: function(data) {
         console.log("Switch role to watcher!");
-        EventEmitter.dispatch("switchUserRoles");
         POKER.role = "Watcher";
         this.setState({role: "Watcher"});
       }.bind(this),
@@ -58,7 +57,6 @@ var StatusBar = React.createClass({
       data: {role: PARTICIPANT_ROLE},
       success: function(data) {
         console.log("Switch role to participant!");
-        EventEmitter.dispatch("switchUserRoles");
         POKER.role = "Participant";
         this.setState({role: "Participant"});
       }.bind(this),
