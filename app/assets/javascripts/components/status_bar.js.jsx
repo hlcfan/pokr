@@ -25,13 +25,23 @@ var StatusBar = React.createClass({
   render:function() {
     var that = this;
     var roomStatusButton = function() {
-      var buttonText = "Close it";
-      var buttonClassName = "btn-warning close-room";
-      var onClickHandler = that.closeRoom;
+      if(POKER.role === 'Moderator') {
+        var buttonText = "Close it";
+        var buttonClassName = "btn-warning close-room";
+        var onClickHandler = that.closeRoom;
 
-      return (
-        <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
-      )
+        return (
+          <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
+        )
+      }
+    }();
+
+    var editButton = function() {
+      if(POKER.role === 'Moderator') {
+        return(
+          <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
+        )
+      }
     }();
 
     var copyLink = function() {
@@ -44,11 +54,11 @@ var StatusBar = React.createClass({
     }
 
     var operationButtons = function() {
-      if (POKER.role === 'Moderator' && POKER.roomState !== "draw") {
+      if (POKER.roomState !== "draw") {
         return(
           <div className="btn-group pull-right room-operation" role="group">
             {roomStatusButton}
-            <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">Edit room</a>
+            {editButton}
             <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">Share link</button>
           </div>
         )
