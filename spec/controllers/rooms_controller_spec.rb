@@ -225,6 +225,19 @@ RSpec.describe RoomsController, type: :controller do
       expect(UserRoom.find_by(user_id: user.id, room_id: room.id).display_role).to eq "Watcher"
     end
 
+    it "returns bad request if switch to current role" do
+      room = Room.create! valid_attributes
+      user = User.find_by email: 'a@a.com'
+      user_room = UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::WATCHER)
+
+      expect(controller).not_to receive(:broadcaster)
+
+      post :switch_role, params: {id: room.slug, role: UserRoom::WATCHER}, session: valid_session
+
+      expect(response.status).to eq 400
+      expect(UserRoom.find_by(user_id: user.id, room_id: room.id).display_role).to eq "Watcher"
+    end
+
     it "returns bad request if it's moderator" do
       room = Room.create! valid_attributes
       user = User.find_by email: 'a@a.com'

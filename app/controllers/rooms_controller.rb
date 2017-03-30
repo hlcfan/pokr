@@ -96,7 +96,7 @@ class RoomsController < ApplicationController
     end
 
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-    if user_room && !user_room.moderator?
+    if user_room && !user_room.moderator? && user_room.role != role
       user_room.update(role: role)
       broadcaster "rooms/#{@room.slug}",
         user_id: current_user.id,
