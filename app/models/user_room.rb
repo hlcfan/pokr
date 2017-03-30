@@ -8,7 +8,15 @@ class UserRoom < ApplicationRecord
   WATCHER = 2
 
   def moderator?
-    role == 0
+    MODERATOR == role
+  end
+
+  def participant?
+    PARTICIPANT == role
+  end
+
+  def watcher?
+    WATCHER == role
   end
 
   def display_role

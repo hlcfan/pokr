@@ -140,8 +140,11 @@
     }
   }
 
-  li i.watcher {
-    color: #FFD700;
+  li.watcher a {
+    &:after {
+      content: "👲";
+      padding-left: 5px;
+    }
   }
 }
 

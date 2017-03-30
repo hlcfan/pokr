@@ -8,6 +8,35 @@ RSpec.describe UserRoom, type: :model do
       user_room.role = 0
       expect(user_room.moderator?).to be true
     end
+
+    it "is false if role isnt equals 0" do
+      user_room.role = 1
+      expect(user_room.moderator?).to be false
+    end
+  end
+
+  describe "#participant?" do
+    it "is true if role equals 1" do
+      user_room.role = 1
+      expect(user_room.participant?).to be true
+    end
+
+    it "is false if role isnt equals 1" do
+      user_room.role = 0
+      expect(user_room.participant?).to be false
+    end
+  end
+
+  describe "#watcher?" do
+    it "is true if role equals 2" do
+      user_room.role = 2
+      expect(user_room.watcher?).to be true
+    end
+
+    it "is false if role isnt equals 2" do
+      user_room.role = 0
+      expect(user_room.watcher?).to be false
+    end
   end
 
   describe "#display_role" do

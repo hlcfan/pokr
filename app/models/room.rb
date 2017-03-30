@@ -93,7 +93,7 @@ class Room < ApplicationRecord
     end
   end
 
-  def user_list params
+  def user_list params={}
     room_users = users.to_a
     user_rooms = {}
     UserRoom.where(user_id: room_users, room_id: id).order(:created_at).select(:user_id, :role).each do |user_room|
@@ -103,13 +103,15 @@ class Room < ApplicationRecord
     user_story_points = {}
     UserStoryPoint.where(user_id: room_users, story_id: current_story_id).each do |user_story_point|
       user_story_points.update({user_story_point.user_id => user_story_point.points})
-    end if params[:sync] == 'true'
+    end
 
     room_users.sort_by! do |user|
-      build_room_user user, user_story_points[user.id], user_rooms[user.id]
+      build_room_user user, user_story_points[user.id], user_rooms[user.id], params[:sync]
 
       user_rooms.keys.index user.id
-    end
+    end.partition do |room_user|
+      room_user.display_role != "Watcher"
+    end.flatten
   end
 
   private
@@ -156,9 +158,9 @@ class Room < ApplicationRecord
     stories.where(point: nil)
   end
 
-  def build_room_user user, user_point, user_role
+  def build_room_user user, user_point, user_role, sync=nil
     user.display_role = user_role
-    user.points = user_point || ""
+    user.points = user_point || "" if sync == 'true'
     user.voted = !!user_point
     user.avatar_thumb = user.letter_avatar
 

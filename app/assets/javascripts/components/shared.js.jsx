@@ -1,3 +1,7 @@
+var MODERATOR_ROLE = 0;
+var PARTICIPANT_ROLE = 1;
+var WATCHER_ROLE = 2;
+
 var EventEmitter = {
   _events: {},
   dispatch: function (event, data) {
@@ -96,6 +100,8 @@ function setupChannelSubscription() {
           revote();
         } else if(data.data === "close-room") {
           EventEmitter.dispatch("roomClosed");
+        } else if(data.data === "switch-roles") {
+          EventEmitter.dispatch("refreshUsers");
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);

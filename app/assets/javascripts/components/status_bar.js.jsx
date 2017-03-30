@@ -1,4 +1,7 @@
 var StatusBar = React.createClass({
+  getInitialState: function() {
+    return { role: POKER.role };
+  },
   openRoom: function() {
   },
   closeRoom: function() {
@@ -23,6 +26,42 @@ var StatusBar = React.createClass({
       });
 
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
+  },
+  beWatcher: function() {
+    if (POKER.role === "Watcher")
+      return
+
+    $.ajax({
+      url: "/rooms/"+POKER.roomId+"/switch_role",
+      cache: false,
+      type: 'POST',
+      data: {role: WATCHER_ROLE},
+      success: function(data) {
+        POKER.role = "Watcher";
+        this.setState({role: "Watcher"});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("Switch role failed!");
+      }.bind(this)
+    });
+  },
+  beParticipant: function() {
+    if (POKER.role === "Participant")
+      return
+
+    $.ajax({
+      url: "/rooms/"+POKER.roomId+"/switch_role",
+      cache: false,
+      type: 'POST',
+      data: {role: PARTICIPANT_ROLE},
+      success: function(data) {
+        POKER.role = "Participant";
+        this.setState({role: "Participant"});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("Switch role failed!");
+      }.bind(this)
+    });
   },
   render:function() {
     var that = this;
@@ -67,6 +106,25 @@ var StatusBar = React.createClass({
       }
     }();
 
+    var userRoleClassName = function(role) {
+      // Dont allow moderator to switch role at the moment
+      if (POKER.role === role || POKER.role === "Moderator" ) {
+        return "disabled";
+      } else {
+        return "";
+      }
+    };
+
+    var currentRoleEmoji = function() {
+      if (POKER.role === "Moderator") {
+        return "👑";
+      } else if (POKER.role === "Participant") {
+        return "👷";
+      } else {
+        return "👲";
+      }
+    }();
+
     return (
       <div className="name">
         <div className="col-md-8">
@@ -75,7 +133,15 @@ var StatusBar = React.createClass({
           <div id="tooltip-area"></div>
         </div>
         <div className="col-md-4">
-          <h3><i className="pull-right">Yo, {POKER.currentUser.name}({POKER.role})!</i></h3>
+          <div className="dropdown pull-right">
+            <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              {currentRoleEmoji} &nbsp;{POKER.role} &nbsp;
+              <span className="caret"></span>
+            </button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 👲</a></li>
+              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
+          </div>
         </div>
         <input type="text" id="hiddenField" className="room--share-link" />
       </div>

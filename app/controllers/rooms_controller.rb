@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role]
   before_action :enter_room, only: [:show]
 
   def index
@@ -87,6 +87,25 @@ class RoomsController < ApplicationController
 
   def draw_board
     @stories = @room.groomed_stories
+  end
+
+  def switch_role
+    role = params[:role].to_i
+    unless [UserRoom::PARTICIPANT, UserRoom::WATCHER].include? role
+      head :bad_request and return
+    end
+
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+    if user_room && !user_room.moderator? && user_room.role != role
+      user_room.update(role: role)
+      broadcaster "rooms/#{@room.slug}",
+        user_id: current_user.id,
+        data: 'switch-roles',
+        type: 'action'
+      head :ok
+    else
+      head :bad_request
+    end
   end
 
   private

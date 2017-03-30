@@ -23,6 +23,7 @@ var PeopleListBox = React.createClass({
   componentDidMount: function() {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
+    EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
   },
   render: function() {
     return (
