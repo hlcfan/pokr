@@ -7,6 +7,8 @@ class UserRoom < ApplicationRecord
   PARTICIPANT = 1
   WATCHER = 2
 
+  after_update :clear_cache
+
   def moderator?
     MODERATOR == role
   end
@@ -30,10 +32,16 @@ class UserRoom < ApplicationRecord
     end
   end
 
-  def self.find_by_with_cache *args
-    Rails.cache.fetch args do
-      find_by(*args)
+  def self.find_by_with_cache user_id:, room_id:
+    Rails.cache.fetch "user_room:#{user_id}:#{room_id}" do
+      find_by(user_id: user_id, room_id: room_id)
     end
+  end
+
+  private
+
+  def clear_cache
+    Rails.cache.delete "user_room:#{user_id}:#{room_id}"
   end
 
 end
