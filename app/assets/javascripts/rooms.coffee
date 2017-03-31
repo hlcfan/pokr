@@ -46,6 +46,8 @@ class Rooms
       return
     $('.room--style--icon').popover();
 
+    $('.room--moderators').tagEditor({ autocomplete: { 'source': '/url/', minLength: 3 } })
+
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->
     rooms = new Rooms
