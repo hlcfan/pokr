@@ -22,6 +22,7 @@ class Rooms
 
     $('#room_style').on 'click', ->
       $('.add.btn').toggle()
+      $('.import').toggle()
       return
 
     $('.point-values li input').on 'click', ->
