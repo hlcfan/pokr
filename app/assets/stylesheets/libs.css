@@ -1,4 +1,5 @@
 /*
 *= require ./libs/bootstrap.min
+*= require ./libs/jquery.tag-editor
 *= require jquery-ui/autocomplete
 */
