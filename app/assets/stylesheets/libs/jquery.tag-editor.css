@@ -1,11 +1,26 @@
 /* surrounding tag container */
 .tag-editor {
-    list-style-type: none; padding: 0 5px 0 0; margin: 0; overflow: hidden; border: 1px solid #eee; cursor: text;
-    font: normal 14px sans-serif; color: #555; background: #fff; line-height: 20px;
+    list-style-type: none;
+    padding: 0 5px 0 0;
+    margin: 0;
+    overflow: hidden;
+    cursor: text;
+    font: normal 14px sans-serif;
+    color: #555;
+    background: #fff;
+    line-height: 1.42857143;
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 /* core styles usually need no change */
-.tag-editor li { display: block; float: left; overflow: hidden; margin: 3px 0; }
+.tag-editor li { display: block; float: left; overflow: hidden; margin: 6px 0; }
 .tag-editor div { float: left; padding: 0 4px; }
 .tag-editor .placeholder { padding: 0 8px; color: #bbb; }
 .tag-editor .tag-editor-spacer { padding: 0; width: 8px; overflow: hidden; color: transparent; background: none; }
