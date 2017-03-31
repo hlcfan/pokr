@@ -62,7 +62,7 @@
       <% if @room.new_record? %>
         <div class="row bulk-links" style="display: none;">
           <%= hidden_field_tag :bulk %>
-          <%= text_area_tag :bulk_links, nil, class: 'form-control col-xs-10' %>
+          <%= text_area_tag :bulk_links, nil, placeholder: "One line one story, i.e.\nstory_link1\nstory_link2\nstory_link3\n...", class: 'form-control col-xs-10' %>
         </div>
       <% end %>
     </div>
