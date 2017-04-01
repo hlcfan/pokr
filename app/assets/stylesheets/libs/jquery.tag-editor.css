@@ -61,9 +61,11 @@
 
 .ui-widget-content, .ui-autocomplete {
     padding: 0;
+    width: 180px !important;
 }
 .ui-menu-item-wrapper {
     padding: 2px;
+    border: 1px solid transparent;
 }
 
 .tag-editor .tag-editor-spacer { width: 6px; }
