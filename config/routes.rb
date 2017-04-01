@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :users do
+    get :autocomplete
+  end
+
   get 'profile' => 'profile#show'
   get 'profile/edit' => 'profile#edit'
   patch 'profile/update' => 'profile#update'

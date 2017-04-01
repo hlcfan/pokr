@@ -1,0 +1,14 @@
+class UsersController < ApplicationController
+
+  def autocomplete
+    query = params[:term]
+    head :bad_request and return if query.blank?
+
+    users = User.where("name like ? OR email like ?", "#{query}%", "#{query}%").pluck(:id, :name).map do |id, name|
+      { id: id, label: name, value: name }
+    end
+
+    render json: users
+  end
+
+end
