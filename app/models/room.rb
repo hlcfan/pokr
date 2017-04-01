@@ -13,7 +13,7 @@ class Room < ApplicationRecord
   before_create :slug!
   before_save :sort_point_values
 
-  attr_accessor :moderators
+  attr_accessor :moderators, :moderator_names
 
   OPEN = 1
   DRAW = 2

@@ -57,7 +57,7 @@ class Rooms
         select: (event, ui) ->
           console.log(ui.item.id)
           currentValue = ui.item.id.toString()
-          $moderators = $("#moderators")
+          $moderators = $("#room_moderators")
           moderatorsValues = $moderators.val()
           moderatorsArray = moderatorsValues.split(',')
           if moderatorsArray.indexOf(currentValue) < 0
