@@ -38,6 +38,12 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1/edit
   def edit
+    user_rooms = UserRoom.includes(:user).where(room_id: @room.id, role: UserRoom::MODERATOR).to_a
+    user_rooms.reject! {|user_room| user_room.user_id == current_user.id }
+    @room.moderators = user_rooms.map(&:id).join(",")
+    @room.moderator_names = user_rooms.map do |user_room|
+      user_room.user.name
+    end.join(",")
   end
 
   # POST /rooms
