@@ -132,11 +132,6 @@ class RoomsController < ApplicationController
     @repo ||= RoomRepository.new
   end
 
-  def set_user_room_moderator
-    user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-    user_room.update!(role: UserRoom::MODERATOR)
-  end
-
   def enter_room
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
     if user_room.new_record?
