@@ -49,10 +49,6 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    if 'true' == params[:bulk]
-      params[:room][:stories_attributes] = bulk_import_params
-    end
-
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
 
     respond_to do |format|
@@ -123,7 +119,7 @@ class RoomsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
     params.require(:room).permit(
-      :name, :pv, :timer, :style, :moderators,
+      :name, :pv, :timer, :style, :bulk, :bulk_links, :moderators,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
   end
@@ -141,18 +137,6 @@ class RoomsController < ApplicationController
         data: 'refresh-users',
         type: 'action'
     end
-  end
-
-  def bulk_import_params
-    links = params[:bulk_links].split "\r\n"
-    return {} if links.blank?
-
-    stories_hash = {}
-    links.each_with_index do |story_link, index|
-      stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
-    end
-
-    stories_hash
   end
 
   def valid_room_status

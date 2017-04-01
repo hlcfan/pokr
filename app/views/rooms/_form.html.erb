@@ -61,8 +61,8 @@
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
       <% if @room.new_record? %>
         <div class="row bulk-links" style="display: none;">
-          <%= hidden_field_tag :bulk %>
-          <%= text_area_tag :bulk_links, nil, placeholder: "One line one story, i.e.\nstory_link1\nstory_link2\nstory_link3\n...", class: 'form-control col-xs-10' %>
+          <input type="hidden" name="room[bulk]">
+          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One line one story, i.e.\nstory_link1\nstory_link2\nstory_link3\n...", class: 'form-control col-xs-10' %>
         </div>
       <% end %>
     </div>
