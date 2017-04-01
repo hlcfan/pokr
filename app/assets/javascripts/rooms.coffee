@@ -46,7 +46,12 @@ class Rooms
       return
     $('.room--style--icon').popover();
 
-    $('.room--moderators').tagEditor({ autocomplete: { 'source': '/url/', minLength: 3 } })
+    $('.room--moderators').tagEditor({ autocomplete: {
+      source: ['ActionScript', 'AppleScript', 'Asp', 'BASIC', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala', 'Scheme'],
+      minLength: 1,
+      delay: 0,
+      position: { collision: 'flip' }
+      } })
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->
