@@ -6,9 +6,11 @@ class RoomRepository
 
   def save room
     if room.save
-      user_room_attrs = room.moderator.split(",").map do |moderator_id|
+      room.moderators << ",#{room.created_by}"
+      user_room_attrs = room.moderators.split(",").map do |moderator_id|
         { user_id: moderator_id, room_id: room.id, role: UserRoom::MODERATOR }
       end
+
       UserRoom.create user_room_attrs
 
       room
