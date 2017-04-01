@@ -74,7 +74,8 @@
   </section>
   <div class="form-group">
     <%= f.label "Add moderators" %>
-    <input class="form-control room--moderators" type="text" name=name[moderators]>
+    <%= hidden_field_tag :moderators, nil, name: "room[moderators]" %>
+    <input class="form-control room--moderators" type="text">
   </div>
   <div class="actions form-group">
     <%= f.submit "Submit", class: 'btn btn-default' %>

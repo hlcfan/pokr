@@ -46,12 +46,25 @@ class Rooms
       return
     $('.room--style--icon').popover();
 
-    $('.room--moderators').tagEditor({ autocomplete: {
-      source: ['ActionScript', 'AppleScript', 'Asp', 'BASIC', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala', 'Scheme'],
-      minLength: 1,
-      delay: 0,
-      position: { collision: 'flip' }
-      } })
+    $('.room--moderators').tagEditor
+      placeholder: 'Type name here...'
+      removeDuplicates: true
+      autocomplete:
+        source: '/users/autocomplete.json'
+        minLength: 1
+        delay: 0
+        position: collision: 'flip'
+        select: (event, ui) ->
+          console.log(ui.item.id)
+          currentValue = ui.item.id.toString()
+          $moderators = $("#moderators")
+          moderatorsValues = $moderators.val()
+          moderatorsArray = moderatorsValues.split(',')
+          if moderatorsArray.indexOf(currentValue) < 0
+            moderatorsArray.push currentValue
+          moderatorsArray = moderatorsArray.clean('')
+          moderatorsValues = moderatorsArray.join(',')
+          $moderators.val moderatorsValues
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->
