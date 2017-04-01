@@ -47,11 +47,10 @@ class RoomsController < ApplicationController
       params[:room][:stories_attributes] = bulk_import_params
     end
 
-    @room = Room.new(room_params.merge(created_by: current_user.id))
+    @room = repo.new_entity(room_params.merge(created_by: current_user.id))
 
     respond_to do |format|
-      if @room.save
-        set_user_room_moderator
+      if repo.save @room
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -118,9 +117,13 @@ class RoomsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
     params.require(:room).permit(
-      :name, :pv, :timer, :style,
+      :name, :pv, :timer, :style, :moderators,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
+  end
+
+  def repo
+    @repo ||= RoomRepository.new
   end
 
   def set_user_room_moderator

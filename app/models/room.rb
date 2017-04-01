@@ -13,6 +13,8 @@ class Room < ApplicationRecord
   before_create :slug!
   before_save :sort_point_values
 
+  attr_accessor :moderators
+
   OPEN = 1
   DRAW = 2
   DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
