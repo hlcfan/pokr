@@ -13,7 +13,7 @@ class Room < ApplicationRecord
   before_create :slug!
   before_save :sort_point_values
 
-  attr_accessor :moderators, :moderator_names
+  attr_accessor :moderator_ids
 
   OPEN = 1
   DRAW = 2
@@ -114,6 +114,22 @@ class Room < ApplicationRecord
     end.partition do |room_user|
       room_user.display_role != "Watcher"
     end.flatten
+  end
+
+  def moderator_ids_string
+    if moderator_ids.present?
+      moderator_ids.join(",")
+    end
+  end
+
+  def moderator_names
+    if moderator_ids.present?
+      User.find(moderator_ids).pluck(:name).join(",")
+    end
+  end
+
+  def moderator_ids
+    @moderator_ids ||= UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
   end
 
   private
