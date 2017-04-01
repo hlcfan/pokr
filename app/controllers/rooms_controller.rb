@@ -38,19 +38,13 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1/edit
   def edit
-    user_rooms = UserRoom.includes(:user).where(room_id: @room.id, role: UserRoom::MODERATOR).to_a
-    user_rooms.reject! {|user_room| user_room.user_id == current_user.id }
-    @room.moderators = user_rooms.map(&:id).join(",")
-    @room.moderator_names = user_rooms.map do |user_room|
-      user_room.user.name
-    end.join(",")
   end
 
   # POST /rooms
   # POST /rooms.json
   def create
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
-
+# binding.pry
     respond_to do |format|
       if repo.save @room
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
@@ -66,7 +60,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1.json
   def update
     respond_to do |format|
-      if @room.update_attributes(room_params)
+      if repo.update_entity @room, room_params
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
@@ -119,7 +113,7 @@ class RoomsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
     params.require(:room).permit(
-      :name, :pv, :timer, :style, :bulk, :bulk_links, :moderators,
+      :name, :pv, :timer, :style, :bulk, :bulk_links, :moderator_ids,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
   end
