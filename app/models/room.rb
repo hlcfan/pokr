@@ -142,6 +142,8 @@ class Room < ApplicationRecord
     end
   end
 
+  private
+
   def moderators
     @moderator ||= begin
       moderator_ids = UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
@@ -150,8 +152,6 @@ class Room < ApplicationRecord
       end
     end
   end
-
-  private
 
   def has_timer?
     !!timer
