@@ -7,7 +7,7 @@ RSpec.describe UsersController, type: :controller do
       login_user
       it "returns users that match the query term" do
         bob = User.create(name: "Bob", email: "b@b.com", password: "password")
-        get :autocomplete, {term: "b"}
+        get :autocomplete, params: { term: "b" }
         body = JSON.parse(response.body)
 
         expect(body).to eq [{"id"=>bob.id, "label"=>bob.name, "value"=>bob.name}]

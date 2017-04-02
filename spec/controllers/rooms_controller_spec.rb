@@ -95,7 +95,7 @@ RSpec.describe RoomsController, type: :controller do
         room.reload
         expect(room.name).to eq "another name"
         expect(room.pv).to eq "1,5,8,13"
-        expect(room.moderators_id).to eq [moderator.id]
+        expect(room.moderator_ids_ary).to eq [moderator.id]
       end
 
       it "assigns the requested room as @room" do
