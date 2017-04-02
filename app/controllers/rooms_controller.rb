@@ -44,7 +44,6 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
-# binding.pry
     respond_to do |format|
       if repo.save @room
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }

@@ -13,7 +13,6 @@ class RoomRepository
       0 == moderator_id && moderator_id.blank?
     end
     if room.update_attributes params
-      # binding.pry
       if moderator_ids.length > room.moderators_id.length
         delta = moderator_ids - room.moderators_id
         user_room_attrs = delta.map do |moderator_id|
@@ -30,7 +29,6 @@ class RoomRepository
   end
 
   def save room
-    binding.pry
     if room.save
       moderator_ids = room_moderators room.moderator_ids, room.created_by
       user_room_attrs = moderator_ids.map do |moderator_id|
