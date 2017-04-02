@@ -244,4 +244,61 @@ RSpec.describe Room, type: :model do
       expect(room.user_list.map(&:id)).to eq([user2.id, user1.id, watcher.id])
     end
   end
+
+  describe "#moderator_ids_string" do
+    it "returns moderator ids in string if has moderators" do
+      allow(room).to receive(:moderators) { [[1, "Alex"], [2, "Bob"]] }
+
+      expect(room.moderator_ids_string).to eq "1-Alex,2-Bob"
+    end
+
+    it "returns nil if no moderators" do
+      allow(room).to receive(:moderators) { [] }
+
+      expect(room.moderator_ids_string).to eq nil
+    end
+  end
+
+  describe "#moderator_names_string" do
+    it "returns moderator names in string if has moderators" do
+      allow(room).to receive(:moderators) { [[1, "Alex"], [2, "Bob"]] }
+
+      expect(room.moderator_names_string).to eq "Alex,Bob"
+    end
+
+    it "returns nil if no moderators" do
+      allow(room).to receive(:moderators) { [] }
+
+      expect(room.moderator_names_string).to eq nil
+    end
+  end
+
+  describe "#moderator_ids_ary" do
+    it "returns moderator names in string if has moderators" do
+      allow(room).to receive(:moderators) { [[1, "Alex"], [2, "Bob"]] }
+
+      expect(room.moderator_ids_ary).to eq [1,2]
+    end
+
+    it "returns empty array if no moderators" do
+      allow(room).to receive(:moderators) { [] }
+
+      expect(room.moderator_ids_ary).to eq []
+    end
+  end
+
+  describe "#moderators" do
+    it "returns moderators without creator" do
+      creator = User.create(email: "c@c.com", password: "password")
+      moderator = User.create(email: 'b@b.com', password: 'password')
+      participant = User.create(email: 'p@p.com', password: 'password')
+      room.name = "test"
+      room.created_by = creator.id
+      room.save!
+      UserRoom.create(room_id: room.id, user_id: moderator.id, role: UserRoom::MODERATOR)
+      UserRoom.create(room_id: room.id, user_id: participant.id)
+
+      expect(room.send(:moderators)).to eq [[moderator.id, moderator.name]]
+    end
+  end
 end
