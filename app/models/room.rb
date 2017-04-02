@@ -132,6 +132,16 @@ class Room < ApplicationRecord
     end
   end
 
+  def moderators_id
+    @moderators_id ||= begin
+      if moderators.present?
+        moderators.map { |user_id, user_name| user_id }
+      else
+        []
+      end
+    end
+  end
+
   def moderators
     @moderator ||= begin
       moderator_ids = UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)

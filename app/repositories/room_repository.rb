@@ -9,17 +9,19 @@ class RoomRepository
   end
 
   def update_entity room, params
-    moderator_ids = params.delete(:moderator_ids).split(",").map(&:to_i).reject &:blank?
+    moderator_ids = params.delete(:moderator_ids).split(",").map(&:to_i).reject do |moderator_id|
+      0 == moderator_id && moderator_id.blank?
+    end
     if room.update_attributes params
-      binding.pry
-      if moderator_ids.length > room.moderator_ids.length
-        delta = moderator_ids - room.moderator_ids
+      # binding.pry
+      if moderator_ids.length > room.moderators_id.length
+        delta = moderator_ids - room.moderators_id
         user_room_attrs = delta.map do |moderator_id|
           { user_id: moderator_id, room_id: room.id, role: UserRoom::MODERATOR }
         end
         UserRoom.create user_room_attrs
-      elsif moderator_ids.length < room.moderator_ids.length
-        delta = current_moderators - moderator_ids
+      elsif moderator_ids.length < room.moderators_id.length
+        delta = room.moderators_id - moderator_ids
         UserRoom.destroy_all(user_id: delta)
       end
 
