@@ -117,19 +117,26 @@ class Room < ApplicationRecord
   end
 
   def moderator_ids_string
-    if moderator_ids.present?
-      moderator_ids.join(",")
+    if moderators.present?
+      moderators.map do |user_id, user_name|
+        "#{user_id}-#{user_name}"
+      end.join(",")
     end
   end
 
   def moderator_names
-    if moderator_ids.present?
-      User.find(moderator_ids).pluck(:name).join(",")
+    if moderators.present?
+      moderators.map do |user_id, user_name|
+        user_name
+      end.join(",")
     end
   end
 
-  def moderator_ids
-    @moderator_ids ||= UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
+  def moderators
+    @moderator ||= begin
+      moderator_ids = UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
+      User.find(moderator_ids).pluck(:id, :name)
+    end
   end
 
   private
