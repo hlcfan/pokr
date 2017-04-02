@@ -82,7 +82,18 @@ class Rooms
           user_id + "-" +user_name
         
         $moderators.val moderatorIds.join(",")
-        # debugger;
+
+    $(".tag-editor-tag").on "click", (e) ->
+      e.preventDefault()
+      return false
+
+    editor = $('.tag-editor')
+    editor.on 'keydown', 'input', (event) ->
+      key = event.keyCode or event.charCode
+      if key == 8 or key == 46
+        event.stopPropagation()
+        event.preventDefault()
+        return false;
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->
