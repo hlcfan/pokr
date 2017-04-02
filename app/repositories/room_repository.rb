@@ -20,8 +20,14 @@ class RoomRepository
         end
         UserRoom.create user_room_attrs
       elsif moderator_ids.length < room.moderator_ids_ary.length
-        delta = room.moderators_id - moderator_ids
+        delta = room.moderator_ids_ary - moderator_ids
         UserRoom.destroy_all(user_id: delta)
+      elsif moderator_ids.length == room.moderator_ids_ary.length
+        UserRoom.destroy_all(room_id: room.id, user_id: room.moderator_ids_ary, role: UserRoom::MODERATOR)
+        user_room_attrs = moderator_ids.map do |moderator_id|
+          { user_id: moderator_id, room_id: room.id, role: UserRoom::MODERATOR }
+        end
+        UserRoom.create user_room_attrs
       end
 
       room
