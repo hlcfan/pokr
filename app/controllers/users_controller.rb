@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_action :authenticate_user!
+
   def autocomplete
     query = params[:term]
     head :bad_request and return if query.blank?
