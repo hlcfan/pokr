@@ -124,7 +124,7 @@ class Room < ApplicationRecord
     end
   end
 
-  def moderator_names
+  def moderator_names_string
     if moderators.present?
       moderators.map do |user_id, user_name|
         user_name
@@ -132,8 +132,8 @@ class Room < ApplicationRecord
     end
   end
 
-  def moderators_id
-    @moderators_id ||= begin
+  def moderator_ids_ary
+    @moderator_ids_ary ||= begin
       if moderators.present?
         moderators.map { |user_id, user_name| user_id }
       else

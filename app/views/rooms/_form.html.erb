@@ -75,7 +75,7 @@
   <div class="form-group">
     <%= f.label "Add moderators" %>
     <%= hidden_field_tag :room_moderator_ids, @room.moderator_ids_string, name: "room[moderator_ids]" %>
-    <input class="form-control room--moderators" type="text" value="<%= @room.moderator_names %>">
+    <input class="form-control room--moderators" type="text" value="<%= @room.moderator_names_string %>">
   </div>
   <div class="actions form-group">
     <%= f.submit "Submit", class: 'btn btn-default' %>
