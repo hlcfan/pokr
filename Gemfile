@@ -25,7 +25,6 @@ gem 'letter_avatar'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jquery-ui-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -48,6 +47,8 @@ gem 'mina-sitemap_generator', :require => false
 # gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
+  # Somehow my local ruby is broken by another version of Ruby while installing VIM
+  gem 'rb-readline'
   gem "pry"
   gem 'pry-doc'
   gem 'pry-nav'
