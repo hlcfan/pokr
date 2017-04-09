@@ -65,6 +65,11 @@ class Rooms
       allowDuplicates: false
       freeInput: false
 
+    $roomModerators = $("#room-moderators")
+    roomModerators = JSON.parse($roomModerators.val())
+    $.each roomModerators, (index, user) ->
+      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name });
+
     # $('.room--moderators').tagEditor
     #   placeholder: 'Type name here...'
     #   removeDuplicates: true
