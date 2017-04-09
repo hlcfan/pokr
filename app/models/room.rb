@@ -116,19 +116,11 @@ class Room < ApplicationRecord
     end.flatten
   end
 
-  def moderator_ids_string
+  def moderator_hash
     if moderators.present?
       moderators.map do |user_id, user_name|
-        "#{user_id}-#{user_name}"
-      end.join(",")
-    end
-  end
-
-  def moderator_names_string
-    if moderators.present?
-      moderators.map do |user_id, user_name|
-        user_name
-      end.join(",")
+        { value: user_id, name: user_name }
+      end
     end
   end
 

@@ -80,3 +80,4 @@
     <%= f.submit "Submit", class: 'btn btn-default' %>
   </div>
 <% end %>
+<input type="hidden" id="room-moderators" value=<%= @room.moderator_hash.to_json %> />
