@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
     users = User.where("name like ? OR email like ?", "#{query}%", "#{query}%").pluck(:id, :name).map do |id, name|
       next if id == current_user.id
-      { id: id, label: name, value: name }
+      { value: id, name: name }
     end.compact
 
     render json: users
