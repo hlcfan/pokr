@@ -1,4 +1,3 @@
-#= require jquery
+#= require jquery2
 #= require jquery_ujs
-#= require jquery-ui/widgets/autocomplete
 #= require_tree ./libs
