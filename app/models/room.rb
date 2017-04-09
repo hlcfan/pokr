@@ -91,7 +91,7 @@ class Room < ApplicationRecord
         Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
           calc_duration_between first_story, last_story
         end
-      end
+      end || 0
     end
   end
 
