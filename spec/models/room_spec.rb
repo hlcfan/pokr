@@ -245,31 +245,17 @@ RSpec.describe Room, type: :model do
     end
   end
 
-  describe "#moderator_ids_string" do
-    it "returns moderator ids in string if has moderators" do
+  describe "#moderator_hash" do
+    it "returns moderator id/name as hash if has moderators" do
       allow(room).to receive(:moderators) { [[1, "Alex"], [2, "Bob"]] }
 
-      expect(room.moderator_ids_string).to eq "1-Alex,2-Bob"
+      expect(room.moderator_hash).to eq [{value: 1, name: "Alex"}, {value: 2, name: "Bob"}]
     end
 
     it "returns nil if no moderators" do
       allow(room).to receive(:moderators) { [] }
 
-      expect(room.moderator_ids_string).to eq nil
-    end
-  end
-
-  describe "#moderator_names_string" do
-    it "returns moderator names in string if has moderators" do
-      allow(room).to receive(:moderators) { [[1, "Alex"], [2, "Bob"]] }
-
-      expect(room.moderator_names_string).to eq "Alex,Bob"
-    end
-
-    it "returns nil if no moderators" do
-      allow(room).to receive(:moderators) { [] }
-
-      expect(room.moderator_names_string).to eq nil
+      expect(room.moderator_hash).to eq nil
     end
   end
 

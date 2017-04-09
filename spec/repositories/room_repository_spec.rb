@@ -38,7 +38,7 @@ RSpec.describe RoomRepository do
       room = repo.save room
 
       expect(room.persisted?).to be_truthy
-      expect(room.moderator_ids_string).to eq "#{bob.id}-#{bob.name}"
+      expect(room.moderator_ids_ary).to eq [bob.id]
     end
   end
 
