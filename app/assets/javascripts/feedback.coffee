@@ -1,6 +1,6 @@
 class Feedback
-  init: -> 
-    modalOptions = 
+  init: ->
+    modalOptions =
       keyboard: false
       backdrop: 'static'
     $('.feedback-holder span').on 'click', ->
@@ -19,7 +19,7 @@ class Feedback
       email = $('#feedback input[name=email]').val()
       if message.length == 0 and email.length == 0
         return false
-      formData = 
+      formData =
         'email': email
         'feedback': message
       $.ajax(
@@ -29,10 +29,8 @@ class Feedback
           return
         url: '/home/feedback'
         data: formData).done (data) ->
-        $('#feedback .new-form').hide()
-        $('#feedback .submitted-form').show()
-        return
-      return
+          $('#feedback .new-form').hide()
+          $('#feedback .submitted-form').show()
 
     $('#sign-up-form .modal-body').load '/home/sign_up_form'
 

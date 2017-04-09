@@ -44,7 +44,7 @@ class Rooms
       selectedPointValues = selectedPointValuesArray.join(',')
       $pointValues.val selectedPointValues
       return
-    $('.room--style--icon').popover();
+    $('.room--style--icon').popover()
 
     matchedUsers = new Bloodhound(
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('')
@@ -68,7 +68,7 @@ class Rooms
     $roomModerators = $("#room-moderators")
     roomModerators = JSON.parse($roomModerators.val())
     $.each roomModerators, (index, user) ->
-      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name });
+      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->

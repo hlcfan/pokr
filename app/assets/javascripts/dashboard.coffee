@@ -5,7 +5,7 @@ class Dashboard
     chartData = JSON.parse($('#chartData').val())
     if typeof chartLabels != 'undefined'
       ctx = document.getElementById('myChart')
-      data = 
+      data =
         labels: chartLabels
         datasets: [ {
           label: '# of stories'
