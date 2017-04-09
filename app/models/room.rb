@@ -147,7 +147,7 @@ class Room < ApplicationRecord
   def moderators
     @moderator ||= begin
       moderator_ids = UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
-      User.find(moderator_ids).pluck(:id, :name).reject do |user_id, user_name|
+      User.where(id: moderator_ids).pluck(:id, :name).reject do |user_id, user_name|
         user_id == created_by
       end
     end
