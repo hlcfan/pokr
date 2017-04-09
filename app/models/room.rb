@@ -13,6 +13,8 @@ class Room < ApplicationRecord
   before_create :slug!
   before_save :sort_point_values
 
+  attr_accessor :moderator_ids
+
   OPEN = 1
   DRAW = 2
   DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
@@ -114,7 +116,34 @@ class Room < ApplicationRecord
     end.flatten
   end
 
+  def moderator_hash
+    if moderators.present?
+      moderators.map do |user_id, user_name|
+        { value: user_id, name: user_name }
+      end
+    end
+  end
+
+  def moderator_ids_ary
+    @moderator_ids_ary ||= begin
+      if moderators.present?
+        moderators.map { |user_id, user_name| user_id }
+      else
+        []
+      end
+    end
+  end
+
   private
+
+  def moderators
+    @moderator ||= begin
+      moderator_ids = UserRoom.where(room_id: id, role: UserRoom::MODERATOR).pluck(:user_id)
+      User.where(id: moderator_ids).pluck(:id, :name).reject do |user_id, user_name|
+        user_id == created_by
+      end
+    end
+  end
 
   def has_timer?
     !!timer

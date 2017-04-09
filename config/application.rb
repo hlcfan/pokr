@@ -16,6 +16,6 @@ module Poker
 
     config.react.addons = true
 
-    config.eager_load_paths += ["app/presenters"]
+    config.eager_load_paths += ["app/presenters", "app/repositories"]
   end
 end

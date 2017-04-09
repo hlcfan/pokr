@@ -61,8 +61,8 @@
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
       <% if @room.new_record? %>
         <div class="row bulk-links" style="display: none;">
-          <%= hidden_field_tag :bulk %>
-          <%= text_area_tag :bulk_links, nil, class: 'form-control col-xs-10' %>
+          <input type="hidden" name="room[bulk]">
+          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One line one story, i.e.\nstory_link1\nstory_link2\nstory_link3\n...", class: 'form-control col-xs-10' %>
         </div>
       <% end %>
     </div>
@@ -72,7 +72,12 @@
       </button>
     </div>
   </section>
+  <div class="form-group">
+    <%= f.label "Add moderators" %>
+    <%= f.text_field :moderator_ids, class: "form-control room--moderators"  %>
+  </div>
   <div class="actions form-group">
     <%= f.submit "Submit", class: 'btn btn-default' %>
   </div>
 <% end %>
+<input type="hidden" id="room-moderators" value=<%= @room.moderator_hash.to_json %> />

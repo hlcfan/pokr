@@ -58,14 +58,14 @@ RSpec.describe UserRoom, type: :model do
     let(:conditions) { { user_id: 1, room_id: 1 } }
 
     it "calls Rails.cache.fetch" do
-      expect(Rails.cache).to receive(:fetch).with([conditions])
-      UserRoom.find_by_with_cache conditions
+      expect(Rails.cache).to receive(:fetch).with("user_room:1:1")
+      UserRoom.find_by_with_cache user_id: 1, room_id: 1
     end
 
     it "bypass cache and find in DB when cannot find in cache" do
       Rails.cache.clear
       expect(UserRoom).to receive(:find_by).with(conditions)
-      UserRoom.find_by_with_cache conditions
+      UserRoom.find_by_with_cache user_id: 1, room_id: 1
     end
   end
 end

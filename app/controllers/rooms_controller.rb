@@ -43,15 +43,9 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    if 'true' == params[:bulk]
-      params[:room][:stories_attributes] = bulk_import_params
-    end
-
-    @room = Room.new(room_params.merge(created_by: current_user.id))
-
+    @room = repo.new_entity(room_params.merge(created_by: current_user.id))
     respond_to do |format|
-      if @room.save
-        set_user_room_moderator
+      if repo.save @room
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -65,7 +59,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1.json
   def update
     respond_to do |format|
-      if @room.update_attributes(room_params)
+      if repo.update_entity @room, room_params
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
@@ -118,14 +112,13 @@ class RoomsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
     params.require(:room).permit(
-      :name, :pv, :timer, :style,
+      :name, :pv, :timer, :style, :bulk, :bulk_links, :moderator_ids,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
   end
 
-  def set_user_room_moderator
-    user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-    user_room.update!(role: UserRoom::MODERATOR)
+  def repo
+    @repo ||= RoomRepository.new
   end
 
   def enter_room
@@ -137,18 +130,6 @@ class RoomsController < ApplicationController
         data: 'refresh-users',
         type: 'action'
     end
-  end
-
-  def bulk_import_params
-    links = params[:bulk_links].split "\r\n"
-    return {} if links.blank?
-
-    stories_hash = {}
-    links.each_with_index do |story_link, index|
-      stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
-    end
-
-    stories_hash
   end
 
   def valid_room_status

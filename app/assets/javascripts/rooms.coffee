@@ -22,6 +22,7 @@ class Rooms
 
     $('#room_style').on 'click', ->
       $('.add.btn').toggle()
+      $('.import').toggle()
       return
 
     $('.point-values li input').on 'click', ->
@@ -44,6 +45,30 @@ class Rooms
       $pointValues.val selectedPointValues
       return
     $('.room--style--icon').popover();
+
+    matchedUsers = new Bloodhound(
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('')
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+      remote:
+        url: '/users/autocomplete.json?term=%QUERY'
+        wildcard: '%QUERY')
+    matchedUsers.initialize()
+
+    $('#room_moderator_ids').tagsinput 
+      typeaheadjs:
+        name: 'matchedUsers'
+        displayKey: 'name'
+#        valueKey: 'name'
+        source: matchedUsers.ttAdapter()
+      itemValue: 'value'
+      itemText: 'name'
+      allowDuplicates: false
+      freeInput: false
+
+    $roomModerators = $("#room-moderators")
+    roomModerators = JSON.parse($roomModerators.val())
+    $.each roomModerators, (index, user) ->
+      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name });
 
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->

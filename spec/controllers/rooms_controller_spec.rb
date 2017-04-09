@@ -6,7 +6,7 @@ RSpec.describe RoomsController, type: :controller do
   # Room. As you add validations to Room, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { name: "room name", timer: 1, pv: "1,3,5,13", stories_attributes: [{ link: "http://jira.com/123" }]}
+    { name: "room name", timer: 1, pv: "1,3,5,13", moderator_ids: "", stories_attributes: [{ link: "http://jira.com/123" }]}
   }
 
   let(:invalid_attributes) {
@@ -84,8 +84,9 @@ RSpec.describe RoomsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
+      let(:moderator) { User.create(name: "Mod", email: "mod.r@ator", password: "password") }
       let(:new_attributes) {
-        { name: "another name", pv: "13,8,1,5" }
+        { name: "another name", pv: "13,8,1,5", moderator_ids: "#{moderator.id}-#{moderator.name}" }
       }
 
       it "updates the requested room" do
@@ -94,6 +95,7 @@ RSpec.describe RoomsController, type: :controller do
         room.reload
         expect(room.name).to eq "another name"
         expect(room.pv).to eq "1,5,8,13"
+        expect(room.moderator_ids_ary).to eq [moderator.id]
       end
 
       it "assigns the requested room as @room" do
