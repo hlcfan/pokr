@@ -48,8 +48,6 @@ gem 'mina-sitemap_generator', :require => false
 # gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
-  # Somehow my local ruby is broken by another version of Ruby while installing VIM
-  gem 'rb-readline'
   gem "pry"
   gem 'pry-doc'
   gem 'pry-nav'
