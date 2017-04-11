@@ -5,13 +5,13 @@ class Rooms
         $('#story-row .row').hide()
         $('.btn.add').hide()
         $('.bulk-links').show()
-        $('#bulk').val true
+        $('#room_bulk').val true
         $('.import').data 'status', 'bulk'
       else
         $('#story-row .row').show()
         $('.btn.add').show()
         $('.bulk-links').hide()
-        $('#bulk').val false
+        $('#room_bulk').val false
         $('.import').data 'status', 'input'
 
     $('.stories-section').nestedFields
