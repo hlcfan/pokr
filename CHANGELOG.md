@@ -2,11 +2,36 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.2.16] - 2017-03-14
+## [0.3.0] - 2017-04-16
+### Added
+- Allow to clear votes [#104](https://github.com/hlcfan/pokr/pull/104)
+
+### Version bump from 0.2.x to 0.3.0
+So far, the basic functionalities of a planning/pointing poker is complete.
+The further changes will be user experience improvements.
+
+## [0.2.21] - 2017-04-09
+### Added
+- Allow to add moderator [#101](https://github.com/hlcfan/pokr/pull/101)
+
+## [0.2.20] - 2017-03-30
+### Added
+- Support watcher mode [#100](https://github.com/hlcfan/pokr/pull/100)
+
+## [0.2.19] - 2017-03-29
+### Added
+- Add room share button [#99](https://github.com/hlcfan/pokr/pull/99)
+
+## [0.2.18] - 2017-03-23
 ### Changed
-- Add page descriptions for sign up/in, about, faq pages
+- Show users ordered by join sequence in room [#93](https://github.com/hlcfan/pokr/pull/93)
+
+## [0.2.17] - 2017-03-14
+### Changed
+- Add page descriptions for sign up/in, about, faq pages [#91](https://github.com/hlcfan/pokr/pull/91)
 - Update landing page title from **Planning Poker** to **Online Planning Poker**
 - Add meta language to html tag on landing page
+- Upgrade Rails to 5.0.2 [#92](https://github.com/hlcfan/pokr/pull/92)
 
 ## [0.2.16] - 2017-03-13
 ### Added
