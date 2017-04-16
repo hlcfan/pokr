@@ -71,8 +71,10 @@ class RoomsChannel < ApplicationCable::Channel
 
   def clear_votes data
     payload = data["data"]
+    set_room data["roomId"]
 
     UserStoryPoint.delete_all(story_id: payload["story_id"])
+    @room.update_attribute :status, nil
     broadcaster "rooms/#{data["roomId"]}",
             type: "action",
             data: "clear-votes"
