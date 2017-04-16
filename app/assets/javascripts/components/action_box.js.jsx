@@ -17,6 +17,14 @@ var ActionBox = React.createClass({
       });
     }
   },
+  clearVotes: function() {
+    if (POKER.role === 'Moderator') {
+      App.rooms.perform('clear_votes', {
+        roomId: POKER.roomId,
+        data: { story_id: POKER.story_id }
+      });
+    }
+  },
   resetActionBox: function() {
     this.setState({ buttonState: 'not-open' });
   },
@@ -75,6 +83,9 @@ var ActionBox = React.createClass({
     var onClickName;
     var buttonText;
     var buttonHtml;
+    var secondButtonText;
+    var secondOnClickName;
+    var buttonCount = 1;
     
     if (POKER.role === 'Moderator') {
       if (that.state.buttonState === 'not-open') {
@@ -83,17 +94,33 @@ var ActionBox = React.createClass({
       } else if (that.state.buttonState === 'open') {
         onClickName = that.skipStory;
         buttonText = "Skip it";
+        secondOnClickName = that.clearVotes;
+        secondButtonText = "Clear votes"
+        buttonCount = 2;
       } else if (that.state.buttonState === 'draw') {
         onClickName = that.showBoard;
         buttonText = "Show board";
       }
     }
     buttonHtml = (function() {
-      if (onClickName && buttonText) {
+      if (onClickName && buttonText && buttonCount > 1) {
         return (
-          <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
-            {buttonText}
-          </a>
+          <div className="btn-group btn-group-lg btn-group-justified" role="group">
+            <a onClick={onClickName} className="btn btn-default btn-lg btn-info" href="javascript:;" role="button">
+              {buttonText}
+            </a>
+            <a onClick={secondOnClickName} className="btn btn-default btn-lg btn-info" href="javascript:;" role="button">
+              {secondButtonText}
+            </a>
+          </div>
+        )
+      } else if(onClickName && buttonText) {
+        return (
+          <div className="" role="group">
+            <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
+              {buttonText}
+            </a>
+          </div>
         )
       }
     })();
@@ -127,9 +154,7 @@ var ActionBox = React.createClass({
             {tip}
             <ResultPanel />
             <div className="openButton container-fluid">
-              <div className="">
-                {buttonHtml}
-              </div>
+              {buttonHtml}
             </div>
           </div>
         </div>
