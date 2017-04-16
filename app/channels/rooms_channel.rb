@@ -69,6 +69,15 @@ class RoomsChannel < ApplicationCable::Channel
     end
   end
 
+  def clear_votes data
+    payload = data["data"]
+
+    UserStoryPoint.delete_all(story_id: payload["story_id"])
+    broadcaster "rooms/#{data["roomId"]}",
+            type: "action",
+            data: "clear-votes"
+  end
+
   private
 
   def set_room room_id
