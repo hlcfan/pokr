@@ -102,6 +102,8 @@ function setupChannelSubscription() {
           EventEmitter.dispatch("roomClosed");
         } else if(data.data === "switch-roles") {
           EventEmitter.dispatch("refreshUsers");
+        } else if(data.data === "clear-votes") {
+          nextStory();
         }
       } else if(data.type === 'notify') {
         var $personElement = $('#u-' + data.person_id);
