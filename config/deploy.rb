@@ -80,11 +80,8 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     on :launch do
-      command "echo ======1"
       invoke :'puma:phased_restart'
-      command "echo ======2"
       invoke :'whenever:update'
-      command "echo ======3"
       invoke :'sitemap:create'
     end
   end
