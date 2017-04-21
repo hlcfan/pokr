@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'
@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'react-rails', '~> 1.10.0'
 gem 'puma'
 gem 'redis-rails', '~> 5.0.1'
-gem 'mina-puma', require: false
+gem 'mina-puma', '1.0.1', require: false
 gem 'multi_fetch_fragments'
 gem 'sitemap_generator'
 gem 'whenever', :require => false
