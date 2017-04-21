@@ -20,6 +20,5 @@
 /coverage
 
 config/database.yml
-.ruby-version
 .idea/
 public/system
