@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'react-rails', '~> 1.10.0'
 gem 'puma'
-gem 'redis-rails', '~> 5.0.1'
+gem 'redis-rails', '~> 5.0.2'
 gem 'mina-puma', '1.0.1', require: false
 gem 'multi_fetch_fragments'
 gem 'sitemap_generator'
