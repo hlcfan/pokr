@@ -8,13 +8,14 @@ require 'mina/sitemap_generator'
 
 set :domain, 'pokrex.com'
 set :deploy_to, '/home/hlcfan/pokr'
-set :app_path,  "#{fetch(:deploy_to)}/#{fetch(:current_path)}"
+set :app_path,  "#{fetch(:current_path)}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
 set :user, 'hlcfan'
 set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
+set :force_asset_precompile, true
 
 set :puma_socket, '/tmp/puma_pokr.sock'
 set :puma_pid, 'tmp/pids/puma.pid'
@@ -25,8 +26,9 @@ set :puma_state, 'tmp/sockets/puma.state'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
-
+# set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
+set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system'])
+set :shared_files, fetch(:shared_files, []).push(*['config/database.yml'])
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
@@ -47,17 +49,17 @@ end
 # For Rails apps, we'll make some of the shared paths that are shared between
 # all releases.
 task :setup => :environment do
-  command %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"]
-  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"]
+  command %[mkdir -p "#{fetch(:shared_path)}/log"]
+  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/log"]
 
-  command %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/uploads"]
-  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/uploads"]
+  command %[mkdir -p "#{fetch(:shared_path)}/uploads"]
+  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/uploads"]
 
-  command %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"]
-  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"]
+  command %[mkdir -p "#{fetch(:shared_path)}/config"]
+  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/config"]
 
-  command %[touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/database.yml"]
-  command  %[echo "-----> Be sure to edit '#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/database.yml'."]
+  command %[touch "#{fetch(:shared_path)}/config/database.yml"]
+  command  %[echo "-----> Be sure to edit '#{fetch(:shared_path)}/config/database.yml'."]
 
   command %{
     mkdir -p "#{fetch(:deploy_to)}/shared/tmp/pids"
@@ -78,8 +80,11 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     on :launch do
+      command "echo ======1"
       invoke :'puma:phased_restart'
+      command "echo ======2"
       invoke :'whenever:update'
+      command "echo ======3"
       invoke :'sitemap:create'
     end
   end
@@ -87,7 +92,7 @@ end
 
 desc "Seed data to the database"
 task :seed => :environment do
-  command "cd #{fetch(:deploy_to)}/#{fetch(:current_path)}/"
+  command "cd #{fetch(:current_path)}/"
   command "bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   command  %[echo "-----> Rake Seeding Completed."]
 end
@@ -97,21 +102,21 @@ namespace :whenever do
   task :clear do
     command %{
       echo "-----> Clear crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:deploy_to)}/#{fetch(:current_path)} ; bundle exec whenever --clear-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:deploy_to)}/#{fetch(:current_path)}']}
+      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --clear-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
     }
   end
   desc "Update crontab"
   task :update do
     command %{
       echo "-----> Update crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:deploy_to)}/#{fetch(:current_path)} ; bundle exec whenever --update-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:deploy_to)}/#{fetch(:current_path)}']}
+      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --update-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
     }
   end
   desc "Write crontab"
   task :write do
     command %{
       echo "-----> Update crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:deploy_to)}/#{fetch(:current_path)} ; bundle exec whenever --write-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:deploy_to)}/#{fetch(:current_path)}']}
+      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --write-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
     }
   end
 end
