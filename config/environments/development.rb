@@ -43,8 +43,6 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.react.variant = :development
-
   config.action_cable.url = "ws://a3.dev:3000/cable"
   config.action_cable.allowed_request_origins = ['http://a3.dev:3000']
 
