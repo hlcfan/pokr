@@ -6,7 +6,7 @@ GIT
       rails (> 3.0.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actioncable (5.0.2)
       actionpack (= 5.0.2)
@@ -131,9 +131,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-doc (0.9.0)
+    pry-doc (0.10.0)
       pry (~> 0.9)
-      yard (~> 0.8)
+      yard (~> 0.9)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
     pry-rails (0.3.4)
@@ -265,7 +265,7 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    yard (0.9.5)
+    yard (0.9.8)
 
 PLATFORMS
   ruby
