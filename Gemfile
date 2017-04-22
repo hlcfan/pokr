@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'
@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'react-rails', '~> 1.10.0'
+gem "react_on_rails", "~> 6"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
 gem 'mina-puma', '1.0.1', require: false
