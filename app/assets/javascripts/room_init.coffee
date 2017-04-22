@@ -1,9 +1,6 @@
 #= require page_init
 #= require action_cable
-#= require react
-#= require react_ujs
 #= require marked
-#= require_tree ./components
 
 $(".rooms.show").ready ->
   POKER.roomId = $('#roomId').val()
@@ -24,7 +21,5 @@ $(".rooms.show").ready ->
       $('.storyList ul li:first').data 'id'
 
     window.syncResult = (POKER.roomState == 'open') ? true : false
-    element = React.createElement(Room, poker: POKER)
-    ReactDOM.render(element, document.getElementById('room'))
-    setupChannelSubscription()
+    # setupChannelSubscription()
     return

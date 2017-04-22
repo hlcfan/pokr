@@ -27,7 +27,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-on-rails": "6.10.0",
-    "webpack": "^2.3.3"
+    "webpack": "^2.3.3",
+    "react-transition-group": "^1.1.2"
   },
   "devDependencies": {
   }
