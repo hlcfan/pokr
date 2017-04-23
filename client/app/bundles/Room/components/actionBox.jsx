@@ -7,7 +7,7 @@ export default class ActionBox extends React.Component {
     buttonState: POKER.roomState
   }
 
-  showResult(e) {
+  showResult = (e) => {
     this.setState({buttonState: 'open'});
     if (!Cookies.get('showTip')) {
       Cookies.set('showTip', true);
@@ -15,7 +15,7 @@ export default class ActionBox extends React.Component {
     publishResult();
   }
 
-  skipStory() {
+  skipStory = () => {
     if (POKER.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
         roomId: POKER.roomId,
@@ -24,7 +24,7 @@ export default class ActionBox extends React.Component {
     }
   }
 
-  clearVotes() {
+  clearVotes = () => {
     if (POKER.role === 'Moderator') {
       App.rooms.perform('clear_votes', {
         roomId: POKER.roomId,
@@ -33,7 +33,7 @@ export default class ActionBox extends React.Component {
     }
   }
 
-  resetActionBox() {
+  resetActionBox = () => {
     this.setState({ buttonState: 'not-open' });
   }
 
@@ -41,12 +41,12 @@ export default class ActionBox extends React.Component {
     this.setState({ buttonState: 'draw' });
   }
 
-  showBoard() {
+  showBoard = () => {
     $('#board').html('');
     drawBoard();
   }
 
-  resetTimer() {
+  resetTimer = () => {
     if (POKER.timer > 0) {
       clearInterval(POKER.timer);
     }
@@ -75,7 +75,7 @@ export default class ActionBox extends React.Component {
     }, 1000);
   }
 
-  disableTimer() {
+  disableTimer = () => {
     $(".timer").remove();
   }
 
@@ -92,7 +92,7 @@ export default class ActionBox extends React.Component {
     }
   }
 
-  render() {
+  render = () => {
     const that = this;
     let onClickName;
     let buttonText;

@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class Board extends React.Component {
-  rawMarkup() {
+  rawMarkup = () => {
     const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
   }
 
-  loadStoryListFromServer() {
+  loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -25,7 +25,7 @@ export default class Board extends React.Component {
     data: []
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadStoryListFromServer();
     $('#board .modal').modal({keyboard: false, backdrop: 'static'});
   }

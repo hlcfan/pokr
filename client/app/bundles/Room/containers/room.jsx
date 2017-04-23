@@ -12,8 +12,8 @@ export default class Room extends React.Component {
     return { __html: rawMarkup };
   }
   state = {
-    storyListUrl: this.props.storyListUrl,
-    peopleListUrl: this.props.peopleListUrl
+    storyListUrl: this.props.poker.storyListUrl,
+    peopleListUrl: this.props.poker.peopleListUrl
   }
 
   roomClosed() {
@@ -35,12 +35,12 @@ export default class Room extends React.Component {
       <div className="row">
         <StatusBar />
         <div id="operationArea" className="col-md-8">
-          <VoteBox poker={this.props}/>
-          <StoryListBox url={this.props.storyListUrl} />
+          <VoteBox poker={this.props.poker} />
+          <StoryListBox url={this.props.poker.storyListUrl} />
         </div>
 
         <div className="col-md-4">
-          <PeopleListBox url={this.props.peopleListUrl} />
+          <PeopleListBox url={this.props.poker.peopleListUrl} />
           <ActionBox />
         </div>
       </div>

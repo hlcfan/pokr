@@ -7,10 +7,10 @@ export default class StatusBar extends React.Component {
     role: POKER.role
   }
 
-  openRoom() {
+  openRoom = () => {
   }
 
-  closeRoom() {
+  closeRoom = () => {
     if(confirm("Do you want to close this room? It can not be undo!")) {
       App.rooms.perform('action', {
         roomId: POKER.roomId,
@@ -20,11 +20,11 @@ export default class StatusBar extends React.Component {
     }
   }
 
-  removeOperationButtons() {
+  removeOperationButtons = () => {
     $(".room-operation").remove();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const originalTitle = "Copy to clipboard";
     $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
       .on("click", function() {
@@ -36,7 +36,7 @@ export default class StatusBar extends React.Component {
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
   }
 
-  beWatcher() {
+  beWatcher = () => {
     if (POKER.role === "Watcher")
       return
 
@@ -55,7 +55,7 @@ export default class StatusBar extends React.Component {
     });
   }
 
-  beParticipant() {
+  beParticipant = () => {
     if (POKER.role === "Participant")
       return
 

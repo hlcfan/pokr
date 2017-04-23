@@ -3,7 +3,7 @@ import React from 'react';
 import StoryList from '../components/StoryList';
 
 export default class StoryListBox extends React.Component {
-  loadStoryListFromServer() {
+  loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -21,12 +21,12 @@ export default class StoryListBox extends React.Component {
     data: []
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadStoryListFromServer();
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
     if($currentStory.length) {
       POKER.story_id = $currentStory.data('id');

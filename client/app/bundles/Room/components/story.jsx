@@ -6,7 +6,7 @@ export default class Story extends React.Component {
   //   var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
   //   return { __html: rawMarkup };
   // },
-  revote(e) {
+  revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
     if (POKER.role === 'Moderator') {
       App.rooms.perform('revote', {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import PointBar from '../components/PointBar';
 
 export default class ResultPanel extends React.Component {
   state = {
@@ -32,8 +33,8 @@ export default class ResultPanel extends React.Component {
 
     keys.sort((a, b) => parseInt(a) - parseInt(b));
 
-    const pointArray = [];
-    let i, j;
+    let pointArray = [];
+    let i, j, point, count, barWidth;
     for (i = (len-1), j=0; i >= 0; i--, j++) {
       point = keys[i];
       count = pointHash[point];
@@ -43,7 +44,7 @@ export default class ResultPanel extends React.Component {
     this.setState({data: pointArray});
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     EventEmitter.subscribe("showResultPanel", this.readFromElement);
   }
 

@@ -24,7 +24,7 @@ window.EventEmitter = {
   }
 };
 
-var barColors = {
+window.barColors = {
   // 0 1 2 3 5 8 13 20 40 100 ? coffee
   "coffee": "#000532",
   "?": "#376182",
@@ -46,7 +46,7 @@ window.pointEmojis = {
   "null" : "skipped"
 }
 
-function publishResult() {
+window.publishResult = function() {
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
     App.rooms.perform('action', {
       roomId: POKER.roomId,
@@ -56,7 +56,7 @@ function publishResult() {
   }
 }
 
-function notifyVoted() {
+window.notifyVoted = function() {
   App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: POKER.currentUser.name,
@@ -64,7 +64,7 @@ function notifyVoted() {
   });
 }
 
-function nextStory() {
+window.nextStory = function() {
   window.syncResult = false;
   POKER.roomState = "not-open"
   EventEmitter.dispatch("refreshUsers");
@@ -75,12 +75,12 @@ function nextStory() {
   }
 }
 
-function revote() {
+window.revote = function() {
   nextStory();
   $('.vote-list ul li input').removeClass('disabled');
 }
 
-function setupChannelSubscription() {
+window.setupChannelSubscription = function() {
   if (POKER.roomState === "draw") {
     return false;
   }
@@ -131,7 +131,7 @@ function setupChannelSubscription() {
   });
 }
 
-function showResultSection() {
+window.showResultSection = function() {
   $('#show-result').show();
   EventEmitter.dispatch("refreshUsers");
   EventEmitter.dispatch("showResultPanel");
@@ -152,8 +152,5 @@ window.drawBoard = function () {
     }
   });
   var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
-  ReactDOM.render(
-    <Board url={drawBoardUrl} />,
-    document.getElementById('board')
-  );
+  ReactOnRails.render("Board", {url: drawBoardUrl}, 'board');
 }

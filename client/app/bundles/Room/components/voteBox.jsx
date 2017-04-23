@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class VoteBox extends React.Component {
-  onItemClick(e) {
+  onItemClick = (e) => {
     const node = $(e.target);
     if (POKER.story_id) {
       // Remove all selected points
@@ -15,11 +15,11 @@ export default class VoteBox extends React.Component {
     }
   }
 
-  disableVote() {
+  disableVote = () => {
     $('.vote-list ul li input').addClass('disabled');
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     EventEmitter.subscribe("refreshStories", () => {
       $('.vote-list ul li input').removeClass('btn-info');
     });

@@ -17,7 +17,7 @@
 <%= action_cable_meta_tag %>
 <div class="room" id="room"></div>
 <div id="board"></div>
-<%= react_component("Room",
+<%#= react_component("Room",
   props: {roomId: @room.slug,
           roomName: @room.name,
           role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,

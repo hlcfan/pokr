@@ -3,7 +3,7 @@ import React from 'react';
 import PeopleList from '../components/PeopleList';
 
 export default class PeopleListBox extends React.Component {
-  loadPeopleListFromServer(callback) {
+  loadPeopleListFromServer = (callback) => {
     $.ajax({
       url: `${this.props.url}?sync=${window.syncResult}`,
       dataType: 'json',
@@ -26,7 +26,7 @@ export default class PeopleListBox extends React.Component {
     data: []
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
     EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
