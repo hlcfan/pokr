@@ -8,7 +8,11 @@ services:
   - redis-server
 
 rvm:
+  - 2.3.4
   - 2.4.1
+
+sudo: required
+dist: trusty
 
 before_script:
   - mysql -e 'create database poker_test;'
