@@ -28,3 +28,5 @@ node_modules
 
 # Generated js bundles
 /app/assets/webpack/*
+
+active_record_log_subscriber.rb
