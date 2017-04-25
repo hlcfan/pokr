@@ -2,40 +2,40 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class VoteBox extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentVote: this.props.currentVote
+    }
+  }
+
   onItemClick = (e) => {
     const node = $(e.target);
-    if (POKER.story_id) {
-      // Remove all selected points
-      $('.vote-list ul li input').removeClass('btn-info');
-      node.toggleClass('btn-info');
+    const currentStoryId = $('.storyList ul li:first').data('id')
+    if (currentStoryId) {
+      this.setState({currentVote: e.target.dataset.point})
       App.rooms.perform('vote', {
-        roomId: POKER.roomId,
-        data: { points: node.data("point"), story_id: POKER.story_id },
+        roomId: this.props.roomId,
+        data: { points: node.data("point"), story_id: currentStoryId },
       });
     }
   }
 
-  disableVote = () => {
-    $('.vote-list ul li input').addClass('disabled');
-  }
+  // componentDidMount = () => {
+  //   EventEmitter.subscribe("refreshStories", () => {
+  //     $('.vote-list ul li input').removeClass('btn-info');
+  //   });
+  // }
 
-  componentDidMount = () => {
-    EventEmitter.subscribe("refreshStories", () => {
-      $('.vote-list ul li input').removeClass('btn-info');
-    });
-    EventEmitter.subscribe("roomClosed", this.disableVote);
-  }
-
-  render() {
-    const currentVote = this.props.poker.currentVote;
-    const that = this;
-    const pointsList = this.props.poker.pointValues.map(point => {
-      const currentVoteClassName = currentVote == point ? ' btn-info' : '';
+  render = () => {
+    const pointsList = this.props.pointValues.map(point => {
+      const currentVoteClassName = this.state.currentVote == point ? 'btn-info' : '';
       const displayPoint = pointEmojis[point] || point;
+      const buttonStatusClassName = (this.props.roomState == 'draw') && "disabled"
 
       return (
         <li key={point}>
-          <input className={`btn btn-default btn-lg${currentVoteClassName}` } type="button" onClick={that.onItemClick} data-point={point} value={displayPoint} />
+          <input className={`btn btn-default btn-lg ${currentVoteClassName} ${buttonStatusClassName}` } type="button" onClick={this.onItemClick} data-point={point} value={displayPoint} />
         </li>
       )
     });
