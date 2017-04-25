@@ -21,6 +21,6 @@ $(".rooms.show").ready ->
       $('.storyList ul li:first').data 'id'
 
     window.syncResult = (POKER.roomState == 'open') ? true : false
-    ReactOnRails.render("Room", {poker: POKER}, 'room')
+    # ReactOnRails.render("Room", {poker: POKER}, 'room')
     setupChannelSubscription()
     return

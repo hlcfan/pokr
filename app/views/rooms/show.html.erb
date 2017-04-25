@@ -15,9 +15,9 @@
 <input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
 <%= action_cable_meta_tag %>
-<div class="room" id="room"></div>
-<div id="board"></div>
-<%#= react_component("Room",
+<!-- <div class="room" id="room"></div>
+<div id="board"></div> -->
+<%= react_component("Room",
   props: {roomId: @room.slug,
           roomName: @room.name,
           role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
