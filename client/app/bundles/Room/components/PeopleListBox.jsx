@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import PeopleList from '../components/PeopleList';
+import EventEmitter from 'libs/eventEmitter';
 
 export default class PeopleListBox extends React.Component {
   loadPeopleListFromServer = (callback) => {

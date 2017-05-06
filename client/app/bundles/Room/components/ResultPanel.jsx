@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import PointBar from '../components/PointBar';
+import EventEmitter from 'libs/eventEmitter';
 
 export default class ResultPanel extends React.Component {
   state = {

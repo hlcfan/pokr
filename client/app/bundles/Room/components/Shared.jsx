@@ -1,28 +1,11 @@
 import React from 'react';
 import Board from '../components/Board';
 import ReactDOM from 'react-dom';
+import EventEmitter from 'libs/eventEmitter';
 
 var MODERATOR_ROLE = 0;
 var PARTICIPANT_ROLE = 1;
 var WATCHER_ROLE = 2;
-
-window.EventEmitter = {
-  _events: {},
-  dispatch: function (event, data) {
-    if (!this._events[event]) {
-      return;
-    }
-    for (var i = 0; i < this._events[event].length; i++) {
-      this._events[event][i](data);
-    }
-  },
-  subscribe: function (event, callback) {
-    if (!this._events[event]) {
-      this._events[event] = [];
-    }
-    this._events[event].push(callback);
-  }
-};
 
 window.barColors = {
   // 0 1 2 3 5 8 13 20 40 100 ? coffee

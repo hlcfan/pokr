@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ResultPanel from '../components/ResultPanel';
+import EventEmitter from 'libs/eventEmitter';
 
 export default class ActionBox extends React.Component {
 
