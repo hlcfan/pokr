@@ -16,13 +16,30 @@ export default class Room extends React.Component {
     super(props)
     this.state = {
       roomState: props.roomState,
-      syncResult: (props.roomState == 'open') ? true : false
+      syncResult: (props.roomState == 'open') ? true : false,
+      currentStoryId: props.currentStoryId
     }
   }
 
   state = {
     storyListUrl: this.props.storyListUrl,
     peopleListUrl: this.props.peopleListUrl
+  }
+
+  handleStoryChange = () => {
+    this.setState({
+      roomState: this.state.roomState,
+      syncResult: (this.state.roomState == 'open') ? true : false,
+      currentStoryId: this.state.currentStoryId
+    })
+  }
+
+  handleNoStoryLeft = () => {
+    this.setState({
+      roomState: "draw"
+    })
+
+    // Send request to draw room
   }
 
   render() {
@@ -32,7 +49,7 @@ export default class Room extends React.Component {
           <StatusBar roomState={this.state.roomState} role={this.props.role} roomId={this.props.roomId} roomName={this.props.roomName} />
           <div id="operationArea" className="col-md-8">
             <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} />
-            <StoryListBox url={this.props.storyListUrl} />
+            <StoryListBox onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} />
           </div>
 
           <div className="col-md-4">

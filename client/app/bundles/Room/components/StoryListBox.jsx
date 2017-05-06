@@ -21,21 +21,33 @@ export default class StoryListBox extends React.Component {
     data: []
   }
 
-  componentDidMount = () => {
-    this.loadStoryListFromServer();
-    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
+  handleStoryChange = () => {
+
   }
 
-  componentDidUpdate = () => {
-    let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
-    if($currentStory.length) {
-      POKER.story_id = $currentStory.data('id');
-    } else if($('.storyList ul li').length) {
-      POKER.story_id = "";
-      if (!POKER.freeStyle) {
-        EventEmitter.dispatch("roomClosed");
-      }
+  handleNoStoryLeft = () => {
+    this.props.onNoStoryLeft()
+  }
+
+  componentDidMount() {
+    this.loadStoryListFromServer();
+    // EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
+  }
+
+  componentDidUpdate() {
+    const ungroomedStories = this.state.data.ungroomed || []
+    if (ungroomedStories.length == 0) {
+      this.handleNoStoryLeft()
     }
+    // let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
+    // if($currentStory.length) {
+    //   POKER.story_id = $currentStory.data('id');
+    // } else if($('.storyList ul li').length) {
+    //   POKER.story_id = "";
+    //   if (!POKER.freeStyle) {
+    //     EventEmitter.dispatch("roomClosed");
+    //   }
+    // }
   }
 
   render() {
