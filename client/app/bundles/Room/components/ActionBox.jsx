@@ -172,7 +172,7 @@ export default class ActionBox extends React.Component {
         <div className="panel-body row">
           <div id="actionBox" className="row">
             {tip}
-            <ResultPanel />
+            <ResultPanel roomId={this.props.roomId} role={this.props.role} storyId={this.props.storyId} />
             <div className="openButton container-fluid">
               {buttonHtml}
             </div>

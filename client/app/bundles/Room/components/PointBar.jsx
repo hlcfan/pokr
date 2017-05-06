@@ -3,10 +3,10 @@ import React from 'react';
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
-    if (POKER.role === 'Moderator') {
+    if (this.props.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
-        roomId: POKER.roomId,
-        data: { point: this.props.point, story_id: POKER.story_id }
+        roomId: this.props.roomId,
+        data: { point: this.props.point, story_id: this.props.story_id }
       });
     }
   }

@@ -49,7 +49,16 @@ export default class ResultPanel extends React.Component {
   }
 
   render() {
-    const pointBars = this.state.data.map(pointBar => <PointBar key={`${pointBar.point}-${pointBar.count}`} point={pointBar.point} count={pointBar.count} barWidth={pointBar.barWidth} color={pointBar.color} />);
+    const pointBars = this.state.data.map(
+      pointBar =>
+        <PointBar key={`${pointBar.point}-${pointBar.count}`}
+          point={pointBar.point} count={pointBar.count}
+          barWidth={pointBar.barWidth}
+          color={pointBar.color}
+          roomId={this.props.roomId}
+          role={this.props.role}
+          storyId={this.props.storyId}
+          />);
 
     const resultChart = (function() {
       if (window.syncResult) {
