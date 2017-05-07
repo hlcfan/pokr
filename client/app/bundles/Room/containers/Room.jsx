@@ -14,9 +14,10 @@ export default class Room extends React.Component {
 
   constructor(props) {
     super(props)
+    window.syncResult = (props.roomState == 'open') ? true : false
+
     this.state = {
       roomState: props.roomState,
-      syncResult: (props.roomState == 'open') ? true : false,
       currentStoryId: props.currentStoryId
     }
   }
@@ -29,7 +30,6 @@ export default class Room extends React.Component {
   handleStoryChange = () => {
     this.setState({
       roomState: this.state.roomState,
-      syncResult: (this.state.roomState == 'open') ? true : false,
       currentStoryId: this.state.currentStoryId
     })
   }
