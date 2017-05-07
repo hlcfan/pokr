@@ -5,6 +5,7 @@ import VoteBox from '../components/VoteBox';
 import StoryListBox from '../components/StoryListBox';
 import PeopleListBox from '../components/PeopleListBox';
 import ActionBox from '../components/ActionBox';
+import ActionCable from 'libs/actionCable'
 
 export default class Room extends React.Component {
   rawMarkup() {
@@ -15,6 +16,7 @@ export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = (props.roomState == 'open') ? true : false
+    ActionCable.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
       roomState: props.roomState,
