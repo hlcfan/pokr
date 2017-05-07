@@ -42,7 +42,6 @@ window.revote = function() {
   $('.vote-list ul li input').removeClass('disabled');
 }
 
-
 window.showResultSection = function() {
   $('#show-result').show();
   EventEmitter.dispatch("refreshUsers");

@@ -50,7 +50,7 @@ export default {
             $('#u-' + data.person_id + ' .points').text(BarColors.emoji(data.points) || data.points)
             $('#u-' + data.person_id).attr('data-point', data.points)
           }
-          EventEmitter.dispatch("showResultPanel")
+          EventEmitter.dispatch("refreshUsers")
         } else {
 
         }
