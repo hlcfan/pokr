@@ -1,56 +1,60 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import PointBar from '../components/PointBar';
-import EventEmitter from 'libs/eventEmitter';
+import PropTypes from 'prop-types'
+import React from 'react'
+import PointBar from '../components/PointBar'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class ResultPanel extends React.Component {
-  state = {
-    data: []
+
+  constructor(props) {
+    super(props)
+    this.state = { data: [] }
   }
 
-  readFromElement = () => {
-    const pointHash = {};
-    const $peopleList = $('.people-list ul li');
-    if ($peopleList.length <= 0) {
-      return false;
-    }
-    $peopleList.each((i, ele) => {
-      const point = $(ele).attr('data-point');
-      if (point) {
-        let pointCount = pointHash[point] || 0;
-        pointHash[point] = (pointCount += 1);
-      }
-    });
+  componentDidMount = () => {
+    EventEmitter.subscribe("showResultPanel", (data) => {
+      this.setState({ data: data })
+    })
+  }
 
-    let maxPointCount = 0;
-    $.each(pointHash, (k, v) => {
-      if (v > maxPointCount) {
-        maxPointCount = v;
+  render() {
+    // TODO
+    // Gotta find out why it could be null sometimes
+    if (!this.state.data) {
+      return null
+    }
+
+    let pointHash = {}
+    $.each(this.state.data, (index, voteObject) => {
+      const point = voteObject.points
+      if (point) {
+        let pointCount = pointHash[point] || 0
+        pointHash[point] = (pointCount += 1)
       }
-    });
+    })
+
+    let maxPointCount = 0
+    $.each(pointHash, (point, count) => {
+      if (count > maxPointCount) {
+        maxPointCount = count
+      }
+    })
 
     let keys = Object.keys(pointHash)
     let len = keys.length
 
-    keys.sort((a, b) => parseInt(a) - parseInt(b));
+    keys.sort((a, b) => parseInt(a) - parseInt(b))
 
-    let pointArray = [];
-    let i, j, point, count, barWidth;
+    let pointArray = []
+    let i, j, point, count, barWidth, color
     for (i = (len-1), j=0; i >= 0; i--, j++) {
-      point = keys[i];
-      count = pointHash[point];
-      barWidth = count/maxPointCount * 100;
-      pointArray.push({point, count, barWidth, color: barColors[point]})
+      point = keys[i]
+      count = pointHash[point]
+      barWidth = count/maxPointCount * 100
+      color = barColors[point]
+      pointArray.push({ point, count, barWidth, color })
     }
-    this.setState({data: pointArray});
-  }
 
-  componentDidMount = () => {
-    EventEmitter.subscribe("showResultPanel", this.readFromElement);
-  }
-
-  render() {
-    const pointBars = this.state.data.map(
+    const pointBars = pointArray.map(
       pointBar =>
         <PointBar key={`${pointBar.point}-${pointBar.count}`}
           point={pointBar.point} count={pointBar.count}
@@ -59,7 +63,7 @@ export default class ResultPanel extends React.Component {
           roomId={this.props.roomId}
           role={this.props.role}
           storyId={this.props.storyId}
-          />);
+          />)
 
     const resultChart = (function() {
       if (window.syncResult) {
@@ -67,11 +71,11 @@ export default class ResultPanel extends React.Component {
           <ul className="list-unstyled">
             {pointBars}
           </ul>
-        );
+        )
       } else {
-        return (<div></div>);
+        return (<div></div>)
       }
-    })();
+    })()
 
     return (
       <div className="container-fluid" style={{clear: 'both', width: '100%'}}>

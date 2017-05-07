@@ -4,27 +4,25 @@ import PeopleList from '../components/PeopleList';
 import EventEmitter from 'libs/eventEmitter';
 
 export default class PeopleListBox extends React.Component {
+
+  state = {
+    data: []
+  }
+
   loadPeopleListFromServer = (callback) => {
     $.ajax({
       url: `${this.props.url}?sync=${window.syncResult}`,
       dataType: 'json',
       cache: false,
       success: data => {
-        this.setState({data: []});
+        // this.setState({data: []});
         this.setState({data});
-        EventEmitter.dispatch("showResultPanel");
-        if (callback) {
-          callback();
-        }
+        EventEmitter.dispatch("showResultPanel", data);
       },
       error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
       }
     });
-  }
-
-  state = {
-    data: []
   }
 
   componentDidMount = () => {
