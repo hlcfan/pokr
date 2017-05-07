@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import PointBar from '../components/PointBar'
 import EventEmitter from 'libs/eventEmitter'
+import BarColors from 'libs/barColors'
 
 export default class ResultPanel extends React.Component {
 
@@ -50,7 +51,7 @@ export default class ResultPanel extends React.Component {
       point = keys[i]
       count = pointHash[point]
       barWidth = count/maxPointCount * 100
-      color = barColors[point]
+      color = BarColors.color(point)
       pointArray.push({ point, count, barWidth, color })
     }
 
