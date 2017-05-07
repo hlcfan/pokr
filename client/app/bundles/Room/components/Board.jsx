@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class Board extends React.Component {
   rawMarkup = () => {
@@ -32,7 +33,7 @@ export default class Board extends React.Component {
 
   render() {
     const dataNodes = this.state.data.map(story => {
-      const point = pointEmojis[story.point] || story.point;
+      const point = BarColors.emoji(story.point) || story.point;
       return (
         <tr key={story.id}>
           <td><a href={storyLinkHref(story.link)} target="_blank">{story.link}</a></td>

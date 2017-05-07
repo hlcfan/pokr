@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
@@ -12,7 +13,7 @@ export default class PointBar extends React.Component {
   }
 
   render() {
-    var pointIndicator = pointEmojis[this.props.point] || this.props.point;
+    var pointIndicator = BarColors.emoji(this.props.point) || this.props.point;
 
     return (
       <li className="row" data-point={this.props.point}>

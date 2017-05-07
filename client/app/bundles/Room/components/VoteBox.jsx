@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class VoteBox extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class VoteBox extends React.Component {
   render = () => {
     const pointsList = this.props.pointValues.map(point => {
       const currentVoteClassName = this.state.currentVote == point ? 'btn-info' : '';
-      const displayPoint = pointEmojis[point] || point;
+      const displayPoint = BarColors.emoji(point) || point;
       const buttonStatusClassName = (this.props.roomState == 'draw') && "disabled"
 
       return (

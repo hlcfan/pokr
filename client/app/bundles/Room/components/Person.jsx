@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class Person extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class Person extends React.Component {
       if (window.syncResult) {
         return(
           <span className="points pull-right">
-            {pointEmojis[that.props.points] || that.props.points}
+            {BarColors.emoji(that.props.points) || that.props.points}
           </span>
         );
       }

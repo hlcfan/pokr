@@ -14,8 +14,18 @@ const barColors = {
   "0":   "#ffe4e1"
 }
 
+const pointEmojis = {
+  "coffee": "☕",
+  "?": "⁉️",
+  "null" : "skipped"
+}
+
 export default {
   color(point) {
     return barColors[point]
+  },
+
+  emoji(point) {
+    return pointEmojis[point]
   }
 }

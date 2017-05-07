@@ -1,18 +1,13 @@
-import React from 'react';
-import Board from '../components/Board';
-import ReactDOM from 'react-dom';
-import EventEmitter from 'libs/eventEmitter';
+import React from 'react'
+import Board from '../components/Board'
+import ReactDOM from 'react-dom'
+import EventEmitter from 'libs/eventEmitter'
+import BarColors from 'libs/barColors'
 
 var MODERATOR_ROLE = 0;
 var PARTICIPANT_ROLE = 1;
 var WATCHER_ROLE = 2;
 
-
-window.pointEmojis = {
-  "coffee": "☕",
-  "?": "⁉️",
-  "null" : "skipped"
-}
 
 window.publishResult = function() {
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
@@ -88,7 +83,7 @@ window.setupChannelSubscription = function() {
 
         window.syncResult = data.sync;
         if (syncResult) {
-          $('#u-' + data.person_id + ' .points').text(pointEmojis[data.points] || data.points);
+          $('#u-' + data.person_id + ' .points').text(BarColors.emoji(data.points) || data.points);
           $('#u-' + data.person_id).attr('data-point', data.points);
         }
         EventEmitter.dispatch("showResultPanel");
