@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import StoryList from '../components/StoryList';
+import PropTypes from 'prop-types'
+import React from 'react'
+import StoryList from '../components/StoryList'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class StoryListBox extends React.Component {
   loadStoryListFromServer = () => {
@@ -31,7 +32,7 @@ export default class StoryListBox extends React.Component {
 
   componentDidMount() {
     this.loadStoryListFromServer();
-    // EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
+    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
   }
 
   componentDidUpdate() {

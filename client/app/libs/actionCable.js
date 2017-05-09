@@ -26,7 +26,8 @@ export default {
               EventEmitter.dispatch("refreshUsers")
             }
           } else if(data.data === "next-story") {
-            nextStory()
+            EventEmitter.dispatch("refreshUsers", {storyId: data.story_id})
+            EventEmitter.dispatch("refreshStories", {storyId: data.story_id})
           } else if(data.data === "revote") {
             revote()
           } else if(data.data === "close-room") {

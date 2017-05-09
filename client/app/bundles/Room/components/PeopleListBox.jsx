@@ -5,9 +5,7 @@ import EventEmitter from 'libs/eventEmitter';
 
 export default class PeopleListBox extends React.Component {
 
-  state = {
-    data: []
-  }
+  state = { data: [] }
 
   loadPeopleListFromServer = (callback) => {
     $.ajax({
@@ -15,9 +13,12 @@ export default class PeopleListBox extends React.Component {
       dataType: 'json',
       cache: false,
       success: data => {
+        // TODO
+        // This was used for switching roles
+        // This should be done via state by setting role into state
         // this.setState({data: []});
-        this.setState({data});
-        EventEmitter.dispatch("showResultPanel", data);
+        this.setState({ data: data })
+        EventEmitter.dispatch("showResultPanel", data)
       },
       error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
@@ -25,10 +26,10 @@ export default class PeopleListBox extends React.Component {
     });
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
-    EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
+    // EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
   }
 
   render() {
