@@ -37,6 +37,8 @@ export default {
             nextStory()
           }
         } else if(data.type === 'notify') {
+          EventEmitter.dispatch("refreshUsers")
+          // Must keep for now
           var $personElement = $('#u-' + data.person_id)
           if ($personElement.hasClass('voted')) {
             $personElement.removeClass("voted")
@@ -45,12 +47,11 @@ export default {
             $personElement.addClass("voted", 100)
           }, 200)
 
-          window.syncResult = data.sync
-          if (syncResult) {
-            $('#u-' + data.person_id + ' .points').text(BarColors.emoji(data.points) || data.points)
-            $('#u-' + data.person_id).attr('data-point', data.points)
-          }
-          EventEmitter.dispatch("refreshUsers")
+          // window.syncResult = data.sync
+          // if (syncResult) {
+          //   $('#u-' + data.person_id + ' .points').text(BarColors.emoji(data.points) || data.points)
+          //   $('#u-' + data.person_id).attr('data-point', data.points)
+          // }
         } else {
 
         }
