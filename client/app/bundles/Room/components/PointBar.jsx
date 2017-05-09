@@ -7,7 +7,7 @@ export default class PointBar extends React.Component {
     if (this.props.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
         roomId: this.props.roomId,
-        data: { point: this.props.point, story_id: this.props.story_id }
+        data: { point: this.props.point, story_id: this.props.storyId }
       });
     }
   }
