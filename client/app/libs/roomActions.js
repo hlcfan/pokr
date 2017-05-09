@@ -10,5 +10,10 @@ export default {
     if (POKER.timerInterval > 0) {
       EventEmitter.dispatch("resetTimer");
     }
+  },
+
+  showResultSection() {
+    EventEmitter.dispatch("refreshUsers");
+    EventEmitter.dispatch("showResultPanel");
   }
 }

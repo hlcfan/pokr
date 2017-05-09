@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import ResultPanel from '../components/ResultPanel';
-import EventEmitter from 'libs/eventEmitter';
+import PropTypes from 'prop-types'
+import React from 'react'
+import ResultPanel from '../components/ResultPanel'
+import EventEmitter from 'libs/eventEmitter'
+import RoomActions from 'libs/roomActions'
 
 export default class ActionBox extends React.Component {
 
@@ -101,7 +102,7 @@ export default class ActionBox extends React.Component {
       this.resetTimer();      
     }
     if (this.props.roomState === 'open') {
-      showResultSection();
+      RoomActions.showResultSection();
     }
   }
 
