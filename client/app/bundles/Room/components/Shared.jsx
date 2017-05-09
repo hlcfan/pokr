@@ -26,17 +26,6 @@ window.notifyVoted = function() {
   });
 }
 
-window.nextStory = function() {
-  window.syncResult = false;
-  POKER.roomState = "not-open"
-  EventEmitter.dispatch("refreshUsers");
-  EventEmitter.dispatch("refreshStories");
-  EventEmitter.dispatch("resetActionBox");
-  if (POKER.timerInterval > 0) {
-    EventEmitter.dispatch("resetTimer");
-  }
-}
-
 window.revote = function() {
   nextStory();
   $('.vote-list ul li input').removeClass('disabled');
