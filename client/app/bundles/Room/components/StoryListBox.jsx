@@ -4,13 +4,19 @@ import StoryList from '../components/StoryList'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class StoryListBox extends React.Component {
+
+  state = {
+    data: []
+  }
+
   loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
       success: data => {
-        this.setState({data});
+        this.handleStorySwitch(data["ungroomed"][0]["id"])
+        this.setState({ data })
       },
       error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
@@ -18,12 +24,8 @@ export default class StoryListBox extends React.Component {
     });
   }
 
-  state = {
-    data: []
-  }
-
-  handleStoryChange = () => {
-
+  handleStorySwitch = (storyId) => {
+    this.props.onSwitchStory(storyId)
   }
 
   handleNoStoryLeft = () => {
@@ -38,7 +40,7 @@ export default class StoryListBox extends React.Component {
   componentDidUpdate() {
     const ungroomedStories = this.state.data.ungroomed || []
     if (ungroomedStories.length == 0) {
-      this.handleNoStoryLeft()
+      // this.handleNoStoryLeft()
     }
     // let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
     // if($currentStory.length) {

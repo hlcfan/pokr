@@ -1,5 +1,6 @@
 import EventEmitter from 'libs/eventEmitter'
 import BarColors from 'libs/barColors'
+import RoomActions from 'libs/roomActions'
 
 window.App = {}
 
@@ -26,8 +27,7 @@ export default {
               EventEmitter.dispatch("refreshUsers")
             }
           } else if(data.data === "next-story") {
-            EventEmitter.dispatch("refreshUsers", {storyId: data.story_id})
-            EventEmitter.dispatch("refreshStories", {storyId: data.story_id})
+            RoomActions.nextStory()
           } else if(data.data === "revote") {
             revote()
           } else if(data.data === "close-room") {

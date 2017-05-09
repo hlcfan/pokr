@@ -4,7 +4,6 @@ import BarColors from 'libs/barColors'
 export default {
   nextStory() {
     window.syncResult = false;
-    // POKER.roomState = "not-open"
     EventEmitter.dispatch("refreshUsers");
     EventEmitter.dispatch("refreshStories");
     EventEmitter.dispatch("resetActionBox");

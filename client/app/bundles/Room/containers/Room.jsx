@@ -29,10 +29,10 @@ export default class Room extends React.Component {
     peopleListUrl: this.props.peopleListUrl
   }
 
-  handleStoryChange = () => {
+  handleStorySwitch = (storyId) => {
     this.setState({
-      roomState: this.state.roomState,
-      currentStoryId: this.state.currentStoryId
+      roomState: "not-open",
+      currentStoryId: storyId
     })
   }
 
@@ -51,7 +51,7 @@ export default class Room extends React.Component {
           <StatusBar roomState={this.state.roomState} role={this.props.role} roomId={this.props.roomId} roomName={this.props.roomName} />
           <div id="operationArea" className="col-md-8">
             <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} />
-            <StoryListBox onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} />
+            <StoryListBox onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} />
           </div>
 
           <div className="col-md-4">
