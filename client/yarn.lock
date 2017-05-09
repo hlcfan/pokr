@@ -1486,6 +1486,12 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
+immutability-helper@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.2.0.tgz#c4385ad4f68315843efaf0cff3575ee82ffa405f"
+  dependencies:
+    invariant "^2.2.0"
+
 imports-loader@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/imports-loader/-/imports-loader-0.7.1.tgz#f204b5f34702a32c1db7d48d89d5e867a0441253"
@@ -2143,7 +2149,7 @@ react-on-rails@6.10.0:
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-6.10.0.tgz#bc9e01b5e0fd225baad4d4c69d9b5114a2ca228b"
 
-react-transition-group@^1.1.2:
+react-transition-group@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.1.3.tgz#5e02cf6e44a863314ff3c68a0c826c2d9d70b221"
   dependencies:
