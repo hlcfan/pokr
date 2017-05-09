@@ -10,11 +10,17 @@ export default class ActionBox extends React.Component {
   }
 
   showResult = (e) => {
-    this.setState({buttonState: 'open'});
+    this.setState({buttonState: 'open'})
     if (!Cookies.get('showTip')) {
-      Cookies.set('showTip', true);
+      Cookies.set('showTip', true)
     }
-    publishResult();
+    if (this.props.role === 'Moderator' && this.props.roomState !== 'open') {
+      App.rooms.perform('action', {
+        roomId: POKER.roomId,
+        data: 'open',
+        type: 'action'
+      })
+    }
   }
 
   skipStory = () => {

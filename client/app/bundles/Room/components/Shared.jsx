@@ -8,16 +8,6 @@ var MODERATOR_ROLE = 0;
 var PARTICIPANT_ROLE = 1;
 var WATCHER_ROLE = 2;
 
-window.publishResult = function() {
-  if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
-    App.rooms.perform('action', {
-      roomId: POKER.roomId,
-      data: 'open',
-      type: 'action'
-    });
-  }
-}
-
 window.notifyVoted = function() {
   App.rooms.perform('action', {
     roomId: POKER.roomId,
