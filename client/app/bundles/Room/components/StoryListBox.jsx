@@ -16,7 +16,10 @@ export default class StoryListBox extends React.Component {
       cache: false,
       success: data => {
         if (data["ungroomed"].length) {
-          this.handleStorySwitch(data["ungroomed"][0]["id"])
+          let nextStoryId = data["ungroomed"][0]["id"]
+          if (this.props.storyId !== nextStoryId) {
+            this.handleStorySwitch(nextStoryId)
+          }
         } else {
           this.handleNoStoryLeft()
         }
