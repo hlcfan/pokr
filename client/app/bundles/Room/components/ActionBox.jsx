@@ -46,13 +46,8 @@ export default class ActionBox extends React.Component {
     this.setState({ buttonState: 'not-open' });
   }
 
-  setToDrawBoard = () => {
-    this.setState({ buttonState: 'draw' });
-  }
-
   showBoard = () => {
-    $('#board').html('');
-    drawBoard();
+    EventEmitter.dispatch("showBoard")
   }
 
   resetTimer = () => {
@@ -95,8 +90,6 @@ export default class ActionBox extends React.Component {
 
   componentDidMount = () => {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
-    // EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
-    // EventEmitter.subscribe("roomClosed", this.disableTimer);
     if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
       EventEmitter.subscribe("resetTimer", this.resetTimer);
       this.resetTimer();      

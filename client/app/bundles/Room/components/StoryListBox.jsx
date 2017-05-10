@@ -15,7 +15,9 @@ export default class StoryListBox extends React.Component {
       dataType: 'json',
       cache: false,
       success: data => {
-        this.handleStorySwitch(data["ungroomed"][0]["id"])
+        if ("draw" !== this.props.roomState) {
+          this.handleStorySwitch(data["ungroomed"][0]["id"])
+        }
         this.setState({ data })
       },
       error: (xhr, status, err) => {

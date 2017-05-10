@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import StatusBar from '../components/StatusBar';
-import VoteBox from '../components/VoteBox';
-import StoryListBox from '../components/StoryListBox';
-import PeopleListBox from '../components/PeopleListBox';
-import ActionBox from '../components/ActionBox';
+import PropTypes from 'prop-types'
+import React from 'react'
+import StatusBar from '../components/StatusBar'
+import VoteBox from '../components/VoteBox'
+import StoryListBox from '../components/StoryListBox'
+import PeopleListBox from '../components/PeopleListBox'
+import ActionBox from '../components/ActionBox'
+import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
 
 export default class Room extends React.Component {
@@ -51,7 +52,7 @@ export default class Room extends React.Component {
           <StatusBar roomState={this.state.roomState} role={this.props.role} roomId={this.props.roomId} roomName={this.props.roomName} />
           <div id="operationArea" className="col-md-8">
             <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} />
-            <StoryListBox onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} />
+            <StoryListBox onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} roomState={this.state.roomState}/>
           </div>
 
           <div className="col-md-4">
@@ -64,6 +65,10 @@ export default class Room extends React.Component {
               timerInterval={this.props.timerInterval} />
           </div>
         </div>
+        {
+          this.state.roomState &&
+            <Board roomId={this.props.roomId} roomState={this.state.roomState} />
+        }
       </div>
     )
   }
