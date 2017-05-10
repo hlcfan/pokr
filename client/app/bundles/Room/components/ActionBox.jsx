@@ -15,7 +15,7 @@ export default class ActionBox extends React.Component {
     if (!Cookies.get('showTip')) {
       Cookies.set('showTip', true)
     }
-    if (this.props.role === 'Moderator' && this.props.roomState !== 'open') {
+    if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
       App.rooms.perform('action', {
         roomId: POKER.roomId,
         data: 'open',
@@ -108,16 +108,16 @@ export default class ActionBox extends React.Component {
     let buttonCount = 1;
 
     if (this.props.role === 'Moderator') {
-      if (this.props.roomState === 'not-open') {
+      if (this.state.roomState === 'not-open') {
         onClickName = this.showResult;
         buttonText = "Flip";
-      } else if (this.props.roomState === 'open') {
+      } else if (this.state.roomState === 'open') {
         onClickName = this.skipStory;
         buttonText = "Skip it";
         secondOnClickName = this.clearVotes;
         secondButtonText = "Clear votes"
         buttonCount = 2;
-      } else if (this.props.roomState === 'draw') {
+      } else if (this.state.roomState === 'draw') {
         onClickName = this.showBoard;
         buttonText = "Show board";
       }
