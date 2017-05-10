@@ -35,7 +35,7 @@ export default {
           } else if(data.data === "switch-roles") {
             EventEmitter.dispatch("refreshUsers")
           } else if(data.data === "clear-votes") {
-            nextStory()
+            RoomActions.nextStory()
           }
         } else if(data.type === 'notify') {
           EventEmitter.dispatch("refreshUsers")
