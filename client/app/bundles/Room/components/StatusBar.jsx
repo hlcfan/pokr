@@ -32,47 +32,45 @@ export default class StatusBar extends React.Component {
   }
 
   beWatcher = () => {
-    if (this.props.role === "Watcher")
+    if ("Watcher" === this.state.role)
       return
 
     $.ajax({
       url: `/rooms/${this.props.roomId}/switch_role`,
       cache: false,
       type: 'POST',
-      data: {role: WATCHER_ROLE},
+      data: { role: WATCHER_ROLE },
       success: data => {
-        this.props.role = "Watcher";
-        this.setState({role: "Watcher"});
+        this.setState({ role: "Watcher" })
       },
       error: (xhr, status, err) => {
-        console.error("Switch role failed!");
+        console.error("Switch role failed!")
       }
-    });
+    })
   }
 
   beParticipant = () => {
-    if (this.props.role === "Participant")
+    if ("Participant" === this.state.role)
       return
 
     $.ajax({
       url: `/rooms/${this.props.roomId}/switch_role`,
       cache: false,
       type: 'POST',
-      data: {role: PARTICIPANT_ROLE},
+      data: { role: PARTICIPANT_ROLE },
       success: data => {
-        this.props.role = "Participant";
-        this.setState({role: "Participant"});
+        this.setState({ role: "Participant" })
       },
       error: (xhr, status, err) => {
-        console.error("Switch role failed!");
+        console.error("Switch role failed!")
       }
-    });
+    })
   }
 
   render() {
     const that = this;
     const roomStatusButton = (() => {
-      if(this.props.role === 'Moderator') {
+      if('Moderator' === this.state.role) {
         const buttonText = "🏁 Close it";
         const buttonClassName = "btn-warning close-room";
         const onClickHandler = that.closeRoom;
@@ -84,7 +82,7 @@ export default class StatusBar extends React.Component {
     })();
 
     const editButton = (() => {
-      if(this.props.role === 'Moderator') {
+      if('Moderator' === this.state.role) {
         return(
           <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
         )
@@ -114,7 +112,7 @@ export default class StatusBar extends React.Component {
 
     const userRoleClassName = role => {
       // Dont allow moderator to switch role at the moment
-      if (this.props.role === role || this.props.role === "Moderator" ) {
+      if (role === this.state.role || "Moderator" === this.state.role) {
         return "disabled";
       } else {
         return "";
@@ -122,9 +120,9 @@ export default class StatusBar extends React.Component {
     };
 
     const currentRoleEmoji = (() => {
-      if (this.props.role === "Moderator") {
+      if ("Moderator" === this.state.role) {
         return "👑";
-      } else if (this.props.role === "Participant") {
+      } else if ("Participant" === this.state.role) {
         return "👷";
       } else {
         return "👲";
