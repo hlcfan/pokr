@@ -15,5 +15,11 @@ export default {
   showResultSection() {
     EventEmitter.dispatch("refreshUsers");
     EventEmitter.dispatch("showResultPanel");
+  },
+
+  revote() {
+    nextStory();
+    $('.vote-list ul li input').removeClass('disabled');
   }
+
 }

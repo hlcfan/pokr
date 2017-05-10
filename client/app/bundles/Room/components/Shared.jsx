@@ -8,11 +8,6 @@ var MODERATOR_ROLE = 0;
 var PARTICIPANT_ROLE = 1;
 var WATCHER_ROLE = 2;
 
-window.revote = function() {
-  nextStory();
-  $('.vote-list ul li input').removeClass('disabled');
-}
-
 window.drawBoard = function () {
   $.ajax({
     url: '/rooms/' + POKER.roomId + '/set_room_status.json',
