@@ -15,8 +15,10 @@ export default class StoryListBox extends React.Component {
       dataType: 'json',
       cache: false,
       success: data => {
-        if ("draw" !== this.props.roomState) {
+        if (data["ungroomed"].length) {
           this.handleStorySwitch(data["ungroomed"][0]["id"])
+        } else {
+          this.handleNoStoryLeft()
         }
         this.setState({ data })
       },
@@ -37,22 +39,6 @@ export default class StoryListBox extends React.Component {
   componentDidMount() {
     this.loadStoryListFromServer();
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
-  }
-
-  componentDidUpdate() {
-    const ungroomedStories = this.state.data.ungroomed || []
-    if (ungroomedStories.length == 0) {
-      // this.handleNoStoryLeft()
-    }
-    // let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
-    // if($currentStory.length) {
-    //   POKER.story_id = $currentStory.data('id');
-    // } else if($('.storyList ul li').length) {
-    //   POKER.story_id = "";
-    //   if (!POKER.freeStyle) {
-    //     EventEmitter.dispatch("roomClosed");
-    //   }
-    // }
   }
 
   render() {

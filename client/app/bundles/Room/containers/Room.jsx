@@ -38,11 +38,22 @@ export default class Room extends React.Component {
   }
 
   handleNoStoryLeft = () => {
+    $.ajax({
+      url: `/rooms/${POKER.roomId}/set_room_status.json`,
+      data: { status: 'draw' },
+      method: 'post',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        // pass
+      },
+      error: function(xhr, status, err) {
+        // pass
+      }
+    })
     this.setState({
       roomState: "draw"
     })
-
-    // Send request to draw room
   }
 
   roomClosed = () => {
