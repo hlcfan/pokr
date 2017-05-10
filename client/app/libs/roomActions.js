@@ -21,5 +21,4 @@ export default {
     nextStory();
     $('.vote-list ul li input').removeClass('disabled');
   }
-
 }

@@ -1,5 +1,9 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+
+const MODERATOR_ROLE = 0
+const PARTICIPANT_ROLE = 1
+const WATCHER_ROLE = 2
 
 export default class StatusBar extends React.Component {
 
