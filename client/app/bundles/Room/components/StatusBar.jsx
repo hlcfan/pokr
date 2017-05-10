@@ -32,7 +32,7 @@ export default class StatusBar extends React.Component {
   }
 
   beWatcher = () => {
-    if ("Watcher" === this.state.role)
+    if ("Watcher" === this.state.role || 'Moderator' === this.state.role)
       return
 
     $.ajax({
@@ -50,7 +50,7 @@ export default class StatusBar extends React.Component {
   }
 
   beParticipant = () => {
-    if ("Participant" === this.state.role)
+    if ("Participant" === this.state.role || 'Moderator' === this.state.role)
       return
 
     $.ajax({
