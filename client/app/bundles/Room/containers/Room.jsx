@@ -23,8 +23,8 @@ export default class Room extends React.Component {
     this.state = {
       roomState: props.roomState,
       currentStoryId: props.currentStoryId,
-      storyListUrl: this.props.storyListUrl,
-      peopleListUrl: this.props.peopleListUrl
+      storyListUrl: props.storyListUrl,
+      peopleListUrl: props.peopleListUrl
     }
   }
 
@@ -69,7 +69,7 @@ export default class Room extends React.Component {
         <div className="row">
           <StatusBar roomState={this.state.roomState} role={this.props.role} roomId={this.props.roomId} roomName={this.props.roomName} />
           <div id="operationArea" className="col-md-8">
-            <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} />
+            <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} storyId={this.state.currentStoryId} />
             <StoryListBox onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} url={this.props.storyListUrl} roomState={this.state.roomState} storyId={this.state.currentStoryId} />
           </div>
 
