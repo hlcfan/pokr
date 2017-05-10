@@ -45,6 +45,10 @@ export default class Room extends React.Component {
     // Send request to draw room
   }
 
+  roomClosed = () => {
+    "draw" === this.state.roomState
+  }
+
   render() {
     return (
       <div className="room" id="room">
@@ -66,7 +70,7 @@ export default class Room extends React.Component {
           </div>
         </div>
         {
-          this.state.roomState &&
+          this.roomClosed() &&
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
         }
       </div>
