@@ -46,7 +46,7 @@ export default class Room extends React.Component {
   }
 
   roomClosed = () => {
-    "draw" === this.state.roomState
+    return "draw" === this.state.roomState
   }
 
   render() {
