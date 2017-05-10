@@ -7,11 +7,11 @@ import RoomActions from 'libs/roomActions'
 export default class ActionBox extends React.Component {
 
   state = {
-    buttonState: this.props.roomState
+    roomState: this.props.roomState
   }
 
   showResult = (e) => {
-    this.setState({buttonState: 'open'})
+    this.setState({roomState: 'open'})
     if (!Cookies.get('showTip')) {
       Cookies.set('showTip', true)
     }
@@ -43,7 +43,7 @@ export default class ActionBox extends React.Component {
   }
 
   resetActionBox = () => {
-    this.setState({ buttonState: 'not-open' });
+    this.setState({ roomState: 'not-open' });
   }
 
   showBoard = () => {
@@ -108,16 +108,16 @@ export default class ActionBox extends React.Component {
     let buttonCount = 1;
 
     if (this.props.role === 'Moderator') {
-      if (this.state.buttonState === 'not-open') {
+      if (this.props.roomState === 'not-open') {
         onClickName = this.showResult;
         buttonText = "Flip";
-      } else if (this.state.buttonState === 'open') {
+      } else if (this.props.roomState === 'open') {
         onClickName = this.skipStory;
         buttonText = "Skip it";
         secondOnClickName = this.clearVotes;
         secondButtonText = "Clear votes"
         buttonCount = 2;
-      } else if (this.state.buttonState === 'draw') {
+      } else if (this.props.roomState === 'draw') {
         onClickName = this.showBoard;
         buttonText = "Show board";
       }
