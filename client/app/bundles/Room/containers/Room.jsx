@@ -7,6 +7,7 @@ import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox'
 import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
+import update from 'immutability-helper'
 
 export default class Room extends React.Component {
   rawMarkup() {
@@ -38,22 +39,27 @@ export default class Room extends React.Component {
   }
 
   handleNoStoryLeft = () => {
-    $.ajax({
-      url: `/rooms/${POKER.roomId}/set_room_status.json`,
-      data: { status: 'draw' },
-      method: 'post',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // pass
-      },
-      error: function(xhr, status, err) {
-        // pass
-      }
-    })
-    this.setState({
-      roomState: "draw"
-    })
+    if (!this.roomClosed()) {
+      $.ajax({
+        url: `/rooms/${POKER.roomId}/set_room_status.json`,
+        data: { status: 'draw' },
+        method: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          // pass
+        },
+        error: function(xhr, status, err) {
+          // pass
+        }
+      })
+
+      let newState = update(this.state, {
+        roomState: { $set: "draw" }
+      })
+
+      this.setState(newState)
+    }
   }
 
   roomClosed = () => {
