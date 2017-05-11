@@ -1,15 +1,29 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import StoryList from '../components/StoryList';
+import PropTypes from 'prop-types'
+import React from 'react'
+import StoryList from '../components/StoryList'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class StoryListBox extends React.Component {
+
+  state = {
+    data: []
+  }
+
   loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
       success: data => {
-        this.setState({data});
+        if (data["ungroomed"].length) {
+          let nextStoryId = data["ungroomed"][0]["id"]
+          if (this.props.storyId !== nextStoryId) {
+            this.handleStorySwitch(nextStoryId)
+          }
+        } else {
+          this.handleNoStoryLeft()
+        }
+        this.setState({ data })
       },
       error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
@@ -17,25 +31,17 @@ export default class StoryListBox extends React.Component {
     });
   }
 
-  state = {
-    data: []
+  handleStorySwitch = (storyId) => {
+    this.props.onSwitchStory(storyId)
   }
 
-  componentDidMount = () => {
+  handleNoStoryLeft = () => {
+    this.props.onNoStoryLeft()
+  }
+
+  componentDidMount() {
     this.loadStoryListFromServer();
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
-  }
-
-  componentDidUpdate = () => {
-    let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
-    if($currentStory.length) {
-      POKER.story_id = $currentStory.data('id');
-    } else if($('.storyList ul li').length) {
-      POKER.story_id = "";
-      if (!POKER.freeStyle) {
-        EventEmitter.dispatch("roomClosed");
-      }
-    }
   }
 
   render() {

@@ -63,7 +63,7 @@ group :production do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'codecov', :require => false
 end

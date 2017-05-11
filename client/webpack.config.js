@@ -22,6 +22,9 @@ const config = {
 
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      libs: pathLib.resolve(__dirname, 'app/libs')
+    }
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),

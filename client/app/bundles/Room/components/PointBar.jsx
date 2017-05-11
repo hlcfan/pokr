@@ -1,18 +1,19 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
-    if (POKER.role === 'Moderator') {
+    if (this.props.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
-        roomId: POKER.roomId,
-        data: { point: this.props.point, story_id: POKER.story_id }
+        roomId: this.props.roomId,
+        data: { point: this.props.point, story_id: this.props.storyId }
       });
     }
   }
 
   render() {
-    var pointIndicator = pointEmojis[this.props.point] || this.props.point;
+    var pointIndicator = BarColors.emoji(this.props.point) || this.props.point;
 
     return (
       <li className="row" data-point={this.props.point}>
