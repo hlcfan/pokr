@@ -1,10 +1,16 @@
-var StatusBar = React.createClass({
-  getInitialState: function() {
-    return { role: POKER.role };
-  },
-  openRoom: function() {
-  },
-  closeRoom: function() {
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default class StatusBar extends React.Component {
+
+  state = {
+    role: POKER.role
+  }
+
+  openRoom = () => {
+  }
+
+  closeRoom = () => {
     if(confirm("Do you want to close this room? It can not be undo!")) {
       App.rooms.perform('action', {
         roomId: POKER.roomId,
@@ -12,12 +18,14 @@ var StatusBar = React.createClass({
         type: 'action'
       });
     }
-  },
-  removeOperationButtons: function() {
+  }
+
+  removeOperationButtons = () => {
     $(".room-operation").remove();
-  },
-  componentDidMount: function() {
-    var originalTitle = "Copy to clipboard";
+  }
+
+  componentDidMount = () => {
+    const originalTitle = "Copy to clipboard";
     $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
       .on("click", function() {
         $(this).attr("title", "Copied!").tooltip("fixTitle").tooltip("show");
@@ -26,75 +34,78 @@ var StatusBar = React.createClass({
       });
 
     EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
-  },
-  beWatcher: function() {
+  }
+
+  beWatcher = () => {
     if (POKER.role === "Watcher")
       return
 
     $.ajax({
-      url: "/rooms/"+POKER.roomId+"/switch_role",
+      url: `/rooms/${POKER.roomId}/switch_role`,
       cache: false,
       type: 'POST',
       data: {role: WATCHER_ROLE},
-      success: function(data) {
+      success: data => {
         POKER.role = "Watcher";
         this.setState({role: "Watcher"});
-      }.bind(this),
-      error: function(xhr, status, err) {
+      },
+      error: (xhr, status, err) => {
         console.error("Switch role failed!");
-      }.bind(this)
+      }
     });
-  },
-  beParticipant: function() {
+  }
+
+  beParticipant = () => {
     if (POKER.role === "Participant")
       return
 
     $.ajax({
-      url: "/rooms/"+POKER.roomId+"/switch_role",
+      url: `/rooms/${POKER.roomId}/switch_role`,
       cache: false,
       type: 'POST',
       data: {role: PARTICIPANT_ROLE},
-      success: function(data) {
+      success: data => {
         POKER.role = "Participant";
         this.setState({role: "Participant"});
-      }.bind(this),
-      error: function(xhr, status, err) {
+      },
+      error: (xhr, status, err) => {
         console.error("Switch role failed!");
-      }.bind(this)
+      }
     });
-  },
-  render:function() {
-    var that = this;
-    var roomStatusButton = function() {
+  }
+
+  render() {
+    const that = this;
+    const roomStatusButton = (() => {
       if(POKER.role === 'Moderator') {
-        var buttonText = "🏁 Close it";
-        var buttonClassName = "btn-warning close-room";
-        var onClickHandler = that.closeRoom;
+        const buttonText = "🏁 Close it";
+        const buttonClassName = "btn-warning close-room";
+        const onClickHandler = that.closeRoom;
 
         return (
-          <button type="button" onClick={onClickHandler} className={"btn btn-default " + buttonClassName}>{buttonText}</button>
+          <button type="button" onClick={onClickHandler} className={`btn btn-default ${buttonClassName}`}>{buttonText}</button>
         )
       }
-    }();
+    })();
 
-    var editButton = function() {
+    const editButton = (() => {
       if(POKER.role === 'Moderator') {
         return(
-          <a href={"/rooms/"+ POKER.roomId + "/edit"} className="btn btn-default">✏️ Edit room</a>
+          <a href={`/rooms/${POKER.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
         )
       }
-    }();
+    })();
 
-    var copyLink = function() {
-      var aField = document.getElementById("hiddenField");
+    const copyLink = () => {
+      const aField = document.getElementById("hiddenField");
       aField.hidden   = false;
       aField.value    = window.location.href;
       aField.select();
       document.execCommand("copy");
       aField.hidden = true;
-    }
+    };
 
-    var operationButtons = function() {
+    const operationButtons = (() => {
       if (POKER.roomState !== "draw") {
         return(
           <div className="btn-group pull-right room-operation" role="group">
@@ -104,9 +115,9 @@ var StatusBar = React.createClass({
           </div>
         )
       }
-    }();
+    })();
 
-    var userRoleClassName = function(role) {
+    const userRoleClassName = role => {
       // Dont allow moderator to switch role at the moment
       if (POKER.role === role || POKER.role === "Moderator" ) {
         return "disabled";
@@ -115,7 +126,7 @@ var StatusBar = React.createClass({
       }
     };
 
-    var currentRoleEmoji = function() {
+    const currentRoleEmoji = (() => {
       if (POKER.role === "Moderator") {
         return "👑";
       } else if (POKER.role === "Participant") {
@@ -123,7 +134,7 @@ var StatusBar = React.createClass({
       } else {
         return "👲";
       }
-    }();
+    })();
 
     return (
       <div className="name">
@@ -145,6 +156,6 @@ var StatusBar = React.createClass({
         </div>
         <input type="text" id="hiddenField" className="room--share-link" />
       </div>
-    );
+    )
   }
-});
+}

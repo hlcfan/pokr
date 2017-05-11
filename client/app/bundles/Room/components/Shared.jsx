@@ -1,8 +1,12 @@
+import React from 'react';
+import Board from '../components/Board';
+import ReactDOM from 'react-dom';
+
 var MODERATOR_ROLE = 0;
 var PARTICIPANT_ROLE = 1;
 var WATCHER_ROLE = 2;
 
-var EventEmitter = {
+window.EventEmitter = {
   _events: {},
   dispatch: function (event, data) {
     if (!this._events[event]) {
@@ -20,7 +24,7 @@ var EventEmitter = {
   }
 };
 
-var barColors = {
+window.barColors = {
   // 0 1 2 3 5 8 13 20 40 100 ? coffee
   "coffee": "#000532",
   "?": "#376182",
@@ -36,13 +40,13 @@ var barColors = {
   "0":   "#ffe4e1"
 };
 
-var pointEmojis = {
+window.pointEmojis = {
   "coffee": "☕",
   "?": "⁉️",
   "null" : "skipped"
 }
 
-function publishResult() {
+window.publishResult = function() {
   if (POKER.role === 'Moderator' && POKER.roomState !== 'open') {
     App.rooms.perform('action', {
       roomId: POKER.roomId,
@@ -52,7 +56,7 @@ function publishResult() {
   }
 }
 
-function notifyVoted() {
+window.notifyVoted = function() {
   App.rooms.perform('action', {
     roomId: POKER.roomId,
     data: POKER.currentUser.name,
@@ -60,7 +64,7 @@ function notifyVoted() {
   });
 }
 
-function nextStory() {
+window.nextStory = function() {
   window.syncResult = false;
   POKER.roomState = "not-open"
   EventEmitter.dispatch("refreshUsers");
@@ -71,12 +75,12 @@ function nextStory() {
   }
 }
 
-function revote() {
+window.revote = function() {
   nextStory();
   $('.vote-list ul li input').removeClass('disabled');
 }
 
-function setupChannelSubscription() {
+window.setupChannelSubscription = function() {
   if (POKER.roomState === "draw") {
     return false;
   }
@@ -127,13 +131,13 @@ function setupChannelSubscription() {
   });
 }
 
-function showResultSection() {
+window.showResultSection = function() {
   $('#show-result').show();
   EventEmitter.dispatch("refreshUsers");
   EventEmitter.dispatch("showResultPanel");
 }
 
-function drawBoard() {
+window.drawBoard = function () {
   $.ajax({
     url: '/rooms/' + POKER.roomId + '/set_room_status.json',
     data: { status: 'draw' },
@@ -147,10 +151,6 @@ function drawBoard() {
       // pass
     }
   });
-
   var drawBoardUrl = '/rooms/' + POKER.roomId + '/draw_board.json';
-  ReactDOM.render(
-    <Board url={drawBoardUrl} />,
-    document.getElementById('board')
-  );
+  ReactOnRails.render("Board", {url: drawBoardUrl}, 'board');
 }

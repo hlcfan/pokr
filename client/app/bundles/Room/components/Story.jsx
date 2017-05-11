@@ -1,21 +1,26 @@
-var Story = React.createClass({
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default class Story extends React.Component {
   // rawMarkup: function() {
   //   var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
   //   return { __html: rawMarkup };
   // },
-  revote: function(e) {
-    var revoteStoryId = $(e.target).parents("li").data("id");
+  revote = (e) => {
+    const revoteStoryId = $(e.target).parents("li").data("id");
     if (POKER.role === 'Moderator') {
       App.rooms.perform('revote', {
         roomId: POKER.roomId,
         data: { story_id: revoteStoryId }
       });
     }
-  },
-  render: function() {
-    var that = this;
-    var revoteIcon, liElementClass;
-    revoteIcon = function() {
+  }
+
+  render() {
+    const that = this;
+    let revoteIcon;
+    let liElementClass;
+    revoteIcon = (() => {
       if (POKER.role === 'Moderator' && that.props.tab === "groomed" && POKER.roomState !== "draw") {
         return(
           <a href="javascript:;" className="revote" onClick={that.revote}>
@@ -23,18 +28,18 @@ var Story = React.createClass({
           </a>
         )
       }
-    }();
+    })()
 
-    liElementClass = function() {
+    liElementClass = (() => {
       if (that.props.tab === "groomed") {
         return("story story__groomed");
       } else {
         return("story story__ungroomed");
       }
-    }();
+    })()
 
     return (
-      <li className={liElementClass} id={'story-' + this.props.id} data-id={this.props.id}>
+      <li className={liElementClass} id={`story-${this.props.id}`} data-id={this.props.id}>
         <a href={storyLinkHref(that.props.link)} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>
@@ -44,6 +49,6 @@ var Story = React.createClass({
           {this.props.desc}
         </p>
       </li>
-    );
+    )
   }
-});
+}

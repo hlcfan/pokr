@@ -1,31 +1,38 @@
-var Board = React.createClass({
-  rawMarkup: function() {
-    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default class Board extends React.Component {
+  rawMarkup = () => {
+    const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
-  },
-  loadStoryListFromServer: function() {
+  }
+
+  loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
+      success: data => {
+        this.setState({data});
+      },
+      error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
-  },
-  getInitialState: function() {
-    return { data: [] };
-  },
-  componentDidMount: function() {
+  }
+
+  state = {
+    data: []
+  }
+
+  componentDidMount = () => {
     this.loadStoryListFromServer();
     $('#board .modal').modal({keyboard: false, backdrop: 'static'});
-  },
-  render: function() {
-    var dataNodes = this.state.data.map(function(story) {
-      var point = pointEmojis[story.point] || story.point;
+  }
+
+  render() {
+    const dataNodes = this.state.data.map(story => {
+      const point = pointEmojis[story.point] || story.point;
       return (
         <tr key={story.id}>
           <td><a href={storyLinkHref(story.link)} target="_blank">{story.link}</a></td>
@@ -56,6 +63,6 @@ var Board = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+}

@@ -1,13 +1,17 @@
-var PointBar = React.createClass({
-  selectPoint: function() {
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default class PointBar extends React.Component {
+  selectPoint = () => {
     if (POKER.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
         roomId: POKER.roomId,
         data: { point: this.props.point, story_id: POKER.story_id }
       });
     }
-  },
-  render: function() {
+  }
+
+  render() {
     var pointIndicator = pointEmojis[this.props.point] || this.props.point;
 
     return (
@@ -21,6 +25,6 @@ var PointBar = React.createClass({
           </div>
         </div>
       </li>
-    );
+    )
   }
-});
+}

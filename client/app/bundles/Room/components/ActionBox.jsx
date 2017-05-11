@@ -1,56 +1,67 @@
-var ActionBox = React.createClass({
-  getInitialState: function() {
-    return { buttonState: POKER.roomState };
-  },
-  showResult: function(e) {
+import PropTypes from 'prop-types';
+import React from 'react';
+import ResultPanel from '../components/ResultPanel';
+
+export default class ActionBox extends React.Component {
+  state = {
+    buttonState: POKER.roomState
+  }
+
+  showResult = (e) => {
     this.setState({buttonState: 'open'});
     if (!Cookies.get('showTip')) {
       Cookies.set('showTip', true);
     }
     publishResult();
-  },
-  skipStory: function() {
+  }
+
+  skipStory = () => {
     if (POKER.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
         roomId: POKER.roomId,
         data: { point: 'null', story_id: POKER.story_id }
       });
     }
-  },
-  clearVotes: function() {
+  }
+
+  clearVotes = () => {
     if (POKER.role === 'Moderator') {
       App.rooms.perform('clear_votes', {
         roomId: POKER.roomId,
         data: { story_id: POKER.story_id }
       });
     }
-  },
-  resetActionBox: function() {
+  }
+
+  resetActionBox = () => {
     this.setState({ buttonState: 'not-open' });
-  },
-  setToDrawBoard: function() {
+  }
+
+  setToDrawBoard = () => {
     this.setState({ buttonState: 'draw' });
-  },
-  showBoard: function() {
+  }
+
+  showBoard = () => {
     $('#board').html('');
     drawBoard();
-  },
-  resetTimer: function() {
+  }
+
+  resetTimer = () => {
     if (POKER.timer > 0) {
       clearInterval(POKER.timer);
     }
     $(".timer").show();
     $(".timer .counter").text(POKER.timerInterval);
-    var tick = POKER.timerInterval;
-    var $icon = $(".timer .fa");
+    let tick = POKER.timerInterval;
+    const $icon = $(".timer .fa");
 
-    POKER.timer = setInterval(function() {
+    POKER.timer = setInterval(() => {
       if (tick <= 0) {
         if (!$icon.hasClass("warning")) {
           $(".timer .counter").text("Time up");
           $icon.attr("class", "fa warning").text("⚠️");
         }
-        var $warning = $(".warning");
+        const $warning = $(".warning");
         if(!$warning.is(':animated')) {
           $warning.fadeToggle("fast");
         }
@@ -62,11 +73,13 @@ var ActionBox = React.createClass({
         $(".timer .counter").text(tick);
       }
     }, 1000);
-  },
-  disableTimer: function() {
+  }
+
+  disableTimer = () => {
     $(".timer").remove();
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount = () => {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
     EventEmitter.subscribe("roomClosed", this.disableTimer);
@@ -77,15 +90,16 @@ var ActionBox = React.createClass({
     if (POKER.roomState === 'open') {
       showResultSection();
     }
-  },
-  render: function() {
-    var that = this;
-    var onClickName;
-    var buttonText;
-    var buttonHtml;
-    var secondButtonText;
-    var secondOnClickName;
-    var buttonCount = 1;
+  }
+
+  render = () => {
+    const that = this;
+    let onClickName;
+    let buttonText;
+    let buttonHtml;
+    let secondButtonText;
+    let secondOnClickName;
+    let buttonCount = 1;
     
     if (POKER.role === 'Moderator') {
       if (that.state.buttonState === 'not-open') {
@@ -102,7 +116,7 @@ var ActionBox = React.createClass({
         buttonText = "Show board";
       }
     }
-    buttonHtml = (function() {
+    buttonHtml = ((() => {
       if (onClickName && buttonText && buttonCount > 1) {
         return (
           <div className="btn-group btn-group-lg btn-group-justified" role="group">
@@ -123,8 +137,9 @@ var ActionBox = React.createClass({
           </div>
         )
       }
-    })();
-    var tip = (function(){
+    }))()
+
+    const tip = ((() => {
       // already decided point
       if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Moderator') {
         Cookies.set('adp', true);
@@ -137,7 +152,7 @@ var ActionBox = React.createClass({
           </div>
         )
       }
-    })();
+    }))()
 
     return (
       <div className="panel panel-default">
@@ -159,6 +174,6 @@ var ActionBox = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+}

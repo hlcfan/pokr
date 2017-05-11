@@ -74,8 +74,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'pokrex.com' }
 
-  config.react.variant = :production
-
   config.action_cable.url = '/cable'
   config.action_cable.allowed_request_origins = [ 'https://pokrex.com' ]
 

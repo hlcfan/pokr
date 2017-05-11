@@ -14,8 +14,6 @@ module Poker
     require Rails.root.join("lib/custom_public_exceptions")
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 
-    config.react.addons = true
-
     config.eager_load_paths += ["app/presenters", "app/repositories"]
   end
 end

@@ -17,3 +17,16 @@
 <%= action_cable_meta_tag %>
 <div class="room" id="room"></div>
 <div id="board"></div>
+<%#= react_component("Room",
+  props: {roomId: @room.slug,
+          roomName: @room.name,
+          role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
+          roomState: @room.state,
+          pointValues: @room.point_values,
+          timerInterval: @room.timer_interval,
+          freeStyle: @room.free_style?,
+          storyListUrl: "/rooms/#{@room.slug}/story_list.json",
+          peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
+          currentVote: current_user.points_of_story(@room.current_story_id)
+          },
+  prerender: false) %>

@@ -22,3 +22,11 @@
 config/database.yml
 .idea/
 public/system
+# React on Rails
+npm-debug.log*
+node_modules
+
+# Generated js bundles
+/app/assets/webpack/*
+
+active_record_log_subscriber.rb

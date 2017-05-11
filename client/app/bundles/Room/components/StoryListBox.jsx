@@ -1,26 +1,33 @@
-var StoryListBox = React.createClass({
-  loadStoryListFromServer: function() {
+import PropTypes from 'prop-types';
+import React from 'react';
+import StoryList from '../components/StoryList';
+
+export default class StoryListBox extends React.Component {
+  loadStoryListFromServer = () => {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
+      success: data => {
+        this.setState({data});
+      },
+      error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
-  },
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
+  }
+
+  state = {
+    data: []
+  }
+
+  componentDidMount = () => {
     this.loadStoryListFromServer();
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
-  },
-  componentDidUpdate: function() {
-    $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
+  }
+
+  componentDidUpdate = () => {
+    let $currentStory = $('.storyList ul li.story__ungroomed').not(".story-leave").first();
     if($currentStory.length) {
       POKER.story_id = $currentStory.data('id');
     } else if($('.storyList ul li').length) {
@@ -29,8 +36,9 @@ var StoryListBox = React.createClass({
         EventEmitter.dispatch("roomClosed");
       }
     }
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">Stories</div>
@@ -53,6 +61,6 @@ var StoryListBox = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+}

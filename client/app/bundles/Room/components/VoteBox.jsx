@@ -1,6 +1,9 @@
-var VoteBox = React.createClass({
-  onItemClick: function(e) {
-    var node = $(e.target);
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default class VoteBox extends React.Component {
+  onItemClick = (e) => {
+    const node = $(e.target);
     if (POKER.story_id) {
       // Remove all selected points
       $('.vote-list ul li input').removeClass('btn-info');
@@ -10,26 +13,29 @@ var VoteBox = React.createClass({
         data: { points: node.data("point"), story_id: POKER.story_id },
       });
     }
-  },
-  disableVote: function() {
+  }
+
+  disableVote = () => {
     $('.vote-list ul li input').addClass('disabled');
-  },
-  componentDidMount: function() {
-    EventEmitter.subscribe("refreshStories", function(){
+  }
+
+  componentDidMount = () => {
+    EventEmitter.subscribe("refreshStories", () => {
       $('.vote-list ul li input').removeClass('btn-info');
     });
     EventEmitter.subscribe("roomClosed", this.disableVote);
-  },
-  render:function() {
-    var currentVote = this.props.poker.currentVote;
-    var that = this;
-    var pointsList = this.props.poker.pointValues.map(function(point) {
-      var currentVoteClassName = currentVote == point ? ' btn-info' : '';
-      var displayPoint = pointEmojis[point] || point;
+  }
+
+  render() {
+    const currentVote = this.props.poker.currentVote;
+    const that = this;
+    const pointsList = this.props.poker.pointValues.map(point => {
+      const currentVoteClassName = currentVote == point ? ' btn-info' : '';
+      const displayPoint = pointEmojis[point] || point;
 
       return (
         <li key={point}>
-          <input className={'btn btn-default btn-lg' + currentVoteClassName } type="button" onClick={that.onItemClick} data-point={point} value={displayPoint} />
+          <input className={`btn btn-default btn-lg${currentVoteClassName}` } type="button" onClick={that.onItemClick} data-point={point} value={displayPoint} />
         </li>
       )
     });
@@ -45,6 +51,6 @@ var VoteBox = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+}

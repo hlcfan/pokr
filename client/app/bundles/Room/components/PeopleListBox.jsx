@@ -1,31 +1,38 @@
-var PeopleListBox = React.createClass({
-  loadPeopleListFromServer: function(callback) {
+import PropTypes from 'prop-types';
+import React from 'react';
+import PeopleList from '../components/PeopleList';
+
+export default class PeopleListBox extends React.Component {
+  loadPeopleListFromServer = (callback) => {
     $.ajax({
-      url: this.props.url + '?sync=' + window.syncResult,
+      url: `${this.props.url}?sync=${window.syncResult}`,
       dataType: 'json',
       cache: false,
-      success: function(data) {
+      success: data => {
         this.setState({data: []});
-        this.setState({data: data});
+        this.setState({data});
         EventEmitter.dispatch("showResultPanel");
         if (callback) {
           callback();
         }
-      }.bind(this),
-      error: function(xhr, status, err) {
+      },
+      error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
-  },
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
+  }
+
+  state = {
+    data: []
+  }
+
+  componentDidMount = () => {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
     EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">People</div>
@@ -35,6 +42,6 @@ var PeopleListBox = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+}
