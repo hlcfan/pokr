@@ -13,6 +13,8 @@ RSpec.describe "rooms/show", type: :view do
   end
 
   it "renders attributes in <p>" do
+    controller.extra_params = { :id => 111 }
+
     render
     expect(rendered).to match(/Name/)
   end

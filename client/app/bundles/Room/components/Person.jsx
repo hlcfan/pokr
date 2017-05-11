@@ -1,22 +1,27 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
+// import EventEmitter from 'libs/eventEmitter'
+// import update from 'immutability-helper'
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Person extends React.Component {
+
   render() {
     const that = this;
     const pointLabel = ((() => {
       if (window.syncResult) {
         return(
           <span className="points pull-right">
-            {pointEmojis[that.props.points] || that.props.points}
+            {BarColors.emoji(that.props.points) || that.props.points}
           </span>
-        );
+        )
       }
-    }))();
+    }))()
 
     let votedClass = '';
     if (this.props.voted) {
-      votedClass = 'voted';
+      votedClass = 'voted'
     }
 
     return (

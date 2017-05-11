@@ -1,118 +1,124 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import ResultPanel from '../components/ResultPanel';
+import PropTypes from 'prop-types'
+import React from 'react'
+import ResultPanel from '../components/ResultPanel'
+import EventEmitter from 'libs/eventEmitter'
+import RoomActions from 'libs/roomActions'
 
 export default class ActionBox extends React.Component {
+
   state = {
-    buttonState: POKER.roomState
+    roomState: this.props.roomState
   }
 
   showResult = (e) => {
-    this.setState({buttonState: 'open'});
+    this.setState({roomState: 'open'})
     if (!Cookies.get('showTip')) {
-      Cookies.set('showTip', true);
+      Cookies.set('showTip', true)
     }
-    publishResult();
+    if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
+      App.rooms.perform('action', {
+        roomId: POKER.roomId,
+        data: 'open',
+        type: 'action'
+      })
+    }
   }
 
   skipStory = () => {
-    if (POKER.role === 'Moderator') {
+    if (this.props.role === 'Moderator') {
       App.rooms.perform('set_story_point', {
-        roomId: POKER.roomId,
-        data: { point: 'null', story_id: POKER.story_id }
+        roomId: this.props.roomId,
+        data: { point: 'null', story_id: this.props.storyId }
       });
     }
   }
 
   clearVotes = () => {
-    if (POKER.role === 'Moderator') {
+    if (this.props.role === 'Moderator') {
       App.rooms.perform('clear_votes', {
-        roomId: POKER.roomId,
-        data: { story_id: POKER.story_id }
+        roomId: this.props.roomId,
+        data: { story_id: this.props.storyId }
       });
     }
   }
 
   resetActionBox = () => {
-    this.setState({ buttonState: 'not-open' });
-  }
-
-  setToDrawBoard = () => {
-    this.setState({ buttonState: 'draw' });
+    this.setState({ roomState: 'not-open' });
   }
 
   showBoard = () => {
-    $('#board').html('');
-    drawBoard();
+    EventEmitter.dispatch("showBoard")
   }
 
   resetTimer = () => {
-    if (POKER.timer > 0) {
-      clearInterval(POKER.timer);
-    }
-    $(".timer").show();
-    $(".timer .counter").text(POKER.timerInterval);
-    let tick = POKER.timerInterval;
-    const $icon = $(".timer .fa");
+    // if (!this.props.timerInterval) {
+    //   return
+    // }
+    // let timer;
 
-    POKER.timer = setInterval(() => {
-      if (tick <= 0) {
-        if (!$icon.hasClass("warning")) {
-          $(".timer .counter").text("Time up");
-          $icon.attr("class", "fa warning").text("⚠️");
-        }
-        const $warning = $(".warning");
-        if(!$warning.is(':animated')) {
-          $warning.fadeToggle("fast");
-        }
-      } else {
-        if (!$icon.hasClass("sandglass")) {
-          $icon.attr("class", "fa sandglass").text("⌛").show();
-        }
-        tick -= 1;
-        $(".timer .counter").text(tick);
-      }
-    }, 1000);
+    // if (timer > 0) {
+    //   clearInterval(POKER.timer);
+    // }
+    // $(".timer").show();
+    // $(".timer .counter").text(POKER.timerInterval);
+    // let tick = POKER.timerInterval;
+    // const $icon = $(".timer .fa");
+
+    // POKER.timer = setInterval(() => {
+    //   if (tick <= 0) {
+    //     if (!$icon.hasClass("warning")) {
+    //       $(".timer .counter").text("Time up");
+    //       $icon.attr("class", "fa warning").text("⚠️");
+    //     }
+    //     const $warning = $(".warning");
+    //     if(!$warning.is(':animated')) {
+    //       $warning.fadeToggle("fast");
+    //     }
+    //   } else {
+    //     if (!$icon.hasClass("sandglass")) {
+    //       $icon.attr("class", "fa sandglass").text("⌛").show();
+    //     }
+    //     tick -= 1;
+    //     $(".timer .counter").text(tick);
+    //   }
+    // }, 1000);
   }
 
   disableTimer = () => {
-    $(".timer").remove();
+    // $(".timer").remove();
   }
 
   componentDidMount = () => {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
-    EventEmitter.subscribe("roomClosed", this.setToDrawBoard);
-    EventEmitter.subscribe("roomClosed", this.disableTimer);
-    if (POKER.roomState !== "draw" && POKER.timerInterval > 0) {
+    if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
       EventEmitter.subscribe("resetTimer", this.resetTimer);
       this.resetTimer();      
     }
-    if (POKER.roomState === 'open') {
-      showResultSection();
+    if (this.props.roomState === 'open') {
+      RoomActions.showResultSection();
     }
   }
 
-  render = () => {
-    const that = this;
+  render() {
     let onClickName;
     let buttonText;
     let buttonHtml;
     let secondButtonText;
     let secondOnClickName;
     let buttonCount = 1;
-    
-    if (POKER.role === 'Moderator') {
-      if (that.state.buttonState === 'not-open') {
-        onClickName = that.showResult;
+
+    if (this.props.role === 'Moderator') {
+      if (this.state.roomState === 'not-open') {
+        onClickName = this.showResult;
         buttonText = "Flip";
-      } else if (that.state.buttonState === 'open') {
-        onClickName = that.skipStory;
+      } else if (this.state.roomState === 'open') {
+        onClickName = this.skipStory;
         buttonText = "Skip it";
-        secondOnClickName = that.clearVotes;
+        secondOnClickName = this.clearVotes;
         secondButtonText = "Clear votes"
         buttonCount = 2;
-      } else if (that.state.buttonState === 'draw') {
-        onClickName = that.showBoard;
+      } else if (this.state.roomState === 'draw') {
+        onClickName = this.showBoard;
         buttonText = "Show board";
       }
     }
@@ -141,7 +147,7 @@ export default class ActionBox extends React.Component {
 
     const tip = ((() => {
       // already decided point
-      if (Cookies.get('showTip') && !Cookies.get('adp') && POKER.role === 'Moderator') {
+      if (Cookies.get('showTip') && !Cookies.get('adp') && this.props.role === 'Moderator') {
         Cookies.set('adp', true);
         return (
           <div className="container-fluid" style={{clear: 'both', width: '90%'}}>
@@ -161,13 +167,13 @@ export default class ActionBox extends React.Component {
           <span className="timer pull-right" style={{display: 'none'}}>
             <i className="fa sandglass">⌛</i>
             &nbsp;
-            <i className="counter">{POKER.timerInterval}</i>
+            <i className="counter">{this.props.timerInterval}</i>
           </span>
         </div>
         <div className="panel-body row">
           <div id="actionBox" className="row">
             {tip}
-            <ResultPanel />
+            <ResultPanel roomId={this.props.roomId} role={this.props.role} storyId={this.props.storyId} />
             <div className="openButton container-fluid">
               {buttonHtml}
             </div>

@@ -1,27 +1,24 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+
+const MODERATOR_ROLE = 0
+const PARTICIPANT_ROLE = 1
+const WATCHER_ROLE = 2
 
 export default class StatusBar extends React.Component {
 
   state = {
-    role: POKER.role
-  }
-
-  openRoom = () => {
+    role: this.props.role
   }
 
   closeRoom = () => {
     if(confirm("Do you want to close this room? It can not be undo!")) {
       App.rooms.perform('action', {
-        roomId: POKER.roomId,
+        roomId: this.props.roomId,
         data: "close-room",
         type: 'action'
       });
     }
-  }
-
-  removeOperationButtons = () => {
-    $(".room-operation").remove();
   }
 
   componentDidMount = () => {
@@ -32,52 +29,48 @@ export default class StatusBar extends React.Component {
       }).mouseleave(function() {
         $(this).attr("title", originalTitle).tooltip("fixTitle");
       });
-
-    EventEmitter.subscribe("roomClosed", this.removeOperationButtons);
   }
 
   beWatcher = () => {
-    if (POKER.role === "Watcher")
+    if ("Watcher" === this.state.role || 'Moderator' === this.state.role)
       return
 
     $.ajax({
-      url: `/rooms/${POKER.roomId}/switch_role`,
+      url: `/rooms/${this.props.roomId}/switch_role`,
       cache: false,
       type: 'POST',
-      data: {role: WATCHER_ROLE},
+      data: { role: WATCHER_ROLE },
       success: data => {
-        POKER.role = "Watcher";
-        this.setState({role: "Watcher"});
+        this.setState({ role: "Watcher" })
       },
       error: (xhr, status, err) => {
-        console.error("Switch role failed!");
+        console.error("Switch role failed!")
       }
-    });
+    })
   }
 
   beParticipant = () => {
-    if (POKER.role === "Participant")
+    if ("Participant" === this.state.role || 'Moderator' === this.state.role)
       return
 
     $.ajax({
-      url: `/rooms/${POKER.roomId}/switch_role`,
+      url: `/rooms/${this.props.roomId}/switch_role`,
       cache: false,
       type: 'POST',
-      data: {role: PARTICIPANT_ROLE},
+      data: { role: PARTICIPANT_ROLE },
       success: data => {
-        POKER.role = "Participant";
-        this.setState({role: "Participant"});
+        this.setState({ role: "Participant" })
       },
       error: (xhr, status, err) => {
-        console.error("Switch role failed!");
+        console.error("Switch role failed!")
       }
-    });
+    })
   }
 
   render() {
     const that = this;
     const roomStatusButton = (() => {
-      if(POKER.role === 'Moderator') {
+      if('Moderator' === this.state.role) {
         const buttonText = "🏁 Close it";
         const buttonClassName = "btn-warning close-room";
         const onClickHandler = that.closeRoom;
@@ -89,9 +82,9 @@ export default class StatusBar extends React.Component {
     })();
 
     const editButton = (() => {
-      if(POKER.role === 'Moderator') {
+      if('Moderator' === this.state.role) {
         return(
-          <a href={`/rooms/${POKER.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
+          <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
         )
       }
     })();
@@ -106,7 +99,7 @@ export default class StatusBar extends React.Component {
     };
 
     const operationButtons = (() => {
-      if (POKER.roomState !== "draw") {
+      if (this.props.roomState !== "draw") {
         return(
           <div className="btn-group pull-right room-operation" role="group">
             {roomStatusButton}
@@ -119,7 +112,7 @@ export default class StatusBar extends React.Component {
 
     const userRoleClassName = role => {
       // Dont allow moderator to switch role at the moment
-      if (POKER.role === role || POKER.role === "Moderator" ) {
+      if (role === this.state.role || "Moderator" === this.state.role) {
         return "disabled";
       } else {
         return "";
@@ -127,9 +120,9 @@ export default class StatusBar extends React.Component {
     };
 
     const currentRoleEmoji = (() => {
-      if (POKER.role === "Moderator") {
+      if ("Moderator" === this.state.role) {
         return "👑";
-      } else if (POKER.role === "Participant") {
+      } else if ("Participant" === this.state.role) {
         return "👷";
       } else {
         return "👲";
@@ -139,14 +132,14 @@ export default class StatusBar extends React.Component {
     return (
       <div className="name">
         <div className="col-md-8">
-          <h3 className="pull-left">{POKER.roomName}</h3>
+          <h3 className="pull-left">{this.props.roomName}</h3>
           {operationButtons}
           <div id="tooltip-area"></div>
         </div>
         <div className="col-md-4">
           <div className="dropdown pull-right">
             <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              {currentRoleEmoji} &nbsp;{POKER.role} &nbsp;
+              {currentRoleEmoji} &nbsp;{this.state.role} &nbsp;
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">

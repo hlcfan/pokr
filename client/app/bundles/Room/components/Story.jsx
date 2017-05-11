@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
+import BarColors from 'libs/barColors'
 
 export default class Story extends React.Component {
   // rawMarkup: function() {
@@ -43,7 +44,7 @@ export default class Story extends React.Component {
         <a href={storyLinkHref(that.props.link)} className="storyLink" rel="noreferrer" target="_blank">
           {this.props.link}
         </a>
-        <span className="label label-info story--voted-point">{pointEmojis[this.props.point] || this.props.point}</span>
+        <span className="label label-info story--voted-point">{BarColors.emoji(this.props.point) || this.props.point}</span>
         {revoteIcon}
         <p className="story-desc">
           {this.props.desc}

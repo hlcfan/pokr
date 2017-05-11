@@ -13,14 +13,14 @@ $(".rooms.show").ready ->
   POKER.freeStyle = JSON.parse($('#freeStyle').val())
 
   if POKER? && POKER.roomId?
-    window.App = {}
-    App.cable = ActionCable.createConsumer()
+    # window.App = {}
+    # App.cable = ActionCable.createConsumer()
     POKER.storyListUrl = '/rooms/' + POKER.roomId + '/story_list.json'
     POKER.peopleListUrl = '/rooms/' + POKER.roomId + '/user_list.json'
     POKER.story_id = do ->
       $('.storyList ul li:first').data 'id'
 
     window.syncResult = (POKER.roomState == 'open') ? true : false
-    ReactOnRails.render("Room", {poker: POKER}, 'room')
-    setupChannelSubscription()
+    # ReactOnRails.render("Room", {poker: POKER}, 'room')
+    # setupChannelSubscription()
     return
