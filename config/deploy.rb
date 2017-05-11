@@ -27,7 +27,7 @@ set :puma_state, 'tmp/sockets/puma.state'
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 # set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
-set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system'])
+set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'client/node_modules'])
 set :shared_files, fetch(:shared_files, []).push(*['config/database.yml'])
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
@@ -76,6 +76,7 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
+    invoke :'npm:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
@@ -115,6 +116,17 @@ namespace :whenever do
       echo "-----> Update crontab for #{fetch(:domain)}"
       #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --write-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
     }
+  end
+end
+
+namespace :npm do
+  desc "Npm install"
+  task :install do
+    command %{
+      echo "-----> Npm installing for #{fetch(:app_path)}"
+    }
+    command "cd #{fetch(:app_path)}"
+    command "npm install"
   end
 end
 
