@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Person from '../components/Person';
+import PropTypes from 'prop-types'
+import React from 'react'
+import Person from '../components/Person'
 
 export default class PeopleList extends React.Component {
   render() {
@@ -14,7 +14,7 @@ export default class PeopleList extends React.Component {
         voted={person.voted}
         avatar={person.avatar_thumb}
         />
-      );
+      )
     return (
       <div className="people-list col-md-12">
         <ul className="list-unstyled">
