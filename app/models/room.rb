@@ -54,8 +54,10 @@ class Room < ApplicationRecord
   end
 
   def current_story_id
-    if story_id = un_groomed_stories.pluck(:id).first
-      story_id
+    @current_story_id ||= begin
+      if story_id = un_groomed_stories.pluck(:id).first
+        story_id
+      end
     end
   end
 
@@ -105,7 +107,7 @@ class Room < ApplicationRecord
     user_story_points = {}
     UserStoryPoint.where(user_id: room_users, story_id: current_story_id).each do |user_story_point|
       user_story_points.update({user_story_point.user_id => user_story_point.points})
-    end
+    end if current_story_id
 
     room_users.sort_by! do |user|
       build_room_user user, user_story_points[user.id], user_rooms[user.id], params[:sync]
