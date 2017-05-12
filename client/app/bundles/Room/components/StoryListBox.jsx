@@ -11,7 +11,7 @@ export default class StoryListBox extends React.Component {
 
   loadStoryListFromServer = () => {
     $.ajax({
-      url: this.props.url,
+      url: `/rooms/${this.props.roomId}/story_list.json`,
       dataType: 'json',
       cache: false,
       success: data => {
@@ -26,7 +26,7 @@ export default class StoryListBox extends React.Component {
         this.setState({ data })
       },
       error: (xhr, status, err) => {
-        console.error(this.props.url, status, err.toString());
+        console.error("Fetching story list", status, err.toString());
       }
     });
   }

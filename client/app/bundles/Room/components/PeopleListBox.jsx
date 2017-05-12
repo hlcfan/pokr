@@ -9,7 +9,7 @@ export default class PeopleListBox extends React.Component {
 
   loadPeopleListFromServer = (callback) => {
     $.ajax({
-      url: `${this.props.url}?sync=${window.syncResult}`,
+      url: `/rooms/${this.props.roomId}/user_list.json?sync=${window.syncResult}`,
       dataType: 'json',
       cache: false,
       success: data => {
@@ -21,7 +21,7 @@ export default class PeopleListBox extends React.Component {
         EventEmitter.dispatch("showResultPanel", data)
       },
       error: (xhr, status, err) => {
-        console.error(this.props.url, status, err.toString());
+        console.error("Fetching people list", status, err.toString());
       }
     });
   }
