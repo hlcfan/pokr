@@ -30,7 +30,6 @@ export default class Room extends React.Component {
       joyrideType: 'continuous',
       isReady: false,
       isRunning: false,
-      stepIndex: 0,
       steps: [],
       selector: ''
     }
@@ -118,7 +117,6 @@ export default class Room extends React.Component {
       joyrideOverlay,
       joyrideType,
       selector,
-      stepIndex,
       steps,
     } = this.state
 
@@ -140,7 +138,6 @@ export default class Room extends React.Component {
           showOverlay={joyrideOverlay}
           showSkipButton={true}
           showStepsProgress={true}
-          stepIndex={stepIndex}
           steps={steps}
           type={joyrideType}
         />
@@ -149,21 +146,43 @@ export default class Room extends React.Component {
           role={this.props.role}
           roomId={this.props.roomId}
           roomName={this.props.roomName}
-          addSteps={this.addSteps} selector={selector} next={this.next}
+          addSteps={this.addSteps}
+          selector={selector}
+          next={this.next}
+          stepIndex={1}
         />
         <div className="row">
           <div id="operationArea" className="col-md-8">
-            <VoteBox addSteps={this.addSteps} roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} storyId={this.state.currentStoryId} />
-            <StoryListBox roomId={this.props.roomId} onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} roomState={this.state.roomState} storyId={this.state.currentStoryId} />
+            <VoteBox
+              roomId={this.props.roomId}
+              roomState={this.state.roomState}
+              currentVote={this.props.currentVote}
+              pointValues={this.props.pointValues}
+              storyId={this.state.currentStoryId}
+              addSteps={this.addSteps}
+            />
+            <StoryListBox
+              roomId={this.props.roomId}
+              onSwitchStory={this.handleStorySwitch}
+              onNoStoryLeft={this.handleNoStoryLeft}
+              roomState={this.state.roomState}
+              storyId={this.state.currentStoryId}
+              addSteps={this.addSteps}
+            />
           </div>
           <div className="col-md-4">
-            <PeopleListBox roomId={this.props.roomId} />
+            <PeopleListBox
+              roomId={this.props.roomId}
+              addSteps={this.addSteps}
+          />
             <ActionBox
               roomState={this.state.roomState}
               role={this.props.role}
               roomId={this.props.roomId}
               storyId={this.state.currentStoryId}
-              timerInterval={this.props.timerInterval} />
+              timerInterval={this.props.timerInterval}
+              addSteps={this.addSteps}
+            />
           </div>
         </div>
         {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import BarColors from 'libs/barColors'
+import BarColors, {defaultTourColor} from 'libs/barColors'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class VoteBox extends React.Component {
@@ -23,6 +23,14 @@ export default class VoteBox extends React.Component {
     EventEmitter.subscribe("refreshStories", () => {
       this.setState({ currentVote: null })
     })
+
+    this.props.addSteps({
+      title: 'Deck',
+      text: 'All the points are listed in this panel. Just click on the point which you would like to vote.',
+      selector: '#deck',
+      position: 'top-right',
+      style: defaultTourColor
+    })
   }
 
   render() {
@@ -39,7 +47,7 @@ export default class VoteBox extends React.Component {
     })
 
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" id="deck">
         <div className="panel-heading">Deck</div>
         <div className="vote-list panel-body row">
           <div className="col-md-12">

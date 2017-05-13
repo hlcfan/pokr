@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {defaultTourColor} from 'libs/barColors'
 
 const MODERATOR_ROLE = 0
 const PARTICIPANT_ROLE = 1
@@ -35,24 +36,16 @@ export default class StatusBar extends React.Component {
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
       selector: '.name .col-md-8',
       position: 'top-right',
-      style: {
-        mainColor: '#f07b50',
-        beacon: {
-          inner: '#f07b50',
-          outer: '#f07b50',
-        },
-      },
+      style: defaultTourColor
     })
 
-    setTimeout(() => {
-      this.props.addSteps({
-        title: 'Switch your role',
-        text: 'Moderator is not allowd to switch role. Participant can switch to Watcher, and Watcher can easily switch to Participant.',
-        selector: '.name .col-md-4 .dropdown',
-        position: 'right',
-      });
-    }, 3000);
-
+    this.props.addSteps({
+      title: 'Switch your role',
+      text: 'Moderator is not allowd to switch role. Participant can switch to Watcher, and Watcher can easily switch to Participant.',
+      selector: '.name .col-md-4 .dropdown',
+      position: 'top-right',
+      style: defaultTourColor
+    });
   }
 
   beWatcher = () => {

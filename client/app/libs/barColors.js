@@ -1,3 +1,10 @@
+export const defaultTourColor = {
+      mainColor: '#31b0d5',
+      beacon: {
+        inner: '#31b0d5',
+        outer: '#269abc',
+      }
+    }
 const barColors = {
   // 0 1 2 3 5 8 13 20 40 100 ? coffee
   "coffee": "#000532",
@@ -29,3 +36,25 @@ export default {
     return pointEmojis[point]
   }
 }
+
+// Blue:
+// style: {
+  // mainColor: '#31b0d5',
+  // beacon: {
+  //   inner: '#31b0d5',
+  //   outer: '#269abc',
+  // },
+// }
+
+// Orange:
+// style: {
+//   mainColor: '#f07b50',
+//   beacon: {
+//     inner: '#f07b50',
+//     outer: '#f07b50',
+//   },
+// },
+
+
+// Red:
+// Default

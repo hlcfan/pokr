@@ -3,6 +3,7 @@ import React from 'react'
 import ResultPanel from '../components/ResultPanel'
 import EventEmitter from 'libs/eventEmitter'
 import RoomActions from 'libs/roomActions'
+import {defaultTourColor} from 'libs/barColors'
 
 export default class ActionBox extends React.Component {
 
@@ -88,7 +89,7 @@ export default class ActionBox extends React.Component {
     // $(".timer").remove();
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
     if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
       EventEmitter.subscribe("resetTimer", this.resetTimer);
@@ -97,6 +98,21 @@ export default class ActionBox extends React.Component {
     if (this.props.roomState === 'open') {
       RoomActions.showResultSection();
     }
+
+    let text
+    if ("Moderator" === this.props.role) {
+      text = "All the actions with points will be dealt with here. You can call the final point of a story, clear votes, or skip current story."
+    } else {
+      text = "You'll see the result of votes here, only the moderator can decide which is the final point."
+    }
+
+    this.props.addSteps({
+      title: 'Stories',
+      text: text,
+      selector: '#action-box',
+      position: 'top-right',
+      style: defaultTourColor
+    })
   }
 
   render() {
@@ -161,7 +177,7 @@ export default class ActionBox extends React.Component {
     }))()
 
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" id="action-box">
         <div className="panel-heading">
           Action
           <span className="timer pull-right" style={{display: 'none'}}>

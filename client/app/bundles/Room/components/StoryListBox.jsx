@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../components/StoryList'
 import EventEmitter from 'libs/eventEmitter'
+import {defaultTourColor} from 'libs/barColors'
 
 export default class StoryListBox extends React.Component {
 
@@ -40,13 +41,29 @@ export default class StoryListBox extends React.Component {
   }
 
   componentDidMount() {
-    this.loadStoryListFromServer();
-    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer);
+    this.loadStoryListFromServer()
+    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
+
+    this.props.addSteps({
+      title: 'Stories',
+      text: 'All the stories are listed separately under ungroomed and groomed tabs. Click on each of the to check out.',
+      selector: '#stories',
+      position: 'top-right',
+      style: defaultTourColor
+    })
+
+    this.props.addSteps({
+      title: 'Current on going story',
+      text: "The ► indicates it's the on going story",
+      selector: '#stories .story__ungroomed:first-child',
+      position: 'right',
+      style: defaultTourColor
+    })
   }
 
   render() {
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" id="stories">
         <div className="panel-heading">Stories</div>
         <div id="storyListArea" className="panel-body row">
           <ul className="nav nav-tabs" role="tablist">
