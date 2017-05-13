@@ -29,6 +29,30 @@ export default class StatusBar extends React.Component {
       }).mouseleave(function() {
         $(this).attr("title", originalTitle).tooltip("fixTitle");
       });
+
+    this.props.addSteps({
+      title: 'Handy bar',
+      text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
+      selector: '.name .col-md-8',
+      position: 'top-right',
+      style: {
+        mainColor: '#f07b50',
+        beacon: {
+          inner: '#f07b50',
+          outer: '#f07b50',
+        },
+      },
+    })
+
+    setTimeout(() => {
+      this.props.addSteps({
+        title: 'Switch your role',
+        text: 'Moderator is not allowd to switch role. Participant can switch to Watcher, and Watcher can easily switch to Participant.',
+        selector: '.name .col-md-4 .dropdown',
+        position: 'right',
+      });
+    }, 3000);
+
   }
 
   beWatcher = () => {
