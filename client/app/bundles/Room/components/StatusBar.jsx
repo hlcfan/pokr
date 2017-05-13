@@ -21,7 +21,7 @@ export default class StatusBar extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     const originalTitle = "Copy to clipboard";
     $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
       .on("click", function() {
@@ -92,18 +92,17 @@ export default class StatusBar extends React.Component {
   }
 
   render() {
-    const that = this;
     const roomStatusButton = (() => {
-      if('Moderator' === this.state.role) {
-        const buttonText = "🏁 Close it";
-        const buttonClassName = "btn-warning close-room";
-        const onClickHandler = that.closeRoom;
+      if ('Moderator' === this.state.role) {
+        const buttonText = "🏁 Close it"
+        const buttonClassName = "btn-warning close-room"
+        const onClickHandler = this.closeRoom
 
         return (
           <button type="button" onClick={onClickHandler} className={`btn btn-default ${buttonClassName}`}>{buttonText}</button>
         )
       }
-    })();
+    })()
 
     const editButton = (() => {
       if('Moderator' === this.state.role) {
