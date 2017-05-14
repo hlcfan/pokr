@@ -56,7 +56,7 @@ export default class StoryListBox extends React.Component {
       title: 'Current on going story',
       text: "The ► indicates it's the on going story",
       selector: '#stories .story__ungroomed:first-child',
-      position: 'right',
+      position: 'bottom-left',
       style: defaultTourColor
     })
   }
