@@ -35,7 +35,7 @@ export default class StatusBar extends React.Component {
       title: 'Handy bar',
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
       selector: '.name .col-md-8',
-      position: 'top-right',
+      position: 'right',
       style: defaultTourColor
     })
 
@@ -82,6 +82,10 @@ export default class StatusBar extends React.Component {
         console.error("Switch role failed!")
       }
     })
+  }
+
+  playTourGuide = () => {
+    this.props.playTourGuide()
   }
 
   render() {
@@ -153,6 +157,9 @@ export default class StatusBar extends React.Component {
           <div id="tooltip-area"></div>
         </div>
         <div className="col-md-4">
+          <div className="pull-left">
+            <button className="btn btn-default" onClick={this.playTourGuide}>❓How to use?</button>
+          </div>
           <div className="dropdown pull-right">
             <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               {currentRoleEmoji} &nbsp;{this.state.role} &nbsp;

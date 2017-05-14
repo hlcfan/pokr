@@ -26,12 +26,13 @@ export default class Room extends React.Component {
       currentStoryId: props.currentStoryId,
       storyListUrl: props.storyListUrl,
       peopleListUrl: props.peopleListUrl,
-      joyrideOverlay: true,
       joyrideType: 'continuous',
       isReady: false,
       isRunning: false,
       steps: [],
-      selector: ''
+      selector: '',
+      autoStart: true,
+      stepIndex: 1
     }
   }
 
@@ -85,11 +86,11 @@ export default class Room extends React.Component {
     this.setState(currentState => {
       currentState.steps = currentState.steps.concat(newSteps);
       return currentState;
-    });
+    })
   }
 
   next() {
-    this.joyride.next();
+    this.joyride.next()
   }
 
   callback = (data) => {
@@ -101,20 +102,19 @@ export default class Room extends React.Component {
     });
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        isReady: true,
-        isRunning: true,
-      });
-    }, 1000)
+  playTourGuide = () => {
+    let newState = update(this.state, {
+      isReady: { $set: true },
+      isRunning: { $set: true }
+    })
+
+    this.setState(newState)
   }
 
   render() {
     const {
       isReady,
       isRunning,
-      joyrideOverlay,
       joyrideType,
       selector,
       steps,
@@ -135,11 +135,12 @@ export default class Room extends React.Component {
             skip: (<span>Skip</span>),
           }}
           run={isRunning}
-          showOverlay={joyrideOverlay}
+          showOverlay={true}
           showSkipButton={true}
           showStepsProgress={true}
           steps={steps}
           type={joyrideType}
+          autoStart={true}
         />
         <StatusBar
           roomState={this.state.roomState}
@@ -149,7 +150,7 @@ export default class Room extends React.Component {
           addSteps={this.addSteps}
           selector={selector}
           next={this.next}
-          stepIndex={1}
+          playTourGuide={this.playTourGuide}
         />
         <div className="row">
           <div id="operationArea" className="col-md-8">
