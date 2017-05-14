@@ -27,7 +27,6 @@ export default class Room extends React.Component {
       storyListUrl: props.storyListUrl,
       peopleListUrl: props.peopleListUrl,
       joyrideType: 'continuous',
-      isReady: false,
       isRunning: false,
       steps: [],
       selector: '',
@@ -100,11 +99,19 @@ export default class Room extends React.Component {
     this.setState({
       selector: data.type === 'tooltip:before' ? data.step.selector : '',
     });
+
+    if ("finished" === data.type) {
+      let newState = update(this.state, {
+        isRunning: { $set: false }
+      })
+
+      this.setState(newState)
+      this.joyride.reset()
+    }
   }
 
   playTourGuide = () => {
     let newState = update(this.state, {
-      isReady: { $set: true },
       isRunning: { $set: true }
     })
 
@@ -113,7 +120,6 @@ export default class Room extends React.Component {
 
   render() {
     const {
-      isReady,
       isRunning,
       joyrideType,
       selector,
