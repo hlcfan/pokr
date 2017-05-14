@@ -93,8 +93,8 @@ export default class Room extends React.Component {
   }
 
   callback = (data) => {
-    console.log('%ccallback', 'color: #47AAAC; font-weight: bold; font-size: 13px;'); //eslint-disable-line no-console
-    console.log(data); //eslint-disable-line no-console
+    // console.log('%ccallback', 'color: #47AAAC; font-weight: bold; font-size: 13px;'); //eslint-disable-line no-console
+    // console.log(data); //eslint-disable-line no-console
 
     this.setState({
       selector: data.type === 'tooltip:before' ? data.step.selector : '',
