@@ -36,10 +36,12 @@ export default class Room extends React.Component {
   }
 
   handleStorySwitch = (storyId) => {
-    this.setState({
-      roomState: "not-open",
-      currentStoryId: storyId
+    let newState = update(this.state, {
+      roomState: { $set: "not-open" },
+      currentStoryId: { $set: storyId }
     })
+
+    this.setState(newState)
   }
 
   handleNoStoryLeft = () => {
@@ -116,6 +118,10 @@ export default class Room extends React.Component {
     })
 
     this.setState(newState)
+  }
+
+  componentDidMount() {
+    EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
   }
 
   render() {
