@@ -12,11 +12,13 @@ export default class VoteBox extends React.Component {
   }
 
   onItemClick = (e) => {
-    this.setState({currentVote: e.target.dataset.point})
-    App.rooms.perform('vote', {
-      roomId: this.props.roomId,
-      data: { points: e.target.dataset.point, story_id: this.props.storyId },
-    })
+    if ("draw" !== this.props.roomState) {
+      this.setState({currentVote: e.target.dataset.point})
+      App.rooms.perform('vote', {
+        roomId: this.props.roomId,
+        data: { points: e.target.dataset.point, story_id: this.props.storyId },
+      })
+    }
   }
 
   componentDidMount() {
@@ -37,7 +39,7 @@ export default class VoteBox extends React.Component {
     const pointsList = this.props.pointValues.map(point => {
       const currentVoteClassName = this.state.currentVote === point ? 'btn-info' : ''
       const displayPoint = BarColors.emoji(point) || point
-      const buttonStatusClassName = (this.props.roomState === 'draw') && "disabled"
+      const buttonStatusClassName = ('draw' === this.props.roomState) && "disabled"
 
       return (
         <li key={point}>
