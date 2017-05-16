@@ -8,6 +8,7 @@ import ActionBox from '../components/ActionBox'
 import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
 import update from 'immutability-helper'
+import Joyride from 'react-joyride'
 
 export default class Room extends React.Component {
   rawMarkup() {
@@ -24,7 +25,13 @@ export default class Room extends React.Component {
       roomState: props.roomState,
       currentStoryId: props.currentStoryId,
       storyListUrl: props.storyListUrl,
-      peopleListUrl: props.peopleListUrl
+      peopleListUrl: props.peopleListUrl,
+      joyrideType: 'continuous',
+      isRunning: false,
+      steps: [],
+      selector: '',
+      autoStart: true,
+      stepIndex: 1
     }
   }
 
@@ -63,24 +70,126 @@ export default class Room extends React.Component {
     return "draw" === this.state.roomState
   }
 
+  addSteps = (steps) => {
+    let newSteps = steps;
+
+    if (!Array.isArray(newSteps)) {
+      newSteps = [newSteps];
+    }
+
+    if (!newSteps.length) {
+      return;
+    }
+
+    // Force setState to be synchronous to keep step order.
+    this.setState(currentState => {
+      currentState.steps = currentState.steps.concat(newSteps);
+      return currentState;
+    })
+  }
+
+  next() {
+    this.joyride.next()
+  }
+
+  callback = (data) => {
+    // console.log('%ccallback', 'color: #47AAAC; font-weight: bold; font-size: 13px;'); //eslint-disable-line no-console
+    // console.log(data); //eslint-disable-line no-console
+
+    this.setState({
+      selector: data.type === 'tooltip:before' ? data.step.selector : '',
+    });
+
+    if ("finished" === data.type) {
+      let newState = update(this.state, {
+        isRunning: { $set: false }
+      })
+
+      this.setState(newState)
+      this.joyride.reset()
+    }
+  }
+
+  playTourGuide = () => {
+    let newState = update(this.state, {
+      isRunning: { $set: true }
+    })
+
+    this.setState(newState)
+  }
+
   render() {
+    const {
+      isRunning,
+      joyrideType,
+      selector,
+      steps,
+    } = this.state
+
     return (
       <div className="room" id="room">
+        <Joyride
+          ref={c => (this.joyride = c)}
+          callback={this.callback}
+          debug={false}
+          disableOverlay={true}
+          locale={{
+            back: (<span>Back</span>),
+            close: (<span>Close</span>),
+            last: (<span>Last</span>),
+            next: (<span>Next</span>),
+            skip: (<span>Skip</span>),
+          }}
+          run={isRunning}
+          showOverlay={true}
+          showSkipButton={true}
+          showStepsProgress={true}
+          steps={steps}
+          type={joyrideType}
+          autoStart={true}
+        />
+        <StatusBar
+          roomState={this.state.roomState}
+          role={this.props.role}
+          roomId={this.props.roomId}
+          roomName={this.props.roomName}
+          addSteps={this.addSteps}
+          selector={selector}
+          next={this.next}
+          playTourGuide={this.playTourGuide}
+        />
         <div className="row">
-          <StatusBar roomState={this.state.roomState} role={this.props.role} roomId={this.props.roomId} roomName={this.props.roomName} />
           <div id="operationArea" className="col-md-8">
-            <VoteBox roomId={this.props.roomId} roomState={this.state.roomState} currentVote={this.props.currentVote} pointValues={this.props.pointValues} storyId={this.state.currentStoryId} />
-            <StoryListBox roomId={this.props.roomId} onSwitchStory={this.handleStorySwitch} onNoStoryLeft={this.handleNoStoryLeft} roomState={this.state.roomState} storyId={this.state.currentStoryId} />
+            <VoteBox
+              roomId={this.props.roomId}
+              roomState={this.state.roomState}
+              currentVote={this.props.currentVote}
+              pointValues={this.props.pointValues}
+              storyId={this.state.currentStoryId}
+              addSteps={this.addSteps}
+            />
+            <StoryListBox
+              roomId={this.props.roomId}
+              onSwitchStory={this.handleStorySwitch}
+              onNoStoryLeft={this.handleNoStoryLeft}
+              roomState={this.state.roomState}
+              storyId={this.state.currentStoryId}
+              addSteps={this.addSteps}
+            />
           </div>
-
           <div className="col-md-4">
-            <PeopleListBox roomId={this.props.roomId} />
+            <PeopleListBox
+              roomId={this.props.roomId}
+              addSteps={this.addSteps}
+          />
             <ActionBox
               roomState={this.state.roomState}
               role={this.props.role}
               roomId={this.props.roomId}
               storyId={this.state.currentStoryId}
-              timerInterval={this.props.timerInterval} />
+              timerInterval={this.props.timerInterval}
+              addSteps={this.addSteps}
+            />
           </div>
         </div>
         {

@@ -4,7 +4,7 @@
 
 .vote-list {
   ul li input.btn {
-    width: 100px;
+    width: 100%;
     margin-bottom: 15px;
   }
 
@@ -225,4 +225,16 @@
 
 .bootstrap-tagsinput {
   width: 100%;
+}
+
+.tour-guide {
+  position: relative;
+
+  a {
+    bottom: -35px;
+    position: absolute;
+    width: 100px;
+    color: #444;
+    text-decoration: none;
+  }
 }

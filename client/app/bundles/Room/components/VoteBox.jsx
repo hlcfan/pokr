@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import BarColors from 'libs/barColors'
+import BarColors, {defaultTourColor} from 'libs/barColors'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class VoteBox extends React.Component {
@@ -23,6 +23,14 @@ export default class VoteBox extends React.Component {
     EventEmitter.subscribe("refreshStories", () => {
       this.setState({ currentVote: null })
     })
+
+    this.props.addSteps({
+      title: 'Deck',
+      text: 'All the points are listed in this panel. Just click on the point which you would like to vote. ⁉️ means infinite, while ☕ means you have no clue.',
+      selector: '#deck',
+      position: 'top-right',
+      style: defaultTourColor
+    })
   }
 
   render() {
@@ -32,21 +40,19 @@ export default class VoteBox extends React.Component {
       const buttonStatusClassName = (this.props.roomState === 'draw') && "disabled"
 
       return (
-        <li key={point}>
+        <li key={point} className="col-sm-2">
           <input className={`btn btn-default btn-lg ${currentVoteClassName} ${buttonStatusClassName}` } type="button" onClick={this.onItemClick} data-point={point} value={displayPoint} />
         </li>
       )
     })
 
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" id="deck">
         <div className="panel-heading">Deck</div>
-        <div className="vote-list panel-body row">
-          <div className="col-md-12">
-            <ul className="list-inline">
-              {pointsList}
-            </ul>
-          </div>
+        <div className="vote-list panel-body">
+          <ul className="list-inline">
+            {pointsList}
+          </ul>
         </div>
       </div>
     )

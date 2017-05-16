@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import PeopleList from '../components/PeopleList';
-import EventEmitter from 'libs/eventEmitter';
+import PropTypes from 'prop-types'
+import React from 'react'
+import PeopleList from '../components/PeopleList'
+import EventEmitter from 'libs/eventEmitter'
+import {defaultTourColor} from 'libs/barColors'
 
 export default class PeopleListBox extends React.Component {
 
@@ -30,11 +31,19 @@ export default class PeopleListBox extends React.Component {
     this.loadPeopleListFromServer();
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
     // EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
+
+    this.props.addSteps({
+      title: 'People',
+      text: "Whoever joins in this room will be in this list. It also indicates the voting status by showing a blue bar next to avatar. When moderator flips the cards, the point will be showing following one's name.",
+      selector: '#people',
+      position: 'top-right',
+      style: defaultTourColor
+    })
   }
 
   render() {
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" id="people">
         <div className="panel-heading">People</div>
         <div id="peopleListArea" className="panel-body row">
           <div className="peopleListBox">

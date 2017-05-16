@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {defaultTourColor} from 'libs/barColors'
 
 const MODERATOR_ROLE = 0
 const PARTICIPANT_ROLE = 1
@@ -21,7 +22,7 @@ export default class StatusBar extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     const originalTitle = "Copy to clipboard";
     $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
       .on("click", function() {
@@ -29,6 +30,22 @@ export default class StatusBar extends React.Component {
       }).mouseleave(function() {
         $(this).attr("title", originalTitle).tooltip("fixTitle");
       });
+
+    this.props.addSteps({
+      title: 'Handy bar',
+      text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
+      selector: '.name .col-md-8',
+      position: 'right',
+      style: defaultTourColor
+    })
+
+    this.props.addSteps({
+      title: 'Switch your role',
+      text: 'Participant can switch to Watcher, and Watcher can easily switch to Participant. Moderator is not allowd to switch role.',
+      selector: '.name .col-md-4 .dropdown',
+      position: 'top-right',
+      style: defaultTourColor
+    });
   }
 
   beWatcher = () => {
@@ -67,19 +84,22 @@ export default class StatusBar extends React.Component {
     })
   }
 
+  playTourGuide = () => {
+    this.props.playTourGuide()
+  }
+
   render() {
-    const that = this;
     const roomStatusButton = (() => {
-      if('Moderator' === this.state.role) {
-        const buttonText = "🏁 Close it";
-        const buttonClassName = "btn-warning close-room";
-        const onClickHandler = that.closeRoom;
+      if ('Moderator' === this.state.role) {
+        const buttonText = "🏁 Close it"
+        const buttonClassName = "btn-warning close-room"
+        const onClickHandler = this.closeRoom
 
         return (
           <button type="button" onClick={onClickHandler} className={`btn btn-default ${buttonClassName}`}>{buttonText}</button>
         )
       }
-    })();
+    })()
 
     const editButton = (() => {
       if('Moderator' === this.state.role) {
@@ -130,13 +150,18 @@ export default class StatusBar extends React.Component {
     })();
 
     return (
-      <div className="name">
+      <div className="name row">
         <div className="col-md-8">
           <h3 className="pull-left">{this.props.roomName}</h3>
           {operationButtons}
           <div id="tooltip-area"></div>
         </div>
         <div className="col-md-4">
+          <div className="pull-left tour-guide">
+            <a href="javascript:;" onClick={this.playTourGuide}>
+              <i className="fa fa-question-circle" aria-hidden="true"></i> How to use?
+            </a>
+          </div>
           <div className="dropdown pull-right">
             <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               {currentRoleEmoji} &nbsp;{this.state.role} &nbsp;
