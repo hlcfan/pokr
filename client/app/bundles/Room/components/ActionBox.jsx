@@ -103,7 +103,7 @@ export default class ActionBox extends React.Component {
     let title
     if ("Moderator" === this.props.role) {
       title = "Actions"
-      text = "All the actions with points will be dealt with here. You can call the final point of a story by clicking on the point bar, clear votes, or skip current story."
+      text = "All the actions with points will be done in this panel. You can call the final point of a story by clicking on the point bar, clear votes, or skip current story."
     } else {
       title = "Votes"
       text = "You'll see the result of votes here, only the moderator can decide which is the final point."

@@ -34,7 +34,7 @@ export default class PeopleListBox extends React.Component {
 
     this.props.addSteps({
       title: 'People',
-      text: "Whoever joins in this room will be in this list. It indicates the voting status by showing a blue bar. When moderator flips the cards, the point will be show following one's name.",
+      text: "Whoever joins in this room will be in this list. It also indicates the voting status by showing a blue bar next to avatar. When moderator flips the cards, the point will be showing following one's name.",
       selector: '#people',
       position: 'top-right',
       style: defaultTourColor

@@ -41,7 +41,7 @@ export default class StatusBar extends React.Component {
 
     this.props.addSteps({
       title: 'Switch your role',
-      text: 'Moderator is not allowd to switch role. Participant can switch to Watcher, and Watcher can easily switch to Participant.',
+      text: 'Participant can switch to Watcher, and Watcher can easily switch to Participant. Moderator is not allowd to switch role.',
       selector: '.name .col-md-4 .dropdown',
       position: 'top-right',
       style: defaultTourColor

@@ -46,7 +46,7 @@ export default class StoryListBox extends React.Component {
 
     this.props.addSteps({
       title: 'Stories',
-      text: 'All the stories are listed separately under ungroomed and groomed tabs. Click on each of the to check out.',
+      text: 'All the stories are listed separately under ungroomed and groomed tabs. Click on each tab to check them out.',
       selector: '#stories',
       position: 'top-right',
       style: defaultTourColor
@@ -54,7 +54,7 @@ export default class StoryListBox extends React.Component {
 
     this.props.addSteps({
       title: 'Current on going story',
-      text: "The ► indicates it's the on going story",
+      text: "The ► indicates it's the on going story.",
       selector: '#stories .story__ungroomed:first-child',
       position: 'bottom-left',
       style: defaultTourColor
