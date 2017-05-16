@@ -9,6 +9,7 @@ import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
   rawMarkup() {
