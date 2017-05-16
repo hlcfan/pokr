@@ -157,8 +157,10 @@ export default class StatusBar extends React.Component {
           <div id="tooltip-area"></div>
         </div>
         <div className="col-md-4">
-          <div className="pull-left">
-            <button className="btn btn-default" onClick={this.playTourGuide}>❓How to use?</button>
+          <div className="pull-left tour-guide">
+            <a href="javascript:;" onClick={this.playTourGuide}>
+              <i className="fa fa-question-circle" aria-hidden="true"></i> How to use?
+            </a>
           </div>
           <div className="dropdown pull-right">
             <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
