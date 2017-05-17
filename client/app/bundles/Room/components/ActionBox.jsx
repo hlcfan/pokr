@@ -41,7 +41,7 @@ export default class ActionBox extends React.Component {
     }
     if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
       App.rooms.perform('action', {
-        roomId: POKER.roomId,
+        roomId: this.props.roomId,
         data: 'open',
         type: 'action'
       })
