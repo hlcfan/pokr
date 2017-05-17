@@ -19,7 +19,7 @@ export default class Room extends React.Component {
 
   constructor(props) {
     super(props)
-    window.syncResult = (props.roomState == 'open') ? true : false
+    window.syncResult = ('open' === props.roomState ) ? true : false
     ActionCable.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
