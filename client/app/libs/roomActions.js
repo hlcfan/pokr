@@ -7,9 +7,6 @@ export default {
     EventEmitter.dispatch("refreshUsers");
     EventEmitter.dispatch("refreshStories");
     EventEmitter.dispatch("resetActionBox");
-    if (POKER.timerInterval > 0) {
-      EventEmitter.dispatch("resetTimer");
-    }
   },
 
   showResultSection() {

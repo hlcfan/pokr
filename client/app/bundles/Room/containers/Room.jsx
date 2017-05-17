@@ -9,6 +9,7 @@ import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
   rawMarkup() {
@@ -36,10 +37,12 @@ export default class Room extends React.Component {
   }
 
   handleStorySwitch = (storyId) => {
-    this.setState({
-      roomState: "not-open",
-      currentStoryId: storyId
+    let newState = update(this.state, {
+      roomState: { $set: "not-open" },
+      currentStoryId: { $set: storyId }
     })
+
+    this.setState(newState)
   }
 
   handleNoStoryLeft = () => {
@@ -116,6 +119,10 @@ export default class Room extends React.Component {
     })
 
     this.setState(newState)
+  }
+
+  componentDidMount() {
+    EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
   }
 
   render() {

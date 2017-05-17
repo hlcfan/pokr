@@ -14,23 +14,18 @@ export default class PeopleListBox extends React.Component {
       dataType: 'json',
       cache: false,
       success: data => {
-        // TODO
-        // This was used for switching roles
-        // This should be done via state by setting role into state
-        // this.setState({data: []});
         this.setState({ data: data })
         EventEmitter.dispatch("showResultPanel", data)
       },
       error: (xhr, status, err) => {
         console.error("Fetching people list", status, err.toString());
       }
-    });
+    })
   }
 
   componentDidMount() {
     this.loadPeopleListFromServer();
-    EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer);
-    // EventEmitter.subscribe("switchUserRoles", this.loadPeopleListFromServer);
+    EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer)
 
     this.props.addSteps({
       title: 'People',
