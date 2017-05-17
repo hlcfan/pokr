@@ -76,7 +76,7 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'npm:install'
+    invoke :'yarn:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
@@ -119,14 +119,14 @@ namespace :whenever do
   end
 end
 
-namespace :npm do
-  desc "Npm install"
+namespace :yarn do
+  desc "Yarn install"
   task :install do
     command %{
       echo "-----> Npm installing for #{fetch(:app_path)}"
     }
     command "cd #{fetch(:app_path)}"
-    command "npm install"
+    command "yarn"
   end
 end
 
