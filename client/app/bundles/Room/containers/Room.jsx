@@ -12,11 +12,6 @@ import Joyride from 'react-joyride'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
-  rawMarkup() {
-    const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    return { __html: rawMarkup };
-  }
-
   constructor(props) {
     super(props)
     window.syncResult = ('open' === props.roomState ) ? true : false

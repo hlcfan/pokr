@@ -4,11 +4,6 @@ import BarColors from 'libs/barColors'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Board extends React.Component {
-  rawMarkup = () => {
-    const rawMarkup = marked(this.props.children.toString(), { sanitize: true })
-    return { __html: rawMarkup }
-  }
-
   loadStoryListFromServer = () => {
     $.ajax({
       url: `/rooms/${this.props.roomId}/draw_board.json`,

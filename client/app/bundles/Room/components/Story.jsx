@@ -3,10 +3,6 @@ import React from 'react'
 import BarColors from 'libs/barColors'
 
 export default class Story extends React.Component {
-  // rawMarkup: function() {
-  //   var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-  //   return { __html: rawMarkup };
-  // },
   revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
     if (this.props.role === 'Moderator') {

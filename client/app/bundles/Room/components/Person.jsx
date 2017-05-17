@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
-// import EventEmitter from 'libs/eventEmitter'
-// import update from 'immutability-helper'
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Person extends React.Component {
 
