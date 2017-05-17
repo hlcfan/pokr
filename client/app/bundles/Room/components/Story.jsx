@@ -9,9 +9,9 @@ export default class Story extends React.Component {
   // },
   revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
-    if (POKER.role === 'Moderator') {
+    if (this.props.role === 'Moderator') {
       App.rooms.perform('revote', {
-        roomId: POKER.roomId,
+        roomId: this.props.roomId,
         data: { story_id: revoteStoryId }
       });
     }
@@ -22,7 +22,7 @@ export default class Story extends React.Component {
     let revoteIcon;
     let liElementClass;
     revoteIcon = (() => {
-      if (POKER.role === 'Moderator' && that.props.tab === "groomed" && POKER.roomState !== "draw") {
+      if (this.props.role === 'Moderator' && that.props.tab === "groomed" && this.props.roomState !== "draw") {
         return(
           <a href="javascript:;" className="revote" onClick={that.revote}>
             <i className="fa fa-refresh"></i>

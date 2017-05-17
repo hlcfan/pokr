@@ -48,7 +48,7 @@ export default class Room extends React.Component {
   handleNoStoryLeft = () => {
     if (!this.roomClosed()) {
       $.ajax({
-        url: `/rooms/${POKER.roomId}/set_room_status.json`,
+        url: `/rooms/${this.props.roomId}/set_room_status.json`,
         data: { status: 'draw' },
         method: 'post',
         dataType: 'json',
@@ -181,6 +181,7 @@ export default class Room extends React.Component {
               onNoStoryLeft={this.handleNoStoryLeft}
               roomState={this.state.roomState}
               storyId={this.state.currentStoryId}
+              role={this.props.role}
               addSteps={this.addSteps}
             />
           </div>
