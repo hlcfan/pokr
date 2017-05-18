@@ -190,7 +190,7 @@ export default class Room extends React.Component {
               role={this.props.role}
               roomId={this.props.roomId}
               storyId={this.state.currentStoryId}
-              timerInterval={this.props.timerInterval}
+              countDown={this.props.timerInterval}
               addSteps={this.addSteps}
             />
           </div>
