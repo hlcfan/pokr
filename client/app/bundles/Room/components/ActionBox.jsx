@@ -12,8 +12,7 @@ export default class ActionBox extends React.Component {
 
     this.state = {
       roomState: this.props.roomState,
-      countDown: this.props.timerInterval,
-      storyId: this.props.storyId
+      countDown: this.props.countDown,
     }
   }
 
@@ -69,12 +68,12 @@ export default class ActionBox extends React.Component {
   resetActionBox = () => {
     let newState = update(this.state, {
       roomState: { $set: "not-open" },
-      countDown: { $set: this.props.timerInterval }
+      countDown: { $set: this.props.countDown }
     })
 
     this.setState(newState)
 
-    if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
+    if (this.state.roomState !== "draw" && this.props.countDown > 0) {
       this.intervalId = setInterval(this.timer, 1000)
     }
   }
@@ -85,7 +84,7 @@ export default class ActionBox extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
-    if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
+    if (this.props.roomState !== "draw" && this.props.countDown > 0) {
       this.intervalId = setInterval(this.timer, 1000)
     }
     if (this.props.roomState === 'open') {
@@ -109,6 +108,13 @@ export default class ActionBox extends React.Component {
       position: 'top-right',
       style: defaultTourColor
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.state = {
+      roomState: nextProps.roomState,
+      countDown: nextProps.countDown,
+    } 
   }
 
   componentWillUnmount() {
@@ -150,7 +156,7 @@ export default class ActionBox extends React.Component {
             </a>
           </div>
         )
-      } else if(onClickName && buttonText) {
+      } else if (onClickName && buttonText) {
         return (
           <div className="" role="group">
             <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
@@ -177,8 +183,8 @@ export default class ActionBox extends React.Component {
     }))()
 
     const icon = () => {
-      if ("draw" !== this.props.roomState && this.props.timerInterval) {
-        if (this.state.countDown < 1) {
+      if ("draw" !== this.props.roomState && this.props.countDown) {
+        if (this.props.countDown < 1) {
           return(
             <span className="timer pull-right">
               <i className="fa warning">⚠️</i>
@@ -190,7 +196,7 @@ export default class ActionBox extends React.Component {
             <span className="timer pull-right">
               <i className="fa sandglass">⌛</i>
               &nbsp;
-              <i className="counter">{this.state.countDown}</i>
+              <i className="counter">{this.props.countDown}</i>
             </span>
           )
         }
