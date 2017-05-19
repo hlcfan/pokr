@@ -4,15 +4,19 @@ class RoomRepository
     @params = params
 
     bulk_import_stories
+    add_sequence_to_stories
 
     Room.new @params
   end
 
   def update_entity room, params
-    moderator_ids = (params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
+    @params = params
+    add_sequence_to_stories
+    moderator_ids = (@params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
       0 == moderator_id && moderator_id.blank?
     end
-    if room.update_attributes params
+
+    if room.update_attributes @params
       if moderator_ids.length > room.moderator_ids_ary.length
         delta = moderator_ids - room.moderator_ids_ary
         user_room_attrs = delta.map do |moderator_id|
@@ -70,6 +74,14 @@ class RoomRepository
       @params[:stories_attributes] = stories_hash
     else
       @params.delete(:bulk_links)
+    end
+  end
+
+  def add_sequence_to_stories
+    index = 0
+    @params[:stories_attributes] && @params[:stories_attributes].each_pair do |_, story|
+      index += 1
+      story[:sequence] = index
     end
   end
 
