@@ -194,6 +194,27 @@
     margin-bottom: 15px;
   }
 
+  .move-btn, .remove-btn {
+    position: relative;
+    width: 3%;
+  }
+
+  a.remove, a.move {
+    font-size: 1.6em;
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+  }
+
+  a.move {
+    cursor: move;
+  }
+
+  #story-row > .row {
+    border-bottom: 1px dashed #ccc;
+    margin-top: 10px;
+  }
+
   .stories-section .import {
     color: #fff;
     text-decoration: none;
