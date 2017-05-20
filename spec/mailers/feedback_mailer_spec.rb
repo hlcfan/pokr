@@ -16,6 +16,10 @@ RSpec.describe FeedbackMailer, type: :mailer do
       expect(mail.from).to eq ["no-reply@pokrex.com"]
     end
 
+    it "populates the email message id" do
+      expect(mail.message_id).to match /(.*)@pokrex.com/
+    end
+
     it "assigns @email" do
       expect(mail.body.encoded).to match "a@a.com"
       expect(mail.body.encoded).to match "message"
