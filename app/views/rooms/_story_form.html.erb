@@ -1,5 +1,5 @@
 <%= f.nested_fields_for :stories do |story| %>
-  <li class="row">
+  <div class="row">
     <div class="form-group col-xs-1 form-group-sm move-btn">
       <a href="javascript:;" class="move">↕️</a>
     </div>
@@ -16,5 +16,5 @@
     </div>
     <%= story.hidden_field :id %>
     <%= story.hidden_field :_destroy %>
-  </li>
+  </div>
 <% end %>
