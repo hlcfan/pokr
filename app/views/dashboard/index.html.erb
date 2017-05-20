@@ -5,7 +5,7 @@
 <div class="dashboard">
   <div class="row stats">
     <div class="col-md-3">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Stories groomed</h5></div>
         <div class="panel-body">
           <p class="lead stats--data"><%= @user.stories_groomed_count %></p>
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Time spent</h5></div>
         <div class="panel-body">
           <p class="lead stats--data"><%= (@user.time_spent/60).round(2) %> Mins</p>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Average per story</h5></div>
         <div class="panel-body">
           <p class="lead stats--data">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Skip rate</h5></div>
         <div class="panel-body">
           <p class="lead stats--data"><%= number_to_percentage @user.skip_rate, precision: 2 %></p>
@@ -54,7 +54,7 @@
   </div>
   <div class="row">
     <div class="col-md-7">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Rooms</h5></div>
         <div class="panel-body">
           <!-- Nav tabs -->
@@ -79,7 +79,7 @@
       </div>
     </div>
     <div class="col-md-5">
-      <div class="panel">
+      <div class="panel panel-none">
         <div class="panel-heading"><h5>Stories recently groomed</h5></div>
         <div class="panel-body">
           <div class="list-group">

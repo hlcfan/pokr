@@ -13,6 +13,7 @@ RSpec.describe RoomRepository do
       room = repo.new_entity(room_params)
 
       expect(room.stories.map(&:link)).to eq ["link1", "link2", "link3"]
+      expect(room.stories.map(&:sequence)).to eq [1, 2, 3]
     end
 
     it "initialize a room object if bulk import not enabled" do
@@ -22,6 +23,18 @@ RSpec.describe RoomRepository do
       room = repo.new_entity(room_params)
 
       expect(room.name).to eq "test"
+    end
+
+    it "initialize a room object with stories with sequence" do
+      room_params = {
+        name: "test",
+        stories_attributes: {
+          "0"=>{"link"=>"113", "desc"=>"", "_destroy"=>"false"},
+          "1"=>{"link"=>"22", "desc"=>"", "_destroy"=>"false"}
+        }
+      }
+      room = repo.new_entity(room_params)
+      expect(room.stories.map(&:sequence)).to eq [1, 2]
     end
   end
 
@@ -111,6 +124,34 @@ RSpec.describe RoomRepository do
 
       expect(room.name).to eq "updated-name"
       expect(room.moderator_ids_ary).to eq [catlin.id]
+    end
+
+    it "updates room stories with sequence" do
+      room_params = {
+        name: "test",
+        created_by: 1,
+        stories_attributes: {
+          "0"=>{"link"=>"first", "desc"=>"", "_destroy"=>"false"},
+          "1"=>{"link"=>"second", "desc"=>"", "_destroy"=>"false"}
+        }
+      }
+      room = repo.new_entity(room_params)
+      room = repo.save room
+
+      first_story = Story.find_by link: "first"
+      second_story = Story.find_by link: "second"
+
+      new_room_params = {
+        name: "test",
+        stories_attributes: {
+          "0" => { "id" => first_story.id, "link" => "first", "desc" => "", "_destroy" => "false"},
+          "3" => { "link" => "third", "desc" => "", "_destroy" => "false" },
+          "1" => { "id" => second_story.id, "link" => "second", "desc" => "", "_destroy" => "false"}
+        }
+      }
+      room = repo.update_entity room, new_room_params
+
+      expect(room.stories.map(&:link)).to eq ["first", "third", "second"]
     end
   end
 end

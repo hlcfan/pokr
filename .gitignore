@@ -18,6 +18,8 @@
 !/log/.keep
 /tmp
 /coverage
+*.swp
+*.swo
 
 config/database.yml
 .idea/

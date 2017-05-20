@@ -47,9 +47,9 @@
       <%= generate_point_values(@room.point_values) %>
     </ul>
   </div>
-  <section class="stories-section panel panel-primary" id="story-section">
+  <section class="stories-section panel panel-default" id="story-section">
     <div class="panel-heading">
-      Stories
+      <h3 class="panel-title">Stories</h3>
       <% if @room.new_record? %>
         <a class="pull-right import" href="javascript:;" data-status="input">
           <i class="fa fa-list" aria-hidden="true"></i>
@@ -73,7 +73,7 @@
     </div>
   </section>
   <div class="form-group">
-    <%= f.label "Add moderators" %>
+    <%= f.label "Moderators" %>
     <%= f.text_field :moderator_ids, class: "form-control room--moderators"  %>
   </div>
   <div class="actions form-group">

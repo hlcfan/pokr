@@ -70,6 +70,16 @@ class Rooms
     $.each roomModerators, (index, user) ->
       $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
 
+    el = document.getElementById('story-row')
+    sortable = Sortable.create(el, {
+      group: "name",
+      handle: ".move-btn",
+      draggable: ".row",
+      animation: 150,
+      dragClass: ".row",
+      sort: true
+    })
+
 $(document).on "turbolinks:load", ->
   $(".rooms.new, .rooms.edit").ready ->
     rooms = new Rooms

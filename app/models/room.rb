@@ -4,7 +4,7 @@ class Room < ApplicationRecord
 
   has_many :user_rooms
   has_many :users, through: :user_rooms
-  has_many :stories, dependent: :destroy
+  has_many :stories, -> { order(:sequence) }, dependent: :destroy
 
   belongs_to :creator, class_name: "User", foreign_key: :created_by
 
