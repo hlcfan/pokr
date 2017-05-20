@@ -3,22 +3,19 @@ import BarColors from 'libs/barColors'
 
 export default {
   nextStory() {
-    window.syncResult = false;
-    EventEmitter.dispatch("refreshUsers");
-    EventEmitter.dispatch("refreshStories");
-    EventEmitter.dispatch("resetActionBox");
-    if (POKER.timerInterval > 0) {
-      EventEmitter.dispatch("resetTimer");
-    }
+    window.syncResult = false
+    EventEmitter.dispatch("refreshUsers")
+    EventEmitter.dispatch("refreshStories")
+    EventEmitter.dispatch("resetActionBox")
   },
 
   showResultSection() {
-    EventEmitter.dispatch("refreshUsers");
-    EventEmitter.dispatch("showResultPanel");
+    window.syncResult = true
+    EventEmitter.dispatch("refreshUsers")
   },
 
   revote() {
     nextStory();
-    $('.vote-list ul li input').removeClass('disabled');
+    $('.vote-list ul li input').removeClass('disabled')
   }
 }

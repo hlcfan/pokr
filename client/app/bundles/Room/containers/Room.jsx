@@ -9,16 +9,12 @@ import Board from '../components/Board'
 import ActionCable from 'libs/actionCable'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
-  rawMarkup() {
-    const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    return { __html: rawMarkup };
-  }
-
   constructor(props) {
     super(props)
-    window.syncResult = (props.roomState == 'open') ? true : false
+    window.syncResult = ('open' === props.roomState ) ? true : false
     ActionCable.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
@@ -36,16 +32,18 @@ export default class Room extends React.Component {
   }
 
   handleStorySwitch = (storyId) => {
-    this.setState({
-      roomState: "not-open",
-      currentStoryId: storyId
+    let newState = update(this.state, {
+      roomState: { $set: "not-open" },
+      currentStoryId: { $set: storyId }
     })
+
+    this.setState(newState)
   }
 
   handleNoStoryLeft = () => {
     if (!this.roomClosed()) {
       $.ajax({
-        url: `/rooms/${POKER.roomId}/set_room_status.json`,
+        url: `/rooms/${this.props.roomId}/set_room_status.json`,
         data: { status: 'draw' },
         method: 'post',
         dataType: 'json',
@@ -118,6 +116,10 @@ export default class Room extends React.Component {
     this.setState(newState)
   }
 
+  componentDidMount() {
+    EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
+  }
+
   render() {
     const {
       isRunning,
@@ -174,6 +176,7 @@ export default class Room extends React.Component {
               onNoStoryLeft={this.handleNoStoryLeft}
               roomState={this.state.roomState}
               storyId={this.state.currentStoryId}
+              role={this.props.role}
               addSteps={this.addSteps}
             />
           </div>
@@ -187,7 +190,7 @@ export default class Room extends React.Component {
               role={this.props.role}
               roomId={this.props.roomId}
               storyId={this.state.currentStoryId}
-              timerInterval={this.props.timerInterval}
+              countDown={this.props.timerInterval}
               addSteps={this.addSteps}
             />
           </div>

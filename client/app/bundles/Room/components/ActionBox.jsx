@@ -2,23 +2,45 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ResultPanel from '../components/ResultPanel'
 import EventEmitter from 'libs/eventEmitter'
+import update from 'immutability-helper'
 import RoomActions from 'libs/roomActions'
 import {defaultTourColor} from 'libs/barColors'
 
 export default class ActionBox extends React.Component {
+  constructor(props){
+    super(props);
 
-  state = {
-    roomState: this.props.roomState
+    this.state = {
+      roomState: this.props.roomState,
+      countDown: this.props.countDown,
+    }
+  }
+
+  timer = () => {
+    let newState = update(this.state, {
+      countDown: { $set: this.state.countDown - 1 }
+    })
+
+    this.setState(newState)
+
+    if(this.state.countDown < 1) {
+      clearInterval(this.intervalId);
+    }
   }
 
   showResult = (e) => {
-    this.setState({roomState: 'open'})
+    let newState = update(this.state, {
+      roomState: { $set: "open" }
+    })
+
+    this.setState(newState)
+
     if (!Cookies.get('showTip')) {
       Cookies.set('showTip', true)
     }
     if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
       App.rooms.perform('action', {
-        roomId: POKER.roomId,
+        roomId: this.props.roomId,
         data: 'open',
         type: 'action'
       })
@@ -44,56 +66,26 @@ export default class ActionBox extends React.Component {
   }
 
   resetActionBox = () => {
-    this.setState({ roomState: 'not-open' });
+    let newState = update(this.state, {
+      roomState: { $set: "not-open" },
+      countDown: { $set: this.props.countDown }
+    })
+
+    this.setState(newState)
+
+    if (this.state.roomState !== "draw" && this.props.countDown > 0) {
+      this.intervalId = setInterval(this.timer, 1000)
+    }
   }
 
   showBoard = () => {
     EventEmitter.dispatch("showBoard")
   }
 
-  resetTimer = () => {
-    // if (!this.props.timerInterval) {
-    //   return
-    // }
-    // let timer;
-
-    // if (timer > 0) {
-    //   clearInterval(POKER.timer);
-    // }
-    // $(".timer").show();
-    // $(".timer .counter").text(POKER.timerInterval);
-    // let tick = POKER.timerInterval;
-    // const $icon = $(".timer .fa");
-
-    // POKER.timer = setInterval(() => {
-    //   if (tick <= 0) {
-    //     if (!$icon.hasClass("warning")) {
-    //       $(".timer .counter").text("Time up");
-    //       $icon.attr("class", "fa warning").text("⚠️");
-    //     }
-    //     const $warning = $(".warning");
-    //     if(!$warning.is(':animated')) {
-    //       $warning.fadeToggle("fast");
-    //     }
-    //   } else {
-    //     if (!$icon.hasClass("sandglass")) {
-    //       $icon.attr("class", "fa sandglass").text("⌛").show();
-    //     }
-    //     tick -= 1;
-    //     $(".timer .counter").text(tick);
-    //   }
-    // }, 1000);
-  }
-
-  disableTimer = () => {
-    // $(".timer").remove();
-  }
-
   componentDidMount() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox);
-    if (this.props.roomState !== "draw" && this.props.timerInterval > 0) {
-      EventEmitter.subscribe("resetTimer", this.resetTimer);
-      this.resetTimer();      
+    if (this.props.roomState !== "draw" && this.props.countDown > 0) {
+      this.intervalId = setInterval(this.timer, 1000)
     }
     if (this.props.roomState === 'open') {
       RoomActions.showResultSection();
@@ -116,6 +108,17 @@ export default class ActionBox extends React.Component {
       position: 'top-right',
       style: defaultTourColor
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.state = {
+      roomState: nextProps.roomState,
+      countDown: nextProps.countDown,
+    } 
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   render() {
@@ -153,7 +156,7 @@ export default class ActionBox extends React.Component {
             </a>
           </div>
         )
-      } else if(onClickName && buttonText) {
+      } else if (onClickName && buttonText) {
         return (
           <div className="" role="group">
             <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
@@ -179,15 +182,32 @@ export default class ActionBox extends React.Component {
       }
     }))()
 
+    const icon = () => {
+      if ("draw" !== this.props.roomState && this.props.countDown) {
+        if (this.props.countDown < 1) {
+          return(
+            <span className="timer pull-right">
+              <i className="fa warning">⚠️</i>
+              Time out
+            </span>
+          )
+        } else {
+          return(
+            <span className="timer pull-right">
+              <i className="fa sandglass">⌛</i>
+              &nbsp;
+              <i className="counter">{this.props.countDown}</i>
+            </span>
+          )
+        }
+      }
+    }
+
     return (
       <div className="panel panel-default" id="action-box">
         <div className="panel-heading">
           Action
-          <span className="timer pull-right" style={{display: 'none'}}>
-            <i className="fa sandglass">⌛</i>
-            &nbsp;
-            <i className="counter">{this.props.timerInterval}</i>
-          </span>
+          {icon()}
         </div>
         <div className="panel-body row">
           <div id="actionBox" className="row">

@@ -19,8 +19,6 @@ export default {
         // console.dir(data)
         if (data.type === 'action') {
           if (data.data === 'open') {
-            window.syncResult = true
-            roomState = 'open'
             RoomActions.showResultSection()
           } else if (data.data === 'refresh-users') {
             if ($("#u-" + data.user_id).length <= 0) {
@@ -47,12 +45,6 @@ export default {
           setTimeout(function(){
             $personElement.addClass("voted", 100)
           }, 200)
-
-          // window.syncResult = data.sync
-          // if (syncResult) {
-          //   $('#u-' + data.person_id + ' .points').text(BarColors.emoji(data.points) || data.points)
-          //   $('#u-' + data.person_id).attr('data-point', data.points)
-          // }
         } else {
 
         }
