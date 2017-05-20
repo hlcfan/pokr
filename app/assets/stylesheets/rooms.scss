@@ -215,14 +215,10 @@
     top: 33px;
   }
 
-  #story-row ul {
-    padding-left: 0;
-
-    li {
-      border-bottom: 1px dashed #ccc;
-      padding-top: 10px;
-      list-style-type: none;
-    }
+  #story-row > .row {
+    border-bottom: 1px dashed #ccc;
+    padding-top: 10px;
+    list-style-type: none;
   }
 
   .stories-section .import {

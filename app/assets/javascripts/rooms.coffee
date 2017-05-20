@@ -70,13 +70,13 @@ class Rooms
     $.each roomModerators, (index, user) ->
       $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
 
-    el = document.querySelectorAll("#story-row ul")[0]
+    el = document.getElementById('story-row')
     sortable = Sortable.create(el, {
       group: "name",
       handle: ".move-btn",
-      draggable: "li",
+      draggable: ".row",
       animation: 150,
-      dragClass: "li",
+      dragClass: ".row",
       sort: true
     })
 
