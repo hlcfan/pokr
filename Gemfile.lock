@@ -116,7 +116,6 @@ GEM
     mini_racer (0.1.9)
       libv8 (~> 5.3)
     minitest (5.10.2)
-    multi_fetch_fragments (0.0.17)
     multi_json (1.12.1)
     mysql2 (0.4.6)
     nio4r (2.0.0)
@@ -285,7 +284,6 @@ DEPENDENCIES
   mina-puma (= 1.0.1)
   mina-sitemap_generator
   mini_racer
-  multi_fetch_fragments
   mysql2 (~> 0.4.4)
   paperclip (~> 5.1.0)
   pry
