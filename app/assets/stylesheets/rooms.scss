@@ -210,9 +210,19 @@
     cursor: move;
   }
 
-  #story-row > .row {
-    border-bottom: 1px dashed #ccc;
-    margin-top: 10px;
+  a.remove {
+    left: 2px;
+    top: 33px;
+  }
+
+  #story-row ul {
+    padding-left: 0;
+
+    li {
+      border-bottom: 1px dashed #ccc;
+      padding-top: 10px;
+      list-style-type: none;
+    }
   }
 
   .stories-section .import {
