@@ -22,6 +22,11 @@ gem 'ruby-pinyin'
 gem 'paperclip', '~> 5.1.0'
 gem 'letter_avatar'
 
+gem 'omniauth'
+gem 'omniauth-weibo-oauth2'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -47,6 +52,7 @@ gem 'mina-sitemap_generator', :require => false
 # gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
   gem "pry"
   gem 'pry-doc'
   gem 'pry-nav'
@@ -62,7 +68,6 @@ group :production do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'codecov', :require => false
 end
