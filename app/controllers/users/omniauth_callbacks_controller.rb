@@ -26,6 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       super resource
     else
       # No entry here
+      # Could be useful some day
       finish_signup_path(resource)
     end
   end
