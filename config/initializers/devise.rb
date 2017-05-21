@@ -238,7 +238,7 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  binding.pry
+
   config.omniauth :google_oauth2, OMNIAUTH_CONFIG[:google][:key], OMNIAUTH_CONFIG[:google][:secret], { name: "google" }
   config.omniauth :github, OMNIAUTH_CONFIG[:github][:key], OMNIAUTH_CONFIG[:github][:secret], scope: 'user,public_repo'
   config.omniauth :weibo, OMNIAUTH_CONFIG[:weibo][:key], OMNIAUTH_CONFIG[:weibo][:secret], token_params: { redirect_uri: OMNIAUTH_CONFIG[:weibo][:redirect_uri] }
