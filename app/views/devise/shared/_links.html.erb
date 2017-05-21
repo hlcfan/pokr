@@ -19,13 +19,20 @@
     <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
   <% end -%>
 
-  <%- if devise_mapping.omniauthable? %>
-    <%- resource_class.omniauth_providers.each do |provider| %>
-      <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
-    <% end -%>
-  <% end -%>
-
   <a id="why" href="javascript:;" role="button" data-trigger="focus" data-toggle="popover" data-placement="bottom" title="Because..." data-content="To obtain better experience, we keep user system to maintain rooms and stroies. Thus, everyone can check'em out in dashboard later on. FYI, your information is securely stored and won't be leaked.">Why do I need to sign in/up?</a>
+
+  <%- if devise_mapping.omniauthable? %>
+    <br /><br />
+    <div class="form-group">
+      <div class="social-sign-in">
+        <label>Sign in with</label>
+        <br />
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to "", omniauth_authorize_path(resource_name, provider), class: "#{provider} icon" %>
+        <% end -%>
+      </div>
+    </div>
+  <% end -%>
 </div>
 
 <script type="text/javascript">
