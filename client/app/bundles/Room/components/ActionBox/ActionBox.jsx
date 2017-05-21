@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ResultPanel from '../components/ResultPanel'
+import ResultPanel from './ResultPanel/ResultPanel'
 import EventEmitter from 'libs/eventEmitter'
 import update from 'immutability-helper'
 import RoomActions from 'libs/roomActions'
