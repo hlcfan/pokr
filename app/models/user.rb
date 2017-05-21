@@ -20,8 +20,11 @@ class User < ApplicationRecord
   has_many :rooms, through: :user_rooms
   has_many :user_story_points
   has_many :created_rooms, class_name: "Room", foreign_key: :created_by
+  has_many :authorizations
 
   after_initialize :default_values
+
+  after_avatar_post_process :set_avatar_as_image
 
   attr_accessor :points, :display_role, :voted, :avatar_thumb
 
@@ -51,15 +54,15 @@ class User < ApplicationRecord
     @stories_groomed_count ||= UserStoryPoint.where(user_id: id).count
   end
 
-  def letter_avatar size=:thumb
-    if avatar?
-      avatar.url size
+  def letter_avatar
+    if avatar? || image?
+      image
     else
       letter_avatar_url name_in_letter, 100
     end
   end
 
-def self.find_for_oauth(auth, signed_in_resource = nil)
+  def self.find_for_oauth(auth, signed_in_resource = nil)
     # Get the identity and user if they exist
     identity = Authorization.find_for_oauth(auth)
 
@@ -80,12 +83,13 @@ def self.find_for_oauth(auth, signed_in_resource = nil)
           name: auth.extra.raw_info.name,
           #username: auth.info.nickname || auth.uid,
           email: email ? email : "#{EMAIL_PREFIX}-#{auth.uid}@#{auth.provider}.com",
-          password: Devise.friendly_token[0,20]
+          password: Devise.friendly_token[0,20],
         )
-
-        user.save!
       end
     end
+
+    user.image = auth.info.image if auth.info.image
+    user.save! if user.changed?
 
     # Associate the identity with the user if needed
     if identity.user != user
@@ -107,6 +111,10 @@ def self.find_for_oauth(auth, signed_in_resource = nil)
     else
       name
     end
+  end
+
+  def set_avatar_as_image
+    self.image = avatar.url :medium
   end
 
 end
