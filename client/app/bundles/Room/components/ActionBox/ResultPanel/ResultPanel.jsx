@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import PointBar from '../components/PointBar'
+import PointBar from '../PointBar/PointBar'
 import EventEmitter from 'libs/eventEmitter'
 import BarColors from 'libs/barColors'
 
