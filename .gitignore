@@ -30,5 +30,6 @@ node_modules
 
 # Generated js bundles
 /app/assets/webpack/*
+omniauth.yml
 
 active_record_log_subscriber.rb
