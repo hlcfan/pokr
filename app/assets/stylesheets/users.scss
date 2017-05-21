@@ -1,0 +1,28 @@
+.social-sign-in{
+  .icon {
+    width: 32px;
+    height: 32px;
+    background-size: 32px;
+    display: inline-block;
+  }
+
+  .google {
+    background-image: image-url("social/google.svg")
+  }
+
+  .github {
+    background-image: image-url("social/github.svg")
+  }
+
+  .weibo {
+    background-image: image-url("social/weibo.svg")
+  }
+
+  .facebook {
+    background-image: image-url("social/facebook.svg")
+  }
+
+  .twitter {
+    background-image: image-url("social/twitter.svg")
+  }
+}
