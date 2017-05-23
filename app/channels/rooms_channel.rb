@@ -73,7 +73,7 @@ class RoomsChannel < ApplicationCable::Channel
     payload = data["data"]
     set_room data["roomId"]
 
-    UserStoryPoint.delete_all(story_id: payload["story_id"])
+    UserStoryPoint.where(story_id: payload["story_id"]).delete_all
     @room.update_attribute :status, nil
     broadcaster "rooms/#{data["roomId"]}",
             type: "action",
