@@ -1,0 +1,64 @@
+development:
+  google:
+    key: blah
+    secret: blah
+
+  github:
+    key: blah
+    secret: blah
+
+  weibo:
+    key: blah
+    secret: blah
+    redirect_uri: http://a3.dev:3000/users/auth/weibo/callback
+
+  facebook:
+    key: blah
+    secret: blah
+
+  twitter:
+    key: blah
+    secret: blah
+
+test:
+  google:
+    key: blah
+    secret: blah
+
+  github:
+    key: blah
+    secret: blah
+
+  weibo:
+    key: blah
+    secret: blah
+    redirect_uri: http://a3.dev:3000/users/auth/weibo/callback
+
+  facebook:
+    key: blah
+    secret: blah
+
+  twitter:
+    key: blah
+    secret: blah
+
+google:
+  key: <%= ENV["GOOGLE_KEY"] %>
+  secret: <%= ENV["GOOGLE_SECRET"] %>
+
+github:
+  key: <%= ENV["GITHUB_KEY"] %>
+  secret: <%= ENV["GITHUB_SECRET"] %>
+
+weibo:
+  key: <%= ENV["WEIBO_KEY"] %>
+  secret: <%= ENV["WEIBO_SECRET"] %>
+  redirect_uri: https://pokrex.com/users/auth/weibo/callback
+
+facebook: 
+  key: <%= ENV["FB_KEY"] %>
+  secret: <%= ENV["FB_SECRET"] %>
+
+twitter:
+  key: <%= ENV["TWITTER_KEY"] %>
+  secret: <%= ENV["TWITTER_SECRET"] %>

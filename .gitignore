@@ -30,6 +30,6 @@ node_modules
 
 # Generated js bundles
 /app/assets/webpack/*
-oauth.yml
+oauth.yml.template
 
 active_record_log_subscriber.rb
