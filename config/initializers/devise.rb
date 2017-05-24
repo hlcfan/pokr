@@ -239,11 +239,11 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
 
-  config.omniauth :google_oauth2, OMNIAUTH_CONFIG[:google][:key], OMNIAUTH_CONFIG[:google][:secret], { name: "google" }
-  config.omniauth :github, OMNIAUTH_CONFIG[:github][:key], OMNIAUTH_CONFIG[:github][:secret], scope: 'user,public_repo'
-  config.omniauth :weibo, OMNIAUTH_CONFIG[:weibo][:key], OMNIAUTH_CONFIG[:weibo][:secret], token_params: { redirect_uri: OMNIAUTH_CONFIG[:weibo][:redirect_uri] }
-  config.omniauth :facebook, OMNIAUTH_CONFIG[:facebook][:key], OMNIAUTH_CONFIG[:facebook][:secret]
-  config.omniauth :twitter, OMNIAUTH_CONFIG[:twitter][:key], OMNIAUTH_CONFIG[:twitter][:secret]
+  config.omniauth :google_oauth2, OAUTH_CONFIG[:google][:key], OAUTH_CONFIG[:google][:secret], { name: "google" }
+  config.omniauth :github, OAUTH_CONFIG[:github][:key], OAUTH_CONFIG[:github][:secret], scope: 'user,public_repo'
+  config.omniauth :weibo, OAUTH_CONFIG[:weibo][:key], OAUTH_CONFIG[:weibo][:secret], token_params: { redirect_uri: OAUTH_CONFIG[:weibo][:redirect_uri] }
+  config.omniauth :facebook, OAUTH_CONFIG[:facebook][:key], OAUTH_CONFIG[:facebook][:secret]
+  config.omniauth :twitter, OAUTH_CONFIG[:twitter][:key], OAUTH_CONFIG[:twitter][:secret]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
