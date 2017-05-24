@@ -55,12 +55,17 @@ RSpec.describe User, type: :model do
                 less_than(2.megabytes) }
 
   describe "#letter_avatar" do
-    context "when user uploaded avatar" do
-      it "returns user uploaded avatar" do
-        allow(user).to receive(:avatar?) { true }
-        allow(user).to receive_message_chain(:avatar, :url) { "avatar/path.png" }
-        expect(user.letter_avatar).to eq "avatar/path.png"
-      end
+    it "returns medium size avatar if user uploaded avatar" do
+      user.id = 1
+      user.avatar = File.new "#{Rails.root}/spec/fixtures/avatar.png"
+
+      expect(user.letter_avatar).to start_with "/system/users/avatars/000/000/001/medium/avatar.png"
+    end
+    
+    it "returns user avatar if avatar set from oauth platform" do
+      user.image = "image-from-twitter"
+
+      expect(user.letter_avatar).to eq user.image
     end
 
     context "when user havent upload avatar" do
@@ -81,6 +86,62 @@ RSpec.describe User, type: :model do
         allow(user).to receive(:name) { "石alex" }
         expect(user.letter_avatar).to match /letter_avatars\/\d+\/S.+100.png/
       end
+    end
+  end
+
+  describe "#email_verified?" do
+    it "returns true if valid email" do
+      user.email = "a@a.com"
+
+      expect(user.email_verified?).to be_truthy
+    end
+
+    it "returns false if invalid email" do
+      user.email = "a@@a.com"
+
+      expect(user.email_verified?).to be_falsy
+    end
+
+  end
+
+  describe ".find_for_oauth" do
+    before do
+      AUTH = Struct.new(:uid, :provider, :info, :extra)
+      AUTH_INFO = Struct.new(:email, :image)
+      AUTH_EXTRA = Struct.new(:raw_info)
+      AUTH_EXTRA_RAWINFO = Struct.new(:name)
+    end
+
+    it "creates authorization and user if none exists" do
+      auth_info = AUTH_INFO.new("alex@pokrex.com", "alex.png")
+      auth_extra_rawinfo = AUTH_EXTRA_RAWINFO.new("hlcfan")
+      auth_extra = AUTH_EXTRA.new(auth_extra_rawinfo)
+      auth = AUTH.new("12345", "weibo", auth_info, auth_extra)
+
+      user = User.find_for_oauth auth, nil
+
+      expect(user.name).to eq "hlcfan"
+      expect(user.email).to eq "alex@pokrex.com"
+      expect(user.image).to eq "alex.png"
+      expect(Authorization.find_by(user_id: user.id).uid).to eq "12345"
+    end
+
+    it "updates user image and create new authorization if login with oauth shared same email" do
+      auth_info = AUTH_INFO.new("alex@pokrex.com", "alex.png")
+      auth_extra_rawinfo = AUTH_EXTRA_RAWINFO.new("hlcfan")
+      auth_extra = AUTH_EXTRA.new(auth_extra_rawinfo)
+      auth = AUTH.new("12345", "weibo", auth_info, auth_extra)
+
+      user = User.new name: "alex", email: "alex@pokrex.com", password: "what-ever"
+      user.avatar = File.new "#{Rails.root}/spec/fixtures/avatar.png"
+      user.save!
+
+      user_updated = User.find_for_oauth auth, nil
+
+      expect(user_updated.name).to eq "alex"
+      expect(user_updated.email).to eq "alex@pokrex.com"
+      expect(user_updated.image).to eq "alex.png"
+      expect(Authorization.find_by(user_id: user.id).uid).to eq "12345"
     end
   end
 
