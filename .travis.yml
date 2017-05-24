@@ -27,7 +27,7 @@ before_script:
 
 before_install:
   - nvm install node
-  - bundle install --full-index
+  # - bundle install --full-index
 
 script: RAILS_ENV=test bundle exec rspec
 cache: bundler
