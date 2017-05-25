@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :store_location, :set_user_id
+  # before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
 
   def after_sign_in_path_for(resource)
     cookies.signed[:user_id] = current_user.id
@@ -22,15 +23,31 @@ class ApplicationController < ActionController::Base
       /users/confirmation
       /users/sign_out
     )
-    if !dont_store_paths.include?(request.path) && !request.xhr?
+    if !dont_store_paths.include?(request.path) &&
+      not_omniauth_paths(request.path) && !request.xhr?
       session[:previous_url] = request.fullpath
     end
+  end
+
+  def not_omniauth_paths path_name
+    /^\/users\/auth\// !~ path_name
   end
 
   # Will be removed some day
   def set_user_id
     if request.get? && current_user && cookies.signed[:user_id].blank?
       cookies.signed[:user_id] = current_user.id
+    end
+  end
+
+  def ensure_signup_complete
+    # Ensure we don't go into an infinite loop
+    return if action_name == 'finish_signup'
+
+    # Redirect to the 'finish_signup' page if the user
+    # email hasn't been verified yet
+    if current_user && !current_user.email_verified?
+      redirect_to finish_signup_path(current_user)
     end
   end
 

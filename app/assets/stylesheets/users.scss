@@ -1,0 +1,51 @@
+.line-spliter {
+  height: 1px;
+  border-top: 1px solid #ddd;
+  text-align: center; 
+
+  span {
+    position: relative;
+    top: -8px;
+    background: #fff;
+    padding: 0 20px;
+  }
+}
+
+.social-sign-in{
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-pack:justify;
+  -webkit-justify-content:space-between;
+  -ms-flex-pack:justify;
+  justify-content:space-between;
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    display: block;
+    background-size: 32px;
+    text-align: center;
+  }
+
+  .google {
+    background-image: image-url("social/google.svg")
+  }
+
+  .github {
+    background-image: image-url("social/github.svg")
+  }
+
+  .weibo {
+    background-image: image-url("social/weibo.svg")
+  }
+
+  .facebook {
+    background-image: image-url("social/facebook.svg")
+  }
+
+  .twitter {
+    background-image: image-url("social/twitter.svg")
+  }
+}

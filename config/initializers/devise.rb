@@ -238,7 +238,12 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+
+  config.omniauth :google_oauth2, OAUTH_CONFIG[:google][:key], OAUTH_CONFIG[:google][:secret], { name: "google" }
+  config.omniauth :github, OAUTH_CONFIG[:github][:key], OAUTH_CONFIG[:github][:secret], scope: 'user,public_repo'
+  config.omniauth :weibo, OAUTH_CONFIG[:weibo][:key], OAUTH_CONFIG[:weibo][:secret], token_params: { redirect_uri: OAUTH_CONFIG[:weibo][:redirect_uri] }
+  config.omniauth :facebook, OAUTH_CONFIG[:facebook][:key], OAUTH_CONFIG[:facebook][:secret]
+  config.omniauth :twitter, OAUTH_CONFIG[:twitter][:key], OAUTH_CONFIG[:twitter][:secret]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
