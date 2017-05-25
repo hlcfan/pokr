@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   def letter_avatar
     if avatar? || image?
-      image
+      image || avatar.url(:medium)
     else
       letter_avatar_url name_in_letter, 100
     end
