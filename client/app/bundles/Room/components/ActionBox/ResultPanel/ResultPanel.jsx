@@ -8,12 +8,16 @@ export default class ResultPanel extends React.Component {
 
   constructor(props) {
     super(props)
+    this.fromFlip = false
     this.state = { data: [] }
   }
 
   componentDidMount = () => {
     EventEmitter.subscribe("showResultPanel", (data) => {
-      this.setState({ data: data })
+      if (data["fromFlip"]) {
+        this.fromFlip = true
+      }
+      this.setState({ data: data["value"] })
     })
   }
 
@@ -53,6 +57,11 @@ export default class ResultPanel extends React.Component {
       barWidth = count/maxPointCount * 100
       color = BarColors.color(point)
       pointArray.push({ point, count, barWidth, color })
+    }
+
+    if (this.fromFlip && this.state.data.length >= 2 && pointArray.length === 1) {
+      EventEmitter.dispatch("consensus")
+      this.fromFlip = false
     }
 
     const pointBars = pointArray.map(
