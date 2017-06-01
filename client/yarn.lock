@@ -1294,6 +1294,10 @@ find-up@^1.0.0:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
+floating.js@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/floating.js/-/floating.js-2.7.1.tgz#f0c159fb0d99d8fc579732c121cda84c77c3da73"
+
 for-in@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
