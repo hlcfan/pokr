@@ -56,6 +56,10 @@ const config = {
         '.scss',
       ],
     }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
   ],
   module: {
     rules: [

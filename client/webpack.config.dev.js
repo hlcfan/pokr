@@ -28,7 +28,11 @@ const config = {
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
     new ExtractTextPlugin('[name].css'),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
   ],
   module: {
     rules: [
