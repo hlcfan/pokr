@@ -3,19 +3,29 @@
  "only-multiline"} ] */
 
 const webpack = require('webpack');
-const pathLib = require('path');
+const { resolve } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const configPath = resolve('..', 'config');
+const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
+const { webpackOutputPath, webpackPublicOutputDir } = webpackConfigLoader(configPath);
+const { manifest } = webpackConfigLoader(configPath);
 
 const config = {
-  entry: [
-    'babel-polyfill',
-    './app/bundles/Room/startup/registration',
-  ],
+  entry: {
+    'vendor-bundle': [
+      'babel-polyfill'
+    ],
+    'app-bundle': [
+      './app/bundles/Room/startup/registration',
+    ]
+  },
 
   output: {
-    filename: 'webpack-bundle.js',
-    path: pathLib.resolve(__dirname, '../app/assets/webpack'),
+    filename: '[name]-[hash].js',
+    // Leading and trailing slashes ARE necessary.
+    publicPath: '/' + webpackPublicOutputDir + '/',
+    path: webpackOutputPath,
   },
 
   devtool: 'eval-source-map',
@@ -23,7 +33,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      libs: pathLib.resolve(__dirname, 'app/libs')
+      libs: resolve(__dirname, 'app/libs')
     }
   },
   plugins: [
@@ -34,7 +44,23 @@ const config = {
       minimize: false,
       debug: false
     }),
-    new ManifestPlugin(),
+    new ManifestPlugin({
+      fileName: manifest,
+      writeToFileEmit: true
+    }),
+    // https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk
+    new webpack.optimize.CommonsChunkPlugin({
+      // This name 'vendor-bundle' ties into the entry definition
+      name: 'vendor-bundle',
+
+      // We don't want the default vendor.js name
+      filename: 'vendor-bundle-[hash].js',
+
+      minChunks(module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
+    }),
   ],
   module: {
     rules: [
