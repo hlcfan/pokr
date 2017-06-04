@@ -52,7 +52,6 @@ export default class ResultPanel extends React.Component {
     keys.sort((a, b) => parseInt(a) - parseInt(b))
 
     let pointArray = []
-    
     let i, j, point, count, barWidth, color
     for (i = (len-1), j=0; i >= 0; i--, j++) {
       point = keys[i]
