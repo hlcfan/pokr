@@ -27,7 +27,7 @@ export default {
           } else if(data.data === "next-story") {
             RoomActions.nextStory()
           } else if(data.data === "revote") {
-            RoomActions.revote()
+            RoomActions.nextStory()
           } else if(data.data === "close-room") {
             EventEmitter.dispatch("roomClosed")
           } else if(data.data === "switch-roles") {
