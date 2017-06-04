@@ -30,7 +30,7 @@ const config = {
     new ExtractTextPlugin('[name].css'),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
-      minimize: true,
+      minimize: false,
       debug: false
     }),
   ],
