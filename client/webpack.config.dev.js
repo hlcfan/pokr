@@ -5,6 +5,7 @@
 const webpack = require('webpack');
 const pathLib = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const config = {
   entry: [
@@ -33,6 +34,7 @@ const config = {
       minimize: false,
       debug: false
     }),
+    new ManifestPlugin(),
   ],
   module: {
     rules: [

@@ -7,6 +7,7 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const glob = require('glob');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const config = {
   entry: [
@@ -60,6 +61,7 @@ const config = {
       minimize: true,
       debug: false
     }),
+    new ManifestPlugin(),
   ],
   module: {
     rules: [
