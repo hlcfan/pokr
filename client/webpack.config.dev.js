@@ -4,13 +4,10 @@
 
 const webpack = require('webpack');
 const pathLib = require('path');
-
-const devBuild = process.env.NODE_ENV !== 'production';
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   entry: [
-    'es5-shim/es5-shim',
-    'es5-shim/es5-sham',
     'babel-polyfill',
     './app/bundles/Room/startup/registration',
   ],
@@ -20,6 +17,8 @@ const config = {
     path: pathLib.resolve(__dirname, '../app/assets/webpack'),
   },
 
+  devtool: 'eval-source-map',
+
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -28,19 +27,15 @@ const config = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
+    new ExtractTextPlugin('[name].css'),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: false,
+      debug: false
+    }),
   ],
   module: {
     rules: [
-      {
-        test: require.resolve('react'),
-        use: {
-          loader: 'imports-loader',
-          options: {
-            shim: 'es5-shim/es5-shim',
-            sham: 'es5-shim/es5-sham',
-          }
-        },
-      },
       {
         test: /\.jsx?$/,
         use: 'babel-loader',
@@ -58,10 +53,3 @@ const config = {
 };
 
 module.exports = config;
-
-if (devBuild) {
-  console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
-  module.exports.devtool = 'eval-source-map';
-} else {
-  console.log('Webpack production build for Rails'); // eslint-disable-line no-console
-}
