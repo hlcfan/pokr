@@ -29,9 +29,11 @@ export default class ResultPanel extends React.Component {
     }
 
     let pointHash = {}
+    let votedCount = 0;
     $.each(this.state.data, (index, voteObject) => {
       const point = voteObject.points
       if (point) {
+        votedCount++
         let pointCount = pointHash[point] || 0
         pointHash[point] = (pointCount += 1)
       }
@@ -59,10 +61,13 @@ export default class ResultPanel extends React.Component {
       pointArray.push({ point, count, barWidth, color })
     }
 
-    if (this.fromFlip && this.state.data.length >= 2 && pointArray.length === 1) {
+    if (this.fromFlip &&
+        this.state.data.length >= 2 &&
+        pointArray.length === 1 &&
+        votedCount/this.state.data.length >= .75) {
       EventEmitter.dispatch("consensus")
-      this.fromFlip = false
     }
+    this.fromFlip = false
 
     const pointBars = pointArray.map(
       pointBar =>
