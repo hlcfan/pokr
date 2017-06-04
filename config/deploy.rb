@@ -123,7 +123,7 @@ namespace :yarn do
   desc "Yarn install"
   task :install do
     command %{
-      echo "-----> Npm installing for #{fetch(:app_path)}"
+      echo "-----> Yarn for #{fetch(:app_path)}"
     }
     command "cd #{fetch(:app_path)}"
     command "yarn"
