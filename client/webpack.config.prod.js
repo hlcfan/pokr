@@ -3,30 +3,16 @@
  "only-multiline"} ] */
 
 const webpack = require('webpack');
+const merge = require('webpack-merge');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const glob = require('glob');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const config = require('./webpack.config.base');
 
-const config = {
-  entry: [
-    'babel-polyfill',
-    './app/bundles/Room/startup/registration',
-  ],
-
-  output: {
-    filename: 'webpack-bundle.js',
-    path: path.resolve(__dirname, '../app/assets/webpack'),
-  },
-
+module.exports = merge(config, {
   devtool: 'cheap-module-source-map',
-
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    alias: {
-      libs: path.resolve(__dirname, 'app/libs')
-    }
-  },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -60,23 +46,6 @@ const config = {
       minimize: true,
       debug: false
     }),
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(woff2?|jpe?g|png|gif|svg|ico)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000
-        }
-      },
-    ],
-  },
-};
-
-module.exports = config;
+    new ManifestPlugin(),
+  ]
+});

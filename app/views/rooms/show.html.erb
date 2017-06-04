@@ -6,6 +6,9 @@
   <meta name="turbolinks-cache-control" content="no-cache">
 <% end %>
 <%= javascript_include_tag "room_init" %>
+
+<%= javascript_pack_tag('vendor-bundle') %>
+<%= javascript_pack_tag('app-bundle') %>
 <%= stylesheet_link_tag    "libs/joyride", "data-turbolinks-track" => "reload" %>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
