@@ -8,8 +8,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   entry: [
-    'es5-shim/es5-shim',
-    'es5-shim/es5-sham',
     'babel-polyfill',
     './app/bundles/Room/startup/registration',
   ],
@@ -34,16 +32,6 @@ const config = {
   ],
   module: {
     rules: [
-      {
-        test: require.resolve('react'),
-        use: {
-          loader: 'imports-loader',
-          options: {
-            shim: 'es5-shim/es5-shim',
-            sham: 'es5-shim/es5-sham',
-          }
-        },
-      },
       {
         test: /\.jsx?$/,
         use: 'babel-loader',

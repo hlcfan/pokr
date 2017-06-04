@@ -10,8 +10,6 @@ const glob = require('glob');
 
 const config = {
   entry: [
-    'es5-shim/es5-shim',
-    'es5-shim/es5-sham',
     'babel-polyfill',
     './app/bundles/Room/startup/registration',
   ],
@@ -34,6 +32,7 @@ const config = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
+      comments: false,
       compressor: {
         warnings: false
       }
@@ -60,16 +59,6 @@ const config = {
   ],
   module: {
     rules: [
-      {
-        test: require.resolve('react'),
-        use: {
-          loader: 'imports-loader',
-          options: {
-            shim: 'es5-shim/es5-shim',
-            sham: 'es5-shim/es5-sham',
-          }
-        },
-      },
       {
         test: /\.jsx?$/,
         use: 'babel-loader',
