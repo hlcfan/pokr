@@ -213,7 +213,7 @@ GEM
     rainbow (2.2.2)
       rake
     rake (12.0.0)
-    react_on_rails (6.10.1)
+    react_on_rails (8.0.1)
       addressable
       connection_pool
       execjs (~> 2.5)
@@ -337,7 +337,7 @@ DEPENDENCIES
   puma
   rails (= 5.1.0)
   rails-controller-testing
-  react_on_rails (~> 6)
+  react_on_rails (~> 8.0.1)
   redis-rails (~> 5.0.2)
   rspec-rails (~> 3.6)
   ruby-pinyin

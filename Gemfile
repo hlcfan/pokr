@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "react_on_rails", "~> 6"
+gem "react_on_rails", "~> 8.0.1"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
 gem 'mina-puma', '1.0.1', require: false
