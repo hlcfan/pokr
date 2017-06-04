@@ -7,7 +7,7 @@
     "npm": "4.1.1"
   },
   "scripts": {
-    "build:test": "webpack --config webpack.config.js",
+    "test": "echo 'pass for now'",
     "prod": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "dev": "webpack -w --config webpack.config.dev.js"
   },
