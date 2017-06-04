@@ -8,14 +8,21 @@ export default class PeopleListBox extends React.Component {
 
   state = { data: [] }
 
-  loadPeopleListFromServer = (callback) => {
+  loadPeopleListFromServer = (flip) => {
+    let newData;
+
     $.ajax({
       url: `/rooms/${this.props.roomId}/user_list.json?sync=${window.syncResult}`,
       dataType: 'json',
       cache: false,
       success: data => {
         this.setState({ data: data })
-        EventEmitter.dispatch("showResultPanel", data)
+        if (flip) {
+          newData = { value: data, fromFlip: true }
+        } else {
+          newData = { value: data }
+        }
+        EventEmitter.dispatch("showResultPanel", newData)
       },
       error: (xhr, status, err) => {
         console.error("Fetching people list", status, err.toString());
@@ -24,7 +31,7 @@ export default class PeopleListBox extends React.Component {
   }
 
   componentDidMount() {
-    this.loadPeopleListFromServer();
+    this.loadPeopleListFromServer()
     EventEmitter.subscribe("refreshUsers", this.loadPeopleListFromServer)
 
     this.props.addSteps({
