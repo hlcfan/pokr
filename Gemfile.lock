@@ -298,6 +298,10 @@ GEM
     url (0.3.2)
     warden (1.2.7)
       rack (>= 1.0)
+    webpacker_lite (2.0.4)
+      activesupport (>= 4.2)
+      multi_json (~> 1.2)
+      railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -347,6 +351,7 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+  webpacker_lite
   whenever
 
 BUNDLED WITH
