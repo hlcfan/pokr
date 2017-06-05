@@ -27,6 +27,8 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
+gem 'redis'
+gem 'logster'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
