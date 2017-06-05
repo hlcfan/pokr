@@ -32,6 +32,10 @@ class User < ApplicationRecord
   PARTICIPANT = 1
   WATCHER = 2
 
+  def admin?
+    1 == id
+  end
+
   def points_of_story story_id
     return nil if story_id.blank?
     point = user_story_points.where(story_id: story_id).pluck(:points).first
