@@ -10,6 +10,14 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
 
+  admin_constraint = lambda do |request|
+    request.env['warden'].authenticate? and request.env['warden'].user.admin?
+  end
+
+  constraints admin_constraint do
+    mount Logster::Web => "/logs"
+  end
+
   resources :rooms do
     member do
       get :story_list
