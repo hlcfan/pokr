@@ -70,7 +70,6 @@ class RoomRepository
       links.each_with_index do |story_link, index|
         stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
       end
-
       @params[:stories_attributes] = stories_hash
     else
       @params.delete(:bulk_links)
@@ -83,6 +82,8 @@ class RoomRepository
       index += 1
       story[:sequence] = index
     end
+
+    @params[:stories_attributes].permit!
   end
 
 end
