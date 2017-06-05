@@ -5,6 +5,7 @@ class RoomRepository
 
     bulk_import_stories
     add_sequence_to_stories
+    permit_params!
 
     Room.new @params
   end
@@ -83,7 +84,11 @@ class RoomRepository
         index += 1
         story[:sequence] = index
       end
+    end
+  end
 
+  def permit_params!
+    if @params[:stories_attributes].is_a? ActionController::Parameters
       @params[:stories_attributes].permit!
     end
   end
