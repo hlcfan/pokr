@@ -77,13 +77,15 @@ class RoomRepository
   end
 
   def add_sequence_to_stories
-    index = 0
-    @params[:stories_attributes] && @params[:stories_attributes].each_pair do |_, story|
-      index += 1
-      story[:sequence] = index
-    end
+    if @params[:stories_attributes]
+      index = 0
+      @params[:stories_attributes].each_pair do |_, story|
+        index += 1
+        story[:sequence] = index
+      end
 
-    @params[:stories_attributes].permit!
+      @params[:stories_attributes].permit!
+    end
   end
 
 end
