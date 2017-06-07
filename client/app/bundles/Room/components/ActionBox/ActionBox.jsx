@@ -5,7 +5,6 @@ import EventEmitter from 'libs/eventEmitter'
 import update from 'immutability-helper'
 import RoomActions from 'libs/roomActions'
 import {defaultTourColor} from 'libs/barColors'
-import floating from 'floating.js'
 
 export default class ActionBox extends React.Component {
   constructor(props){
@@ -83,29 +82,8 @@ export default class ActionBox extends React.Component {
     EventEmitter.dispatch("showBoard")
   }
 
-  handleConsensus = () => {
-    floating({
-      content: "🎉",
-      number: 4,
-      duration: 7,
-      repeat: 1,
-      direction: 'reverse',
-      size: [2, 4]
-    })
-
-    floating({
-      content: "🎊",
-      number: 3,
-      duration: 8,
-      repeat: 1,
-      direction: 'reverse',
-      size: [2, 4]
-    })
-  }
-
   componentDidMount() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox)
-    EventEmitter.subscribe("consensus", this.handleConsensus)
     if (this.props.roomState !== "draw" && this.props.countDown > 0) {
       this.intervalId = setInterval(this.timer, 1000)
     }

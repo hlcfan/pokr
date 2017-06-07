@@ -8,21 +8,14 @@ export default class PeopleListBox extends React.Component {
 
   state = { data: [] }
 
-  loadPeopleListFromServer = (flip) => {
-    let newData;
-
+  loadPeopleListFromServer = () => {
     $.ajax({
       url: `/rooms/${this.props.roomId}/user_list.json?sync=${window.syncResult}`,
       dataType: 'json',
       cache: false,
       success: data => {
         this.setState({ data: data })
-        if (flip) {
-          newData = { value: data, fromFlip: true }
-        } else {
-          newData = { value: data }
-        }
-        EventEmitter.dispatch("showResultPanel", newData)
+        EventEmitter.dispatch("showResultPanel", data)
       },
       error: (xhr, status, err) => {
         console.error("Fetching people list", status, err.toString());

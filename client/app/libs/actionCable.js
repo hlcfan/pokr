@@ -19,7 +19,7 @@ export default {
         // console.dir(data)
         if (data.type === 'action') {
           if (data.data === 'open') {
-            RoomActions.flip()
+            RoomActions.showResultSection()
           } else if (data.data === 'refresh-users') {
             if ($("#u-" + data.user_id).length <= 0) {
               EventEmitter.dispatch("refreshUsers")
