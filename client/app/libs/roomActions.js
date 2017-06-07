@@ -12,10 +12,6 @@ export default {
   showResultSection() {
     window.syncResult = true
     EventEmitter.dispatch("refreshUsers")
-  },
-
-  flip() {
-    window.syncResult = true
-    EventEmitter.dispatch("refreshUsers", true)
   }
+
 }

@@ -8,16 +8,12 @@ export default class ResultPanel extends React.Component {
 
   constructor(props) {
     super(props)
-    this.fromFlip = false
     this.state = { data: [] }
   }
 
   componentDidMount = () => {
     EventEmitter.subscribe("showResultPanel", (data) => {
-      if (data["fromFlip"]) {
-        this.fromFlip = true
-      }
-      this.setState({ data: data["value"] })
+      this.setState({ data: data })
     })
   }
 
@@ -29,11 +25,9 @@ export default class ResultPanel extends React.Component {
     }
 
     let pointHash = {}
-    let votedCount = 0;
     $.each(this.state.data, (index, voteObject) => {
       const point = voteObject.points
       if (point) {
-        votedCount++
         let pointCount = pointHash[point] || 0
         pointHash[point] = (pointCount += 1)
       }
@@ -60,14 +54,6 @@ export default class ResultPanel extends React.Component {
       color = BarColors.color(point)
       pointArray.push({ point, count, barWidth, color })
     }
-
-    if (this.fromFlip &&
-        this.state.data.length >= 2 &&
-        pointArray.length === 1 &&
-        votedCount/this.state.data.length >= .75) {
-      EventEmitter.dispatch("consensus")
-    }
-    this.fromFlip = false
 
     const pointBars = pointArray.map(
       pointBar =>
