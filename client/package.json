@@ -7,7 +7,7 @@
     "npm": "4.1.1"
   },
   "scripts": {
-    "test": "NODE_ENV=test webpack --config webpack.config.test.js",
+    "test": "NODE_ENV=test yarn run jest",
     "prod": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "dev": "NODE_ENV=development webpack -w --config webpack.config.dev.js"
   },
@@ -39,6 +39,7 @@
     "expose-loader": "^0.7.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.1",
+    "identity-obj-proxy": "^3.0.0",
     "immutability-helper": "^2.2.0",
     "imports-loader": "^0.7.1",
     "jest": "^20.0.4",
