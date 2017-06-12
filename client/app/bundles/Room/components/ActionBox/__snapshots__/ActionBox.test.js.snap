@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="panel panel-default"
+  id="action-box"
+>
+  <div
+    className="panel-heading"
+  >
+    Action
+    <span
+      className="timer pull-right"
+    >
+      <i
+        className="fa sandglass"
+      >
+        ⌛
+      </i>
+       
+      <i
+        className="counter"
+      >
+        10
+      </i>
+    </span>
+  </div>
+  <div
+    className="panel-body row"
+  >
+    <div
+      className="row"
+      id="actionBox"
+    >
+      <div
+        className="container-fluid"
+        style={
+          Object {
+            "clear": "both",
+            "width": "100%",
+          }
+        }
+      >
+        <div
+          className="row-container container-fluid"
+        >
+          <div />
+        </div>
+      </div>
+      <div
+        className="openButton container-fluid"
+      >
+        <div
+          className="btn-group btn-group-lg btn-group-justified"
+          role="group"
+        >
+          <a
+            className="btn btn-default btn-lg btn-info"
+            href="javascript:;"
+            onClick={[Function]}
+            role="button"
+          >
+            Skip it
+          </a>
+          <a
+            className="btn btn-default btn-lg btn-info"
+            href="javascript:;"
+            onClick={[Function]}
+            role="button"
+          >
+            Clear votes
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
