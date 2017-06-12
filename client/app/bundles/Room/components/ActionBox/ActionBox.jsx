@@ -4,6 +4,7 @@ import ResultPanel from './ResultPanel/ResultPanel'
 import EventEmitter from 'libs/eventEmitter'
 import update from 'immutability-helper'
 import RoomActions from 'libs/roomActions'
+import * as Cookies from "js-cookie"
 import {defaultTourColor} from 'libs/barColors'
 
 export default class ActionBox extends React.Component {
@@ -221,4 +222,13 @@ export default class ActionBox extends React.Component {
       </div>
     )
   }
+}
+
+ActionBox.propTypes = {
+  roomId: PropTypes.string,
+  storyId: PropTypes.number,
+  roomState: PropTypes.string,
+  role: PropTypes.string,
+  countDown: PropTypes.number,
+  addSteps: PropTypes.func
 }

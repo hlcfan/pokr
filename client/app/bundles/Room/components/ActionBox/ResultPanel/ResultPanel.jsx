@@ -24,21 +24,21 @@ export default class ResultPanel extends React.Component {
       return null
     }
 
-    let pointHash = {}
-    $.each(this.state.data, (index, voteObject) => {
+    let pointHash = new Map()
+    for (let voteObject of this.state.data) {
       const point = voteObject.points
       if (point) {
         let pointCount = pointHash[point] || 0
         pointHash[point] = (pointCount += 1)
       }
-    })
+    }
 
     let maxPointCount = 0
-    $.each(pointHash, (point, count) => {
+    for (let [point, count] of pointHash) {
       if (count > maxPointCount) {
         maxPointCount = count
       }
-    })
+    }
 
     let keys = Object.keys(pointHash)
     let len = keys.length
