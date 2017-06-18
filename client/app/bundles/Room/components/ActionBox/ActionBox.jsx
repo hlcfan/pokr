@@ -123,26 +123,29 @@ export default class ActionBox extends React.Component {
   }
 
   render() {
-    let onClickName;
-    let buttonText;
-    let buttonHtml;
-    let secondButtonText;
-    let secondOnClickName;
-    let buttonCount = 1;
+    let onClickName
+    let buttonText
+    let buttonHtml
+    let secondButtonText
+    let secondOnClickName
+    let buttonClassName
+    let buttonCount = 1
 
     if (this.props.role === 'Moderator') {
       if (this.state.roomState === 'not-open') {
-        onClickName = this.showResult;
-        buttonText = "Flip";
+        onClickName = this.showResult
+        buttonText = "Flip"
+        buttonClassName = "flip"
       } else if (this.state.roomState === 'open') {
-        onClickName = this.skipStory;
-        buttonText = "Skip it";
-        secondOnClickName = this.clearVotes;
+        onClickName = this.skipStory
+        buttonText = "Skip it"
+        secondOnClickName = this.clearVotes
         secondButtonText = "Clear votes"
-        buttonCount = 2;
+        buttonCount = 2
       } else if (this.state.roomState === 'draw') {
-        onClickName = this.showBoard;
-        buttonText = "Show board";
+        onClickName = this.showBoard
+        buttonText = "Show board"
+        buttonClassName = "show-board"
       }
     }
     buttonHtml = ((() => {
@@ -160,7 +163,7 @@ export default class ActionBox extends React.Component {
       } else if (onClickName && buttonText) {
         return (
           <div className="" role="group">
-            <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
+            <a onClick={onClickName} className={`btn btn-default btn-lg btn-info btn-block ${buttonClassName}`} href="javascript:;" role="button">
               {buttonText}
             </a>
           </div>
@@ -213,7 +216,9 @@ export default class ActionBox extends React.Component {
         <div className="panel-body row">
           <div id="actionBox" className="row">
             {tip}
-            <ResultPanel roomId={this.props.roomId} role={this.props.role} storyId={this.props.storyId} />
+            <div className="result-panel">
+              <ResultPanel roomId={this.props.roomId} role={this.props.role} storyId={this.props.storyId} />
+            </div>
             <div className="openButton container-fluid">
               {buttonHtml}
             </div>
