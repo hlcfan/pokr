@@ -33,18 +33,22 @@ exports[`renders correctly 1`] = `
       id="actionBox"
     >
       <div
-        className="container-fluid"
-        style={
-          Object {
-            "clear": "both",
-            "width": "100%",
-          }
-        }
+        className="result-panel"
       >
         <div
-          className="row-container container-fluid"
+          className="container-fluid"
+          style={
+            Object {
+              "clear": "both",
+              "width": "100%",
+            }
+          }
         >
-          <div />
+          <div
+            className="row-container container-fluid"
+          >
+            <div />
+          </div>
         </div>
       </div>
       <div
