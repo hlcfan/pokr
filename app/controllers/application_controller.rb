@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :store_location, :set_user_id
+  before_action :store_location, :set_user_id, :set_locale
   # before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
 
   def after_sign_in_path_for(resource)
@@ -11,6 +11,18 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_locale
+    I18n.locale = params[:locale] ||
+      extract_locale_from_accept_language_header ||
+      I18n.default_locale
+  end
+
+  def extract_locale_from_accept_language_header
+    if request.env['HTTP_ACCEPT_LANGUAGE']
+      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    end
+  end
 
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
