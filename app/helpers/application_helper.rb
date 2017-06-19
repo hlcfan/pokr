@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def default_description
-    "Pokrex, is an easy, efficient planning poker, scrum poker or pointing poker for agile/scrum teams."
+    t("site.desc")
   end
 
   def flash_messages opts = {}

@@ -1,2 +1,29 @@
 zh_cn:
-  site_title: "在线计划扑克"
+  site:
+    title: "在线计划扑克"
+    desc: "Pokrex 是一个简单好用的计划（敏捷，打分）扑克，帮助敏姐团队提高 grooming 效率。"
+    slogan: "超级简单的计划扑克"
+    sub_slogan: "使用我们的在线计划扑克工具，让敏捷估分更加简单高效。"
+    footer:
+      links: "链接"
+      about: "关于我们"
+      faq: "常见问题"
+      what: "什么是计划扑克？"
+      share: "分享"
+  user:
+    login: "登陆"
+    signup: "注册"
+    join: "快速加入"
+    email_address: "邮箱"
+  intro:
+    room: "房间"
+    room_desc: "房间是团队成员进行扑克打分的地方，成员可以通过 scrum master 分享的链接进入房间。"
+    room_f_1: "简单好用"
+    room_f_2: "启动切换 user story"
+    room_f_3: "优雅地展示整个用户参与的界面"
+    dashboard: "仪表盘"
+    dashboard_desc: "仪表盘里可以看到所有的数据以及状态，包括统计信息，历史记录，所参与的房间和打过分的故事（user story）。"
+    dashboard_f_1: "快捷统计"
+    dashboard_f_2: "了解每次 planning meeting 的状态"
+    dashboard_f_3: "了解历史记录和会议频率"
+    dashboard_f_4: "快捷查询最近投分的 user story"
