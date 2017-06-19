@@ -1,4 +1,4 @@
-<%# cache Rails.root do %>
+<% cache "#{I18n.locale}:#{Rails.root}" do %>
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
@@ -124,4 +124,4 @@
   </script>
 </body>
 </html>
-<%# end %>
+<% end %>
