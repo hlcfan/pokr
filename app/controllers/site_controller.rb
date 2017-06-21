@@ -5,7 +5,7 @@ class SiteController < ApplicationController
   end
 
   def faq
-
+    render "faq.#{I18n.locale}"
   end
 
 end
