@@ -36,6 +36,17 @@ en:
     signup: "Sign up"
     join: "Sign up"
     email_address: "Email address"
+    log_in: "Log in"
+    log_in_desc: "Log in Pokrex to experience holistic way of online planning/pointing poker."
+    signup_desc: "Sign up Pokrex to start your online planning/pointing poker. It's free!"
+    remember_me: "Remember me"
+    min_chars: "characters minimum"
+    forgot_pw: "Forgot your password?"
+    new_confirmation: "Didn't receive confirmation instructions?"
+    new_unlock: "Didn't receive unlock instructions?"
+    why_sign_up: "Why do I need to sign in/up?"
+    or: "Or"
+
   intro:
     room: "Room"
     room_desc: "In a room, will be a round of planning or grooming. Participants can easily join by opening the link."
