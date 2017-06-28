@@ -104,7 +104,8 @@ RSpec.describe Room, type: :model do
 
   describe "#slug!" do
     it "generates slug before create" do
-      room = Room.create(name: 'test slug')
+      room = Room.create(name: "test slug")
+      expect(room.slug).to eq "test-slug"
       expect(room.slug).to be_present
     end
 
@@ -113,6 +114,12 @@ RSpec.describe Room, type: :model do
       room_2 = Room.create(name: 'test slug')
       expect(room_2.slug).to be_present
       expect(room_2.slug).not_to eq room_1.slug
+    end
+
+    it "replace _ or - to space and then generates slug" do
+      room = Room.create(name: 'test_slug')
+      expect(room.slug).to eq "test-slug"
+      expect(room.slug).to be_present
     end
   end
 
