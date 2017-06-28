@@ -2,6 +2,51 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.9] - 2017-06-19
+### Added
+- Add Chinese support for landing and other pages [#131](https://github.com/hlcfan/pokr/pull/131) [#134](https://github.com/hlcfan/pokr/pull/134)
+
+## [0.4.8] - 2017-06-07
+### Changed
+- Remove consensus animation [#129](https://github.com/hlcfan/pokr/pull/129)
+
+## [0.4.7] - 2017-06-05
+### Changed
+- Add logster [#128](https://github.com/hlcfan/pokr/pull/128)
+
+## [0.4.6] - 2017-06-04
+### Changed
+- Upgrade `react_on_rails` to 8.0.1 [#127](https://github.com/hlcfan/pokr/pull/127)
+
+## [0.4.5] - 2017-06-01
+### Added
+- Add shared links to sign up popup [#121](https://github.com/hlcfan/pokr/pull/121)
+- Add consensus animation [#123](https://github.com/hlcfan/pokr/pull/123)
+
+## [0.4.4] - 2017-05-25
+### Added
+- Add oauth, fb, twitter, google, github, weibo [#117](https://github.com/hlcfan/pokr/pull/117)
+
+## [0.4.3] - 2017-05-21
+### Added
+- Make select point easier [#116](https://github.com/hlcfan/pokr/pull/116)
+
+## [0.4.2] - 2017-05-20
+### Added
+- Allow sort stories whilst editing room [#114](https://github.com/hlcfan/pokr/pull/114)
+
+### Changed
+- Upgrade Rails to 5.1 [#115](https://github.com/hlcfan/pokr/pull/115)
+
+## [0.4.1] - 2017-05-16
+### Added
+- Setup room tour guide [#110](https://github.com/hlcfan/pokr/pull/110)
+
+## [0.4.0] - 2017-05-11
+### Changed
+- Switch from `react-rails` to `react_on_rails`[#105](https://github.com/hlcfan/pokr/pull/105)
+- Series code refactor based on ^^^
+
 ## [0.3.0] - 2017-04-16
 ### Added
 - Allow to clear votes [#104](https://github.com/hlcfan/pokr/pull/104)
