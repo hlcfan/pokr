@@ -80,7 +80,7 @@ class RoomsController < ApplicationController
   end
 
   def more
-    @stories = @room.groomed_stories
+    @stories = @room.detailed_groomed_stories
   end
 
   def draw_board

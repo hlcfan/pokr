@@ -50,6 +50,10 @@ class Room < ApplicationRecord
   end
 
   def groomed_stories
+    stories.where("point IS NOT NULL").pluck(:id, :link, :point)
+  end
+
+  def detailed_groomed_stories
     story_ids = stories.map &:id
     users_hash = {}
     users.each do |user|
