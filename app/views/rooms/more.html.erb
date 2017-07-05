@@ -1,11 +1,10 @@
 <%
-  title "About"
-  description "Pokrex is a online planning/pointing poker brought to you by hlcfan. Agile/scrum teams use it to estimate effort or relative size of development goals in software development."
+  title "Summary - #{@room.name}"
 %>
 <div class="row">
   <div class="col-xs-4 col-md-4"></div>
   <div class="col-xs-4 col-md-4">
-    <h1>More</h1>
+    <h3>Summary - <%= @room.name %></h3>
     <% @stories.each do |story| %>
       <div class="panel-group" id="accordion">
         <div class="panel panel-default">
