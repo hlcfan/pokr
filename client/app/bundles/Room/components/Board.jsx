@@ -60,6 +60,7 @@ export default class Board extends React.Component {
                 </table>
               </div>
               <div className="modal-footer">
+                <a href={`/rooms/${this.props.roomId}/more`} target="_blank" className="pull-left">View more</a>
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>

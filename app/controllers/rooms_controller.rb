@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :more]
   before_action :enter_room, only: [:show]
 
   def index
@@ -77,6 +77,10 @@ class RoomsController < ApplicationController
       format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def more
+    @stories = @room.groomed_stories
   end
 
   def draw_board

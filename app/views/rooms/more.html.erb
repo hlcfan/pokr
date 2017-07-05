@@ -1,0 +1,37 @@
+<%
+  title "About"
+  description "Pokrex is a online planning/pointing poker brought to you by hlcfan. Agile/scrum teams use it to estimate effort or relative size of development goals in software development."
+%>
+<div class="row">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <h1>More</h1>
+    <% @stories.each do |story| %>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= story[:id] %>"><%= story[:link] %></a>
+            </h4>
+          </div>
+          <div id="collapse-<%= story[:id] %>" class="panel-collapse collapse in">
+            <div class="panel-body people-list">
+              <ul class="list-unstyled">
+                <% story[:individuals].each do |individual| %>
+                  <li>
+                    <i class="person--avatar"><img src="<%= individual[:user_avatar]%>" /></i>
+                    <a href="javascript:;" class="person">
+                      <%= individual[:user_name] %>
+                      <span class="points pull-right"><%= individual[:user_points] %></span>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-xs-4 col-md-4"></div>
+</div>

@@ -51,11 +51,19 @@ class Room < ApplicationRecord
 
   def groomed_stories
     story_ids = stories.map &:id
-    user_ids = users.map &:id
-    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: user_ids)
+    users_hash = {}
+    users.each do |user|
+      users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
+    end
+    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys)
     user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
     user_story_points.each do |user_story_point|
-      user_story_points_hash[user_story_point.story_id] << {user_story_point.user_id => user_story_point.points}
+      user_story_points_hash[user_story_point.story_id] << {
+        user_id: user_story_point.user_id,
+        user_points: user_story_point.points,
+        user_name: users_hash[user_story_point.user_id][:name],
+        user_avatar: users_hash[user_story_point.user_id][:avatar]
+      }
     end
 
     stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
