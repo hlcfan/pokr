@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       post :set_room_status
       get :draw_board
       post :switch_role
-      get :more
+      get :summary
     end
   end
 

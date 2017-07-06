@@ -79,8 +79,8 @@ class RoomsController < ApplicationController
     end
   end
 
-  def more
-    @stories = @room.detailed_groomed_stories
+  def summary
+    @stories = @room.summary
   end
 
   def draw_board
