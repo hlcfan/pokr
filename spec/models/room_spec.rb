@@ -56,7 +56,7 @@ RSpec.describe Room, type: :model do
 
     it "returns stories with point set" do
       room.id = 1
-      expect(room.groomed_stories).to eq [story_2, story_3]
+      expect(room.groomed_stories.map(&:first)).to eq [story_2.id, story_3.id]
     end
   end
 

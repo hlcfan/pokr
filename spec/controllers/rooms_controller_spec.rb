@@ -196,7 +196,7 @@ RSpec.describe RoomsController, type: :controller do
     it "gets groomed stories" do
       story.update_attribute :point, 13
       get :draw_board, format: :json, params: {:id => room.slug}, session: valid_session
-      expect(assigns(:stories)).to eq [story]
+      expect(assigns(:stories)).to eq [[story.id, story.link, story.point]]
     end
   end
 
