@@ -2408,9 +2408,9 @@ react-joyride@^1.10.1:
     react-autobind "^1.0"
     scroll "^2.0"
 
-react-on-rails@8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-8.0.2.tgz#dd5b30553e4c3ee26d10fb847a6461a82362fb00"
+react-on-rails@8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-8.0.5.tgz#144b1c0be41df2ac810981a4876720fc0630cde7"
 
 react-transition-group@^1.1.3:
   version "1.1.3"
