@@ -11,6 +11,7 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= story[:id] %>"><%= story[:link] %></a>
+              <a href="<%= show_story_link(story[:link]) %>" class="pull-right" target="_blank"><i class="fa fa-external-link"></i></a>
             </h4>
           </div>
           <div id="collapse-<%= story[:id] %>" class="panel-collapse collapse in">
