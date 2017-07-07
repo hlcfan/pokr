@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.11] - 2017-07-07
+### Added
+- Add summary for room [#135](https://github.com/hlcfan/pokr/pull/135)
+
+## [0.4.10] - 2017-06-28
+### Changed
+- Fix room slug when dash or underline in title [commit](https://github.com/hlcfan/pokr/commit/8937097df8c8fa44dac1858937a560cb7a3e8ba7)
+
 ## [0.4.9] - 2017-06-19
 ### Added
 - Add Chinese support for landing and other pages [#131](https://github.com/hlcfan/pokr/pull/131) [#134](https://github.com/hlcfan/pokr/pull/134)
