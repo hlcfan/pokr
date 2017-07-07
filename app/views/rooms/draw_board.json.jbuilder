@@ -1,3 +1,5 @@
 json.array!(@stories) do |story|
-  json.extract! story, :id, :link, :point
+  json.id story[0]
+  json.link story[1]
+  json.point story[2]
 end
