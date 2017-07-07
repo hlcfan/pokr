@@ -200,6 +200,15 @@ RSpec.describe RoomsController, type: :controller do
     end
   end
 
+  describe "GET #summary" do
+    it "gets room summary" do
+      room = Room.create! valid_attributes
+      get :summary, params: {:id => room.slug}, session: valid_session
+
+      expect(assigns(:summaries)).to eq []
+    end
+  end
+
   describe "POST #switch_role" do
     it "switches to participant if watcher now" do
       room = Room.create! valid_attributes

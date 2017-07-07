@@ -294,4 +294,38 @@ RSpec.describe Room, type: :model do
       expect(room.send(:moderators)).to eq [[moderator.id, moderator.name]]
     end
   end
+
+  describe "#summary" do
+    it "gets room summary" do
+      room = Room.create(name: "test slug")
+      story = Story.create(link: "link_1", room_id: room.id)
+      story.update_attribute :point, 13
+      user_alex = User.create email: 'a@a.com', password: 'password'
+      user_bob = User.create(email: 'b@b.com', password: 'password')
+      UserRoom.create(user_id: user_alex.id, room_id: room.id, role: UserRoom::PARTICIPANT)
+      UserRoom.create(user_id: user_bob.id, room_id: room.id, role: UserRoom::PARTICIPANT)
+      UserStoryPoint.create(user_id: user_alex.id, story_id: story.id, points: 13)
+      UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
+
+      expect(room.summary).to eq [{
+        id: story.id,
+        link: story.link,
+        point: story.point,
+        individuals: [
+          {
+            user_id: user_alex.id,
+            user_points: "13",
+            user_name: user_alex.display_name,
+            user_avatar: user_alex.letter_avatar
+          },
+          {
+            user_id: user_bob.id,
+            user_points: "8",
+            user_name: user_bob.display_name,
+            user_avatar: user_bob.letter_avatar
+          }
+        ]
+      }]
+    end
+  end
 end
