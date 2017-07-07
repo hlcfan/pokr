@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :more]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary]
   before_action :enter_room, only: [:show]
 
   def index
@@ -80,7 +80,7 @@ class RoomsController < ApplicationController
   end
 
   def summary
-    @stories = @room.summary
+    @summaries = @room.summary
   end
 
   def draw_board
