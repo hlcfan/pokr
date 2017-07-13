@@ -28,7 +28,7 @@ set :puma_state, 'tmp/sockets/puma.state'
 # They will be linked in the 'deploy:link_shared_paths' step.
 # set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
 set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'public/webpack', 'client/node_modules'])
-set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml'])
+set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml', 'config/oneapm.yml'])
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
