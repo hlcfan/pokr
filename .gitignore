@@ -32,5 +32,6 @@ public/webpack
 # Generated js bundles
 /app/assets/webpack/*
 oauth.yml.template
+oneapm.yml.template
 
 active_record_log_subscriber.rb
