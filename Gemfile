@@ -47,7 +47,6 @@ gem 'mina-puma', '1.0.1', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
-gem 'oneapm_rpm', '1.3.7'
 
 # gem 'rack-mini-profiler'
 # gem 'flamegraph'
