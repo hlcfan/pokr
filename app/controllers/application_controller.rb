@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
   before_action :store_location, :set_user_id, :set_locale
   # before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
 
+  before_action do
+    if current_user && current_user.admin?
+      Rack::MiniProfiler.authorize_request
+    end
+  end
+
   def after_sign_in_path_for(resource)
     cookies.signed[:user_id] = current_user.id
     session[:previous_url] || root_path

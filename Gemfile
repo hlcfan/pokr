@@ -48,9 +48,9 @@ gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
 
-# gem 'rack-mini-profiler'
-# gem 'flamegraph'
-# gem 'stackprof'     # For Ruby MRI 2.1+
+gem 'rack-mini-profiler'
+gem 'flamegraph'
+gem 'stackprof'     # For Ruby MRI 2.1+
 # gem 'fast_stack'    # For Ruby MRI 2.0
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
