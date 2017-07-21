@@ -39,7 +39,12 @@ export default class PeopleListBox extends React.Component {
   render() {
     return (
       <div className="panel panel-default" id="people">
-        <div className="panel-heading">People</div>
+        <div className="panel-heading">
+          People
+          <a className="pull-right invitation" href="javascript:;">
+            <i className="fa fa-plus-circle"></i> Invite
+          </a>
+        </div>
         <div id="peopleListArea" className="panel-body row">
           <div className="peopleListBox">
             <PeopleList data={this.state.data} />
