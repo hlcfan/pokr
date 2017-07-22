@@ -6,12 +6,14 @@ require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/sitemap_generator'
 
-set :domain, 'pokrex.com'
+# set :domain, '104.155.223.121'
+set :domain, '118.193.149.168'
 set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{fetch(:current_path)}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
 set :user, 'hlcfan'
+# set :identity_file, "/Users/alexshi/.ssh/google_vm"
 set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'

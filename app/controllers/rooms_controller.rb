@@ -106,6 +106,12 @@ class RoomsController < ApplicationController
     end
   end
 
+  def invite
+    binding.pry
+    head :ok
+    # head :bad_request
+  end
+
   private
 
   def set_room
