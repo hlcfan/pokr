@@ -6,7 +6,6 @@ import StoryListBox from '../components/StoryListBox'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
 import Board from '../components/Board'
-import Invitation from '../components/Invitation'
 import ActionCable from 'libs/actionCable'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
@@ -184,6 +183,7 @@ export default class Room extends React.Component {
           <div className="col-md-4">
             <PeopleListBox
               roomId={this.props.roomId}
+              roomState={this.state.roomState}
               addSteps={this.addSteps}
           />
             <ActionBox
@@ -199,10 +199,6 @@ export default class Room extends React.Component {
         {
           this.roomClosed() &&
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
-        }
-        {
-          !this.roomClosed() &&
-            <Invitation roomId={this.props.roomId} />
         }
       </div>
     )
