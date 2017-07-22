@@ -284,8 +284,15 @@ a.invitation {
     padding-left: 0;
     font-size: 1.3em;
   }
-}
 
+  .invitation__icon--on {
+    color: #5bc0de;
+  }
+
+  .invitation--sent {
+    text-align: center;
+  }
+}
 
 .summary {
   .panel-title label {

@@ -7,10 +7,19 @@ export default class Invitation extends React.Component {
   }
 
   state = {
-    emails: ["", "", ""]
+    emails: ["", "", ""],
+    sent: false
   }
 
   componentDidMount() {
+    $('#invitation .modal').on('hidden.bs.modal', (e) => {
+      if (this.state.sent) {
+        this.setState({
+          emails: ["", "", ""],
+          sent: false
+        })
+      }
+    })
   }
 
   addEmail = () => {
@@ -33,12 +42,46 @@ export default class Invitation extends React.Component {
 
     this.setState(prevState => {
       return {
-        emails: emails
+        emails: emails,
+        sent: prevState.sent
       }
     })
   }
 
-  render() {
+  handleEmailChange = (event) => {
+    let emails = this.state.emails
+    let inputIndex = event.target.dataset.index
+    emails[inputIndex] = event.target.value
+
+    this.setState(prevState => {
+      return {
+        emails: emails,
+        sent: prevState.sent
+      }
+    })
+  }
+
+  sendInvitation = () => {
+    $.ajax({
+      url: `/rooms/${this.props.roomId}/invite`,
+      type: 'POST',
+      data: { emails: this.state.emails },
+      cache: false,
+      success: data => {
+        this.setState(prevState => {
+          return {
+            emails: prevState.emails,
+            sent: true
+          }
+        })
+      },
+      error: (xhr, status, err) => {
+        console.error("Fetching people list", status, err.toString());
+      }
+    })
+  }
+
+  emailForm = () => {
     const emailFields = this.state.emails.map((email, index) => {
       return(
         <div className="row" key={`${email}-${index}`}>
@@ -46,7 +89,14 @@ export default class Invitation extends React.Component {
             <label>Email address</label>
             <div className="row">
               <div className="col-xs-11">
-                <input type="email" className="form-control" name="email" placeholder="Email" defaultValue={email} onChange={this.changeEmail} />
+                <input type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Email"
+                  defaultValue={email}
+                  onBlur={this.handleEmailChange}
+                  data-index={index}
+                  />
               </div>
               {
                 this.state.emails.length > 1 &&
@@ -60,6 +110,61 @@ export default class Invitation extends React.Component {
       )
     })
 
+    return(
+      <form method="post" action={`/rooms/${this.props.roomId}/invite`}>
+        <div className="form-group">
+          {emailFields}
+          <div className="row add">
+            <div className="col-xs-8">
+              <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    )
+  }
+
+  emailSent = () => {
+    return(
+      <div>
+        <h4 className="invitation--sent">Your invitation has been sent!</h4>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Email Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>alex.shi@gmail.com</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  // resetForm = () => {
+  //   $('#invitation .modal').modal('hide')
+  // }
+
+  render() {
+    const invitationContent = () => {
+      if (this.state.sent) {
+        return(this.emailSent())
+      } else {
+        return(this.emailForm())
+      }
+    }
+
+    const invitationIconStatus = () => {
+      if (this.state.sent) {
+        return "invitation__icon--on"
+      } else {
+        return ""
+      }
+    }
+
     return (
       <div id="invitation">
         <div className="modal fade" tabIndex="-1" role="dialog">
@@ -67,22 +172,16 @@ export default class Invitation extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title"><i className="fa fa-paper-plane"></i> Invite members</h4>
+                <h4 className="modal-title"><i className={`fa fa-paper-plane ${invitationIconStatus()}`}></i> Invite members</h4>
               </div>
               <div className="modal-body">
-                <form method="post" action={`/rooms/${this.props.roomId}/invite`}>
-                  <div className="form-group">
-                    {emailFields}
-                    <div className="row add">
-                      <div className="col-xs-8">
-                        <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                {invitationContent()}
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-info pull-left" data-dismiss="modal">Send Invitations</button>
+                {
+                  !this.state.sent &&
+                   <button type="button" className="btn btn-info pull-left" onClick={this.sendInvitation}>Send Invitations</button>
+                }
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
