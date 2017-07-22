@@ -46,6 +46,10 @@ Rails.application.configure do
   config.action_cable.url = "ws://a3.dev:3000/cable"
   config.action_cable.allowed_request_origins = ['http://a3.dev:3000']
 
+  config.action_mailer.default_url_options = { :host => 'pokrex.com' }
+
+  config.action_mailer.delivery_method = :letter_opener
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

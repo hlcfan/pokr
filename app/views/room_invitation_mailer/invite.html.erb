@@ -1,17 +1,37 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1>Welcome to example.com, <%= @user.name %></h1>
-    <p>
-      You have successfully signed up to example.com,
-      your username is: <%= @user.login %>.<br>
-    </p>
-    <p>
-      To login to the site, just follow this link: <%= @url %>.
-    </p>
-    <p>Thanks for joining and have a great day!</p>
-  </body>
-</html>
+<style type="text/css">
+  .btn {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    text-decoration: none;
+    padding: 6px 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+</style>
+<h1>Join <%= @room_name %> on Pokrex</h1>
+<p>
+  <%= @from_name %> (<%= @from_email %>) has invited you to join the Pokrex room <b><%= @room_name %></b>. Join now to start poker!<br>
+  <%= link_to "Join Now", room_url(@room_slug), target: "_blank", class: "btn" %>
+</p><hr>
+<div>
+  <div style="float:left;"><img src="https://pokrex.com/apple-icon-120x120.png" width="50" height="50" /></div>
+  <div><a href="https://pokrex.com" target="_blank" style="line-height:50px;">Pokrex</a></div>
+</div>

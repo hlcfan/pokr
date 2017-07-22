@@ -107,9 +107,15 @@ class RoomsController < ApplicationController
   end
 
   def invite
-    emails = params[:emails].select { |email| email =~ VALID_EMAIL_REGEX }
+    emails = params[:emails].select { |email| email =~ User::VALID_EMAIL_REGEX }
     emails.each do |email_address|
-      RoomInvitationMailer.invite(from: current_user.display_name, to: email_address, room: @room.name).deliver_later
+      RoomInvitationMailer.invite(
+        from_email: current_user.email, 
+        from_name: current_user.display_name,
+        to: email_address,
+        room_name: @room.name,
+        room_slug: @room.slug
+      ).deliver_now!
     end
 
     head :ok
