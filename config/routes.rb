@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       get :draw_board
       post :switch_role
       get :summary
+      post :invite
     end
   end
 

@@ -47,6 +47,7 @@ gem 'mina-puma', '1.0.1', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
+gem 'sidekiq'
 
 gem 'rack-mini-profiler'
 gem 'flamegraph'
@@ -54,6 +55,10 @@ gem 'stackprof'     # For Ruby MRI 2.1+
 # gem 'fast_stack'    # For Ruby MRI 2.0
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+group :development do
+  gem "letter_opener"
+end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'

@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite]
   before_action :enter_room, only: [:show]
 
   def index
@@ -107,9 +107,12 @@ class RoomsController < ApplicationController
   end
 
   def invite
-    binding.pry
+    emails = params[:emails].select { |email| email =~ VALID_EMAIL_REGEX }
+    emails.each do |email_address|
+      RoomInvitationMailer.invite(from: current_user.display_name, to: email_address, room: @room.name).deliver_later
+    end
+
     head :ok
-    # head :bad_request
   end
 
   private
