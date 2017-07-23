@@ -76,84 +76,88 @@ export default class Invitation extends React.Component {
         })
       },
       error: (xhr, status, err) => {
-        console.error("Fetching people list", status, err.toString());
+        console.error("Sending invitation error", status, err.toString());
       }
     })
   }
 
-  emailForm = () => {
-    const emailFields = this.state.emails.map((email, index) => {
-      return(
-        <div className="row" key={`${email}-${index}`}>
-          <div className="col-xs-8">
-            <label>Email address</label>
-            <div className="row">
-              <div className="col-xs-11">
-                <input type="email"
-                  className="form-control"
-                  name="email"
-                  placeholder="Email"
-                  defaultValue={email}
-                  onBlur={this.handleEmailChange}
-                  data-index={index}
-                  />
+  render() {
+    const emailForm = () => {
+      const emailFields = this.state.emails.map((email, index) => {
+        return(
+          <div className="row" key={`${email}-${index}`}>
+            <div className="col-xs-8">
+              <label>Email address</label>
+              <div className="row">
+                <div className="col-xs-11">
+                  <input type="email"
+                    className="form-control"
+                    name="email"
+                    placeholder="Email"
+                    defaultValue={email}
+                    onBlur={this.handleEmailChange}
+                    data-index={index}
+                    />
+                </div>
+                {
+                  this.state.emails.length > 1 &&
+                    <div className="col-xs-1 remove">
+                      <a href="javascript:;" onClick={(index) => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
+                    </div>
+                }
               </div>
-              {
-                this.state.emails.length > 1 &&
-                  <div className="col-xs-1 remove">
-                    <a href="javascript:;" onClick={(index) => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
-                  </div>
-              }
             </div>
           </div>
+        )
+      })
+
+      return(
+        <form method="post" action={`/rooms/${this.props.roomId}/invite`}>
+          <div className="form-group">
+            {emailFields}
+            <div className="row add">
+              <div className="col-xs-8">
+                <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      )
+    }
+
+    const emailSent = () => {
+      const emailsSentList = this.state.emails.map((email, index) => {
+        if (email.length) {
+          return(
+            <tr key={`${email}-${index}`}>
+              <th>{email}</th>
+            </tr>
+          )
+        }
+      })
+
+      return(
+        <div>
+          <h4 className="invitation--sent">Your invitation has been sent! ✨✨✨</h4>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Email Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              {emailsSentList}
+            </tbody>
+          </table>
         </div>
       )
-    })
+    }
 
-    return(
-      <form method="post" action={`/rooms/${this.props.roomId}/invite`}>
-        <div className="form-group">
-          {emailFields}
-          <div className="row add">
-            <div className="col-xs-8">
-              <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
-            </div>
-          </div>
-        </div>
-      </form>
-    )
-  }
-
-  emailSent = () => {
-    return(
-      <div>
-        <h4 className="invitation--sent">Your invitation has been sent!</h4>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Email Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>alex.shi@gmail.com</th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-
-  // resetForm = () => {
-  //   $('#invitation .modal').modal('hide')
-  // }
-
-  render() {
     const invitationContent = () => {
       if (this.state.sent) {
-        return(this.emailSent())
+        return(emailSent())
       } else {
-        return(this.emailForm())
+        return(emailForm())
       }
     }
 
