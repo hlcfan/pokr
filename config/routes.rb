@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { omniauth_callbacks: 'users/omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
+  require 'sidekiq/web'
 
   post 'home/feedback'
   get 'home/sign_up_form'
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
 
   constraints admin_constraint do
     mount Logster::Web => "/logs"
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   resources :rooms do
