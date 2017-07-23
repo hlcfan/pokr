@@ -115,7 +115,7 @@ class RoomsController < ApplicationController
         to: email_address,
         room_name: @room.name,
         room_slug: @room.slug
-      ).deliver_now!
+      ).deliver_later
     end
 
     head :ok
