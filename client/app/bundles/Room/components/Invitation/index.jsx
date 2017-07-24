@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+require('./index.scss')
 
 export default class Invitation extends React.Component {
   static propTypes = {
