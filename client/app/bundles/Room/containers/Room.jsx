@@ -183,6 +183,7 @@ export default class Room extends React.Component {
           <div className="col-md-4">
             <PeopleListBox
               roomId={this.props.roomId}
+              roomState={this.state.roomState}
               addSteps={this.addSteps}
           />
             <ActionBox

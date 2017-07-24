@@ -52,7 +52,7 @@ export default class ActionBox extends React.Component {
       App.rooms.perform('set_story_point', {
         roomId: this.props.roomId,
         data: { point: 'null', story_id: this.props.storyId }
-      });
+      })
     }
   }
 
@@ -61,7 +61,7 @@ export default class ActionBox extends React.Component {
       App.rooms.perform('clear_votes', {
         roomId: this.props.roomId,
         data: { story_id: this.props.storyId }
-      });
+      })
     }
   }
 

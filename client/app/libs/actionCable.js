@@ -36,7 +36,9 @@ export default {
             RoomActions.nextStory()
           }
         } else if(data.type === 'notify') {
-          EventEmitter.dispatch("refreshUsers")
+          if (window.syncResult) {
+            EventEmitter.dispatch("refreshUsers")
+          }
           // Must keep for now
           var $personElement = $('#u-' + data.person_id)
           if ($personElement.hasClass('voted')) {

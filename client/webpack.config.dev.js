@@ -16,7 +16,10 @@ module.exports = merge(config, {
   devtool: 'eval-source-map',
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin({
+      filename: '[name]-[hash].css',
+      allChunks: true
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: false,
