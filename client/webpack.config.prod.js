@@ -18,7 +18,7 @@ module.exports = merge(config, {
     rules: [
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {
@@ -41,7 +41,7 @@ module.exports = merge(config, {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          loader: [
+          use: [
             {
               loader: 'css-loader',
               options: {

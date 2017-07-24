@@ -7,6 +7,8 @@ const configPath = resolve('..', 'config');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
 const { webpackOutputPath, webpackPublicOutputDir } = webpackConfigLoader(configPath);
 const { manifest } = webpackConfigLoader(configPath);
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -46,6 +48,53 @@ module.exports = {
         options: {
           limit: 10000
         }
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: false,
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader', options: {
+                plugins: [autoprefixer]
+            }}
+          ],
+        }),
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: false,
+                modules: true,
+                importLoaders: 3,
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: 'autoprefixer'
+              }
+            },
+            {
+              loader: 'sass-loader',
+            }
+          ],
+        }),
       },
     ]
   }
