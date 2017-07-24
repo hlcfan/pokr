@@ -12,7 +12,7 @@ const glob = require('glob');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const config = require('./webpack.config.base');
 
-module.exports = merge(config, {
+module.exports = merge.smart(config, {
   devtool: 'cheap-module-source-map',
   module: {
     rules: [
@@ -27,7 +27,7 @@ module.exports = merge(config, {
                 minimize: true,
                 modules: true,
                 importLoaders: 1,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                localIdentName: 'prf_[local]__[hash:base64:5]',
               },
             },
             {
@@ -48,7 +48,7 @@ module.exports = merge(config, {
                 minimize: true,
                 modules: true,
                 importLoaders: 3,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                localIdentName: 'prf_[local]__[hash:base64:5]',
               },
             },
             {
@@ -90,7 +90,7 @@ module.exports = merge(config, {
       purifyOptions: {
         minify: true,
         info: true,
-        whitelist: ['*polyfill*'],
+        whitelist: ['*polyfill*', '*prf*'],
       },
       styleExtensions: [
         '.css',
