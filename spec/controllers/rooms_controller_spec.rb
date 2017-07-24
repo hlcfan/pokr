@@ -262,4 +262,24 @@ RSpec.describe RoomsController, type: :controller do
       expect(UserRoom.find_by(user_id: user.id, room_id: room.id).display_role).to eq "Moderator"
     end
   end
+
+  describe "POST #invite" do
+    it "selects valid email address and deliver emails" do
+      room = Room.create! valid_attributes
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
+      expect(RoomInvitationMailer).to receive(:invite).once { message_delivery }
+      expect(message_delivery).to receive(:deliver_later)
+
+      post :invite, params: {id: room.slug, emails: ["a@a.com", "invalid-email", "alex@localhost"]}, session: valid_session
+      expect(response.status).to eq 200
+    end
+
+    it "selects valid email address and deliver emails" do
+      room = Room.create! valid_attributes
+      expect(RoomInvitationMailer).not_to receive(:invite)
+
+      post :invite, params: {id: room.slug, emails: ["invalid-email", "alex@localhost"]}, session: valid_session
+      expect(response.status).to eq 200
+    end
+  end
 end
