@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-require('./index.scss')
+import css from './index.scss'
 
 export default class Invitation extends React.Component {
   static propTypes = {
@@ -102,7 +102,7 @@ export default class Invitation extends React.Component {
                 </div>
                 {
                   this.state.emails.length > 1 &&
-                    <div className="col-xs-1 remove">
+                    <div className={`col-xs-1 ${css.invitation__remove}`}>
                       <a href="javascript:;" onClick={(index) => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
                     </div>
                 }
@@ -116,7 +116,7 @@ export default class Invitation extends React.Component {
         <form method="post" action={`/rooms/${this.props.roomId}/invite`}>
           <div className="form-group">
             {emailFields}
-            <div className="row add">
+            <div className={`row ${css.invitation__add}`}>
               <div className="col-xs-8">
                 <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
               </div>
@@ -139,7 +139,7 @@ export default class Invitation extends React.Component {
 
       return(
         <div>
-          <h4 className="invitation--sent">Your invitation has been sent! ✨✨✨</h4>
+          <h4 className={css['invitation--sent']}>Your invitation has been sent! ✨✨✨</h4>
           <table className="table">
             <thead>
               <tr>
@@ -162,22 +162,22 @@ export default class Invitation extends React.Component {
       }
     }
 
-    const invitationIconStatus = () => {
+    const invitationIconStatus = (() => {
       if (this.state.sent) {
-        return "invitation__icon--on"
+        return css['invitation__icon--on']
       } else {
         return ""
       }
-    }
+    })()
 
     return (
-      <div id="invitation">
+      <div className={css.invitation} id="invitation">
         <div className="modal fade" tabIndex="-1" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title"><i className={`fa fa-paper-plane ${invitationIconStatus()}`}></i> Invite members</h4>
+                <h4 className="modal-title"><i className={`fa fa-paper-plane ${invitationIconStatus}`}></i> Invite members</h4>
               </div>
               <div className="modal-body">
                 {invitationContent()}
