@@ -117,6 +117,8 @@ GEM
     mina-puma (1.0.1)
       mina (~> 1.0.0)
       puma (>= 2.13)
+    mina-sidekiq (1.0.1)
+      mina (>= 1.0.2)
     mina-sitemap_generator (0.0.3)
       mina (~> 1.0.0)
     mini_portile2 (2.2.0)
@@ -346,6 +348,7 @@ DEPENDENCIES
   logster
   marked-rails
   mina-puma (= 1.0.1)
+  mina-sidekiq
   mina-sitemap_generator
   mini_racer
   mysql2 (~> 0.4.4)

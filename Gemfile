@@ -47,6 +47,7 @@ gem 'mina-puma', '1.0.1', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
+gem 'mina-sidekiq', :require => false
 gem 'sidekiq'
 
 gem 'rack-mini-profiler'
