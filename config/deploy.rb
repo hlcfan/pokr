@@ -5,15 +5,15 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/sitemap_generator'
+require 'mina_sidekiq/tasks'
 
-# set :domain, '104.155.223.121'
-set :domain, '118.193.149.168'
+set :domain, 'pokrex.com'
 set :deploy_to, '/home/hlcfan/pokr'
 set :app_path,  "#{fetch(:current_path)}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
 set :user, 'hlcfan'
-# set :identity_file, "/Users/alexshi/.ssh/google_vm"
+set :identity_file, "/Users/alexshi/.ssh/google_vm"
 set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
@@ -78,7 +78,6 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'yarn:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
@@ -86,6 +85,7 @@ task :deploy => :environment do
       invoke :'puma:phased_restart'
       invoke :'whenever:update'
       invoke :'sitemap:create'
+      invoke :'sidekiq:restart'
     end
   end
 end
