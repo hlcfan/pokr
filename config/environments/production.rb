@@ -67,7 +67,7 @@ Rails.application.configure do
     :password => ENV['MAILER_PASSWORD'],
     :domain => 'pokrex.com',
     :address => 'smtp.sendgrid.net',
-    :port => 587,
+    :port => 2525,
     :authentication => :plain,
     :enable_starttls_auto => true
   }
