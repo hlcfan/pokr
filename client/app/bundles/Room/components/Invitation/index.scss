@@ -1,9 +1,6 @@
-.invitation__link {
+a.invitation__link {
   color: #444;
-
-  &:hover {
-    text-decoration: none;    
-  }
+  text-decoration: none;
 }
 
 .invitation {
