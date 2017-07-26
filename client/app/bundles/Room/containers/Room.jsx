@@ -6,7 +6,7 @@ import StoryListBox from '../components/StoryListBox'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
 import Board from '../components/Board'
-import ActionCable from 'libs/actionCable'
+import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
 import EventEmitter from 'libs/eventEmitter'
@@ -15,7 +15,7 @@ export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === props.roomState ) ? true : false
-    ActionCable.setupChannelSubscription(props.roomId, props.roomState)
+    AirTraffic.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
       roomState: props.roomState,
