@@ -3762,6 +3762,10 @@ tar@^2.0.0, tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
+timeme.js@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/timeme.js/-/timeme.js-2.0.3.tgz#a2b9fc2d1692d5fccc8fa035a47b6ac64bf90007"
+
 timers-browserify@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.2.tgz#ab4883cf597dcd50af211349a00fbca56ac86b86"
