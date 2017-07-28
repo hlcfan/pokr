@@ -9,12 +9,14 @@ import Board from '../components/Board'
 import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
+import TimeMe from 'timeme.js'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === props.roomState ) ? true : false
+    this.duration = props.duration
     AirTraffic.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
@@ -116,8 +118,41 @@ export default class Room extends React.Component {
     this.setState(newState)
   }
 
+  onUnload = (event) => {
+    event.preventDefault()
+    this.sendRealtimeDuration()
+    return event.returnValue = 'Are you sure you want to close?'
+  }
+
+  sendRealtimeDuration = () => {
+    let duration = this.duration + TimeMe.getTimeOnCurrentPageInSeconds()
+
+    $.ajax({
+      url: `/rooms/${this.props.roomId}/timing`,
+      data: { duration: duration },
+      method: 'post',
+      cache: false,
+      success: function(data) {
+        // pass
+      },
+      error: function(xhr, status, err) {
+        // pass
+      }
+    })
+  }
+
   componentDidMount() {
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
+    TimeMe.initialize({
+      currentPageName: this.props.roomId,
+      idleTimeoutInSeconds: 120
+    })
+
+    window.addEventListener("beforeunload", this.onUnload)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.onUnload)
   }
 
   render() {
