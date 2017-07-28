@@ -114,6 +114,8 @@ class Room < ApplicationRecord
   end
 
   def time_duration
+    return duration if duration.present?
+
     @time_duration ||= begin
       all_stories = stories.to_a
       first_story = all_stories.first
@@ -162,6 +164,14 @@ class Room < ApplicationRecord
       else
         []
       end
+    end
+  end
+
+  def update_duration period
+    if period > self.duration.to_f
+      self.update_attribute :duration, period
+
+      self
     end
   end
 

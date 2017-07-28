@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       post :switch_role
       get :summary
       post :invite
+      post :timing
     end
   end
 

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StatusBar from '../components/StatusBar'
 import VoteBox from '../components/VoteBox'
+import TimeCounter from '../components/TimeCounter'
 import StoryListBox from '../components/StoryListBox'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
@@ -96,7 +97,7 @@ export default class Room extends React.Component {
 
     this.setState({
       selector: data.type === 'tooltip:before' ? data.step.selector : '',
-    });
+    })
 
     if ("finished" === data.type) {
       let newState = update(this.state, {
@@ -199,6 +200,10 @@ export default class Room extends React.Component {
         {
           this.roomClosed() &&
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
+        }
+        {
+          !this.roomClosed() && this.props.role === "Moderator" &&
+            <TimeCounter roomId={this.props.roomId} initialDuration={this.props.duration}/>
         }
       </div>
     )
