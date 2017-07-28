@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StatusBar from '../components/StatusBar'
 import VoteBox from '../components/VoteBox'
+import TimeCounter from '../components/TimeCounter'
 import StoryListBox from '../components/StoryListBox'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
@@ -9,14 +10,12 @@ import Board from '../components/Board'
 import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
 import Joyride from 'react-joyride'
-import TimeMe from 'timeme.js'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === props.roomState ) ? true : false
-    this.duration = props.duration
     AirTraffic.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
@@ -98,7 +97,7 @@ export default class Room extends React.Component {
 
     this.setState({
       selector: data.type === 'tooltip:before' ? data.step.selector : '',
-    });
+    })
 
     if ("finished" === data.type) {
       let newState = update(this.state, {
@@ -118,45 +117,8 @@ export default class Room extends React.Component {
     this.setState(newState)
   }
 
-  onUnload = (event) => {
-    event.preventDefault()
-    this.sendRealtimeDuration()
-    return event.returnValue = 'Are you sure you want to close?'
-  }
-
-  sendRealtimeDuration = () => {
-    let duration = this.duration + TimeMe.getTimeOnCurrentPageInSeconds()
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/timing`,
-      data: { duration: duration },
-      method: 'post',
-      cache: false,
-      success: function(data) {
-        // pass
-      },
-      error: function(xhr, status, err) {
-        // pass
-      }
-    })
-  }
-
   componentDidMount() {
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
-    TimeMe.initialize({
-      currentPageName: this.props.roomId,
-      idleTimeoutInSeconds: 120
-    })
-
-    window.addEventListener("beforeunload", this.onUnload)
-
-    setInterval(() => {
-      this.sendRealtimeDuration()
-    }, 60000)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload)
   }
 
   render() {
@@ -238,6 +200,10 @@ export default class Room extends React.Component {
         {
           this.roomClosed() &&
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
+        }
+        {
+          !this.roomClosed() && this.props.role === "Moderator" &&
+            <TimeCounter roomId={this.props.roomId} initialDuration={this.props.duration}/>
         }
       </div>
     )
