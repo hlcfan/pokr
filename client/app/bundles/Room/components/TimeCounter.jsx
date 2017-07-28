@@ -4,6 +4,11 @@ import TimeMe from 'timeme.js'
 
 export default class TimeCounter extends React.Component {
 
+  static propTypes = {
+    roomId: PropTypes.string,
+    initialDuration: PropTypes.number
+  }
+
   constructor(props) {
     super(props)
     this.duration = props.initialDuration
@@ -17,7 +22,7 @@ export default class TimeCounter extends React.Component {
 
   sendRealtimeDuration = () => {
     let duration = this.duration + TimeMe.getTimeOnCurrentPageInSeconds()
-    console.log(duration)
+
     $.ajax({
       url: `/rooms/${this.props.roomId}/timing`,
       data: { duration: duration },
@@ -33,17 +38,16 @@ export default class TimeCounter extends React.Component {
   }
 
   componentDidMount() {
-      TimeMe.initialize({
-        currentPageName: this.props.roomId,
-        idleTimeoutInSeconds: 120
-      })
+    TimeMe.initialize({
+      currentPageName: this.props.roomId,
+      idleTimeoutInSeconds: 120
+    })
 
-      window.addEventListener("beforeunload", this.onUnload)
+    window.addEventListener("beforeunload", this.onUnload)
 
-      setInterval(() => {
-        this.sendRealtimeDuration()
-      }, 2000)
-    
+    setInterval(() => {
+      this.sendRealtimeDuration()
+    }, 2000)
   }
 
   componentWillUnmount() {
@@ -51,7 +55,6 @@ export default class TimeCounter extends React.Component {
   }
 
   render() {
-
     return (
       <div></div>
     )
