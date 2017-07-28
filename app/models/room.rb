@@ -114,6 +114,8 @@ class Room < ApplicationRecord
   end
 
   def time_duration
+    return duration if duration.present?
+
     @time_duration ||= begin
       all_stories = stories.to_a
       first_story = all_stories.first

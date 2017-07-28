@@ -149,6 +149,10 @@ export default class Room extends React.Component {
     })
 
     window.addEventListener("beforeunload", this.onUnload)
+
+    setInterval(() => {
+      this.sendRealtimeDuration()
+    }, 60000)
   }
 
   componentWillUnmount() {
