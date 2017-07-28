@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :timing]
   before_action :enter_room, only: [:show]
 
   def index
@@ -117,6 +117,12 @@ class RoomsController < ApplicationController
         room_slug: @room.slug
       ).deliver_later
     end
+
+    head :ok
+  end
+
+  def timing
+    @room.update_duration params[:duration].to_f
 
     head :ok
   end

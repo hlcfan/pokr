@@ -165,6 +165,14 @@ class Room < ApplicationRecord
     end
   end
 
+  def update_duration period
+    if period > self.duration.to_f
+      self.update_attribute :duration, period
+
+      self
+    end
+  end
+
   private
 
   def moderators

@@ -328,4 +328,18 @@ RSpec.describe Room, type: :model do
       }]
     end
   end
+
+  describe "#update_duration" do
+    let(:the_room) { Room.create(name: "test slug") }
+
+    it "updates duration" do
+      room = the_room.update_duration(3.3)
+      expect(room.duration).to eq 3.3
+    end
+
+    it "does not update duration if smaller duration" do
+      the_room.duration = 10.3
+      expect(the_room.update_duration(3.3)).to be_nil
+    end
+  end
 end
