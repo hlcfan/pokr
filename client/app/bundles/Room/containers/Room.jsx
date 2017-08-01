@@ -9,7 +9,6 @@ import ActionBox from '../components/ActionBox/ActionBox'
 import Board from '../components/Board'
 import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
-import Joyride from 'react-joyride'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
@@ -88,7 +87,7 @@ export default class Room extends React.Component {
   }
 
   next() {
-    this.joyride.next()
+    this.pageGuide.next()
   }
 
   callback = (data) => {
@@ -105,7 +104,7 @@ export default class Room extends React.Component {
       })
 
       this.setState(newState)
-      this.joyride.reset()
+      this.pageGuide.reset()
     }
   }
 
@@ -119,6 +118,10 @@ export default class Room extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
+    import('../components/PageGuide').then(Component => {
+      this.PageGuide = Component
+      this.forceUpdate()
+    })
   }
 
   render() {
@@ -131,26 +134,16 @@ export default class Room extends React.Component {
 
     return (
       <div className="room" id="room">
-        <Joyride
-          ref={c => (this.joyride = c)}
-          callback={this.callback}
-          debug={false}
-          disableOverlay={true}
-          locale={{
-            back: (<span>Back</span>),
-            close: (<span>Close</span>),
-            last: (<span>Last</span>),
-            next: (<span>Next</span>),
-            skip: (<span>Skip</span>),
-          }}
-          run={isRunning}
-          showOverlay={true}
-          showSkipButton={true}
-          showStepsProgress={true}
-          steps={steps}
-          type={joyrideType}
-          autoStart={true}
-        />
+        {
+          this.PageGuide ?
+          <this.PageGuide.default
+            ref={c => (this.pageGuide = c)}
+            callback={this.callback}
+            isRunning={isRunning}
+            steps={steps}
+            joyrideType={joyrideType}
+            /> : null
+        }
         <StatusBar
           roomState={this.state.roomState}
           role={this.props.role}
