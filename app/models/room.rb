@@ -129,23 +129,32 @@ class Room < ApplicationRecord
   end
 
   def user_list params={}
-    room_users = users.to_a
-    user_rooms = {}
-    UserRoom.where(user_id: room_users, room_id: id).order(:created_at).select(:user_id, :role).each do |user_room|
-      user_rooms.update({user_room.user_id => user_room.display_role})
-    end
+    # room_users = users.to_a
 
     user_story_points = {}
-    UserStoryPoint.where(user_id: room_users, story_id: current_story_id).each do |user_story_point|
+    # .where(user_id: room_users, story_id: current_story_id)
+    UserStoryPoint.joins(user: :user_rooms).where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id).each do |user_story_point|
       user_story_points.update({user_story_point.user_id => user_story_point.points})
     end if current_story_id
 
-    room_users.sort_by! do |user|
-      build_room_user user, user_story_points[user.id], user_rooms[user.id], params[:sync]
+    room_users = []
 
-      user_rooms.keys.index user.id
-    end.partition do |room_user|
-      room_user.display_role != "Watcher"
+    User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
+      .order("user_rooms.created_at")
+      .select(:id, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
+      .select("user_rooms.role as role").each do |user|
+      room_users.push({
+        id: user.id,
+        name: user.display_name,
+        display_role: display_role(user.role),
+        avatar_thumb: user.letter_avatar,
+        voted: user.voted = user_story_points.key?(user.id),
+        points: (params[:sync] == 'true' ? user_story_points[user.id] : "")
+      })
+    end
+
+    room_users.partition do |room_user|
+      room_user[:role] != "Watcher"
     end.flatten
   end
 
@@ -229,13 +238,15 @@ class Room < ApplicationRecord
     stories.where(point: nil)
   end
 
-  def build_room_user user, user_point, user_role, sync=nil
-    user.display_role = user_role
-    user.points = user_point || "" if sync == 'true'
-    user.voted = !!user_point
-    user.avatar_thumb = user.letter_avatar
-
-    user
+  def display_role role
+    case role
+    when 0
+      'Moderator'
+    when 1
+      'Participant'
+    else
+      'Watcher'
+    end
   end
 
 end
