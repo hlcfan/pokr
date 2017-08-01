@@ -22,6 +22,7 @@ module.exports = {
 
   output: {
     filename: '[name]-[hash].js',
+    chunkFilename: '[name]-[hash].js',
     // Leading and trailing slashes ARE necessary.
     publicPath: '/' + webpackPublicOutputDir + '/',
     path: webpackOutputPath,
