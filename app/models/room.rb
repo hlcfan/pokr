@@ -154,7 +154,7 @@ class Room < ApplicationRecord
     end
 
     room_users.partition do |room_user|
-      room_user[:role] != "Watcher"
+      room_user[:display_role] != "Watcher"
     end.flatten
   end
 
