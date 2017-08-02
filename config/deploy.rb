@@ -18,7 +18,9 @@ set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
 set :force_asset_precompile, true
+set :pty, false
 
+set :sidekiq_pid, "tmp/pids/sidekiq.pid"
 set :puma_socket, '/tmp/puma_pokr.sock'
 set :puma_pid, 'tmp/pids/puma.pid'
 set :puma_state, 'tmp/sockets/puma.state'

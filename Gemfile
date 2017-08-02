@@ -43,12 +43,12 @@ gem "react_on_rails", "~> 8.0.5"
 gem "webpacker_lite"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
+gem 'sidekiq'
 gem 'mina-puma', '1.0.1', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
 gem 'mina-sidekiq', :require => false
-gem 'sidekiq'
 
 gem 'rack-mini-profiler'
 gem 'flamegraph'
