@@ -140,7 +140,6 @@ class Room < ApplicationRecord
       .order("user_rooms.created_at")
       .select(:id, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
       .select("user_rooms.role as role")
-      .group_by("user_rooms.role = 2")
       .inject([]) do |array, user|
       array.push({
         id: user.id,
