@@ -205,8 +205,8 @@ RSpec.describe Room, type: :model do
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
         UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-        expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
-        expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list({sync: "true"}).map{|u|u[:points]}).to eq(["13", "10"])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([true, true])
       end
     end
 
@@ -222,8 +222,8 @@ RSpec.describe Room, type: :model do
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
         UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
-        expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([true, true])
       end
 
       it "lists users without points and without vote status in a room if no one voted" do
@@ -233,8 +233,8 @@ RSpec.describe Room, type: :model do
         UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
         UserRoom.create(user_id: user1.id, room_id: room.id, role: 2)
 
-        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
-        expect(room.user_list.map(&:voted)).to eq([false, false])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([false, false])
       end
     end
 
@@ -248,7 +248,7 @@ RSpec.describe Room, type: :model do
       sleep 1
       UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
 
-      expect(room.user_list.map(&:id)).to eq([user2.id, user1.id, watcher.id])
+      expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id, watcher.id])
     end
   end
 

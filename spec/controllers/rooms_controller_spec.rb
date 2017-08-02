@@ -185,7 +185,14 @@ RSpec.describe RoomsController, type: :controller do
     it "gets users in room" do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
-      expect(assigns(:users)).to eq [user]
+      expect(assigns(:users)).to eq [{
+        id: user.id,
+        name: user.display_name,
+        display_role: user_room.display_role,
+        avatar_thumb: user.letter_avatar,
+        voted: false,
+        points: ""
+      }]
     end
   end
 
