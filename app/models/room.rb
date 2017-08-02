@@ -129,21 +129,20 @@ class Room < ApplicationRecord
   end
 
   def user_list params={}
-    # room_users = users.to_a
+    user_story_points = (UserStoryPoint.joins(user: :user_rooms)
+      .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id)
+      .inject({}) do |h, user_story_point|
+      h[user_story_point.user_id] = user_story_point.points
+      h
+    end if current_story_id) || {}
 
-    user_story_points = {}
-    # .where(user_id: room_users, story_id: current_story_id)
-    UserStoryPoint.joins(user: :user_rooms).where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id).each do |user_story_point|
-      user_story_points.update({user_story_point.user_id => user_story_point.points})
-    end if current_story_id
-
-    room_users = []
-
-    User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
+    room_users = User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
       .order("user_rooms.created_at")
       .select(:id, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
-      .select("user_rooms.role as role").each do |user|
-      room_users.push({
+      .select("user_rooms.role as role")
+      .group_by("user_rooms.role = 2")
+      .inject([]) do |array, user|
+      array.push({
         id: user.id,
         name: user.display_name,
         display_role: display_role(user.role),
