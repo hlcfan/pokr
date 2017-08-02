@@ -4,4 +4,3 @@
 :queues:
   - default
   - [mailers, 2]
-:daemon: false
