@@ -40,14 +40,14 @@ export default class TimeCounter extends React.Component {
   componentDidMount() {
     TimeMe.initialize({
       currentPageName: this.props.roomId,
-      idleTimeoutInSeconds: 120
+      idleTimeoutInSeconds: 300
     })
 
     window.addEventListener("beforeunload", this.onUnload)
 
     setInterval(() => {
       this.sendRealtimeDuration()
-    }, 120000)
+    }, 6000)
   }
 
   componentWillUnmount() {
