@@ -69,7 +69,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'skylight'
+  gem 'scout_apm'
   gem 'god'
 end
 
