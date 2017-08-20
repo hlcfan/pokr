@@ -185,7 +185,14 @@ RSpec.describe RoomsController, type: :controller do
     it "gets users in room" do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
-      expect(assigns(:users)).to eq [user]
+      expect(assigns(:users)).to eq [{
+        id: user.id,
+        name: user.display_name,
+        display_role: user_room.display_role,
+        avatar_thumb: user.letter_avatar,
+        voted: false,
+        points: ""
+      }]
     end
   end
 
@@ -196,7 +203,16 @@ RSpec.describe RoomsController, type: :controller do
     it "gets groomed stories" do
       story.update_attribute :point, 13
       get :draw_board, format: :json, params: {:id => room.slug}, session: valid_session
-      expect(assigns(:stories)).to eq [story]
+      expect(assigns(:stories)).to eq [[story.id, story.link, story.point]]
+    end
+  end
+
+  describe "GET #summary" do
+    it "gets room summary" do
+      room = Room.create! valid_attributes
+      get :summary, params: {:id => room.slug}, session: valid_session
+
+      expect(assigns(:summaries)).to eq []
     end
   end
 
@@ -251,6 +267,44 @@ RSpec.describe RoomsController, type: :controller do
 
       expect(response.status).to eq 400
       expect(UserRoom.find_by(user_id: user.id, room_id: room.id).display_role).to eq "Moderator"
+    end
+  end
+
+  describe "POST #invite" do
+    it "selects valid email address and deliver emails" do
+      room = Room.create! valid_attributes
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
+      expect(RoomInvitationMailer).to receive(:invite).once { message_delivery }
+      expect(message_delivery).to receive(:deliver_later)
+
+      post :invite, params: {id: room.slug, emails: ["a@a.com", "invalid-email", "alex@localhost"]}, session: valid_session
+      expect(response.status).to eq 200
+    end
+
+    it "selects valid email address and deliver emails" do
+      room = Room.create! valid_attributes
+      expect(RoomInvitationMailer).not_to receive(:invite)
+
+      post :invite, params: {id: room.slug, emails: ["invalid-email", "alex@localhost"]}, session: valid_session
+      expect(response.status).to eq 200
+    end
+  end
+
+  describe "POST #timing" do
+    it "updates room duration" do
+      room = Room.create! valid_attributes
+
+      post :timing, params: {id: room.slug, duration: "10.2"}, session: valid_session
+      expect(Room.find(room.id).duration).to eq 10.2
+      expect(response.status).to eq 200
+    end
+
+    it "doesn't update room duration if invalid duration" do
+      room = Room.create! valid_attributes.merge(duration: 10.2)
+
+      post :timing, params: {id: room.slug, duration: "8.3"}, session: valid_session
+      expect(Room.find(room.id).duration).to eq 10.2
+      expect(response.status).to eq 200
     end
   end
 end

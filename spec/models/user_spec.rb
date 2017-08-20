@@ -106,10 +106,18 @@ RSpec.describe User, type: :model do
 
   describe ".find_for_oauth" do
     before do
-      AUTH = Struct.new(:uid, :provider, :info, :extra)
-      AUTH_INFO = Struct.new(:email, :image)
-      AUTH_EXTRA = Struct.new(:raw_info)
-      AUTH_EXTRA_RAWINFO = Struct.new(:name)
+      unless defined?(AUTH)
+        AUTH = Struct.new(:uid, :provider, :info, :extra)
+      end
+      unless defined?(AUTH_INFO)
+        AUTH_INFO = Struct.new(:email, :image)
+      end
+      unless defined?(AUTH_EXTRA)
+        AUTH_EXTRA = Struct.new(:raw_info)
+      end
+      unless defined?(AUTH_EXTRA_RAWINFO)
+        AUTH_EXTRA_RAWINFO = Struct.new(:name)
+      end
     end
 
     it "creates authorization and user if none exists" do

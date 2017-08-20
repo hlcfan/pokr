@@ -5,6 +5,7 @@ class RoomRepository
 
     bulk_import_stories
     add_sequence_to_stories
+    permit_params!
 
     Room.new @params
   end
@@ -70,7 +71,6 @@ class RoomRepository
       links.each_with_index do |story_link, index|
         stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
       end
-
       @params[:stories_attributes] = stories_hash
     else
       @params.delete(:bulk_links)
@@ -78,10 +78,18 @@ class RoomRepository
   end
 
   def add_sequence_to_stories
-    index = 0
-    @params[:stories_attributes] && @params[:stories_attributes].each_pair do |_, story|
-      index += 1
-      story[:sequence] = index
+    if @params[:stories_attributes]
+      index = 0
+      @params[:stories_attributes].each_pair do |_, story|
+        index += 1
+        story[:sequence] = index
+      end
+    end
+  end
+
+  def permit_params!
+    if @params[:stories_attributes].is_a? ActionController::Parameters
+      @params[:stories_attributes].permit!
     end
   end
 

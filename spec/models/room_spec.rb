@@ -56,7 +56,7 @@ RSpec.describe Room, type: :model do
 
     it "returns stories with point set" do
       room.id = 1
-      expect(room.groomed_stories).to eq [story_2, story_3]
+      expect(room.groomed_stories.map(&:first)).to eq [story_2.id, story_3.id]
     end
   end
 
@@ -104,7 +104,8 @@ RSpec.describe Room, type: :model do
 
   describe "#slug!" do
     it "generates slug before create" do
-      room = Room.create(name: 'test slug')
+      room = Room.create(name: "test slug")
+      expect(room.slug).to eq "test-slug"
       expect(room.slug).to be_present
     end
 
@@ -113,6 +114,12 @@ RSpec.describe Room, type: :model do
       room_2 = Room.create(name: 'test slug')
       expect(room_2.slug).to be_present
       expect(room_2.slug).not_to eq room_1.slug
+    end
+
+    it "replace _ or - to space and then generates slug" do
+      room = Room.create(name: 'test_slug')
+      expect(room.slug).to eq "test-slug"
+      expect(room.slug).to be_present
     end
   end
 
@@ -198,8 +205,8 @@ RSpec.describe Room, type: :model do
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
         UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-        expect(room.user_list({sync: "true"}).map(&:points)).to eq(["13", "10"])
-        expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list({sync: "true"}).map{|u|u[:points]}).to eq(["13", "10"])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([true, true])
       end
     end
 
@@ -215,8 +222,8 @@ RSpec.describe Room, type: :model do
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
         UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
-        expect(room.user_list.map(&:voted)).to eq([true, true])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([true, true])
       end
 
       it "lists users without points and without vote status in a room if no one voted" do
@@ -226,8 +233,8 @@ RSpec.describe Room, type: :model do
         UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
         UserRoom.create(user_id: user1.id, room_id: room.id, role: 2)
 
-        expect(room.user_list.map(&:id)).to eq([user2.id, user1.id])
-        expect(room.user_list.map(&:voted)).to eq([false, false])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
+        expect(room.user_list.map{|u|u[:voted]}).to eq([false, false])
       end
     end
 
@@ -241,7 +248,7 @@ RSpec.describe Room, type: :model do
       sleep 1
       UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
 
-      expect(room.user_list.map(&:id)).to eq([user2.id, user1.id, watcher.id])
+      expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id, watcher.id])
     end
   end
 
@@ -285,6 +292,54 @@ RSpec.describe Room, type: :model do
       UserRoom.create(room_id: room.id, user_id: participant.id)
 
       expect(room.send(:moderators)).to eq [[moderator.id, moderator.name]]
+    end
+  end
+
+  describe "#summary" do
+    it "gets room summary" do
+      room = Room.create(name: "test slug")
+      story = Story.create(link: "link_1", room_id: room.id)
+      story.update_attribute :point, 13
+      user_alex = User.create email: 'a@a.com', password: 'password'
+      user_bob = User.create(email: 'b@b.com', password: 'password')
+      UserRoom.create(user_id: user_alex.id, room_id: room.id, role: UserRoom::PARTICIPANT)
+      UserRoom.create(user_id: user_bob.id, room_id: room.id, role: UserRoom::PARTICIPANT)
+      UserStoryPoint.create(user_id: user_alex.id, story_id: story.id, points: 13)
+      UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
+
+      expect(room.summary).to eq [{
+        id: story.id,
+        link: story.link,
+        point: story.point,
+        individuals: [
+          {
+            user_id: user_alex.id,
+            user_points: "13",
+            user_name: user_alex.display_name,
+            user_avatar: user_alex.letter_avatar
+          },
+          {
+            user_id: user_bob.id,
+            user_points: "8",
+            user_name: user_bob.display_name,
+            user_avatar: user_bob.letter_avatar
+          }
+        ]
+      }]
+    end
+  end
+
+  describe "#update_duration" do
+    let(:the_room) { Room.create(name: "test slug") }
+
+    it "updates duration" do
+      room = the_room.update_duration(3.3)
+      expect(room.duration).to eq 3.3
+    end
+
+    it "does not update duration if smaller duration" do
+      the_room.duration = 10.3
+      expect(the_room.update_duration(3.3)).to be_nil
     end
   end
 end

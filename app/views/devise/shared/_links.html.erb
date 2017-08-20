@@ -1,30 +1,30 @@
 <div class="other-links">
   <%- if controller_name != 'sessions' %>
-    <%= link_to "Log in", new_session_path(resource_name) %><br />
+    <%= link_to t("user.log_in"), new_session_path(resource_name) %><br />
   <% end -%>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-    <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+    <%= link_to t("user.signup"), new_registration_path(resource_name) %><br />
   <% end -%>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    <%= link_to t("user.forgot_pw"), new_password_path(resource_name) %><br />
   <% end -%>
 
   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-    <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+    <%= link_to t("user.new_confirmation"), new_confirmation_path(resource_name) %><br />
   <% end -%>
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-    <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+    <%= link_to t("user.new_unlock"), new_unlock_path(resource_name) %><br />
   <% end -%>
 
-  <a id="why" href="javascript:;" role="button" data-trigger="focus" data-toggle="popover" data-placement="bottom" title="Because..." data-content="To obtain better experience, we keep user system to maintain rooms and stroies. Thus, everyone can check'em out in dashboard later on. FYI, your information is securely stored and won't be leaked.">Why do I need to sign in/up?</a>
+  <a id="why" href="javascript:;" role="button" data-trigger="focus" data-toggle="popover" data-placement="bottom" title="Because..." data-content="To obtain better experience, we keep user system to maintain rooms and stroies. Thus, everyone can check'em out in dashboard later on. FYI, your information is securely stored and won't be leaked."><%= t("user.why_sign_up") %></a>
 
   <%- if devise_mapping.omniauthable? %>
     <br /><br />
     <div class="line-spliter">
-      <span><b>Or</b></span>
+      <span><b><%= t("user.or") %></b></span>
     </div>
     <br />
     <div class="social-sign-in">

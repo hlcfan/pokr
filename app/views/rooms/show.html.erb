@@ -5,8 +5,11 @@
 <% content_for(:page_head) do %>
   <meta name="turbolinks-cache-control" content="no-cache">
 <% end %>
-<%= javascript_include_tag "room_init" %>
-<%= stylesheet_link_tag    "libs/joyride", "data-turbolinks-track" => "reload" %>
+
+<%= javascript_pack_tag('vendor-bundle') %>
+<%= javascript_pack_tag('app-bundle') %>
+<%= stylesheet_pack_tag('app-bundle') %>
+<%= stylesheet_link_tag "libs/joyride", "data-turbolinks-track" => "reload" %>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
 <input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />
@@ -29,5 +32,6 @@
           peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
           currentVote: current_user.points_of_story(@room.current_story_id),
           currentStoryId: @room.current_story_id,
+          duration: @room.duration
           },
   prerender: false) %>

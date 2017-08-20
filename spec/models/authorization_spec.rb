@@ -4,7 +4,9 @@ RSpec.describe Authorization, type: :model do
 
   describe ".find_for_oauth" do
     before do
-      AUTH = Struct.new(:uid, :provider)
+      unless defined?(AUTH)
+        AUTH = Struct.new(:uid, :provider, :info, :extra)
+      end
     end
 
     it "finds authorization" do

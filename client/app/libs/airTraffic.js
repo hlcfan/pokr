@@ -1,6 +1,7 @@
 import EventEmitter from 'libs/eventEmitter'
 import BarColors from 'libs/barColors'
 import RoomActions from 'libs/roomActions'
+import ActionCable from 'actioncable'
 
 window.App = {}
 
@@ -27,7 +28,7 @@ export default {
           } else if(data.data === "next-story") {
             RoomActions.nextStory()
           } else if(data.data === "revote") {
-            RoomActions.revote()
+            RoomActions.nextStory()
           } else if(data.data === "close-room") {
             EventEmitter.dispatch("roomClosed")
           } else if(data.data === "switch-roles") {
@@ -36,7 +37,9 @@ export default {
             RoomActions.nextStory()
           }
         } else if(data.type === 'notify') {
-          EventEmitter.dispatch("refreshUsers")
+          if (window.syncResult) {
+            EventEmitter.dispatch("refreshUsers")
+          }
           // Must keep for now
           var $personElement = $('#u-' + data.person_id)
           if ($personElement.hasClass('voted')) {

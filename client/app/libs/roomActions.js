@@ -12,10 +12,6 @@ export default {
   showResultSection() {
     window.syncResult = true
     EventEmitter.dispatch("refreshUsers")
-  },
-
-  revote() {
-    nextStory();
-    $('.vote-list ul li input').removeClass('disabled')
   }
+
 }

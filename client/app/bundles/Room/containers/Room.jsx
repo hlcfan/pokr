@@ -2,20 +2,20 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StatusBar from '../components/StatusBar'
 import VoteBox from '../components/VoteBox'
+import TimeCounter from '../components/TimeCounter'
 import StoryListBox from '../components/StoryListBox'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
 import Board from '../components/Board'
-import ActionCable from 'libs/actionCable'
+import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
-import Joyride from 'react-joyride'
 import EventEmitter from 'libs/eventEmitter'
 
 export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === props.roomState ) ? true : false
-    ActionCable.setupChannelSubscription(props.roomId, props.roomState)
+    AirTraffic.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
       roomState: props.roomState,
@@ -87,7 +87,7 @@ export default class Room extends React.Component {
   }
 
   next() {
-    this.joyride.next()
+    this.pageGuide.next()
   }
 
   callback = (data) => {
@@ -96,7 +96,7 @@ export default class Room extends React.Component {
 
     this.setState({
       selector: data.type === 'tooltip:before' ? data.step.selector : '',
-    });
+    })
 
     if ("finished" === data.type) {
       let newState = update(this.state, {
@@ -104,7 +104,7 @@ export default class Room extends React.Component {
       })
 
       this.setState(newState)
-      this.joyride.reset()
+      this.pageGuide.reset()
     }
   }
 
@@ -118,6 +118,10 @@ export default class Room extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
+    import('../components/PageGuide').then(Component => {
+      this.PageGuide = Component
+      this.forceUpdate()
+    })
   }
 
   render() {
@@ -130,26 +134,16 @@ export default class Room extends React.Component {
 
     return (
       <div className="room" id="room">
-        <Joyride
-          ref={c => (this.joyride = c)}
-          callback={this.callback}
-          debug={false}
-          disableOverlay={true}
-          locale={{
-            back: (<span>Back</span>),
-            close: (<span>Close</span>),
-            last: (<span>Last</span>),
-            next: (<span>Next</span>),
-            skip: (<span>Skip</span>),
-          }}
-          run={isRunning}
-          showOverlay={true}
-          showSkipButton={true}
-          showStepsProgress={true}
-          steps={steps}
-          type={joyrideType}
-          autoStart={true}
-        />
+        {
+          this.PageGuide ?
+          <this.PageGuide.default
+            ref={c => (this.pageGuide = c)}
+            callback={this.callback}
+            isRunning={isRunning}
+            steps={steps}
+            joyrideType={joyrideType}
+            /> : null
+        }
         <StatusBar
           roomState={this.state.roomState}
           role={this.props.role}
@@ -183,6 +177,7 @@ export default class Room extends React.Component {
           <div className="col-md-4">
             <PeopleListBox
               roomId={this.props.roomId}
+              roomState={this.state.roomState}
               addSteps={this.addSteps}
           />
             <ActionBox
@@ -198,6 +193,10 @@ export default class Room extends React.Component {
         {
           this.roomClosed() &&
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
+        }
+        {
+          !this.roomClosed() && this.props.role === "Moderator" &&
+            <TimeCounter roomId={this.props.roomId} initialDuration={this.props.duration}/>
         }
       </div>
     )

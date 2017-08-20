@@ -1,13 +1,13 @@
 <%
-  title "Log in"
-  description "Log in Pokrex to experience holistic way of online planning/pointing poker."
+  title t("user.log_in")
+  description t("user.log_in_desc")
 %>
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Log in</h3>
+        <h3 class="panel-title"><%= t("user.log_in") %></h3>
       </div>
       <div class="panel-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -24,13 +24,13 @@
           <% if devise_mapping.rememberable? -%>
             <div class="checkbox">
               <label>
-                <%= f.check_box :remember_me %> Remember me
+                <%= f.check_box :remember_me %> <%= t("user.remember_me") %>
               </label>
             </div>
           <% end -%>
 
           <div class="form-group">
-            <%= f.submit "Log in", class: 'btn btn-info' %>
+            <%= f.submit t("user.log_in"), class: 'btn btn-info' %>
           </div>
         <% end %>
 

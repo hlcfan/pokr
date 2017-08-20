@@ -1,0 +1,46 @@
+zh:
+  site:
+    title: "在线计划扑克"
+    desc: "Pokrex 是一个简单好用的计划扑克（敏捷扑克，打分扑克），帮助敏捷开发团队提高 grooming 效率。"
+    slogan: "超级简单的计划扑克"
+    sub_slogan: "使用我们的在线计划扑克工具，让敏捷估分更加简单高效。"
+    footer:
+      links: "链接"
+      about: "关于我们"
+      faq: "常见问题"
+      what: "什么是计划扑克？"
+      share: "分享"
+  user:
+    login: "登陆"
+    signup: "注册"
+    join: "快速加入"
+    email_address: "邮箱"
+    log_in: "登陆"
+    log_in_desc: "登陆 Pokrex 来体验完整的计划扑克之旅。"
+    signup_desc: "立刻注册 Pokrex 在线的计划扑克进行敏捷估分吧，完全免费！"
+    remember_me: "记住我"
+    min_chars: "位密码最少"
+    forgot_pw: "忘记密码？"
+    new_confirmation: "没有收到确认邮件？"
+    new_unlock: "没有收到解锁邮件？"
+    why_sign_up: "为什么要注册、登陆？"
+    or: "或者"
+  helpers:
+    label:
+      user:
+        email: "邮箱"
+        password: "密码"
+        password_confirmation: "再次输入密码"
+          
+  intro:
+    room: "房间"
+    room_desc: "房间是团队成员进行扑克打分的地方，成员可以通过 scrum master 分享的链接进入房间。"
+    room_f_1: "简单好用"
+    room_f_2: "自动切换 user story"
+    room_f_3: "优雅的用户的界面"
+    dashboard: "仪表盘"
+    dashboard_desc: "仪表盘里可以看到所有的数据以及状态，包括统计信息，历史记录，所参与的房间和打过分的故事（user story）。"
+    dashboard_f_1: "快捷统计"
+    dashboard_f_2: "了解每次 planning meeting 的状态"
+    dashboard_f_3: "了解历史记录和会议频率"
+    dashboard_f_4: "快捷查询最近投分的 user story"

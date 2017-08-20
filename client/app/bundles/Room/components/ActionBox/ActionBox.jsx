@@ -52,7 +52,7 @@ export default class ActionBox extends React.Component {
       App.rooms.perform('set_story_point', {
         roomId: this.props.roomId,
         data: { point: 'null', story_id: this.props.storyId }
-      });
+      })
     }
   }
 
@@ -61,7 +61,7 @@ export default class ActionBox extends React.Component {
       App.rooms.perform('clear_votes', {
         roomId: this.props.roomId,
         data: { story_id: this.props.storyId }
-      });
+      })
     }
   }
 
@@ -83,12 +83,12 @@ export default class ActionBox extends React.Component {
   }
 
   componentDidMount() {
-    EventEmitter.subscribe("resetActionBox", this.resetActionBox);
+    EventEmitter.subscribe("resetActionBox", this.resetActionBox)
     if (this.props.roomState !== "draw" && this.props.countDown > 0) {
       this.intervalId = setInterval(this.timer, 1000)
     }
     if (this.props.roomState === 'open') {
-      RoomActions.showResultSection();
+      RoomActions.showResultSection()
     }
 
     let text

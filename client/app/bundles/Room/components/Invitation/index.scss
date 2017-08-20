@@ -1,0 +1,28 @@
+a.invitation__link {
+  color: #444;
+  text-decoration: none;
+}
+
+.invitation {
+  .invitation__add {
+    margin-top: 10px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .invitation__remove {
+    margin-top: 3px;
+    padding-left: 0;
+    font-size: 1.3em;
+  }
+
+  .invitation__icon--on {
+    color: #5bc0de;
+  }
+
+  .invitation--sent {
+    text-align: center;
+  }
+}

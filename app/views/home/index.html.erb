@@ -1,8 +1,8 @@
-<% cache Rails.root do %>
+<% cache "#{I18n.locale}:#{Rails.root}" do %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= I18n.locale %>">
 <head>
-  <title>Online Planning Poker | Pokrex</title>
+  <title><%= t("site.title") %> | Pokrex</title>
   <meta name="description" content="<%= default_description %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
@@ -35,28 +35,26 @@
           Pokre<span>x</span>
         </a>
         <div class="header-actions pull-right">
-          <a href="<%= new_user_session_path %>" class="link login navbar-btn">Login</a>
-          <a href="<%= new_user_registration_path %>" class="link sign-up btn btn-reg navbar-btn">Sign up</a>
+          <a href="<%= new_user_session_path %>" class="link login navbar-btn"><%= t("user.login") %></a>
+          <a href="<%= new_user_registration_path %>" class="link sign-up btn btn-reg navbar-btn"><%= t("user.signup") %></a>
         </div>
         <div class="clearfix"></div>
       </div>
     </div>
     <div class="row neck">
       <div class="slogan">
-        <h1>
-          The easiest way to planning poker
-        </h1>
+        <h1><%= t("site.slogan") %></h1>
         <h2>
-          Make agile estimating and planning easy with our online planning or scrum poker tool, aiming at simplicity and efficiency.
+          <%= t("site.sub_slogan") %>
         </h2>
       </div>
       <div class="sign-up container">
         <div class="row action input">
           <div class="get-started col-md-5">
               <div class="input-group input-group-lg">
-                <input type="email" name="email" class="form-control email" value="" placeholder="Email address">
+                <input type="email" name="email" class="form-control email" value="" placeholder="<%= t("user.email_address") %>">
                 <a class="input-group-btn" id="sign-up-btn" href="<%= new_user_registration_path %>" target="_blank">
-                  <button class="btn btn-info" type="button">Sign up</button>
+                  <button class="btn btn-info" type="button"><%= t("user.join") %></button>
                 </a>
               </div>
           </div><!-- /input-group -->
@@ -70,12 +68,12 @@
         </div>
 
         <div class="col-xs-4 col-md-4 text-section">
-          <h3>Room</h3>
-          <p>In a room, will be a round of planning or grooming. Participants can easily join by opening the link.</p>
+          <h3><%= t("intro.room") %></h3>
+          <p><%= t("intro.room_desc") %></p>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i>Easy to use</li>
-            <li><i class="fa fa-check"></i>Automatically switch story/card</li>
-            <li><i class="fa fa-check"></i>Elegant way to show vote status</li>
+            <li><i class="fa fa-check"></i><%= t("intro.room_f_1") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.room_f_2") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.room_f_3") %></li>
           </ul>
         </div>
       </div>
@@ -83,13 +81,13 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-4 col-md-4 text-section">
-          <h3>Dashboard</h3>
-          <p>A dashboard, is where you can see all your data status, including statistics, history, all planning/groomming rooms and recent stories/cards.</p>
+          <h3><%= t("intro.dashboard") %></h3>
+          <p><%= t("intro.dashboard_desc") %></p>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i>Quick stats</li>
-            <li><i class="fa fa-check"></i>Know planning/grooming meeting status</li>
-            <li><i class="fa fa-check"></i>Acknowledge history and frequency</li>
-            <li><i class="fa fa-check"></i>Quick check recent stories/cards point</li>
+            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_1") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_2") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_3") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_4") %></li>
           </ul>
         </div>
         <div class="col-xs-8 col-md-8 image-section">
@@ -108,7 +106,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Sign up</h4>
+            <h4 class="modal-title"><%= t("user.join") %></h4>
           </div>
           <div class="modal-body">
           </div>

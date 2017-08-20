@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { omniauth_callbacks: 'users/omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
+  require 'sidekiq/web'
 
   post 'home/feedback'
   get 'home/sign_up_form'
@@ -10,6 +11,15 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
 
+  admin_constraint = lambda do |request|
+    request.env['warden'].authenticate? and request.env['warden'].user.admin?
+  end
+
+  constraints admin_constraint do
+    mount Logster::Web => "/logs"
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   resources :rooms do
     member do
       get :story_list
@@ -17,6 +27,9 @@ Rails.application.routes.draw do
       post :set_room_status
       get :draw_board
       post :switch_role
+      get :summary
+      post :invite
+      post :timing
     end
   end
 

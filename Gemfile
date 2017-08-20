@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.0'
+gem 'rails', '5.1.2'
 
 gem 'mysql2', '~> 0.4.4'
 
@@ -27,6 +27,8 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
+gem 'redis'
+gem 'logster'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -37,17 +39,20 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "react_on_rails", "~> 6"
+gem "react_on_rails", "~> 8.0.5"
+gem "webpacker_lite"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
+gem 'sidekiq'
 gem 'mina-puma', '1.0.1', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
+gem 'mina-sidekiq', :require => false
 
-# gem 'rack-mini-profiler'
-# gem 'flamegraph'
-# gem 'stackprof'     # For Ruby MRI 2.1+
+gem 'rack-mini-profiler'
+gem 'flamegraph'
+gem 'stackprof'     # For Ruby MRI 2.1+
 # gem 'fast_stack'    # For Ruby MRI 2.0
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -64,7 +69,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'skylight'
+  gem 'scout_apm'
   gem 'god'
 end
 

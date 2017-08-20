@@ -15,5 +15,7 @@ module Poker
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 
     config.eager_load_paths += ["app/presenters", "app/repositories"]
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

@@ -5,6 +5,7 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/puma'
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/sitemap_generator'
+require 'mina_sidekiq/tasks'
 
 set :domain, 'pokrex.com'
 set :deploy_to, '/home/hlcfan/pokr'
@@ -12,11 +13,14 @@ set :app_path,  "#{fetch(:current_path)}"
 set :repository, 'https://github.com/hlcfan/pokr.git'
 set :branch, 'master'
 set :user, 'hlcfan'
+set :identity_file, "/Users/alexshi/.ssh/google_vm"
 set :keep_releases, 5
 set :term_mode, :system
 set :rails_env, 'production'
 set :force_asset_precompile, true
+set :pty, false
 
+set :sidekiq_pid, "tmp/pids/sidekiq.pid"
 set :puma_socket, '/tmp/puma_pokr.sock'
 set :puma_pid, 'tmp/pids/puma.pid'
 set :puma_state, 'tmp/sockets/puma.state'
@@ -27,8 +31,8 @@ set :puma_state, 'tmp/sockets/puma.state'
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 # set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
-set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'client/node_modules'])
-set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml'])
+set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'public/webpack', 'client/node_modules'])
+set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml', 'config/scout_apm.yml'])
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
@@ -73,10 +77,10 @@ task :deploy => :environment do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
     invoke :'git:clone'
+    # invoke :'sidekiq:quiet'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'yarn:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
@@ -84,6 +88,7 @@ task :deploy => :environment do
       invoke :'puma:phased_restart'
       invoke :'whenever:update'
       invoke :'sitemap:create'
+      invoke :'sidekiq:restart'
     end
   end
 end
@@ -123,7 +128,7 @@ namespace :yarn do
   desc "Yarn install"
   task :install do
     command %{
-      echo "-----> Npm installing for #{fetch(:app_path)}"
+      echo "-----> Yarn for #{fetch(:app_path)}"
     }
     command "cd #{fetch(:app_path)}"
     command "yarn"
