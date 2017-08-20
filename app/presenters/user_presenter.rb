@@ -9,7 +9,7 @@ class UserPresenter < SimpleDelegator
   # end
 
   def participated_rooms page=1
-    @participated_rooms ||= rooms.offset(page).order("created_at DESC").limit(PER_PAGE).to_a
+    @participated_rooms ||= rooms.offset(page-1).order("created_at DESC").limit(PER_PAGE).to_a
   end
 
   def timestamp_for_line_chart
