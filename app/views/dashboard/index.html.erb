@@ -56,25 +56,11 @@
     <div class="col-md-7">
       <div class="panel panel-none">
         <div class="panel-heading"><h5>Rooms</h5></div>
-        <div class="panel-body">
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#participated" aria-controls="participated" role="tab" data-toggle="tab">Participated</a></li>
-            <li role="presentation"><a href="#created" aria-controls="created" role="tab" data-toggle="tab">Created</a></li>
-          </ul>
-
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="participated">
-              <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room, cache: true %>
-            </div>
-
-            <div role="tabpanel" class="tab-pane" id="created">
-              <div class="list-group">
-                <%= render partial: "dashboard/room_item", collection: @user.created_rooms, as: :room, cache: true %>
-              </div>
-            </div>
-          </div>
+        <div class="panel-body participated">
+          <%= render partial: "dashboard/room_item", collection: @user.participated_rooms, as: :room, cache: true %>
+        </div>
+        <div class="panel-footer">
+          <a href="javascript:;" class="load-participated">Panel footer</a>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 class UserPresenter < SimpleDelegator
 
-  PER_PAGE = 10
+  PER_PAGE = 5
 
-  def created_rooms page=1
-    participated_rooms(page).select do |room|
-      id == room.created_by
-    end
-  end
+  # def created_rooms page=1
+  #   participated_rooms(page).select do |room|
+  #     id == room.created_by
+  #   end
+  # end
 
   def participated_rooms page=1
     @participated_rooms ||= rooms.offset(page).order("created_at DESC").limit(PER_PAGE).to_a

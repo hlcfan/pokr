@@ -1,13 +1,6 @@
 .dashboard {
-  .nav-tabs li:first-child {
-    margin-left: 15px;
-  }
 
-  .nav.nav-tabs a {
-    color: #333;
-  }
-
-  .tab-content a.room-list-item, a.story-list-item {
+  .participated a.room-list-item, a.story-list-item {
     display: block;
     text-decoration: none;
     padding-left: 15px;
