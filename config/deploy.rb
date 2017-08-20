@@ -32,7 +32,7 @@ set :puma_state, 'tmp/sockets/puma.state'
 # They will be linked in the 'deploy:link_shared_paths' step.
 # set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
 set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'public/webpack', 'client/node_modules'])
-set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml'])
+set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml', 'config/scout_apm.yml'])
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
@@ -77,7 +77,7 @@ task :deploy => :environment do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
     invoke :'git:clone'
-    invoke :'sidekiq:quiet'
+    # invoke :'sidekiq:quiet'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
