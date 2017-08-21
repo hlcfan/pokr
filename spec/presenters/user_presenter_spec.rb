@@ -17,17 +17,6 @@ RSpec.describe UserPresenter do
     end
   end
 
-  describe "#created_rooms" do
-    it "returns user created rooms" do
-      room_1 = Room.create(name: "room 1", created_by: user.id)
-      room_2 = Room.create(name: "room 2")
-      UserRoom.create(user_id: user.id, room_id: room_1.id)
-      UserRoom.create(user_id: user.id, room_id: room_2.id)
-
-      expect(user_presented.created_rooms.first).to eq room_1
-    end
-  end
-
   describe "#recent_stories" do
     it "returns recent groomed stories by current user" do
       story_1 = Story.create(link: 'http://jira.com/123', point: 1)

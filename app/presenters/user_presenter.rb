@@ -2,14 +2,14 @@ class UserPresenter < SimpleDelegator
 
   PER_PAGE = 10
 
-  # def created_rooms page=1
-  #   participated_rooms(page).select do |room|
-  #     id == room.created_by
-  #   end
-  # end
-
   def participated_rooms page=1
-    @participated_rooms ||= rooms.offset((page-1)*PER_PAGE).order("created_at DESC").limit(PER_PAGE).to_a
+    @participated_rooms ||= begin
+      if page < 1
+        []
+      else
+        rooms.offset((page-1)*PER_PAGE).order("created_at DESC").limit(PER_PAGE).to_a
+      end
+    end
   end
 
   def timestamp_for_line_chart
