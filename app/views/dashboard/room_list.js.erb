@@ -1,4 +1,4 @@
 $('.participated').append("<%= escape_javascript(render partial: 'dashboard/room_item', collection: @rooms, as: :room, cache: true) %>");
 if (<%= @rooms.size == 0 %>) {
-  $('.more').remove();
+  $('.more').parent().remove();
 }

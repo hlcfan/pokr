@@ -1,6 +1,6 @@
 class UserPresenter < SimpleDelegator
 
-  PER_PAGE = 5
+  PER_PAGE = 10
 
   # def created_rooms page=1
   #   participated_rooms(page).select do |room|
