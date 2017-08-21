@@ -105,26 +105,11 @@ RSpec.describe User, type: :model do
   end
 
   describe ".find_for_oauth" do
-    before do
-      unless defined?(AUTH)
-        AUTH = Struct.new(:uid, :provider, :info, :extra)
-      end
-      unless defined?(AUTH_INFO)
-        AUTH_INFO = Struct.new(:email, :image)
-      end
-      unless defined?(AUTH_EXTRA)
-        AUTH_EXTRA = Struct.new(:raw_info)
-      end
-      unless defined?(AUTH_EXTRA_RAWINFO)
-        AUTH_EXTRA_RAWINFO = Struct.new(:name)
-      end
-    end
-
     it "creates authorization and user if none exists" do
-      auth_info = AUTH_INFO.new("alex@pokrex.com", "alex.png")
-      auth_extra_rawinfo = AUTH_EXTRA_RAWINFO.new("hlcfan")
-      auth_extra = AUTH_EXTRA.new(auth_extra_rawinfo)
-      auth = AUTH.new("12345", "weibo", auth_info, auth_extra)
+      auth_info = double(email: "alex@pokrex.com", image: "alex.png")
+      auth_extra_rawinfo = double(name: "hlcfan")
+      auth_extra = double(raw_info: auth_extra_rawinfo)
+      auth = double(uid: "12345", provider: "weibo", info: auth_info, extra: auth_extra)
 
       user = User.find_for_oauth auth, nil
 
@@ -135,10 +120,10 @@ RSpec.describe User, type: :model do
     end
 
     it "updates user image and create new authorization if login with oauth shared same email" do
-      auth_info = AUTH_INFO.new("alex@pokrex.com", "alex.png")
-      auth_extra_rawinfo = AUTH_EXTRA_RAWINFO.new("hlcfan")
-      auth_extra = AUTH_EXTRA.new(auth_extra_rawinfo)
-      auth = AUTH.new("12345", "weibo", auth_info, auth_extra)
+      auth_info = double(email: "alex@pokrex.com", image: "alex.png")
+      auth_extra_rawinfo = double(name: "hlcfan")
+      auth_extra = double(raw_info: auth_extra_rawinfo)
+      auth = double(uid: "12345", provider: "weibo", info: auth_info, extra: auth_extra)
 
       user = User.new name: "alex", email: "alex@pokrex.com", password: "what-ever"
       user.avatar = File.new "#{Rails.root}/spec/fixtures/avatar.png"
