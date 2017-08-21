@@ -1,13 +1,5 @@
 .dashboard {
-  .nav-tabs li:first-child {
-    margin-left: 15px;
-  }
-
-  .nav.nav-tabs a {
-    color: #333;
-  }
-
-  .tab-content a.room-list-item, a.story-list-item {
+  .participated a.room-list-item, a.story-list-item {
     display: block;
     text-decoration: none;
     padding-left: 15px;
@@ -48,6 +40,25 @@
 
     .story-list-item-text {
       margin-bottom: 10px;
+    }
+  }
+
+  a.more {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  a.more.loading {
+    &:before {
+      content: " ";
+      background: image-url("gear.svg");
+      width: 20px;
+      height: 20px;
+      background-size: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 53%;
     }
   }
 

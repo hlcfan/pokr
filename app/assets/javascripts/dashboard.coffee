@@ -38,6 +38,21 @@ class Dashboard
           maintainAspectRatio: false
           scales: yAxes: [ { ticks: beginAtZero: true } ])
 
+    $(".more").on 'click', ->
+      page = $(this).data('page') || 2
+      moreButton = $(this)
+      moreButton.addClass("loading")
+      $.ajax(
+        type: 'GET'
+        beforeSend: (xhr) ->
+          xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+          return
+        url: '/dashboard/room_list?page=' + page
+      ).done (data) ->
+        page += 1;
+        moreButton.data('page', page)
+        moreButton.removeClass("loading")
+
 $(document).on 'turbolinks:load', ->
   $('.dashboard.index').ready ->
     dashboard = new Dashboard

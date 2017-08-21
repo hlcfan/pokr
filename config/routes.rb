@@ -41,7 +41,11 @@ Rails.application.routes.draw do
   get 'profile/edit' => 'profile#edit'
   patch 'profile/update' => 'profile#update'
   patch 'profile/update_password' => 'profile#update_password'
-  resources :dashboard, only: [:index]
+  resources :dashboard, only: [:index] do
+    collection do
+      get :room_list
+    end
+  end
 
   match "/404" => "errors#not_found", via: [ :get, :post, :patch, :delete ]
 
