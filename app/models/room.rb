@@ -113,20 +113,20 @@ class Room < ApplicationRecord
     end
   end
 
-  def time_duration
-    return duration if duration.present?
+  # def time_duration
+  #   return duration if duration.present?
 
-    @time_duration ||= begin
-      all_stories = stories.to_a
-      first_story = all_stories.first
-      last_story = all_stories.last
-      if first_story.present? && last_story.present?
-        Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
-          calc_duration_between first_story, last_story
-        end
-      end || 0
-    end
-  end
+  #   @time_duration ||= begin
+  #     all_stories = stories.to_a
+  #     first_story = all_stories.first
+  #     last_story = all_stories.last
+  #     if first_story.present? && last_story.present?
+  #       Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
+  #         calc_duration_between first_story, last_story
+  #       end
+  #     end || 0
+  #   end
+  # end
 
   def user_list params={}
     user_story_points = (UserStoryPoint.joins(user: :user_rooms)
