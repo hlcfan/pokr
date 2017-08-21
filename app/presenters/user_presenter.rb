@@ -14,16 +14,16 @@ class UserPresenter < SimpleDelegator
 
   def timestamp_for_line_chart
     Rails.cache.fetch "#{id}:timeline" do
-      rooms_for_chart.map do |room|
-        room.created_at.strftime("%b %d")
+      rooms_for_chart.map do |created_at, _|
+        created_at.strftime("%b %d")
       end
     end
   end
 
   def story_size_for_line_chart
     Rails.cache.fetch "#{id}:storysize" do
-      rooms_for_chart.map do |room|
-        room.stories.size
+      rooms_for_chart.map do |_, size|
+        size
       end
     end
   end
