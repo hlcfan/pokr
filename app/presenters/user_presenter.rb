@@ -13,14 +13,18 @@ class UserPresenter < SimpleDelegator
   end
 
   def timestamp_for_line_chart
-    participated_rooms.reverse.map do |room|
-      room.created_at.strftime("%b %d")
+    Rails.cache.fetch "#{id}:timeline" do
+      rooms_for_chart.map do |room|
+        room.created_at.strftime("%b %d")
+      end
     end
   end
 
   def story_size_for_line_chart
-    participated_rooms.reverse.map do |room|
-      room.stories.size
+    Rails.cache.fetch "#{id}:storysize" do
+      rooms_for_chart.map do |room|
+        room.stories.size
+      end
     end
   end
 
@@ -61,6 +65,12 @@ class UserPresenter < SimpleDelegator
     else
       0
     end
+  end
+
+  private
+
+  def rooms_for_chart
+    rooms.pluck(:created_at, :stories_count)
   end
 
 end
