@@ -40,8 +40,8 @@ class UserPresenter < SimpleDelegator
 
   def time_spent
     @time_spent ||= begin
-      participated_rooms.inject(0) do |total, room|
-        total + room.time_duration
+      rooms_for_chart.inject(0) do |total, (_, _, duration)|
+        total + (duration || 0)
       end
     end
   end
@@ -70,7 +70,7 @@ class UserPresenter < SimpleDelegator
   private
 
   def rooms_for_chart
-    rooms.pluck(:created_at, :stories_count)
+    rooms.pluck(:created_at, :stories_count, :duration)
   end
 
 end
