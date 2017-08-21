@@ -39,7 +39,9 @@ class Dashboard
           scales: yAxes: [ { ticks: beginAtZero: true } ])
 
     $(".more").on 'click', ->
-      page = $(this).data('page') || 2;
+      page = $(this).data('page') || 2
+      moreButton = $(this)
+      moreButton.addClass("loading")
       $.ajax(
         type: 'GET'
         beforeSend: (xhr) ->
@@ -48,7 +50,8 @@ class Dashboard
         url: '/dashboard/room_list?page=' + page
       ).done (data) ->
         page += 1;
-        $(".more").data('page', page)
+        moreButton.data('page', page)
+        moreButton.removeClass("loading")
 
 $(document).on 'turbolinks:load', ->
   $('.dashboard.index').ready ->

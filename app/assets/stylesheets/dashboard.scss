@@ -47,7 +47,9 @@
     display: block;
     text-align: center;
     text-decoration: none;
+  }
 
+  a.more.loading {
     &:before {
       content: " ";
       background: image-url("gear.svg");
