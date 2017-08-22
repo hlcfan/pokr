@@ -103,7 +103,7 @@ RSpec.describe Room, type: :model do
   end
 
   describe "#slug!" do
-    it "generates slug before create" do
+    it "generates slug when latin chars" do
       room = Room.create(name: "test slug")
       expect(room.slug).to eq "test-slug"
       expect(room.slug).to be_present
@@ -116,9 +116,15 @@ RSpec.describe Room, type: :model do
       expect(room_2.slug).not_to eq room_1.slug
     end
 
-    it "replace _ or - to space and then generates slug" do
-      room = Room.create(name: 'test_slug')
-      expect(room.slug).to eq "test-slug"
+    it "translates name when Chinese" do
+      room = Room.create(name: '测试')
+      expect(room.slug).to eq "ce-shi"
+      expect(room.slug).to be_present
+    end
+
+    it "translates name when name with date" do
+      room = Room.create(name: 'test 2012/12/12')
+      expect(room.slug).to eq "test-2012-12-12"
       expect(room.slug).to be_present
     end
   end

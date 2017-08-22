@@ -198,8 +198,13 @@ class Room < ApplicationRecord
   end
 
   def slug!
-    revised_name = name.gsub(/_|-/, " ")
-    permlink = PinYin.permlink(revised_name).downcase
+    # if it's latin letters
+    permlink = if /^[a-zA-Z0-9_\-\/+ ]*$/ =~ name
+      name.parameterize
+    else
+      PinYin.permlink(name).downcase
+    end
+
     if Room.find_by(slug: permlink).present?
       permlink = "#{permlink}-#{SecureRandom.random_number(100000)}"
     end
