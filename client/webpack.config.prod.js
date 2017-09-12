@@ -101,7 +101,10 @@ module.exports = merge.smart(config, {
       minimize: true,
       debug: false
     }),
-    new ManifestPlugin(),
+    new ManifestPlugin({
+      publicPath: config.output.publicPath,
+      writeToFileEmit: true
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       // This name 'vendor-bundle' ties into the entry definition
       name: 'vendor-bundle',
