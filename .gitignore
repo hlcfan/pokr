@@ -22,7 +22,6 @@
 *.swo
 
 config/database.yml
-config/scout_apm.yml
 .idea/
 public/system
 # React on Rails
