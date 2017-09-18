@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def extract_locale_from_accept_language_header
-    http_accept_language.preferred_language_from I18n.available_locales
+    http_accept_language.compatible_language_from I18n.available_locales
   end
 
   def store_location
