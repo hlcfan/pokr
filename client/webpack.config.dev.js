@@ -10,6 +10,7 @@ const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const configPath = resolve('..', 'config');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
+const { output, settings } = webpackConfigLoader(configPath);
 const { webpackOutputPath, webpackPublicOutputDir } = webpackConfigLoader(configPath);
 const config = require('./webpack.config.base');
 
@@ -76,7 +77,10 @@ module.exports = merge(config, {
       minimize: false,
       debug: false
     }),
-    new ManifestPlugin(),
+    new ManifestPlugin({
+      publicPath: output.publicPath,
+      writeToFileEmit: true
+    }),
     // https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk
     new webpack.optimize.CommonsChunkPlugin({
       // This name 'vendor-bundle' ties into the entry definition

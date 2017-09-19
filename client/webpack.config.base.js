@@ -5,8 +5,8 @@
 const { resolve } = require('path');
 const configPath = resolve('..', 'config');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
-const { webpackOutputPath, webpackPublicOutputDir } = webpackConfigLoader(configPath);
-const { manifest } = webpackConfigLoader(configPath);
+const { output, settings } = webpackConfigLoader(configPath);
+const isHMR = !!settings.dev_server ? settings.dev_server.hmr : false;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -21,11 +21,11 @@ module.exports = {
   },
 
   output: {
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[hash].js',
-    // Leading and trailing slashes ARE necessary.
-    publicPath: '/' + webpackPublicOutputDir + '/',
-    path: webpackOutputPath,
+    filename: isHMR ? '[name]-[hash].js' : '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash].chunk.js',
+
+    publicPath: output.publicPath,
+    path: output.path,
   },
 
   devtool: 'eval-source-map',
