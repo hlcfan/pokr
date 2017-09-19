@@ -29,6 +29,7 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'redis'
 gem 'logster'
+gem 'http_accept_language'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
