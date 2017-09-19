@@ -29,6 +29,7 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'redis'
 gem 'logster'
+gem 'http_accept_language'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -39,8 +40,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "react_on_rails", "~> 8.0.5"
-gem "webpacker_lite"
+gem "react_on_rails", "~> 9"
+gem "webpacker"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
 gem 'sidekiq'
