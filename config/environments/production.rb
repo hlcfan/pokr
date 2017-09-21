@@ -74,7 +74,7 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'pokrex.com' }
 
-  config.action_cable.url = '/cable'
+  config.action_cable.url = 'wss://pokrex.com/cable'
   config.action_cable.allowed_request_origins = [ 'https://pokrex.com' ]
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
