@@ -1,5 +1,7 @@
 class Rooms
   init: ->
+    current_scheme_type = $("#scheme_type").val()
+
     $('.import').on 'click', ->
       if $('.import').data('status') == 'input'
         $('#story-row .row').hide()
@@ -25,13 +27,22 @@ class Rooms
       $('.import').toggle()
       return
 
+    $(".schemes-type .label").on "click", ->
+      $(".schemes-type .label").toggleClass("label-info label-default")
+      $(".point-values").removeClass("active")
+      current_scheme_type = $(this).data("target")
+      $activeSchemePanel = $(".point-values." + current_scheme_type)
+      $activeSchemePanel.toggleClass("active")
+      # $activeSchemePanel.find(".btn").addClass("btn-default btn-info")
+      selectedPointValues = $.map $activeSchemePanel.find(".btn-info"), (input) ->
+        input.value
+      # debugger
+      $("#room_scheme_type").val current_scheme_type
+      $pointValues = $('#point-values')
+      $pointValues.val selectedPointValues.join(",")
+
     $('.point-values li input').on 'click', ->
-      if $(this).hasClass('btn-info')
-        $(this).removeClass 'btn-info'
-        $(this).addClass 'btn-default'
-      else
-        $(this).removeClass 'btn-default'
-        $(this).addClass 'btn-info'
+      $(this).toggleClass("btn-info btn-default")
       $pointValues = $('#point-values')
       currentValue = $(this).val()
       selectedPointValues = $pointValues.val()
@@ -44,6 +55,7 @@ class Rooms
       selectedPointValues = selectedPointValuesArray.join(',')
       $pointValues.val selectedPointValues
       return
+
     $('.room--style--icon').popover()
 
     matchedUsers = new Bloodhound(
