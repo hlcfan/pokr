@@ -51,9 +51,13 @@ gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
 gem 'mina-sidekiq', :require => false
 
-gem 'rack-mini-profiler'
-gem 'flamegraph'
-gem 'stackprof'     # For Ruby MRI 2.1+
+# Disable for error:
+# Rack app error handling request { POST /mini-profiler-resources/results }
+# #<Errno::ETIMEDOUT: Operation timed out - user specified timeout>
+# gem 'rack-mini-profiler'
+# gem 'flamegraph'
+# gem 'stackprof'     # For Ruby MRI 2.1+
+
 # gem 'fast_stack'    # For Ruby MRI 2.0
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
