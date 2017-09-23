@@ -16,7 +16,6 @@ RSpec.describe RoomsHelper, type: :helper do
   describe "#render_point_values" do
     it "generates form input tag with different button styles for point values of rooms" do
       html = render_point_values false, %w(0 1 2 5 8 13 20), %w(1 5 13)
-      binding.pry
       expect(html).to include '<input class="btn btn-default" type="button" value="0" />'
       expect(html).to include '<input class="btn btn-info" type="button" value="1" />'
       expect(html).to include '<input class="btn btn-default" type="button" value="2" />'
