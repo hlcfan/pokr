@@ -33,10 +33,9 @@ class Rooms
       current_scheme_type = $(this).data("target")
       $activeSchemePanel = $(".point-values." + current_scheme_type)
       $activeSchemePanel.toggleClass("active")
-      # $activeSchemePanel.find(".btn").addClass("btn-default btn-info")
       selectedPointValues = $.map $activeSchemePanel.find(".btn-info"), (input) ->
         input.value
-      # debugger
+
       $("#room_scheme_type").val current_scheme_type
       $pointValues = $('#point-values')
       $pointValues.val selectedPointValues.join(",")

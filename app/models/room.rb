@@ -236,7 +236,6 @@ class Room < ApplicationRecord
   end
 
   def sort_point_values
-    # binding.pry
     if self.pv_changed?
       scheme_type_part, scheme_points_part = self.pv.split(":")
       scheme_points = scheme_points_part.split(',').sort_by do |value|
