@@ -8,10 +8,10 @@ module RoomsHelper
     end
   end
 
-  def render_point_values numbers, room_points
+  def render_point_values new_record, numbers, room_points
     numbers.inject(''.html_safe) do |html, value|
       html + content_tag(:li) do
-        btn_class = if @room.new_record? || room_points.include?(value)
+        btn_class = if new_record || room_points.include?(value)
           "btn btn-info"
         else
           "btn btn-default"

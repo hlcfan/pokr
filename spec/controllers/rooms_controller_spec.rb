@@ -86,7 +86,7 @@ RSpec.describe RoomsController, type: :controller do
     context "with valid params" do
       let(:moderator) { User.create(name: "Mod", email: "mod.r@ator", password: "password") }
       let(:new_attributes) {
-        { name: "another name", pv: "13,8,1,5", moderator_ids: "#{moderator.id}-#{moderator.name}" }
+        { name: "another name", scheme: "fibonacci", pv: "13,8,1,5", moderator_ids: "#{moderator.id}-#{moderator.name}" }
       }
 
       it "updates the requested room" do
