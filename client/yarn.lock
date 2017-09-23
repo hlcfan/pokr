@@ -3229,7 +3229,14 @@ react-joyride@^1.10.1:
     react-autobind "^1.0"
     scroll "^2.0"
 
-react-on-rails@9.0.2, react-on-rails@^9.0.0-beta.12:
+react-on-rails@9.0.3:
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-9.0.3.tgz#da8a9873a94d62fe91e1f80d76716583f2be9da7"
+  dependencies:
+    react-on-rails "^9.0.0-beta.12"
+    react-redux "^5.0.6"
+
+react-on-rails@^9.0.0-beta.12:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-9.0.2.tgz#fe33a52dd3fe36338d08c18adbf5bc2515de10db"
   dependencies:

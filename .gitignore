@@ -27,10 +27,11 @@ public/system
 # React on Rails
 npm-debug.log*
 node_modules
-public/packs
 
 # Generated js bundles
-/app/assets/webpack/*
 oauth.yml.template
 
 active_record_log_subscriber.rb
+/public/packs
+/public/webpack
+/public/packs-test
