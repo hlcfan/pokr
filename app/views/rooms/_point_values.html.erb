@@ -1,8 +1,9 @@
-<div>
+<div class="schemes-type">
   <% Room::DEFAULT_POINT_VALUES.each do |scheme_type, numbers| %>
-    <span class="label label-primary" data-target="<%= scheme_type %>"><%= scheme_type %></span>  
+    <span class="label <%= scheme_type == @room.scheme_type ? "label-info" : "label-default" %>" data-target="<%= scheme_type %>"><%= scheme_type %></span>
   <% end %>
 </div>
+<hr />
 <div>
   <% Room::DEFAULT_POINT_VALUES.each do |scheme_type, numbers| %>
     <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values <%= "active" if @room.scheme_type == scheme_type %>">

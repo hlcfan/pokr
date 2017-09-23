@@ -229,7 +229,19 @@
     height: 200px;
   }
 
+  .schemes-type {
+    .label {
+      cursor: pointer;
+    }
+  }
+
   .point-values {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+
     li input {
       width: 80px;
       margin-bottom: 15px;
