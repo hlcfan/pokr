@@ -193,6 +193,10 @@ class Room < ApplicationRecord
     end
   end
 
+  def pv_for_form
+    point_values.join(",")
+  end
+
   private
 
   def moderators
@@ -232,10 +236,13 @@ class Room < ApplicationRecord
   end
 
   def sort_point_values
+    # binding.pry
     if self.pv_changed?
-      self.pv = self.pv.split(',').sort_by do |value|
-        DEFAULT_POINT_VALUES["fibonacci"].index value
+      scheme_type_part, scheme_points_part = self.pv.split(":")
+      scheme_points = scheme_points_part.split(',').sort_by do |value|
+        DEFAULT_POINT_VALUES[scheme_type_part].index value
       end.join(',')
+      self.pv = "#{scheme_type_part}:#{scheme_points}"
     end
   end
 
