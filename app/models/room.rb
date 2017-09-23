@@ -12,6 +12,7 @@ class Room < ApplicationRecord
 
   before_create :slug!
   before_save :sort_point_values
+  after_initialize :default_values
 
   attr_accessor :moderator_ids
 
@@ -98,16 +99,8 @@ class Room < ApplicationRecord
       if self.pv.blank?
         DEFAULT_POINT_VALUES["fibonacci"]
       else
-        self.pv.split(":")[1].split(',')
+        self.pv.split(',')
       end
-    end
-  end
-
-  def scheme_type
-    if self.pv.present?
-      self.pv.split(":")[0]
-    else
-      "fibonacci"
     end
   end
 
@@ -236,12 +229,10 @@ class Room < ApplicationRecord
   end
 
   def sort_point_values
-    if self.pv_changed?
-      scheme_type_part, scheme_points_part = self.pv.split(":")
-      scheme_points = scheme_points_part.split(',').sort_by do |value|
-        DEFAULT_POINT_VALUES[scheme_type_part].index value
+    if self.pv_changed? || self.scheme_changed?
+      self.pv = self.pv.split(',').sort_by do |value|
+        DEFAULT_POINT_VALUES[self.scheme].index value
       end.join(',')
-      self.pv = "#{scheme_type_part}:#{scheme_points}"
     end
   end
 
@@ -267,6 +258,10 @@ class Room < ApplicationRecord
     else
       'Watcher'
     end
+  end
+
+  def default_values
+    self.scheme ||= "fibonacci"
   end
 
 end

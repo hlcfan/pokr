@@ -1,6 +1,6 @@
 class Rooms
   init: ->
-    current_scheme_type = $("#scheme_type").val()
+    current_scheme_type = $("#room_scheme").val()
 
     $('.import').on 'click', ->
       if $('.import').data('status') == 'input'
@@ -36,7 +36,7 @@ class Rooms
       selectedPointValues = $.map $activeSchemePanel.find(".btn-info"), (input) ->
         input.value
 
-      $("#room_scheme_type").val current_scheme_type
+      $("#room_scheme").val current_scheme_type
       $pointValues = $('#point-values')
       $pointValues.val selectedPointValues.join(",")
 

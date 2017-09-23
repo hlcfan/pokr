@@ -8,7 +8,7 @@ module RoomsHelper
     end
   end
 
-  def render_point_values numbers, room_points, scheme_type
+  def render_point_values numbers, room_points
     numbers.inject(''.html_safe) do |html, value|
       html + content_tag(:li) do
         btn_class = if @room.new_record? || room_points.include?(value)

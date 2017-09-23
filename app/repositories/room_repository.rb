@@ -4,7 +4,6 @@ class RoomRepository
     @params = params
 
     bulk_import_stories
-    preset_point_scheme!
     add_sequence_to_stories
     permit_params!
 
@@ -13,7 +12,6 @@ class RoomRepository
 
   def update_entity room, params
     @params = params
-    preset_point_scheme!
     add_sequence_to_stories
     moderator_ids = (@params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
       0 == moderator_id && moderator_id.blank?
@@ -93,10 +91,6 @@ class RoomRepository
     if @params[:stories_attributes].is_a? ActionController::Parameters
       @params[:stories_attributes].permit!
     end
-  end
-
-  def preset_point_scheme!
-    @params[:pv] = "#{@params.delete(:scheme_type)}:#{@params[:pv]}"
   end
 
 end
