@@ -17,7 +17,10 @@ class Room < ApplicationRecord
 
   OPEN = 1
   DRAW = 2
-  DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
+  DEFAULT_POINT_VALUES = {
+    "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
+    "1-8" => %w(0 1 2 3 4 5 6 7 8)
+  }
 
   FREESTYLE = 1
 
@@ -93,10 +96,18 @@ class Room < ApplicationRecord
   def point_values
     @point_values ||= begin
       if self.pv.blank?
-        DEFAULT_POINT_VALUES
+        DEFAULT_POINT_VALUES["fibonacci"]
       else
-        self.pv.split ','
+        self.pv.split(":")[1].split(',')
       end
+    end
+  end
+
+  def scheme_type
+    if self.pv.present?
+      self.pv.split(":")[0]
+    else
+      "fibonacci"
     end
   end
 
@@ -223,7 +234,7 @@ class Room < ApplicationRecord
   def sort_point_values
     if self.pv_changed?
       self.pv = self.pv.split(',').sort_by do |value|
-        DEFAULT_POINT_VALUES.index value
+        DEFAULT_POINT_VALUES["fibonacci"].index value
       end.join(',')
     end
   end
