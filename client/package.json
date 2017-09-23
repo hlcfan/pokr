@@ -17,7 +17,7 @@
     "client/node_modules"
   ],
   "dependencies": {
-    "actioncable": "^5.1.2",
+    "actioncable": "^5.1.4",
     "js-yaml": "^3.8.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
