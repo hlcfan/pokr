@@ -8,13 +8,13 @@
   <div>
     <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
       <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values <%= "active" if @room.scheme == scheme_type %>">
-        <%= render_point_values(@room, numbers, @room.point_values) %>
+        <%= render_point_values(true, numbers, @room.point_values) %>
       </ul>
     <% end %>
   </div>
 <% else %>
   <%= scheme_type = @room.scheme %>
   <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values <%= "active" if @room.scheme == scheme_type %>">
-    <%= render_point_values(@room, Room::POINT_SCHEMES[scheme_type], @room.point_values) %>
+    <%= render_point_values(false, Room::POINT_SCHEMES[scheme_type], @room.point_values) %>
   </ul>
 <% end %>
