@@ -1,7 +1,5 @@
 class Rooms
   init: ->
-    current_scheme_type = $("#room_scheme").val()
-
     $('.import').on 'click', ->
       if $('.import').data('status') == 'input'
         $('#story-row .row').hide()
