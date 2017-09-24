@@ -95,13 +95,7 @@ class Room < ApplicationRecord
   end
 
   def point_values
-    @point_values ||= begin
-      if self.pv.blank?
-        POINT_SCHEMES["fibonacci"]
-      else
-        self.pv.split(',')
-      end
-    end
+    @point_values ||= self.pv.split(',')
   end
 
   def valid_vote_point? point
