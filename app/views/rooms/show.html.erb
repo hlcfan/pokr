@@ -7,9 +7,6 @@
 <% end %>
 <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js"
     crossorigin="anonymous"></script>
-<script type="text/javascript">
-  Raven.config('https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730').install()
-</script>
 <%= javascript_pack_tag('vendor-bundle') %>
 <%= javascript_pack_tag('app-bundle') %>
 <%= stylesheet_pack_tag('app-bundle') %>
@@ -39,3 +36,6 @@
           duration: @room.duration
           },
   prerender: false) %>
+<script type="text/javascript">
+  Raven.config('https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730').install()
+</script>
