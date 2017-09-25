@@ -22,7 +22,7 @@ class Room < ApplicationRecord
   DRAW = 2
   POINT_SCHEMES = {
     "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
-    "1-8" => %w(0 1 2 3 4 5 6 7 8 ? coffee)
+    "0-8" => %w(0 1 2 3 4 5 6 7 8 ? coffee)
   }
 
   FREESTYLE = 1
