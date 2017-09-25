@@ -1,0 +1,20 @@
+<% if @room.new_record? %>
+  <div class="schemes-type">
+    <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
+      <span class="label <%= scheme_type == @room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_type %>"><%= scheme_type %></span>
+    <% end %>
+  </div>
+  <hr />
+  <div>
+    <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
+      <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values <%= "active" if @room.scheme == scheme_type %>">
+        <%= render_point_values(true, numbers, @room.point_values) %>
+      </ul>
+    <% end %>
+  </div>
+<% else %>
+  <%= scheme_type = @room.scheme %>
+  <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values <%= "active" if @room.scheme == scheme_type %>">
+    <%= render_point_values(false, Room::POINT_SCHEMES[scheme_type], @room.point_values) %>
+  </ul>
+<% end %>

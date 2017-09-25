@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Room < ApplicationRecord
 
   validates_presence_of :name
@@ -12,12 +14,16 @@ class Room < ApplicationRecord
 
   before_create :slug!
   before_save :sort_point_values
+  after_initialize :default_values
 
   attr_accessor :moderator_ids
 
   OPEN = 1
   DRAW = 2
-  DEFAULT_POINT_VALUES = %w(0 1 2 3 5 8 13 20 40 100 ? coffee)
+  POINT_SCHEMES = {
+    "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
+    "0-8" => %w(0 1 2 3 4 5 6 7 8 ? coffee)
+  }
 
   FREESTYLE = 1
 
@@ -91,13 +97,7 @@ class Room < ApplicationRecord
   end
 
   def point_values
-    @point_values ||= begin
-      if self.pv.blank?
-        DEFAULT_POINT_VALUES
-      else
-        self.pv.split ','
-      end
-    end
+    @point_values ||= self.pv.split(',')
   end
 
   def valid_vote_point? point
@@ -182,6 +182,10 @@ class Room < ApplicationRecord
     end
   end
 
+  def pv_for_form
+    point_values.join(",")
+  end
+
   private
 
   def moderators
@@ -221,9 +225,9 @@ class Room < ApplicationRecord
   end
 
   def sort_point_values
-    if self.pv_changed?
+    if self.pv_changed? || self.scheme_changed?
       self.pv = self.pv.split(',').sort_by do |value|
-        DEFAULT_POINT_VALUES.index value
+        POINT_SCHEMES[self.scheme].index value
       end.join(',')
     end
   end
@@ -250,6 +254,11 @@ class Room < ApplicationRecord
     else
       'Watcher'
     end
+  end
+
+  def default_values
+    self.scheme ||= "fibonacci"
+    self.pv ||= POINT_SCHEMES["fibonacci"].join(",")
   end
 
 end

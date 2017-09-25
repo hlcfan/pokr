@@ -72,8 +72,8 @@ RSpec.describe Room, type: :model do
   end
 
   describe "#point_values" do
-    it "returns default point values if pv is blank" do
-      expect(room.point_values).to eq Room::DEFAULT_POINT_VALUES
+    it "returns default fibonacci scheme if pv is blank" do
+      expect(room.point_values).to eq Room::POINT_SCHEMES["fibonacci"]
     end
 
     it "returns pv splited with comma if pv is present" do
@@ -92,7 +92,7 @@ RSpec.describe Room, type: :model do
     end
 
     it "is true if point is part of point values" do
-      Room::DEFAULT_POINT_VALUES.each do |point|
+      Room::POINT_SCHEMES["fibonacci"].each do |point|
         expect(room.valid_vote_point?(point)).to be true
       end
     end
@@ -138,7 +138,7 @@ RSpec.describe Room, type: :model do
   end
 
   describe "#sort_point_values" do
-    it "sorts point values everytime before room saved" do
+    it "sorts point values everytime before room saved according to scheme" do
       room.name = 'test'
       room.pv = %w(40 3 20 8 13).join(',')
       room.save!
@@ -346,6 +346,19 @@ RSpec.describe Room, type: :model do
     it "does not update duration if smaller duration" do
       the_room.duration = 10.3
       expect(the_room.update_duration(3.3)).to be_nil
+    end
+  end
+
+  describe "#pv_for_form" do
+    it "returns string joined by ','" do
+      expect(room.pv_for_form).to eq "0,1,2,3,5,8,13,20,40,100,?,coffee"
+    end
+  end
+
+  describe "#default_values" do
+    it "returns default scheme and pv" do
+      expect(room.scheme).to eq "fibonacci"
+      expect(room.pv).to eq "0,1,2,3,5,8,13,20,40,100,?,coffee"
     end
   end
 end

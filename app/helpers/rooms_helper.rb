@@ -8,10 +8,14 @@ module RoomsHelper
     end
   end
 
-  def generate_point_values point_values
-    Room::DEFAULT_POINT_VALUES.inject(''.html_safe) do |html, value|
+  def render_point_values new_record, numbers, room_points
+    numbers.inject(''.html_safe) do |html, value|
       html + content_tag(:li) do
-        btn_class = point_values.include?(value) ? "btn btn-info" : "btn btn-default"
+        btn_class = if new_record || room_points.include?(value)
+          "btn btn-info"
+        else
+          "btn btn-default"
+        end
 
         tag(:input, class: btn_class, type: 'button', value: value)
       end

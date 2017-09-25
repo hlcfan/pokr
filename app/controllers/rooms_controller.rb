@@ -32,7 +32,6 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
-    @room.pv = @room.point_values.join(',')
     @room.stories.build
   end
 
@@ -138,6 +137,7 @@ class RoomsController < ApplicationController
   def room_params
     params.require(:room).permit(
       :name, :pv, :timer, :style, :bulk, :bulk_links, :moderator_ids,
+      :scheme,
       stories_attributes: [:id, :link, :desc, :_destroy]
     )
   end

@@ -6,15 +6,18 @@ export const defaultTourColor = {
       }
     }
 const barColors = {
-  // 0 1 2 3 5 8 13 20 40 100 ? coffee
+  // 0 1 2 3 4 5 6 7 8 13 20 40 100 ? coffee
   "coffee": "#000532",
   "?": "#376182",
   "100": "#5e6370",
   "40":  "#a4a0a2",
   "20":  "#ff4265",
   "13":  "#07adeb",
-  "8":   "#acdfe8",
-  "5":   "#78bac2",
+  "8":   "#287d85",
+  "7":   "#66CCCC",
+  "6":   "#78bac2",
+  "5":   "#a7cabe",
+  "4":   "#acdfe8",
   "3":   "#b4eeb4",
   "2":   "#cbf3ad",
   "1":   "#ffc0cb",
