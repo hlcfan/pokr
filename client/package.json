@@ -1,11 +1,6 @@
 {
   "name": "pokrex",
   "version": "1.0.0",
-  "engines": {
-    "node": "7.3.0",
-    "npm": "5.3.0",
-    "yarn": "1.0.2"
-  },
   "license": "GPL",
   "author": "hlcfan",
   "scripts": {
