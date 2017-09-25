@@ -21,10 +21,11 @@ class RoomsChannel < ApplicationCable::Channel
                       payload["points"]) do |user_story_point|
         broadcaster "rooms/#{@room.slug}",
                     type: "notify",
-                    person_id: user_story_point.user_id,
-                    story_id: user_story_point.story_id,
-                    points: user_story_point.points,
-                    sync: @room.state == "open"
+                    person_id: user_story_point.user_id
+
+                    # story_id: user_story_point.story_id,
+                    # points: user_story_point.points,
+                    # sync: @room.state == "open"
       end
     end
   end
