@@ -3,7 +3,6 @@
  "only-multiline"} ] */
 
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const { resolve } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -11,11 +10,45 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const configPath = resolve('..', 'config');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
 const { output, settings } = webpackConfigLoader(configPath);
-const config = require('./webpack.config.base');
+const isHMR = !!settings.dev_server ? settings.dev_server.hmr : false;
 
-module.exports = merge(config, {
+module.exports = {
+  entry: {
+    'vendor-bundle': [
+      'babel-polyfill'
+    ],
+    'app-bundle': [
+      './app/bundles/Room/startup/registration',
+    ]
+  },
+  output: {
+    filename: isHMR ? '[name]-[hash].js' : '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash].chunk.js',
+
+    publicPath: output.publicPath,
+    path: output.path,
+  },
+  devtool: 'eval-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.scss'],
+    alias: {
+      libs: resolve(__dirname, 'app/libs')
+    }
+  },
   module: {
     rules: [
+      {
+        test: /\.jsx?$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(woff2?|jpe?g|png|gif|svg|ico)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
@@ -66,7 +99,7 @@ module.exports = merge(config, {
     ]
   },
   plugins: [
-    new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
+    new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV }),
     new ExtractTextPlugin({
       filename: '[name]-[hash].css',
       allChunks: true
@@ -94,4 +127,4 @@ module.exports = merge(config, {
       },
     }),
   ]
-});
+}

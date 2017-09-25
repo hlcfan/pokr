@@ -5,7 +5,7 @@
   "author": "hlcfan",
   "scripts": {
     "postinstall": "npm rebuild node-sass",
-    "test": "NODE_ENV=test webpack --config webpack.config.test.js",
+    "test": "NODE_ENV=test webpack --config webpack.config.dev.js",
     "prod": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "dev": "NODE_ENV=development webpack -w --config webpack.config.dev.js"
   },

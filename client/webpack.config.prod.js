@@ -3,19 +3,54 @@
  "only-multiline"} ] */
 
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const path = require('path');
+const { resolve } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const glob = require('glob');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const config = require('./webpack.config.base');
+const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
+const configPath = resolve('..', 'config');
+const { output, settings } = webpackConfigLoader(configPath);
+const isHMR = !!settings.dev_server ? settings.dev_server.hmr : false;
 
-module.exports = merge.smart(config, {
+module.exports = {
+  entry: {
+    'vendor-bundle': [
+      'babel-polyfill'
+    ],
+    'app-bundle': [
+      './app/bundles/Room/startup/registration',
+    ]
+  },
+  output: {
+    filename: isHMR ? '[name]-[hash].js' : '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash].chunk.js',
+
+    publicPath: output.publicPath,
+    path: output.path,
+  },
   devtool: 'cheap-module-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.scss'],
+    alias: {
+      libs: resolve(__dirname, 'app/libs')
+    }
+  },
   module: {
     rules: [
+      {
+        test: /\.jsx?$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(woff2?|jpe?g|png|gif|svg|ico)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
@@ -86,7 +121,7 @@ module.exports = merge.smart(config, {
         '.js',
         '.jsx',
       ],
-      paths: glob.sync(path.resolve(__dirname, 'client/app/**/*.{js,jsx,html}')),
+      paths: glob.sync(resolve(__dirname, 'client/app/**/*.{js,jsx,html}')),
       purifyOptions: {
         minify: true,
         info: true,
@@ -102,7 +137,7 @@ module.exports = merge.smart(config, {
       debug: false
     }),
     new ManifestPlugin({
-      publicPath: config.output.publicPath,
+      publicPath: output.publicPath,
       writeToFileEmit: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -118,4 +153,4 @@ module.exports = merge.smart(config, {
       },
     }),
   ]
-});
+}
