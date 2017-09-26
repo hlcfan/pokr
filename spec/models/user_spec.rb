@@ -8,6 +8,11 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be false
       expect(user.errors[:name]).to include "can't be blank"
     end
+
+    it "is valid if name contains emoji" do
+      user = User.create(email: "a@a.com", password: "password", name: "😀")
+      expect(user.valid?).to be_truthy
+    end
   end
 
   describe "#default_values" do
