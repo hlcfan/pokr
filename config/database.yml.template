@@ -10,7 +10,6 @@ mldevelopment: &default_settings
 
 test: &test
   adapter: mysql2
-  encoding: utf8
   database: poker_test
   username: root
   password: 
