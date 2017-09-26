@@ -45,12 +45,6 @@
     <div class="panel-body">
       <canvas id="myChart" width="400" height="260"></canvas>
     </div>
-    <script type="text/javascript">
-      document.addEventListener("turbolinks:before-cache", function() {
-        $(".history canvas").remove();
-        $(".history .panel-body").append('<canvas id="myChart" width="400" height="260"><canvas>');
-      });
-      </script>
   </div>
   <div class="row">
     <div class="col-md-7">

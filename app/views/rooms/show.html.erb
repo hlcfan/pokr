@@ -2,15 +2,12 @@
   title @room.name
 %>
 
-<% content_for(:page_head) do %>
-  <meta name="turbolinks-cache-control" content="no-cache">
-<% end %>
 <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js"
     crossorigin="anonymous"></script>
 <%= javascript_pack_tag('vendor-bundle') %>
 <%= javascript_pack_tag('app-bundle') %>
 <%= stylesheet_pack_tag('app-bundle') %>
-<%= stylesheet_link_tag "libs/joyride", "data-turbolinks-track" => "reload" %>
+<%= stylesheet_link_tag "libs/joyride" %>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
 <input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />

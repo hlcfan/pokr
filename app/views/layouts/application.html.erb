@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
   <%= render 'layouts/favicon' %>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => "reload" %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= yield :page_head if content_for? :page_head %>
   <%= csrf_meta_tags %>
 </head>
