@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170923125354) do
+ActiveRecord::Schema.define(version: 20170926051536) do
 
   create_table "authorizations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
-  create_table "rooms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name", null: false
+  create_table "rooms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string "name", limit: 191
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["slug"], name: "index_rooms_on_slug", unique: true
   end
 
-  create_table "stories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "stories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "room_id"
-    t.string "link"
-    t.string "desc"
+    t.string "link", limit: 191
+    t.string "desc", limit: 191
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "point"
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string "name", limit: 191
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
