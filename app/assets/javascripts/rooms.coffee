@@ -89,7 +89,7 @@ class Rooms
       sort: true
     })
 
-$(document).on "turbolinks:load", ->
+$(document).on "ready", ->
   $(".rooms.new, .rooms.edit").ready ->
     rooms = new Rooms
     rooms.init()

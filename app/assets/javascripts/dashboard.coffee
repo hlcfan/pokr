@@ -53,7 +53,7 @@ class Dashboard
         moreButton.data('page', page)
         moreButton.removeClass("loading")
 
-$(document).on 'turbolinks:load', ->
+$(document).on 'ready', ->
   $('.dashboard.index').ready ->
     dashboard = new Dashboard
     dashboard.init()

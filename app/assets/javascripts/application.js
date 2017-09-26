@@ -14,7 +14,6 @@
 //= require ext
 //= require common
 //= require bootstrap
-//= require turbolinks
 //= require jquery.nested-fields
 //= require rooms
 //= require feedback

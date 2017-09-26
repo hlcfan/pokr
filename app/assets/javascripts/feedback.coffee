@@ -50,6 +50,6 @@ class Feedback
       return
     return
 
-$(document).on 'ready turbolinks:load', ->
+$(document).on 'ready', ->
   feedback = new Feedback
   feedback.init()
