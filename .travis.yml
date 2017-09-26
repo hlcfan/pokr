@@ -15,7 +15,13 @@ sudo: true
 dist: trusty
 
 before_script:
-  - mysql -e 'create database poker_test default charset utf8mb4;'
+  # To resolve: Mysql2::Error: Specified key was too long; max key length is 767 bytes
+  - echo '[mysqld]' | sudo sh -c 'cat >>  /etc/mysql/my.cnf'
+  - echo 'innodb_file_format=Barracuda' | sudo sh -c 'cat >>  /etc/mysql/my.cnf'
+  - echo 'innodb_file_per_table=1' | sudo sh -c 'cat >>  /etc/mysql/my.cnf'
+  - echo 'innodb_large_prefix=1' | sudo sh -c 'cat >>  /etc/mysql/my.cnf'
+  - sudo service mysql restart
+  - mysql -e 'create database poker_test charset utf8;'
   - cp config/database.yml.template config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate
   - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg

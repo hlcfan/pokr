@@ -47,6 +47,7 @@ class User < ApplicationRecord
   end
 
   def default_values
+    puts "email: #{email}"
     self.name ||= email.split('@').first
   end
 
