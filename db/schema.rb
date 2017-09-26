@@ -27,15 +27,15 @@ ActiveRecord::Schema.define(version: 20170926051536) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "slug", null: false, limit: 191
+    t.string "slug", null: false
     t.integer "created_by"
-    t.string "pv", limit: 191
+    t.string "pv"
     t.float "timer", limit: 24
     t.integer "stories_count"
     t.integer "user_rooms_count"
     t.integer "style"
     t.float "duration", limit: 24
-    t.string "scheme", limit: 191
+    t.string "scheme"
     t.index ["created_by"], name: "index_rooms_on_created_by"
     t.index ["name"], name: "index_rooms_on_name"
     t.index ["slug"], name: "index_rooms_on_slug", unique: true
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170926051536) do
     t.string "desc", limit: 191
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "point", limit: 191
+    t.string "point"
     t.integer "ordering"
     t.integer "sequence"
   end
@@ -77,21 +77,21 @@ ActiveRecord::Schema.define(version: 20170926051536) do
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", default: "", null: false, limit: 191
-    t.string "encrypted_password", default: "", null: false, limit: 191
-    t.string "reset_password_token", limit: 191
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip", limit: 191
-    t.string "last_sign_in_ip", limit: 191
-    t.string "avatar_file_name", limit: 191
-    t.string "avatar_content_type", limit: 191
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string "image", limit: 191
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
