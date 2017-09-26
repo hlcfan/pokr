@@ -1,11 +1,12 @@
 mldevelopment: &default_settings
   adapter: mysql2
-  encoding: utf8
   host: localhost
   database: poker_development
   username: root
   password: 
   # timeout: 50000
+  encoding: utf8mb4
+  collation: utf8mb4_bin
 
 test: &test
   adapter: mysql2
@@ -14,13 +15,16 @@ test: &test
   username: root
   password: 
   timeout: 50000
+  encoding: utf8mb4
+  collation: utf8mb4_bin
 
 production:
   adapter: mysql2
-  encoding: utf8
   host: localhost
   database: poker_production
   username: root
   password: 
   timeout: 500000
   pool: 10
+  encoding: utf8mb4
+  collation: utf8mb4_bin
