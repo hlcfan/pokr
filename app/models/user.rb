@@ -46,11 +46,6 @@ class User < ApplicationRecord
     name || email
   end
 
-  def default_values
-    puts "email: #{email}"
-    self.name ||= email.split('@').first
-  end
-
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
@@ -109,6 +104,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def default_values
+    self.name ||= email.split('@').first if new_record?
+  end
 
   def name_in_letter
     unless name =~ /^[a-zA-Z0-9]+/
