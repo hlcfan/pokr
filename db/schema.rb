@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "point"
-    t.integer "ordering"
     t.integer "sequence"
   end
 

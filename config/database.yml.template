@@ -1,4 +1,4 @@
-mldevelopment: &default_settings
+development: &default_settings
   adapter: mysql2
   encoding: utf8
   host: localhost
