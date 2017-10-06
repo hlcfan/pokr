@@ -1,26 +1,23 @@
 development: &default_settings
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
   host: localhost
   database: poker_development
   username: root
   password: 
-  # timeout: 50000
+  encoding: unicode
 
 test: &test
-  adapter: mysql2
-  encoding: utf8
-  database: poker_test
-  username: root
+  adapter: postgresql
+  database: travis_ci_test
+  username: postgres
   password: 
-  timeout: 50000
+  encoding: unicode
 
 production:
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
   host: localhost
   database: poker_production
   username: root
   password: 
-  timeout: 500000
   pool: 10
+  encoding: unicode

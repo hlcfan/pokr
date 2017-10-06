@@ -4,7 +4,7 @@ env:
   - COVERAGE=true
 
 services:
-  - mysql
+  - postgresql
   - redis-server
 
 rvm:
@@ -15,7 +15,7 @@ sudo: true
 dist: trusty
 
 before_script:
-  - mysql -e 'create database poker_test default charset utf8;'
+  - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.template config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate
   - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg

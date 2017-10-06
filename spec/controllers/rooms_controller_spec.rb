@@ -154,14 +154,14 @@ RSpec.describe RoomsController, type: :controller do
       room = Room.create! valid_attributes
       post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session
       expect(Room.last.status).to eq nil
-      expect(Room.last.updated_at).to eq room.updated_at
+      expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
     end
 
     it "doesnt update room status if status parameter same with room status" do
       room = Room.create! valid_attributes.merge(status: 1)
       post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
-      expect(Room.last.updated_at).to eq room.updated_at
+      expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
     end
 

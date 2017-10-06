@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20170923125354) do
 
-  create_table "authorizations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "authorizations", force: :cascade do |t|
     t.integer "user_id"
     t.string "provider"
     t.string "uid"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
-  create_table "rooms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "rooms", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.integer "status"
     t.datetime "created_at", null: false
@@ -30,18 +33,18 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.string "slug", null: false
     t.integer "created_by"
     t.string "pv"
-    t.float "timer", limit: 24
+    t.float "timer"
     t.integer "stories_count"
     t.integer "user_rooms_count"
     t.integer "style"
-    t.float "duration", limit: 24
+    t.float "duration"
     t.string "scheme"
     t.index ["created_by"], name: "index_rooms_on_created_by"
     t.index ["name"], name: "index_rooms_on_name"
     t.index ["slug"], name: "index_rooms_on_slug", unique: true
   end
 
-  create_table "stories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "stories", id: :serial, force: :cascade do |t|
     t.integer "room_id"
     t.string "link"
     t.string "desc"
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.integer "sequence"
   end
 
-  create_table "user_rooms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "user_rooms", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true
   end
 
-  create_table "user_story_points", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "user_story_points", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "story_id"
     t.string "points"
@@ -71,7 +74,7 @@ ActiveRecord::Schema.define(version: 20170923125354) do
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "role"
     t.datetime "created_at", null: false
