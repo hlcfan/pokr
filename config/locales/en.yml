@@ -22,14 +22,14 @@
 en:
   site:
     title: "Online Planning Poker"
-    desc: "Pokrex, is an easy, efficient planning poker, scrum poker or pointing poker for agile/scrum teams."
-    slogan: "The easiest way to planning poker"
-    sub_slogan: "Make agile estimating and planning easy with our online planning or scrum poker tool, aiming at simplicity and efficiency."
+    desc: "Pokrex is an easy, efficient planning poker (a.k.a. scrum poker or pointing poker) for agile/scrum teams."
+    slogan: "Planning poker made easy"
+    sub_slogan: "Agile estimation and planning, aimed at simplicity and efficiency."
     footer:
       links: "Links"
-      about: "About us"
+      about: "About"
       faq: "FAQs"
-      what: "What's planning poker?"
+      what: "What is planning poker?"
       share: "Share"
   user:
     login: "Login"
@@ -48,14 +48,14 @@ en:
     or: "Or"
 
   intro:
-    room: "Room"
-    room_desc: "In a room, will be a round of planning or grooming. Participants can easily join by opening the link."
+    room: "Start a room"
+    room_desc: "Here is where planning and grooming happen. Invite participants by sending them a link."
     room_f_1: "Easy to use"
-    room_f_2: "Automatically switch story/card"
-    room_f_3: "Elegant way to show vote status"
+    room_f_2: "Automatically switches story"
+    room_f_3: "Elegant vote status display"
     dashboard: "Dashboard"
-    dashboard_desc: "A dashboard, is where you can see all your data status, including statistics, history, all planning/groomming rooms and recent stories/cards."
+    dashboard_desc: "See all your past data, including statistics, history, rooms and recent stories/cards."
     dashboard_f_1: "Quick stats"
-    dashboard_f_2: "Know planning/grooming meeting status"
-    dashboard_f_3: "Acknowledge history and frequency"
-    dashboard_f_4: "Quick check recent stories/cards point"
+    dashboard_f_2: "Meeting status"
+    dashboard_f_3: "View history and frequency"
+    dashboard_f_4: "Review recent stories/cards"
