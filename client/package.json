@@ -1,7 +1,7 @@
 {
   "name": "pokrex",
   "version": "1.0.0",
-  "license": "GPL",
+  "license": "GPL-2.0",
   "author": "hlcfan",
   "scripts": {
     "postinstall": "npm rebuild node-sass",
