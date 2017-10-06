@@ -128,7 +128,6 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    mysql2 (0.4.9)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
@@ -172,6 +171,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    pg (0.21.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -347,7 +347,6 @@ DEPENDENCIES
   mina-sidekiq
   mina-sitemap_generator
   mini_racer
-  mysql2 (~> 0.4.4)
   omniauth
   omniauth-facebook
   omniauth-github
@@ -355,6 +354,7 @@ DEPENDENCIES
   omniauth-twitter
   omniauth-weibo-oauth2
   paperclip (~> 5.1.0)
+  pg
   pry
   pry-doc
   pry-nav
