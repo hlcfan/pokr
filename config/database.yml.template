@@ -9,7 +9,7 @@ development: &default_settings
 test: &test
   adapter: postgresql
   database: travis_ci_test
-  username: root
+  username: postgres
   password: 
   encoding: unicode
 
