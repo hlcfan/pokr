@@ -49,7 +49,7 @@ en:
 
   intro:
     room: "Start a room"
-    room_desc: "Here is where planning and grooming happen. Invite participants by sending them a link."
+    room_desc: "Here is where planning and grooming happen. Invite participants by sending them a link or inviting them."
     room_f_1: "Easy to use"
     room_f_2: "Automatically switches story"
     room_f_3: "Elegant vote status display"
