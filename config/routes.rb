@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       post :invite
       post :timing
       get :screen
+      post :screen
     end
   end
 
