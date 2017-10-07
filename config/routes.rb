@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       get :summary
       post :invite
       post :timing
+      get :screen
     end
   end
 

@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :timing]
   before_action :authenticate_user!
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :timing]
   before_action :enter_room, only: [:show]
 
   def index
@@ -126,6 +126,10 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def screen
+    
+  end
+
   private
 
   def set_room
@@ -169,8 +173,10 @@ class RoomsController < ApplicationController
   end
 
   def authenticate_user!
-    current_or_guest_user
-    # binding.pry
+    if current_user.nil?
+      render :screen and return
+    end
+    # current_or_guest_user
     super
     
   end

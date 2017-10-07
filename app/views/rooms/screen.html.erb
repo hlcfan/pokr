@@ -1,0 +1,27 @@
+<%
+  title "Screen"
+%>
+<div class="row screen">
+  <div class="col-xs-4 col-md-4"></div>
+  <div class="col-xs-4 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Type your name or sign up</div>
+      <div class="panel-body">
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="exampleInputName2" class="sr-only">Name</label>
+            <div class="col-xs-12">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default">Join</button>
+        </form>
+        <div class="line-spliter">
+          <span><b>Or</b></span>
+        </div>
+        <%= render template: "home/sign_up_form" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-4 col-md-4"></div>
+</div>
