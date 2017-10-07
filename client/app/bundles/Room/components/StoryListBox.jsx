@@ -46,15 +46,15 @@ export default class StoryListBox extends React.Component {
 
     this.props.addSteps({
       title: 'Stories',
-      text: 'All the stories are listed separately under ungroomed and groomed tabs. Click on each tab to check them out.',
+      text: 'All your stories are listed here.',
       selector: '#stories',
       position: 'top-right',
       style: defaultTourColor
     })
 
     this.props.addSteps({
-      title: 'Current on going story',
-      text: "The ► indicates it's the on going story.",
+      title: 'Current story',
+      text: "The ► indicates the current story.",
       selector: '#stories .story__ungroomed:first-child',
       position: 'bottom-left',
       style: defaultTourColor
@@ -68,10 +68,10 @@ export default class StoryListBox extends React.Component {
         <div id="storyListArea" className="panel-body row">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active">
-              <a href="#grooming-list" aria-controls="home" role="tab" data-toggle="tab">Groom list</a>
+              <a href="#grooming-list" aria-controls="home" role="tab" data-toggle="tab">Pending</a>
             </li>
             <li role="presentation">
-              <a href="#groomed-list" aria-controls="profile" role="tab" data-toggle="tab">Groomed list</a>
+              <a href="#groomed-list" aria-controls="profile" role="tab" data-toggle="tab">Finished</a>
             </li>
           </ul>
           <div className="tab-content">

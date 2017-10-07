@@ -16,7 +16,7 @@
     <div class="col-xs-8">
       <div class="form-group">
         <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.text_field :name, placeholder: 'Room name', class: 'form-control' %>
       </div>
     </div>
     <div class="col-xs-2">
@@ -52,7 +52,7 @@
       <% if @room.new_record? %>
         <a class="pull-right import" href="javascript:;" data-status="input">
           <i class="fa fa-list" aria-hidden="true"></i>
-          Import from list?
+          Import from list
         </a>
       <% end %>
     </div>
@@ -61,7 +61,7 @@
       <% if @room.new_record? %>
         <div class="row bulk-links" style="display: none;">
           <input type="hidden" name="room[bulk]" id="room_bulk">
-          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One line one story, i.e.\nstory_link1\nstory_link2\nstory_link3\n...", class: 'form-control col-xs-10' %>
+          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One story per line", class: 'form-control col-xs-10' %>
         </div>
       <% end %>
     </div>

@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-3">
       <div class="panel panel-none">
-        <div class="panel-heading"><h5>Time spent</h5></div>
+        <div class="panel-heading"><h5>Total time</h5></div>
         <div class="panel-body">
           <p class="lead stats--data"><%= (@user.time_spent/60).round(2) %> Mins</p>
         </div>
@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-3">
       <div class="panel panel-none">
-        <div class="panel-heading"><h5>Average per story</h5></div>
+        <div class="panel-heading"><h5>Average time per story</h5></div>
         <div class="panel-body">
           <p class="lead stats--data">
             <%= @user.avg_per_story %>

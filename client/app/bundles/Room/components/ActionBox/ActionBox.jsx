@@ -95,10 +95,10 @@ export default class ActionBox extends React.Component {
     let title
     if ("Moderator" === this.props.role) {
       title = "Actions"
-      text = "All the actions with points will be done in this panel. You can call the final point of a story by clicking on the point bar, clear votes, or skip current story."
+      text = "Point actions will be displayed in this panel. You can choose the final estimate (click on the point bar), clear votes, or skip the current story."
     } else {
       title = "Votes"
-      text = "You'll see the result of votes here, only the moderator can decide which is the final point."
+      text = "You will see estimations here. Only the moderator can decide the final estimation."
     }
 
     this.props.addSteps({
@@ -114,7 +114,7 @@ export default class ActionBox extends React.Component {
     this.state = {
       roomState: nextProps.roomState,
       countDown: nextProps.countDown,
-    } 
+    }
   }
 
   componentWillUnmount() {

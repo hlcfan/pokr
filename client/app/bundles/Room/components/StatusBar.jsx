@@ -13,7 +13,7 @@ export default class StatusBar extends React.Component {
   }
 
   closeRoom = () => {
-    if(confirm("Do you want to close this room? It can not be undo!")) {
+    if(confirm("WARNING: Do you want to close this room? This cannot be undone.")) {
       App.rooms.perform('action', {
         roomId: this.props.roomId,
         data: "close-room",
@@ -32,7 +32,7 @@ export default class StatusBar extends React.Component {
       });
 
     this.props.addSteps({
-      title: 'Handy bar',
+      title: 'Title bar',
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
       selector: '.name .col-md-8',
       position: 'right',
@@ -41,7 +41,7 @@ export default class StatusBar extends React.Component {
 
     this.props.addSteps({
       title: 'Switch your role',
-      text: 'Participant can switch to Watcher, and Watcher can easily switch to Participant. Moderator is not allowd to switch role.',
+      text: 'Change your role to a Watcher or Participant. The Moderator is not allowed to switch roles.',
       selector: '.name .col-md-4 .dropdown',
       position: 'top-right',
       style: defaultTourColor
@@ -91,7 +91,7 @@ export default class StatusBar extends React.Component {
   render() {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
-        const buttonText = "🏁 Close it"
+        const buttonText = "🏁 Close room"
         const buttonClassName = "btn-warning close-room"
         const onClickHandler = this.closeRoom
 
@@ -159,7 +159,7 @@ export default class StatusBar extends React.Component {
         <div className="col-md-4">
           <div className="pull-left tour-guide">
             <a href="javascript:;" onClick={this.playTourGuide}>
-              <i className="fa fa-question-circle" aria-hidden="true"></i> How to use?
+              <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a>
           </div>
           <div className="dropdown pull-right">
