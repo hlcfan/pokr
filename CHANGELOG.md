@@ -2,6 +2,75 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.1] - 2017-10-07
+### Changed
+- Language improvements [#165](https://github.com/hlcfan/pokr/pull/165)
+
+## [0.5.0] - 2017-10-06
+### Changed
+- Migrate from MySQL to PostgreSQL [#159](https://github.com/hlcfan/pokr/pull/159)
+
+## [0.4.25] - 2017-10-06
+### Changed
+- Language improvements [#163](https://github.com/hlcfan/pokr/pull/163)
+
+## [0.4.24] - 2017-09-27
+### Changed
+- Disable timeme.js for IE users temporarily [#160](https://github.com/hlcfan/pokr/pull/160)
+
+## [0.4.23] - 2017-09-26
+### Added
+- Front end error collection sentry [51bceea078dfcc8316e7ab9d31fa548f0f1673cb](https://github.com/hlcfan/pokr/commit/51bceea078dfcc8316e7ab9d31fa548f0f1673cb)
+
+### Changed
+- Remove turbolinks from whole site [#158](https://github.com/hlcfan/pokr/pull/158)
+
+## [0.4.22] - 2017-09-25
+### Added
+- Add point scheme 0-8 [#154](https://github.com/hlcfan/pokr/pull/154)
+
+## [0.4.21] - 2017-09-21
+### Changed
+- Better detection for user browser language [#151](https://github.com/hlcfan/pokr/pull/151)
+- Upgrade `react_on_rails` to 9.0.2 [#149](https://github.com/hlcfan/pokr/pull/149)
+
+## [0.4.20] - 2017-08-22
+### Changed
+- Optimize SQL by adding one more index [#147](https://github.com/hlcfan/pokr/pull/147)
+
+## [0.4.19] - 2017-08-21
+### Added
+- Add pagination for dashboard page [#146](https://github.com/hlcfan/pokr/pull/146)
+- Remove tabs that differentiates rooms
+
+## [0.4.18] - 2017-08-09
+### Changed
+- Upgrade `react_on_rails` to 8.0.5 [07063a63e0242aad5a586bacde21a1d231b7ad01](https://github.com/hlcfan/pokr/commit/07063a63e0242aad5a586bacde21a1d231b7ad01)
+
+## [0.4.17] - 2017-08-09
+### Changed
+- Optimize SQL when getting user list [#143](https://github.com/hlcfan/pokr/pull/143)
+
+## [0.4.16] - 2017-08-02
+### Changed
+- Code split, lazy load joyride component to gain better page speed [#142](https://github.com/hlcfan/pokr/pull/142)
+
+## [0.4.15] - 2017-07-28
+### Changed
+- Add timeme.js to track user time [#140](https://github.com/hlcfan/pokr/pull/140)
+
+## [0.4.14] - 2017-07-26
+### Changed
+- Fix "Feecback" widget event listening in dashboard page
+
+## [0.4.13] - 2017-07-24
+### Added
+- Add invitation for room [#139](https://github.com/hlcfan/pokr/pull/139)
+
+## [0.4.12] - 2017-07-20
+### Changed
+- Upgrade `react_on_rails` to 8.0.5 [#127](https://github.com/hlcfan/pokr/pull/127)
+
 ## [0.4.11] - 2017-07-07
 ### Added
 - Add summary for room [#135](https://github.com/hlcfan/pokr/pull/135)

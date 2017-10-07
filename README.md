@@ -15,7 +15,7 @@ Yet another planning poker, aiming at efficiency & user experience.
 ## 🚀 Building with
 
 + Rails 5
-+ MySQL
++ PostgreSQL
 + ActionCable
 + React
 + Bootstrap
