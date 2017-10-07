@@ -42,6 +42,11 @@ class ApplicationController < ActionController::Base
      guest_user if with_retry
   end
 
+  def guest_user?
+    session[:guest_user_id].present?
+  end
+  helper_method :guest_user?
+
   private
 
   def set_locale
@@ -105,7 +110,9 @@ class ApplicationController < ActionController::Base
   end
 
   def create_guest_user
-    u = User.create(:name => "guest", :email => "guest_#{Time.now.to_i}#{rand(100)}@example.com")
+    username = params[:username].to_s.parameterize
+    raise ArgumentError "Invalid username" if username.blank?
+    u = User.create(:name => username, :email => "#{username}_#{Time.now.to_i}#{rand(100)}@pokrex.com")
     u.save!(:validate => false)
     session[:guest_user_id] = u.id
     u
