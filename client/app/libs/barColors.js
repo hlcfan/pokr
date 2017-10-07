@@ -26,7 +26,6 @@ const barColors = {
 
 const pointEmojis = {
   "coffee": "☕",
-  "?": "⁉️",
   "null" : "skipped"
 }
 
