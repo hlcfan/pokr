@@ -128,7 +128,7 @@ class RoomsController < ApplicationController
   end
 
   def screen
-    if signed_in?
+    if current_user
       redirect_to room_path(params[:id])
     end
     if request.post?
