@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.5.1] - 2017-10-07
 ### Changed
+- Change room image
+- Change logo from Pokr to Pokrex in navigation bar [aeb09d1d1a345f4f2ee30340af3b725b1b2149cc](https://github.com/hlcfan/pokr/commit/aeb09d1d1a345f4f2ee30340af3b725b1b2149cc)
+
+## [0.5.1] - 2017-10-07
+### Changed
 - Language improvements [#165](https://github.com/hlcfan/pokr/pull/165)
 
 ## [0.5.0] - 2017-10-06
