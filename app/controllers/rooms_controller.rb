@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :timing]
+  before_action :authenticate_user!
   before_action :enter_room, only: [:show]
 
   def index
@@ -166,6 +166,13 @@ class RoomsController < ApplicationController
 
   def broadcaster channel, *message
     ActionCable.server.broadcast channel, *message
+  end
+
+  def authenticate_user!
+    current_or_guest_user
+    # binding.pry
+    super
+    
   end
 
 end
