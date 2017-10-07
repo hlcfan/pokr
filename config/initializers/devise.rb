@@ -1,3 +1,4 @@
+# https://github.com/plataformatec/devise/wiki/How-To:-Create-a-guest-user
 Warden::Strategies.add(:guest_user) do
   def valid?
     session[:guest_user_id].present?
