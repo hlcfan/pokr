@@ -7,15 +7,15 @@
     <div class="panel panel-default">
       <div class="panel-heading">Type your name or sign up</div>
       <div class="panel-body">
-        <form class="form-inline">
+        <%= form_tag screen_room_path, method: "post", class: 'form-inline', role: 'form' do %>
           <div class="form-group">
-            <label for="exampleInputName2" class="sr-only">Name</label>
+            <label for="username" class="sr-only">Name</label>
             <div class="col-xs-12">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+              <input type="text" class="form-control" id="username" name="username" placeholder="Username">
             </div>
           </div>
           <button type="submit" class="btn btn-default">Join</button>
-        </form>
+        <% end %>
         <div class="line-spliter">
           <span><b>Or</b></span>
         </div>
