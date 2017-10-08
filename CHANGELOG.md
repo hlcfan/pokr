@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - T-shirt point scheme [#168](https://github.com/hlcfan/pokr/pull/168)
 
 ### Changed
-- Minor UI and language improvements [#167](https://github.com/hlcfan/pokr/pull/167)
+- Minor UI fixes and language improvements [#167](https://github.com/hlcfan/pokr/pull/167)
 
 ## [0.5.1] - 2017-10-07
 ### Changed
