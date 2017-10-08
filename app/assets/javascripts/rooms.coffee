@@ -26,7 +26,8 @@ class Rooms
       return
 
     $(".schemes-type .label").on "click", ->
-      $(".schemes-type .label").toggleClass("label-info label-default")
+      $(".schemes-type .label").removeClass("label-info").addClass('label-default')
+      $(this).addClass("label-info")
       $(".point-values").removeClass("active")
       current_scheme_type = $(this).data("target")
       $activeSchemePanel = $(".point-values." + current_scheme_type)
