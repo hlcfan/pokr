@@ -18,7 +18,7 @@
 
           <div class="form-group">
             <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+            <%= f.email_field :email, autofocus: true, placeholder: 'Email address', class: 'form-control' %>
           </div>
 
           <div class="form-group">
@@ -26,12 +26,12 @@
             <% if @minimum_password_length %>
             <em>(<%= "#{@minimum_password_length} #{t("user.min_chars")}" %> )</em>
             <% end %><br />
-            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+            <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control' %>
           </div>
 
           <div class="form-group">
             <%= f.label :password_confirmation %><br />
-            <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+            <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Password', class: 'form-control' %>
           </div>
 
           <div class="form-group">

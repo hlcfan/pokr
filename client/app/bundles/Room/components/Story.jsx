@@ -35,11 +35,23 @@ export default class Story extends React.Component {
       }
     })()
 
+    const storyTitle = (() => {
+      if (that.props.link.trim().startsWith('http')) {
+        return(
+          <a href={storyLinkHref(that.props.link)} className="storyLink" rel="noreferrer" target="_blank">
+          {this.props.link}
+          </a>
+        )
+      } else {
+        return (
+          <span className="storyLink">{this.props.link}</span>
+        )
+      }
+    })()
+
     return (
       <li className={liElementClass} id={`story-${this.props.id}`} data-id={this.props.id}>
-        <a href={storyLinkHref(that.props.link)} className="storyLink" rel="noreferrer" target="_blank">
-          {this.props.link}
-        </a>
+        {storyTitle}
         <span className="label label-info story--voted-point">{BarColors.emoji(this.props.point) || this.props.point}</span>
         {revoteIcon}
         <p className="story-desc">

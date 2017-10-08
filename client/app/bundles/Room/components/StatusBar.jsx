@@ -92,7 +92,7 @@ export default class StatusBar extends React.Component {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
         const buttonText = "🏁 Close room"
-        const buttonClassName = "btn-warning close-room"
+        const buttonClassName = "close-room"
         const onClickHandler = this.closeRoom
 
         return (
@@ -122,9 +122,9 @@ export default class StatusBar extends React.Component {
       if (this.props.roomState !== "draw") {
         return(
           <div className="btn-group pull-right room-operation" role="group">
-            {roomStatusButton}
             {editButton}
             <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
+            {roomStatusButton}
           </div>
         )
       }

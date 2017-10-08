@@ -29,7 +29,7 @@ export default class VoteBox extends React.Component {
 
     this.props.addSteps({
       title: 'Deck',
-      text: 'All the points are listed in this panel. Click on a point to select your estimate. ⁉️ means "unsure" and ☕ means "I need a break".',
+      text: 'All the points are listed in this panel. Click on a point to select your estimate. "?" means "unsure" and "☕" means "I need a break".',
       selector: '#deck',
       position: 'top-right',
       style: defaultTourColor
