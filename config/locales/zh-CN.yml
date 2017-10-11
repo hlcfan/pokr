@@ -34,7 +34,7 @@ zh-CN:
           
   intro:
     room: "房间"
-    room_desc: "房间是团队成员进行扑克打分的地方，成员可以通过 scrum master 分享的链接进入房间。"
+    room_desc: "房间是团队成员进行扑克打分的地方，成员可以通过 scrum master 分享的链接或者邀请加入房间。"
     room_f_1: "简单好用"
     room_f_2: "自动切换 user story"
     room_f_3: "优雅的用户的界面"
@@ -44,8 +44,8 @@ zh-CN:
     dashboard_f_2: "了解每次 planning meeting 的状态"
     dashboard_f_3: "了解历史记录和会议频率"
     dashboard_f_4: "快捷查询最近投分的 user story"
-    scheme: "Multiple schemes"
-    scheme_desc: "We offers three point schemes."
-    scheme_f_1: "Fibonacci"
+    scheme: "打分模式"
+    scheme_desc: "多种打分模式可供选择，可以满足不同需求的用户。"
+    scheme_f_1: "斐波那契数列 Fibonacci"
     scheme_f_2: "0-8"
-    scheme_f_3: "T-shirt(XS-XXL)"
+    scheme_f_3: "T 恤码号 T-shirt(XS-XXL)"
