@@ -44,3 +44,8 @@ zh-CN:
     dashboard_f_2: "了解每次 planning meeting 的状态"
     dashboard_f_3: "了解历史记录和会议频率"
     dashboard_f_4: "快捷查询最近投分的 user story"
+    scheme: "Multiple schemes"
+    scheme_desc: "We offers three point schemes."
+    scheme_f_1: "Fibonacci"
+    scheme_f_2: "0-8"
+    scheme_f_3: "T-shirt(XS-XXL)"
