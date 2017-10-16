@@ -20,10 +20,32 @@
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
-      "@type": "WebSite",
+      "@type": "WebApplication",
       "name": "Pokrex",
       "alternateName": "Planning Poker",
-      "url": "https://pokrex.com"
+      "url": "https://pokrex.com",
+      "applicationCategory": "Tool, agile estimating",
+      "operatingSystem": "OSX, Windows, iOS, Android",
+      "screenshot": [
+        "<%= image_url("room.png") %>",
+        "<%= image_url("dashboard.jpg") %>",
+        "<%= image_url("scheme.png") %>"
+      ],
+      "author": {
+        "@type": "Person",
+        "name": "Alex Shi"
+      },
+      "offers": {
+        "@type": "Offer",
+        "availability": "http://schema.org/InStock",
+        "price": 0,
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingCount": "57",
+        "ratingValue": "5"
+      }
     }
   </script>
 </head>
