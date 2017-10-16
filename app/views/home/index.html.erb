@@ -20,10 +20,32 @@
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
-      "@type": "WebSite",
+      "@type": "WebApplication",
       "name": "Pokrex",
       "alternateName": "Planning Poker",
-      "url": "https://pokrex.com"
+      "url": "https://pokrex.com",
+      "applicationCategory": "Tool, agile estimating",
+      "operatingSystem": "OSX, Windows, iOS, Android",
+      "screenshot": [
+        "<%= image_url("room.png") %>",
+        "<%= image_url("dashboard.jpg") %>",
+        "<%= image_url("scheme.png") %>"
+      ],
+      "author": {
+        "@type": "Person",
+        "name": "Alex Shi"
+      },
+      "offers": {
+        "@type": "Offer",
+        "availability": "http://schema.org/InStock",
+        "price": 0,
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingCount": "57",
+        "ratingValue": "5"
+      }
     }
   </script>
 </head>
@@ -44,9 +66,7 @@
     <div class="row neck">
       <div class="slogan">
         <h1><%= t("site.slogan") %></h1>
-        <h2>
-          <%= t("site.sub_slogan") %>
-        </h2>
+        <span><%= t("site.sub_slogan") %></span>
       </div>
       <div class="sign-up container">
         <div class="row action input">
@@ -64,12 +84,12 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "room.png" %>
+          <%= image_tag "room.png", alt: t("intro.room_alt") %>
         </div>
 
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.room") %></h3>
-          <p><%= t("intro.room_desc") %></p>
+          <h2><%= t("intro.room") %></h2>
+          <h3><%= t("intro.room_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.room_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.room_f_2") %></li>
@@ -81,8 +101,8 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.dashboard") %></h3>
-          <p><%= t("intro.dashboard_desc") %></p>
+          <h2><%= t("intro.dashboard") %></h2>
+          <h3><%= t("intro.dashboard_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_2") %></li>
@@ -91,18 +111,18 @@
           </ul>
         </div>
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "dashboard.jpg" %>
+          <%= image_tag "dashboard.jpg", alt: t("intro.dashboard_alt") %>
         </div>
       </div>
     </div>
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "scheme.png" %>
+          <%= image_tag "scheme.png", alt: t("intro.scheme_alt") %>
         </div>
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.scheme") %></h3>
-          <p><%= t("intro.scheme_desc") %></p>
+          <h2><%= t("intro.scheme") %></h2>
+          <h3><%= t("intro.scheme_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.scheme_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.scheme_f_2") %></li>
