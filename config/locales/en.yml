@@ -23,7 +23,7 @@ en:
   site:
     title: "Online Planning Poker"
     desc: "Pokrex is an easy, efficient planning poker (a.k.a. scrum poker or pointing poker) for agile/scrum teams."
-    slogan: "Planning poker made easy"
+    slogan: "Planning/scrum poker made easy"
     sub_slogan: "Agile estimation and planning, aimed at simplicity and efficiency."
     footer:
       links: "Links"
