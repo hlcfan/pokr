@@ -51,7 +51,8 @@ export default class Invitation extends React.Component {
 
   handleEmailChange = (event) => {
     let emails = this.state.emails
-    let inputIndex = event.target.dataset.index
+    let inputIndex = event.target.getAttribute("data-index")
+    debugger
     emails[inputIndex] = event.target.value
 
     this.setState(prevState => {
