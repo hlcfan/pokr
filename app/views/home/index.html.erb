@@ -1,4 +1,4 @@
-<% cache "#{I18n.locale}:#{Rails.root}" do %>
+<%# cache "#{I18n.locale}:#{Rails.root}" do %>
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
@@ -44,9 +44,7 @@
     <div class="row neck">
       <div class="slogan">
         <h1><%= t("site.slogan") %></h1>
-        <h2>
-          <%= t("site.sub_slogan") %>
-        </h2>
+        <span><%= t("site.sub_slogan") %></span>
       </div>
       <div class="sign-up container">
         <div class="row action input">
@@ -68,8 +66,8 @@
         </div>
 
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.room") %></h3>
-          <p><%= t("intro.room_desc") %></p>
+          <h2><%= t("intro.room") %></h2>
+          <h3><%= t("intro.room_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.room_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.room_f_2") %></li>
@@ -81,8 +79,8 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.dashboard") %></h3>
-          <p><%= t("intro.dashboard_desc") %></p>
+          <h2><%= t("intro.dashboard") %></h2>
+          <h3><%= t("intro.dashboard_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_2") %></li>
@@ -101,8 +99,8 @@
           <%= image_tag "scheme.png" %>
         </div>
         <div class="col-xs-4 col-md-4 text-section">
-          <h3><%= t("intro.scheme") %></h3>
-          <p><%= t("intro.scheme_desc") %></p>
+          <h2><%= t("intro.scheme") %></h2>
+          <h3><%= t("intro.scheme_desc") %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check"></i><%= t("intro.scheme_f_1") %></li>
             <li><i class="fa fa-check"></i><%= t("intro.scheme_f_2") %></li>
@@ -140,4 +138,4 @@
   </script>
 </body>
 </html>
-<% end %>
+<%# end %>

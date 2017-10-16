@@ -45,7 +45,7 @@ zh-CN:
     dashboard_f_3: "了解历史记录和会议频率"
     dashboard_f_4: "快捷查询最近投分的 user story"
     scheme: "打分模式"
-    scheme_desc: "多种打分模式可供选择，可以满足不同需求的用户。"
+    scheme_desc: "多种打分（故事点）模式可供选择，可以满足不同需求的用户。"
     scheme_f_1: "斐波那契数列 Fibonacci"
     scheme_f_2: "0-8"
     scheme_f_3: "T 恤码号 T-shirt(XS-XXL)"
