@@ -14,26 +14,11 @@ export default class TimeCounter extends React.Component {
     this.duration = props.initialDuration
   }
 
-  onUnload = (event) => {
-    event.preventDefault()
-    this.sendRealtimeDuration()
-    return event.returnValue = 'Are you sure you want to close?'
-  }
-
   sendRealtimeDuration = () => {
     let duration = this.duration + TimeMe.getTimeOnCurrentPageInSeconds()
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/timing`,
+    App.rooms.perform('vote', {
+      roomId: this.props.roomId,
       data: { duration: duration },
-      method: 'post',
-      cache: false,
-      success: function(data) {
-        // pass
-      },
-      error: function(xhr, status, err) {
-        // pass
-      }
     })
   }
 
@@ -43,15 +28,9 @@ export default class TimeCounter extends React.Component {
       idleTimeoutInSeconds: 600
     })
 
-    window.addEventListener("beforeunload", this.onUnload)
-
     setInterval(() => {
       this.sendRealtimeDuration()
-    }, 600000)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload)
+    }, 30000)
   }
 
   render() {
