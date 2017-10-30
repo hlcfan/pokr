@@ -30,7 +30,7 @@ export default class TimeCounter extends React.Component {
 
     setInterval(() => {
       this.sendRealtimeDuration()
-    }, 60000)
+    }, 30000)
   }
 
   render() {
