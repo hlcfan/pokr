@@ -52,7 +52,6 @@ export default class Invitation extends React.Component {
   handleEmailChange = (event) => {
     let emails = this.state.emails
     let inputIndex = event.target.getAttribute("data-index")
-    debugger
     emails[inputIndex] = event.target.value
 
     this.setState(prevState => {
@@ -104,7 +103,7 @@ export default class Invitation extends React.Component {
                 {
                   this.state.emails.length > 1 &&
                     <div className={`col-xs-1 ${css.invitation__remove}`}>
-                      <a href="javascript:;" onClick={(index) => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
+                      <a href="javascript:;" onClick={() => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
                     </div>
                 }
               </div>
