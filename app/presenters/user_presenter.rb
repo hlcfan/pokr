@@ -53,7 +53,7 @@ class UserPresenter < SimpleDelegator
   private
 
   def rooms_for_chart
-    rooms.pluck(:created_at, :stories_count, :duration)
+    rooms.pluck(:created_at, :stories_count)
   end
 
 end

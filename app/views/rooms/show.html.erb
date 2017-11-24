@@ -29,8 +29,7 @@
           storyListUrl: "/rooms/#{@room.slug}/story_list.json",
           peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
           currentVote: current_user.points_of_story(@room.current_story_id),
-          currentStoryId: @room.current_story_id,
-          duration: @room.duration
+          currentStoryId: @room.current_story_id
           },
   prerender: false) %>
 <script type="text/javascript">
