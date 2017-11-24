@@ -114,21 +114,6 @@ class Room < ApplicationRecord
     end
   end
 
-  # def time_duration
-  #   return duration if duration.present?
-
-  #   @time_duration ||= begin
-  #     all_stories = stories.to_a
-  #     first_story = all_stories.first
-  #     last_story = all_stories.last
-  #     if first_story.present? && last_story.present?
-  #       Rails.cache.fetch "duration:#{id}:#{first_story.id}:#{last_story.id}" do
-  #         calc_duration_between first_story, last_story
-  #       end
-  #     end || 0
-  #   end
-  # end
-
   def user_list params={}
     user_story_points = (UserStoryPoint.joins(user: :user_rooms)
       .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id)
@@ -172,14 +157,6 @@ class Room < ApplicationRecord
       else
         []
       end
-    end
-  end
-
-  def update_duration period
-    if period > self.duration.to_f
-      self.update_attribute :duration, period
-
-      self
     end
   end
 
@@ -232,15 +209,6 @@ class Room < ApplicationRecord
       end.join(',')
     end
   end
-
-  # def calc_duration_between first_story, last_story
-  #   user_votes = UserStoryPoint.where(story_id: [first_story.id, last_story.id]).order("updated_at DESC").pluck(:updated_at)
-  #   if user_votes.present?
-  #     duration_in_seconds = (user_votes.first - user_votes.last).abs
-  #     # throw away the duration if larger than 5 hours
-  #     duration_in_seconds < 18000 ? duration_in_seconds : 0
-  #   end
-  # end
 
   def un_groomed_stories
     stories.where(point: nil)

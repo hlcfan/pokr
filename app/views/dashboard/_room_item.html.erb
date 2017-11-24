@@ -13,10 +13,6 @@
       </span>
       <span class="divider">·</span>
       <span data-toggle="tooltip" data-placement="top" title="<%= l(room.created_at, format: :short) %>"><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
-      <% if room.duration.present? %>
-        <span class="divider">·</span>
-        <span>Took <%= distance_of_time_in_words(room.duration) %></span>
-      <% end %>
     </dd>
     <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
   </a>

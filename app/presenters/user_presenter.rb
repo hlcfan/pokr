@@ -37,15 +37,6 @@ class UserPresenter < SimpleDelegator
       .order("updated_at DESC").limit(10)
   end
 
-
-  def time_spent
-    @time_spent ||= begin
-      rooms_for_chart.inject(0) do |total, (_, _, duration)|
-        total + (duration || 0)
-      end
-    end
-  end
-
   def skip_rate
     # TODO: same as #recent_stories
     points_array = Story.joins(:user_story_points)
@@ -54,14 +45,6 @@ class UserPresenter < SimpleDelegator
     if points_array.size > 0
       skipped_count = points_array.count { |point| point == "null" }
       (skipped_count / points_array.size.to_f).round(2)*100
-    else
-      0
-    end
-  end
-
-  def avg_per_story
-    if stories_groomed_count > 0
-      (time_spent/stories_groomed_count).round(2)
     else
       0
     end
