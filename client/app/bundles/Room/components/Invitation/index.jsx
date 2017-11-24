@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Item from './Item'
 import css from './index.scss'
 
 export default class Invitation extends React.Component {
@@ -34,7 +35,7 @@ export default class Invitation extends React.Component {
     })
   }
 
-  onRemove = (index) => {
+  onRemoveHandler = (index) => {
     let emails = this.state.emails
     if (emails.length === 1) {
       return false
@@ -49,10 +50,9 @@ export default class Invitation extends React.Component {
     })
   }
 
-  handleEmailChange = (event) => {
+  onChangeHandler = (index, value) => {
     let emails = this.state.emails
-    let inputIndex = event.target.getAttribute("data-index")
-    emails[inputIndex] = event.target.value
+    emails[index] = value
 
     this.setState(prevState => {
       return {
@@ -86,29 +86,14 @@ export default class Invitation extends React.Component {
     const emailForm = () => {
       const emailFields = this.state.emails.map((email, index) => {
         return(
-          <div className="row" key={`${email}-${index}`}>
-            <div className="col-xs-8">
-              <label>Email address</label>
-              <div className="row">
-                <div className="col-xs-11">
-                  <input type="email"
-                    className="form-control"
-                    name="email"
-                    placeholder="Email"
-                    defaultValue={email}
-                    onBlur={this.handleEmailChange}
-                    data-index={index}
-                    />
-                </div>
-                {
-                  this.state.emails.length > 1 &&
-                    <div className={`col-xs-1 ${css.invitation__remove}`}>
-                      <a href="javascript:;" onClick={() => this.onRemove(index)}><i className="fa fa-trash-o fa-3"></i></a>
-                    </div>
-                }
-              </div>
-            </div>
-          </div>
+          <Item key={`${email}-${index}`}
+            itemIndex={index}
+            roomId={this.props.roomId}
+            email={email}
+            emailsCount={this.state.emails.length}
+            onChangeHandler={this.onChangeHandler}
+            onRemoveHandler={this.onRemoveHandler}
+            />
         )
       })
 
