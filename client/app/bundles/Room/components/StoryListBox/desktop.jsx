@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StoryList from '../components/StoryList'
+import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 
