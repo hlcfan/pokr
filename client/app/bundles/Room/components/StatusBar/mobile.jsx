@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import {defaultTourColor} from 'libs/barColors'
+import QRCode from 'qrcode.react'
 import css from './index.scss'
 
 const MODERATOR_ROLE = 0
@@ -24,14 +25,6 @@ export default class StatusBar extends React.Component {
   }
 
   componentDidMount() {
-    const originalTitle = "Copy to clipboard";
-    $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})
-      .on("click", function() {
-        $(this).attr("title", "Copied!").tooltip("fixTitle").tooltip("show");
-      }).mouseleave(function() {
-        $(this).attr("title", originalTitle).tooltip("fixTitle");
-      });
-
     this.props.addSteps({
       title: 'Title bar',
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
@@ -106,22 +99,14 @@ export default class StatusBar extends React.Component {
       }
     })();
 
-    const copyLink = () => {
-      const aField = document.getElementById("hiddenField");
-      aField.hidden   = false;
-      aField.value    = window.location.href;
-      aField.select();
-      document.execCommand("copy");
-      aField.hidden = true;
-    };
-
     const operationButtons = (() => {
       if (this.props.roomState !== "draw") {
         return(
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>{editButton}</li>
-            <li><a onClick={copyLink} data-toggle="tooltip" data-placement="bottom">📻 Share</a></li>            
             <li>{roomStatusButton}</li>
+            <li><a href="javascript:;">🔳 QR code</a></li>
+            <div className={css['status-bar__qr']}><QRCode value={location.href} /></div>
           </ul>
         )
       }

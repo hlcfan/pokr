@@ -16,6 +16,7 @@
   "dependencies": {
     "actioncable": "^5.1.4",
     "js-yaml": "^3.8.2",
+    "qrcode.react": "^0.7.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-joyride": "^1.10.1",
