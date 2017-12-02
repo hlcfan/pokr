@@ -251,6 +251,12 @@
       margin-bottom: 15px;
     }
   }
+
+  .story-form__desc {
+    @media only screen and (max-device-width: 736px) {
+      display: none;
+    } 
+  }
 }
 
 #board .modal-header {
