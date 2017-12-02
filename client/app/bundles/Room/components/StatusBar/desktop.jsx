@@ -35,7 +35,7 @@ export default class StatusBar extends React.Component {
     this.props.addSteps({
       title: 'Title bar',
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
-      selector: '.name .col-md-8',
+      selector: `.${css["room__status_bar"]}`,
       position: 'right',
       style: defaultTourColor
     })
@@ -43,7 +43,7 @@ export default class StatusBar extends React.Component {
     this.props.addSteps({
       title: 'Switch your role',
       text: 'Change your role to a Watcher or Participant. The Moderator is not allowed to switch roles.',
-      selector: '.name .col-md-4 .dropdown',
+      selector: `.${css["room__status_bar"]} .dropdown`,
       position: 'top-right',
       style: defaultTourColor
     });
