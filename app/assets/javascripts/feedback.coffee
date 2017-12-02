@@ -3,7 +3,7 @@ class Feedback
     modalOptions =
       keyboard: false
       backdrop: 'static'
-    $('.feedback-holder span').on 'click', ->
+    $('.feedback-holder span, .feedback-link').on 'click', ->
       $('#feedback #message').val ''
       $('#feedback .new-form').show()
       $('#feedback .submitted-form').hide()
