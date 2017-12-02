@@ -3,6 +3,7 @@ import React from 'react'
 import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
+import css from './index.scss'
 
 export default class StoryListBox extends React.Component {
 
@@ -63,10 +64,27 @@ export default class StoryListBox extends React.Component {
 
   render() {
     const defaultArray = [];
+    let ticketHeading = (() => {
+      if (this.state.data.ungroomed) {
+        return this.state.data.ungroomed[0].link
+      } else {
+        return "Loading..."
+      }
+    })();
+
     return (
       <div className="panel panel-default" id="stories">
-        <div className="panel-heading">Stories</div>
-        <div id="storyListArea" className="panel-body row">
+        <div className="panel-heading">
+          <span className={css['stories--ongoing']}></span>
+          <a href={storyLinkHref(ticketHeading)} target="_blank">{ticketHeading}</a>
+          <span className="pull-right"
+            data-toggle="collapse"
+            data-parent="#accordion"
+            href="#storyListArea">
+            ⏬
+          </span>
+        </div>
+        <div id="storyListArea" className="panel-body row panel-collapse collapse">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active">
               <a href="#grooming-list" aria-controls="home" role="tab" data-toggle="tab">Pending</a>
