@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import {defaultTourColor} from 'libs/barColors'
+import css from './index.scss'
 
 const MODERATOR_ROLE = 0
 const PARTICIPANT_ROLE = 1
@@ -91,12 +92,8 @@ export default class StatusBar extends React.Component {
   render() {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
-        const buttonText = "🏁 Close room"
-        const buttonClassName = "close-room"
-        const onClickHandler = this.closeRoom
-
         return (
-          <button type="button" onClick={onClickHandler} className={`btn btn-default ${buttonClassName}`}>{buttonText}</button>
+          <button type="button" onClick={this.closeRoom} className="btn btn-default close-room">🏁 Close room</button>
         )
       }
     })()
@@ -104,7 +101,7 @@ export default class StatusBar extends React.Component {
     const editButton = (() => {
       if('Moderator' === this.state.role) {
         return(
-          <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
+          <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ <span>Edit room</span></a>
         )
       }
     })();

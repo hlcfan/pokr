@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StatusBar from '../components/StatusBar'
+import StatusBar from '../components/StatusBar/index'
 import VoteBox from '../components/VoteBox'
 import TimeCounter from '../components/TimeCounter'
 import StoryListBox from '../components/StoryListBox'
