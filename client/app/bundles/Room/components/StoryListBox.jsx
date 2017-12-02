@@ -62,6 +62,7 @@ export default class StoryListBox extends React.Component {
   }
 
   render() {
+    const defaultArray = [];
     return (
       <div className="panel panel-default" id="stories">
         <div className="panel-heading">Stories</div>
@@ -76,10 +77,10 @@ export default class StoryListBox extends React.Component {
           </ul>
           <div className="tab-content">
             <div role="tabpanel" className="row storyListBox tab-pane active" id="grooming-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.ungroomed || []} tab="ungroomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.ungroomed || defaultArray} tab="ungroomed" />
             </div>
             <div role="tabpanel" className="tab-pane" id="groomed-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.groomed || []} tab="groomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.groomed || defaultArray} tab="groomed" />
             </div>
           </div>
         </div>

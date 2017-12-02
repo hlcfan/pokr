@@ -16,7 +16,7 @@ export default class TimeCounter extends React.Component {
 
   sendRealtimeDuration = () => {
     let duration = this.duration + TimeMe.getTimeOnCurrentPageInSeconds()
-    App.rooms.perform('vote', {
+    App.rooms.perform('timing', {
       roomId: this.props.roomId,
       data: { duration: duration },
     })
