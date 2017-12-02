@@ -93,7 +93,7 @@ export default class StatusBar extends React.Component {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
         return (
-          <button type="button" onClick={this.closeRoom} className="btn btn-default close-room">🏁 <span className={css.descriptive_text}>Close room</span></button>
+          <button type="button" onClick={this.closeRoom} className="btn btn-default close-room">🏁 Close room</button>
         )
       }
     })()
@@ -101,7 +101,7 @@ export default class StatusBar extends React.Component {
     const editButton = (() => {
       if('Moderator' === this.state.role) {
         return(
-          <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ <span className={css.descriptive_text}>Edit room</span></a>
+          <a href={`/rooms/${this.props.roomId}/edit`} className="btn btn-default">✏️ Edit room</a>
         )
       }
     })();
@@ -118,9 +118,9 @@ export default class StatusBar extends React.Component {
     const operationButtons = (() => {
       if (this.props.roomState !== "draw") {
         return(
-          <div className={`btn-group pull-right ${css.room__operation}`} role="group">
+          <div className="btn-group pull-right" role="group">
             {editButton}
-            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 <span className={css.descriptive_text}>Share link</span></button>
+            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
             {roomStatusButton}
           </div>
         )
