@@ -47,17 +47,9 @@ export default class StoryListBox extends React.Component {
 
     this.props.addSteps({
       title: 'Stories',
-      text: 'All your stories are listed here.',
+      text: 'Showing current story, click ⏬ to see all stories',
       selector: '#stories',
       position: 'top-right',
-      style: defaultTourColor
-    })
-
-    this.props.addSteps({
-      title: 'Current story',
-      text: "The ► indicates the current story.",
-      selector: '#stories .story__ungroomed:first-child',
-      position: 'bottom-left',
       style: defaultTourColor
     })
   }

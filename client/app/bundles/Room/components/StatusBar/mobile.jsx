@@ -26,9 +26,9 @@ export default class StatusBar extends React.Component {
 
   componentDidMount() {
     this.props.addSteps({
-      title: 'Title bar',
-      text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
-      selector: css["status-bar__operations"],
+      title: 'Menu bar',
+      text: "Share the QR code to others. You can change room status or edit from here if you're a moderator, or change your role",
+      selector: `.${css["status-bar__operations"]}`,
       position: 'right',
       style: defaultTourColor
     })
@@ -97,6 +97,9 @@ export default class StatusBar extends React.Component {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>{editButton}</li>
             <li>{roomStatusButton}</li>
+            <li><a href="javascript:;" onClick={this.playTourGuide}>
+              <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
+            </a></li>
             <li><a href="javascript:;">🔳 QR code</a></li>
             <div className={css['status-bar__qr']}><QRCode value={location.href} /></div>
           </ul>
@@ -132,7 +135,7 @@ export default class StatusBar extends React.Component {
           <div className="row">
             <div className="dropdown col-md-6 col-xs-6">
               <button className="btn btn-default dropdown-toggle" type="button" id="dropdown-operation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <i className="fa fa-wrench"></i> &nbsp; Operations &nbsp;
+                <i className="fa fa-wrench"></i> &nbsp; Options &nbsp;
                 <span className="caret"></span>
               </button>
               {operationButtons}
@@ -149,15 +152,8 @@ export default class StatusBar extends React.Component {
           </div>
           <div id="tooltip-area"></div>
         </div>
-
         <div className="col-md-4 col-xs-4">
-          <div className={`pull-left ${css['tour-guide']}`}>
-            <a href="javascript:;" onClick={this.playTourGuide}>
-              <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
-            </a>
-          </div>
         </div>
-        <input type="text" id="hiddenField" className="room--share-link" />
       </div>
     )
   }
