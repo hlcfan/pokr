@@ -64,9 +64,11 @@ export default class StoryListBox extends React.Component {
 
   render() {
     const defaultArray = [];
-    let ticketHeading = (() => {
-      if (this.state.data.ungroomed) {
+    const ticketHeading = (() => {
+      if (this.state.data.ungroomed && this.state.data.ungroomed.length) {
         return this.state.data.ungroomed[0].link
+      } else if(this.state.data.groomed && this.state.data.groomed.length) {
+        return "Room closed..."
       } else {
         return "Loading..."
       }
@@ -77,12 +79,12 @@ export default class StoryListBox extends React.Component {
         <div className="panel-heading">
           <span className={css['stories--ongoing']}></span>
           <a href={storyLinkHref(ticketHeading)} target="_blank">{ticketHeading}</a>
-          <span className="pull-right"
+          <a className="pull-right"
             data-toggle="collapse"
             data-parent="#accordion"
             href="#storyListArea">
             ⏬
-          </span>
+          </a>
         </div>
         <div id="storyListArea" className="panel-body row panel-collapse collapse">
           <ul className="nav nav-tabs" role="tablist">
