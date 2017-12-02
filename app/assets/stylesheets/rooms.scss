@@ -171,10 +171,6 @@
   padding: 10px;
 }
 
-.room .name h3{
-  margin-top: 10px;
-}
-
 .room .room--share-link {
   position: fixed;
   left: 0;
@@ -280,18 +276,6 @@
 
 .bootstrap-tagsinput {
   width: 100%;
-}
-
-.tour-guide {
-  position: relative;
-
-  a {
-    bottom: -35px;
-    position: absolute;
-    width: 100px;
-    color: #444;
-    text-decoration: none;
-  }
 }
 
 .summary {

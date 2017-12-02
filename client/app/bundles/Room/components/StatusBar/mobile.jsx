@@ -132,7 +132,7 @@ export default class StatusBar extends React.Component {
     })();
 
     return (
-      <div className="room__status_bar row">
+      <div className={`${css["room__status_bar"]} row`}>
         <div className="col-md-12 col-xs-12">
           <h3 className={`pull-left ${css.room__title}`}>{this.props.roomName}</h3>
         </div>
