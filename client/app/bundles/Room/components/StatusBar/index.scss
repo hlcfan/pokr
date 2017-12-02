@@ -1,15 +1,13 @@
 @media only screen and (max-device-width: 736px) {
-  .room__operation {
-    span.descriptive_text {
-      display: none;
-    }
-  }
-
   .room__title {
-    margin-top: 5px;
+    margin-top: -5px;
   }
 
   .tour-guide {
     display: none;
+  }
+
+  .status-bar__operations {
+    margin-bottom: 10px;
   }
 }

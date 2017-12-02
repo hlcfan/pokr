@@ -22,4 +22,12 @@ module RoomsHelper
     end
   end
 
+  def component_name
+    component_name = if is_mobile_request?
+      "RoomMobile"
+    else
+      "Room"
+    end
+  end
+
 end
