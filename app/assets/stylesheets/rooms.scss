@@ -213,6 +213,10 @@
   a.remove {
     left: 2px;
     top: 33px;
+
+    @media only screen and (max-device-width: 736px) {
+      top: 28px;
+    }
   }
 
   #story-row > .row {
