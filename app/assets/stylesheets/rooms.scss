@@ -46,6 +46,7 @@
 
   .storyList {
     margin-top: 10px;
+
     ul {
       list-style: none;
       margin-left: 0;
@@ -170,10 +171,6 @@
   padding: 10px;
 }
 
-.room .name h3{
-  margin-top: 10px;
-}
-
 .room .room--share-link {
   position: fixed;
   left: 0;
@@ -182,6 +179,12 @@
   border: 0;
   margin: 0;
   padding: 0;
+}
+
+.room .panel {
+  @media only screen and (max-device-width: 736px) {
+    margin-bottom: 10px;
+  }
 }
 
 .room form {
@@ -213,6 +216,10 @@
   a.remove {
     left: 2px;
     top: 33px;
+
+    @media only screen and (max-device-width: 736px) {
+      top: 28px;
+    }
   }
 
   #story-row > .row {
@@ -247,6 +254,12 @@
       margin-bottom: 15px;
     }
   }
+
+  .story-form__desc {
+    @media only screen and (max-device-width: 736px) {
+      display: none;
+    } 
+  }
 }
 
 #board .modal-header {
@@ -263,18 +276,6 @@
 
 .bootstrap-tagsinput {
   width: 100%;
-}
-
-.tour-guide {
-  position: relative;
-
-  a {
-    bottom: -35px;
-    position: absolute;
-    width: 100px;
-    color: #444;
-    text-decoration: none;
-  }
 }
 
 .summary {

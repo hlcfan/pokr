@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StoryList from '../components/StoryList'
+import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
+import css from './index.scss'
 
 export default class StoryListBox extends React.Component {
 
@@ -46,27 +47,38 @@ export default class StoryListBox extends React.Component {
 
     this.props.addSteps({
       title: 'Stories',
-      text: 'All your stories are listed here.',
+      text: 'Showing current story, click ⏬ to see all stories',
       selector: '#stories',
       position: 'top-right',
-      style: defaultTourColor
-    })
-
-    this.props.addSteps({
-      title: 'Current story',
-      text: "The ► indicates the current story.",
-      selector: '#stories .story__ungroomed:first-child',
-      position: 'bottom-left',
       style: defaultTourColor
     })
   }
 
   render() {
     const defaultArray = [];
+    const ticketHeading = (() => {
+      if (this.state.data.ungroomed && this.state.data.ungroomed.length) {
+        return this.state.data.ungroomed[0].link
+      } else if(this.state.data.groomed && this.state.data.groomed.length) {
+        return "Room closed..."
+      } else {
+        return "Loading..."
+      }
+    })();
+
     return (
       <div className="panel panel-default" id="stories">
-        <div className="panel-heading">Stories</div>
-        <div id="storyListArea" className="panel-body row">
+        <div className="panel-heading">
+          <span className={css['stories--ongoing']}></span>
+          <a href={storyLinkHref(ticketHeading)} target="_blank">{ticketHeading}</a>
+          <a className="pull-right"
+            data-toggle="collapse"
+            data-parent="#accordion"
+            href="#storyListArea">
+            ⏬
+          </a>
+        </div>
+        <div id="storyListArea" className="panel-body row panel-collapse collapse">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active">
               <a href="#grooming-list" aria-controls="home" role="tab" data-toggle="tab">Pending</a>

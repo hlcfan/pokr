@@ -36,4 +36,16 @@ RSpec.describe RoomsHelper, type: :helper do
       expect(html).to include '<input class="btn btn-info" type="button" value="20" />'
     end
   end
+
+  describe "#component_name" do
+    it "returns Room if desktop request" do
+      def is_mobile_request?; false; end
+      expect(component_name).to eq "Room"
+    end
+
+    it "returns RoomMobile if desktop request" do
+      def is_mobile_request?; true; end
+      expect(component_name).to eq "RoomMobile"
+    end
+  end
 end

@@ -18,7 +18,7 @@
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
 <%= action_cable_meta_tag %>
 
-<%= react_component("Room",
+<%= react_component(component_name,
   props: {roomId: @room.slug,
           roomName: @room.name,
           role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,

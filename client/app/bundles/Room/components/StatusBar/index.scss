@@ -1,0 +1,33 @@
+.tour-guide {
+  position: relative;
+
+  a {
+    bottom: -35px;
+    position: absolute;
+    width: 100px;
+    color: #444;
+    text-decoration: none;
+  }
+}
+
+.room__status_bar h3 {
+  margin-top: 10px;
+}
+
+@media only screen and (max-device-width: 736px) {
+  .room__title {
+    margin-top: -5px;
+  }
+
+  .tour-guide {
+    display: none;
+  }
+
+  .status-bar__operations {
+    margin-bottom: 10px;
+  }
+
+  .status-bar__qr {
+    text-align: center;
+  }
+}

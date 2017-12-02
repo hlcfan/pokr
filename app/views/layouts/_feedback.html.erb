@@ -1,8 +1,10 @@
-<div class="feedback-holder">
-  <span>Give feedback or need help?</span>
-  &nbsp;
-  <strong class="close">x</strong>
-</div>
+<% unless is_mobile_request? %>
+  <div class="feedback-holder">
+    <span>Give feedback or need help?</span>
+    &nbsp;
+    <strong class="close">x</strong>
+  </div>
+<% end %>
 <div id="feedback">
   <div class="modal fade" tabIndex="-1" role="dialog">
     <div class="modal-dialog">

@@ -22,8 +22,8 @@ export default class PointBar extends React.Component {
 
     return (
       <li className="row" data-point={this.props.point}>
-        <div className="col-md-2 point">{pointIndicator}</div>
-        <div className="col-md-9 bar" style={cursorStyle}>
+        <div className="col-md-2 col-xs-2 point">{pointIndicator}</div>
+        <div className="col-md-9 col-xs-9 bar" style={cursorStyle}>
           <div onClick={this.selectPoint} style={{width: this.props.barWidth + '%', background: this.props.color, color: '#fff', 'textAlign': 'center'}}>
             {this.props.count}
           </div>
