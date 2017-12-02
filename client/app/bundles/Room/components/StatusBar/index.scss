@@ -10,24 +10,26 @@
   }
 }
 
-.room__status_bar h3 {
+.room__status_bar .room__title {
   margin-top: 10px;
 }
 
 @media only screen and (max-device-width: 736px) {
-  .room__title {
-    margin-top: -5px;
-  }
+  .room__status_bar {
+    .room__title {
+      margin-top: -5px;
+    }
 
-  .tour-guide {
-    display: none;
-  }
+    .tour-guide {
+      display: none;
+    }
 
-  .status-bar__operations {
-    margin-bottom: 10px;
-  }
+    .status-bar__operations {
+      margin-bottom: 10px;
+    }
 
-  .status-bar__qr {
-    text-align: center;
+    .status-bar__qr {
+      text-align: center;
+    }
   }
 }
