@@ -1,25 +1,15 @@
-import PropTypes from 'prop-types'
+import {HOC} from './hoc'
 import React from 'react'
 import {defaultTourColor} from 'libs/barColors'
 import css from './index.scss'
 
-const MODERATOR_ROLE = 0
-const PARTICIPANT_ROLE = 1
-const WATCHER_ROLE = 2
+class StatusBarDesktop extends React.Component {
 
-export default class StatusBar extends React.Component {
+  constructor(props) {
+    super(props)
 
-  state = {
-    role: this.props.role
-  }
-
-  closeRoom = () => {
-    if(confirm("WARNING: Do you want to close this room? This cannot be undone.")) {
-      App.rooms.perform('action', {
-        roomId: this.props.roomId,
-        data: "close-room",
-        type: 'action'
-      });
+    this.state = {
+      role: this.props.role
     }
   }
 
@@ -49,51 +39,11 @@ export default class StatusBar extends React.Component {
     });
   }
 
-  beWatcher = () => {
-    if ("Watcher" === this.state.role || 'Moderator' === this.state.role)
-      return
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/switch_role`,
-      cache: false,
-      type: 'POST',
-      data: { role: WATCHER_ROLE },
-      success: data => {
-        this.setState({ role: "Watcher" })
-      },
-      error: (xhr, status, err) => {
-        console.error("Switch role failed!")
-      }
-    })
-  }
-
-  beParticipant = () => {
-    if ("Participant" === this.state.role || 'Moderator' === this.state.role)
-      return
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/switch_role`,
-      cache: false,
-      type: 'POST',
-      data: { role: PARTICIPANT_ROLE },
-      success: data => {
-        this.setState({ role: "Participant" })
-      },
-      error: (xhr, status, err) => {
-        console.error("Switch role failed!")
-      }
-    })
-  }
-
-  playTourGuide = () => {
-    this.props.playTourGuide()
-  }
-
   render() {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
         return (
-          <button type="button" onClick={this.closeRoom} className="btn btn-default close-room">🏁 Close room</button>
+          <button type="button" onClick={this.props.closeRoom} className="btn btn-default close-room">🏁 Close room</button>
         )
       }
     })()
@@ -155,7 +105,7 @@ export default class StatusBar extends React.Component {
         </div>
         <div className="col-md-4 col-xs-4">
           <div className={`pull-left ${css['tour-guide']}`}>
-            <a href="javascript:;" onClick={this.playTourGuide}>
+            <a href="javascript:;" onClick={this.props.playTourGuide}>
               <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a>
           </div>
@@ -165,8 +115,8 @@ export default class StatusBar extends React.Component {
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 👲</a></li>
-              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
+              <li className={userRoleClassName("Watcher")}><a onClick={this.props.beWatcher} href="javascript:;">Be watcher 👲</a></li>
+              <li className={userRoleClassName("Participant")}><a onClick={this.props.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
           </div>
         </div>
         <input type="text" id="hiddenField" className="room--share-link" />
@@ -174,3 +124,6 @@ export default class StatusBar extends React.Component {
     )
   }
 }
+
+const StatusBar = HOC(StatusBarDesktop)
+export default StatusBar

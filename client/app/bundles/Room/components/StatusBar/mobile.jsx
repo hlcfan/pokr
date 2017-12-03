@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {HOC} from './hoc'
 import {defaultTourColor} from 'libs/barColors'
 import QRCode from 'qrcode.react'
 import css from './index.scss'
@@ -8,10 +9,14 @@ const MODERATOR_ROLE = 0
 const PARTICIPANT_ROLE = 1
 const WATCHER_ROLE = 2
 
-export default class StatusBar extends React.Component {
+class StatusBarMobile extends React.Component {
 
-  state = {
-    role: this.props.role
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      role: this.props.role
+    }
   }
 
   closeRoom = () => {
@@ -158,3 +163,5 @@ export default class StatusBar extends React.Component {
     )
   }
 }
+const StatusBar = HOC(StatusBarMobile)
+export default StatusBar
