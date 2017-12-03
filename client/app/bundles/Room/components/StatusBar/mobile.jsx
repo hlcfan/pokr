@@ -19,16 +19,6 @@ class StatusBarMobile extends React.Component {
     }
   }
 
-  closeRoom = () => {
-    if(confirm("WARNING: Do you want to close this room? This cannot be undone.")) {
-      App.rooms.perform('action', {
-        roomId: this.props.roomId,
-        data: "close-room",
-        type: 'action'
-      });
-    }
-  }
-
   componentDidMount() {
     this.props.addSteps({
       title: 'Menu bar',
@@ -37,46 +27,6 @@ class StatusBarMobile extends React.Component {
       position: 'right',
       style: defaultTourColor
     })
-  }
-
-  beWatcher = () => {
-    if ("Watcher" === this.state.role || 'Moderator' === this.state.role)
-      return
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/switch_role`,
-      cache: false,
-      type: 'POST',
-      data: { role: WATCHER_ROLE },
-      success: data => {
-        this.setState({ role: "Watcher" })
-      },
-      error: (xhr, status, err) => {
-        console.error("Switch role failed!")
-      }
-    })
-  }
-
-  beParticipant = () => {
-    if ("Participant" === this.state.role || 'Moderator' === this.state.role)
-      return
-
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/switch_role`,
-      cache: false,
-      type: 'POST',
-      data: { role: PARTICIPANT_ROLE },
-      success: data => {
-        this.setState({ role: "Participant" })
-      },
-      error: (xhr, status, err) => {
-        console.error("Switch role failed!")
-      }
-    })
-  }
-
-  playTourGuide = () => {
-    this.props.playTourGuide()
   }
 
   render() {
@@ -102,7 +52,7 @@ class StatusBarMobile extends React.Component {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>{editButton}</li>
             <li>{roomStatusButton}</li>
-            <li><a href="javascript:;" onClick={this.playTourGuide}>
+            <li><a href="javascript:;" onClick={this.props.playTourGuide}>
               <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a></li>
             <li><a href="javascript:;">🔳 QR code</a></li>
