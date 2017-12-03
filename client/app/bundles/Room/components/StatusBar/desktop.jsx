@@ -4,15 +4,6 @@ import {defaultTourColor} from 'libs/barColors'
 import css from './index.scss'
 
 class StatusBarDesktop extends React.Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      role: this.props.role
-    }
-  }
-
   componentDidMount() {
     const originalTitle = "Copy to clipboard";
     $('[data-toggle="tooltip"]').tooltip({container: "#tooltip-area", title: originalTitle})

@@ -8,6 +8,13 @@ const PARTICIPANT_ROLE = 1
 const WATCHER_ROLE = 2
 
 export const HOC = (WrappedComponent) => class extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      role: this.props.role
+    }
+  }
 
   closeRoom = () => {
     if (confirm("WARNING: Do you want to close this room? This cannot be undone.")) {
@@ -20,7 +27,7 @@ export const HOC = (WrappedComponent) => class extends React.Component {
   }
 
   beWatcher = () => {
-    if ("Watcher" === this.state.role || 'Moderator' === this.state.role)
+    if ("Watcher" === this.props.role || 'Moderator' === this.props.role)
       return
 
     $.ajax({
@@ -38,7 +45,7 @@ export const HOC = (WrappedComponent) => class extends React.Component {
   }
 
   beParticipant = () => {
-    if ("Participant" === this.state.role || 'Moderator' === this.state.role)
+    if ("Participant" === this.props.role || 'Moderator' === this.props.role)
       return
 
     $.ajax({

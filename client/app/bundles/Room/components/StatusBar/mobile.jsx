@@ -6,15 +6,6 @@ import QRCode from 'qrcode.react'
 import css from './index.scss'
 
 class StatusBarMobile extends React.Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      role: this.props.role
-    }
-  }
-
   componentDidMount() {
     this.props.addSteps({
       title: 'Menu bar',
@@ -27,7 +18,7 @@ class StatusBarMobile extends React.Component {
 
   render() {
     const roomStatusButton = (() => {
-      if ('Moderator' === this.state.role) {
+      if ('Moderator' === this.props.role) {
         return (
           <a onClick={this.closeRoom}>🏁 Close</a>
         )
@@ -35,7 +26,7 @@ class StatusBarMobile extends React.Component {
     })()
 
     const editButton = (() => {
-      if('Moderator' === this.state.role) {
+      if('Moderator' === this.props.role) {
         return(
           <a href={`/rooms/${this.props.roomId}/edit`}>✏️ Edit</a>
         )
@@ -60,7 +51,7 @@ class StatusBarMobile extends React.Component {
 
     const userRoleClassName = role => {
       // Dont allow moderator to switch role at the moment
-      if (role === this.state.role || "Moderator" === this.state.role) {
+      if (role === this.props.role || "Moderator" === this.props.role) {
         return "disabled";
       } else {
         return "";
@@ -68,9 +59,9 @@ class StatusBarMobile extends React.Component {
     };
 
     const currentRoleEmoji = (() => {
-      if ("Moderator" === this.state.role) {
+      if ("Moderator" === this.props.role) {
         return "👑";
-      } else if ("Participant" === this.state.role) {
+      } else if ("Participant" === this.props.role) {
         return "👷";
       } else {
         return "👲";
@@ -93,7 +84,7 @@ class StatusBarMobile extends React.Component {
             </div>
             <div className="dropdown col-md-6 col-xs-6">
               <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                {currentRoleEmoji} &nbsp;{this.state.role} &nbsp;
+                {currentRoleEmoji} &nbsp;{this.props.role} &nbsp;
                 <span className="caret"></span>
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
