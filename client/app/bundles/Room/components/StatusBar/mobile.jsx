@@ -5,10 +5,6 @@ import {defaultTourColor} from 'libs/barColors'
 import QRCode from 'qrcode.react'
 import css from './index.scss'
 
-const MODERATOR_ROLE = 0
-const PARTICIPANT_ROLE = 1
-const WATCHER_ROLE = 2
-
 class StatusBarMobile extends React.Component {
 
   constructor(props) {
