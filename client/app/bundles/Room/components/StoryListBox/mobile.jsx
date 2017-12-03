@@ -1,49 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {HOC} from './hoc'
 import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 import css from './index.scss'
 
-export default class StoryListBox extends React.Component {
-
-  state = {
-    data: []
-  }
-
-  loadStoryListFromServer = () => {
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/story_list.json`,
-      dataType: 'json',
-      cache: false,
-      success: data => {
-        if (data["ungroomed"].length) {
-          let nextStoryId = data["ungroomed"][0]["id"]
-          if (this.props.storyId !== nextStoryId) {
-            this.handleStorySwitch(nextStoryId)
-          }
-        } else {
-          this.handleNoStoryLeft()
-        }
-        this.setState({ data })
-      },
-      error: (xhr, status, err) => {
-        console.error("Fetching story list", status, err.toString());
-      }
-    });
-  }
-
-  handleStorySwitch = (storyId) => {
-    this.props.onSwitchStory(storyId)
-  }
-
-  handleNoStoryLeft = () => {
-    this.props.onNoStoryLeft()
-  }
-
+class StoryListBoxMobile extends React.Component {
   componentDidMount() {
-    this.loadStoryListFromServer()
-    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
+    this.props.loadStoryListFromServer()
+    EventEmitter.subscribe("refreshStories", this.props.loadStoryListFromServer)
 
     this.props.addSteps({
       title: 'Stories',
@@ -100,3 +66,6 @@ export default class StoryListBox extends React.Component {
     )
   }
 }
+
+const StoryListBox = HOC(StoryListBoxMobile)
+export default StoryListBox;

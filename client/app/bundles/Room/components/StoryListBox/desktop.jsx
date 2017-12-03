@@ -1,48 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {HOC} from './hoc'
 import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 
-export default class StoryListBox extends React.Component {
-
-  state = {
-    data: []
-  }
-
-  loadStoryListFromServer = () => {
-    $.ajax({
-      url: `/rooms/${this.props.roomId}/story_list.json`,
-      dataType: 'json',
-      cache: false,
-      success: data => {
-        if (data["ungroomed"].length) {
-          let nextStoryId = data["ungroomed"][0]["id"]
-          if (this.props.storyId !== nextStoryId) {
-            this.handleStorySwitch(nextStoryId)
-          }
-        } else {
-          this.handleNoStoryLeft()
-        }
-        this.setState({ data })
-      },
-      error: (xhr, status, err) => {
-        console.error("Fetching story list", status, err.toString());
-      }
-    });
-  }
-
-  handleStorySwitch = (storyId) => {
-    this.props.onSwitchStory(storyId)
-  }
-
-  handleNoStoryLeft = () => {
-    this.props.onNoStoryLeft()
-  }
-
+class StoryListBoxDesktop extends React.Component {
   componentDidMount() {
-    this.loadStoryListFromServer()
-    EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
+    this.props.loadStoryListFromServer()
+    EventEmitter.subscribe("refreshStories", this.props.loadStoryListFromServer)
 
     this.props.addSteps({
       title: 'Stories',
@@ -77,10 +43,10 @@ export default class StoryListBox extends React.Component {
           </ul>
           <div className="tab-content">
             <div role="tabpanel" className="row storyListBox tab-pane active" id="grooming-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.ungroomed || defaultArray} tab="ungroomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.props.data.ungroomed || defaultArray} tab="ungroomed" />
             </div>
             <div role="tabpanel" className="tab-pane" id="groomed-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.groomed || defaultArray} tab="groomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.props.data.groomed || defaultArray} tab="groomed" />
             </div>
           </div>
         </div>
@@ -88,3 +54,6 @@ export default class StoryListBox extends React.Component {
     )
   }
 }
+
+const StoryListBox = HOC(StoryListBoxDesktop)
+export default StoryListBox
