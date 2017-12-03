@@ -23,9 +23,9 @@ class StoryListBoxMobile extends React.Component {
   render() {
     const defaultArray = [];
     const ticketHeading = (() => {
-      if (this.state.data.ungroomed && this.state.data.ungroomed.length) {
-        return this.state.data.ungroomed[0].link
-      } else if(this.state.data.groomed && this.state.data.groomed.length) {
+      if (this.props.data.ungroomed && this.props.data.ungroomed.length) {
+        return this.props.data.ungroomed[0].link
+      } else if(this.props.data.groomed && this.props.data.groomed.length) {
         return "Room closed..."
       } else {
         return "Loading..."
@@ -55,10 +55,10 @@ class StoryListBoxMobile extends React.Component {
           </ul>
           <div className="tab-content">
             <div role="tabpanel" className="row storyListBox tab-pane active" id="grooming-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.ungroomed || defaultArray} tab="ungroomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.props.data.ungroomed || defaultArray} tab="ungroomed" />
             </div>
             <div role="tabpanel" className="tab-pane" id="groomed-list">
-              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.state.data.groomed || defaultArray} tab="groomed" />
+              <StoryList roomState={this.props.roomState} roomId={this.props.roomId} role={this.props.role} data={this.props.data.groomed || defaultArray} tab="groomed" />
             </div>
           </div>
         </div>
