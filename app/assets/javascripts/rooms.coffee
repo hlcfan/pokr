@@ -86,7 +86,7 @@ class Rooms
       handle: ".move-btn",
       draggable: ".row",
       animation: 150,
-      dragClass: ".row",
+      dragClass: "row-dragging",
       sort: true
     })
 
