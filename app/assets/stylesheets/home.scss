@@ -83,6 +83,10 @@ html {
       margin-left: -35px;
       font-weight: 300;
 
+      @media #{$mobile} {
+        font-size: 3rem;
+      }
+
       span {
         color: $default_font_color;
       }
@@ -102,6 +106,12 @@ html {
           margin-right: 3px;
           text-decoration: none;
           padding: 6px 12px;
+
+          @media #{$mobile} {
+            color: #46b8da;
+            border: 1px solid #46b8da;
+            border-radius: 4px;
+          }
         }
       }
       .btn-reg {
@@ -112,6 +122,10 @@ html {
           color: #fff;
           background: #46b8da;
           border: 1px solid #46b8da;
+        }
+
+        @media #{$mobile} {
+          display: none;
         }
       }
     }
