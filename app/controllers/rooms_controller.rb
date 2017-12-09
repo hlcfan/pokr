@@ -59,6 +59,10 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if repo.update_entity @room, room_params
+        broadcaster "rooms/#{@room.slug}",
+          user_id: current_user.id,
+          data: 'next-story',
+          type: 'action'
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else

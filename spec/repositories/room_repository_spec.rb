@@ -76,6 +76,7 @@ RSpec.describe RoomRepository do
       room = repo.update_entity room, new_room_params
       room = Room.find room.id
 
+      expect(room.status).to be_nil
       expect(room.name).to eq "updated-name"
       expect(room.moderator_ids_ary).to eq [bob.id, catlin.id, drake.id]
     end
