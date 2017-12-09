@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.7] - 2017-12-05
+### Changed
+Fix ticket list isn't draggable [9506c0f](https://github.com/hlcfan/pokr/commit/9506c0f8d33e07f3cddbe5f2ca8cfd480929b966)
+
+## [0.5.6] - 2017-12-02
+### Changed
+Responsive implementation [#179](https://github.com/hlcfan/pokr/pull/179)
+
+## [0.5.5] - 2017-10-16
+### Changed
+- Fix removing invitatee bug [c8669df](https://github.com/hlcfan/pokr/commit/c8669dfadbfc65e40c461508ab241c6b5aadd61e)
+
+## [0.5.4] - 2017-10-16
+### Changed
+- SEO changes [#172](https://github.com/hlcfan/pokr/pull/172)
+
+## [0.5.3] - 2017-10-11
+### Added
+- Add new section to landing page about multiple schemes [#170](https://github.com/hlcfan/pokr/pull/170)
+
 ## [0.5.2] - 2017-10-08
 ### Added
 - T-shirt point scheme [#168](https://github.com/hlcfan/pokr/pull/168)
