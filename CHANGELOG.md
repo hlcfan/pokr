@@ -4,11 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.5.8] - 2017-12-09
 ### Changed
-Refresh user/ticket list after updating room [c1d1189](https://github.com/hlcfan/pokr/commit/c1d11894f7aabe0ac942a19ca0e6bd3f8ae26190)
+- Refresh user/ticket list after updating room [c1d1189](https://github.com/hlcfan/pokr/commit/c1d11894f7aabe0ac942a19ca0e6bd3f8ae26190)
+- Wrap story name if too long [68bb389](https://github.com/hlcfan/pokr/commit/68bb3893041f301aa44792cf4758346d73e5bed0)
 
 ## [0.5.7] - 2017-12-05
 ### Changed
-Fix ticket list isn't draggable [9506c0f](https://github.com/hlcfan/pokr/commit/9506c0f8d33e07f3cddbe5f2ca8cfd480929b966)
+- Fix ticket list isn't draggable [9506c0f](https://github.com/hlcfan/pokr/commit/9506c0f8d33e07f3cddbe5f2ca8cfd480929b966)
 
 ## [0.5.6] - 2017-12-02
 ### Changed
