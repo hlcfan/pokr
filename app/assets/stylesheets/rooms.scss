@@ -61,6 +61,11 @@
         margin-right: 10px;
       }
 
+      li.story {
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+
       li.story__ungroomed:first-child {
         font-weight: 500;
         &:before {

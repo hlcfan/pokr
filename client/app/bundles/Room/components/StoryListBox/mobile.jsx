@@ -70,7 +70,7 @@ export default class StoryListBox extends React.Component {
       <div className="panel panel-default" id="stories">
         <div className="panel-heading">
           <span className={css['stories--ongoing']}></span>
-          <a href={storyLinkHref(ticketHeading)} target="_blank">{ticketHeading}</a>
+          <a className={css['story--ongoing']} href={storyLinkHref(ticketHeading)} target="_blank">{ticketHeading}</a>
           <a className="pull-right"
             data-toggle="collapse"
             data-parent="#accordion"
