@@ -15,8 +15,6 @@ import Helper from 'libs/helper'
 export default class RoomMobile extends React.Component {
   constructor(props) {
     super(props)
-    window.syncResult = ('open' === props.roomState ) ? true : false
-    AirTraffic.setupChannelSubscription(props.roomId, props.roomState)
 
     this.state = {
       roomState: props.roomState,
@@ -118,6 +116,15 @@ export default class RoomMobile extends React.Component {
   }
 
   componentDidMount() {
+    window.syncResult = ('open' === this.props.roomState ) ? true : false
+    AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        EventEmitter.dispatch("refreshUsers")
+      }
+    })
+
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
     import('../components/PageGuide').then(Component => {
       this.PageGuide = Component
