@@ -15,6 +15,7 @@ import Helper from 'libs/helper'
 export default class Room extends React.Component {
   constructor(props) {
     super(props)
+    window.syncResult = ('open' === this.props.roomState ) ? true : false
 
     this.state = {
       roomState: props.roomState,
@@ -116,7 +117,6 @@ export default class Room extends React.Component {
   }
 
   componentDidMount() {
-    window.syncResult = ('open' === this.props.roomState ) ? true : false
     AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
 
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
