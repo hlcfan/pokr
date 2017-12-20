@@ -125,10 +125,10 @@ export default class RoomMobile extends React.Component {
     })
 
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
-    // import('../components/PageGuide').then(Component => {
-    //   this.PageGuide = Component
-    //   this.forceUpdate()
-    // })
+    import('../components/PageGuide').then(Component => {
+      this.PageGuide = Component
+      this.forceUpdate()
+    })
   }
 
   render() {

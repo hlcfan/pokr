@@ -119,10 +119,10 @@ export default class Room extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
-    // import('../components/PageGuide').then(Component => {
-    //   this.PageGuide = Component
-    //   this.forceUpdate()
-    // })
+    import('../components/PageGuide').then(Component => {
+      this.PageGuide = Component
+      this.forceUpdate()
+    })
   }
 
   render() {
