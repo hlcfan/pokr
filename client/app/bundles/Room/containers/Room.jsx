@@ -16,6 +16,7 @@ export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === this.props.roomState ) ? true : false
+    AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
 
     this.state = {
       roomState: props.roomState,
@@ -117,13 +118,11 @@ export default class Room extends React.Component {
   }
 
   componentDidMount() {
-    AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
-
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
-    import('../components/PageGuide').then(Component => {
-      this.PageGuide = Component
-      this.forceUpdate()
-    })
+    // import('../components/PageGuide').then(Component => {
+    //   this.PageGuide = Component
+    //   this.forceUpdate()
+    // })
   }
 
   render() {
