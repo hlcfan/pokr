@@ -121,7 +121,7 @@ GEM
       mina (>= 1.0.2)
     mina-sitemap_generator (0.0.3)
       mina (~> 1.0.0)
-    mini_portile2 (2.2.0)
+    mini_portile2 (2.3.0)
     mini_racer (0.1.14)
       libv8 (~> 5.9)
     minitest (5.10.3)
@@ -129,8 +129,8 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nio4r (2.1.0)
-    nokogiri (1.8.0)
-      mini_portile2 (~> 2.2.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     oauth (0.5.3)
     oauth2 (1.4.0)
       faraday (>= 0.8, < 0.13)
@@ -325,7 +325,7 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    yard (0.9.9)
+    yard (0.9.12)
 
 PLATFORMS
   ruby
