@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import {defaultTourColor} from 'libs/barColors'
+import css from './index.scss'
 
 const MODERATOR_ROLE = 0
 const PARTICIPANT_ROLE = 1
@@ -34,7 +35,7 @@ export default class StatusBar extends React.Component {
     this.props.addSteps({
       title: 'Title bar',
       text: 'You can change room status or edit from here. Click "Share link" to copy the link of current room.',
-      selector: '.name .col-md-8',
+      selector: `.${css["room__status_bar"]}`,
       position: 'right',
       style: defaultTourColor
     })
@@ -42,7 +43,7 @@ export default class StatusBar extends React.Component {
     this.props.addSteps({
       title: 'Switch your role',
       text: 'Change your role to a Watcher or Participant. The Moderator is not allowed to switch roles.',
-      selector: '.name .col-md-4 .dropdown',
+      selector: `.${css["room__status_bar"]} .dropdown`,
       position: 'top-right',
       style: defaultTourColor
     });
@@ -91,12 +92,8 @@ export default class StatusBar extends React.Component {
   render() {
     const roomStatusButton = (() => {
       if ('Moderator' === this.state.role) {
-        const buttonText = "🏁 Close room"
-        const buttonClassName = "btn-warning close-room"
-        const onClickHandler = this.closeRoom
-
         return (
-          <button type="button" onClick={onClickHandler} className={`btn btn-default ${buttonClassName}`}>{buttonText}</button>
+          <button type="button" onClick={this.closeRoom} className="btn btn-default close-room">🏁 Close room</button>
         )
       }
     })()
@@ -121,10 +118,10 @@ export default class StatusBar extends React.Component {
     const operationButtons = (() => {
       if (this.props.roomState !== "draw") {
         return(
-          <div className="btn-group pull-right room-operation" role="group">
-            {roomStatusButton}
+          <div className="btn-group pull-right" role="group">
             {editButton}
             <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
+            {roomStatusButton}
           </div>
         )
       }
@@ -150,14 +147,14 @@ export default class StatusBar extends React.Component {
     })();
 
     return (
-      <div className="name row">
-        <div className="col-md-8">
-          <h3 className="pull-left">{this.props.roomName}</h3>
+      <div className={`${css["room__status_bar"]} row`}>
+        <div className="col-md-8 col-xs-8">
+          <h3 className={`pull-left ${css.room__title}`}>{this.props.roomName}</h3>
           {operationButtons}
           <div id="tooltip-area"></div>
         </div>
-        <div className="col-md-4">
-          <div className="pull-left tour-guide">
+        <div className="col-md-4 col-xs-4">
+          <div className={`pull-left ${css['tour-guide']}`}>
             <a href="javascript:;" onClick={this.playTourGuide}>
               <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a>

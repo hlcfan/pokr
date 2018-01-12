@@ -1,0 +1,13 @@
+@media only screen and (max-device-width: 736px) {
+  .stories--ongoing:before {
+    content: "\25BA";
+    font-weight: bolder;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+
+  .story--ongoing {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+}

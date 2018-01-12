@@ -296,6 +296,7 @@ RSpec.describe RoomsController, type: :controller do
       expect(response.status).to eq 200
     end
   end
+<<<<<<< HEAD
 
   describe "POST #timing" do
     it "updates room duration" do

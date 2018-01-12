@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 
   before_action :redirect_to_screen, only: [:show]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :timing]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite]
   before_action :enter_room, only: [:show]
 
   def index
@@ -60,6 +60,10 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if repo.update_entity @room, room_params
+        broadcaster "rooms/#{@room.slug}",
+          user_id: current_user.id,
+          data: 'next-story',
+          type: 'action'
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
@@ -117,12 +121,6 @@ class RoomsController < ApplicationController
         room_slug: @room.slug
       ).deliver_later
     end
-
-    head :ok
-  end
-
-  def timing
-    @room.update_duration params[:duration].to_f
 
     head :ok
   end

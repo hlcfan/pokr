@@ -81,6 +81,11 @@ class RoomsChannel < ApplicationCable::Channel
             data: "clear-votes"
   end
 
+  def timing data
+    set_room data["roomId"]
+    @room.update_duration data["duration"].to_f
+  end
+
   private
 
   def set_room room_id

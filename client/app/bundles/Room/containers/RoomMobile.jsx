@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StatusBar from '../components/StatusBar/desktop'
+import StatusBar from '../components/StatusBar/mobile'
 import VoteBox from '../components/VoteBox'
 import TimeCounter from '../components/TimeCounter'
-import StoryListBox from '../components/StoryListBox/desktop'
+import StoryListBox from '../components/StoryListBox/mobile'
 import PeopleListBox from '../components/PeopleListBox'
 import ActionBox from '../components/ActionBox/ActionBox'
 import Board from '../components/Board'
@@ -12,7 +12,7 @@ import update from 'immutability-helper'
 import EventEmitter from 'libs/eventEmitter'
 import Helper from 'libs/helper'
 
-export default class Room extends React.Component {
+export default class RoomMobile extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === this.props.roomState ) ? true : false
@@ -118,6 +118,12 @@ export default class Room extends React.Component {
   }
 
   componentDidMount() {
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        EventEmitter.dispatch("refreshUsers")
+      }
+    })
+
     EventEmitter.subscribe("roomClosed", this.handleNoStoryLeft)
     import('../components/PageGuide').then(Component => {
       this.PageGuide = Component
@@ -157,14 +163,6 @@ export default class Room extends React.Component {
         />
         <div className="row">
           <div id="operationArea" className="col-md-8">
-            <VoteBox
-              roomId={this.props.roomId}
-              roomState={this.state.roomState}
-              currentVote={this.props.currentVote}
-              pointValues={this.props.pointValues}
-              storyId={this.state.currentStoryId}
-              addSteps={this.addSteps}
-            />
             <StoryListBox
               roomId={this.props.roomId}
               onSwitchStory={this.handleStorySwitch}
@@ -174,19 +172,27 @@ export default class Room extends React.Component {
               role={this.props.role}
               addSteps={this.addSteps}
             />
-          </div>
-          <div className="col-md-4">
-            <PeopleListBox
-              roomId={this.props.roomId}
-              roomState={this.state.roomState}
-              addSteps={this.addSteps}
-          />
             <ActionBox
               roomState={this.state.roomState}
               role={this.props.role}
               roomId={this.props.roomId}
               storyId={this.state.currentStoryId}
               countDown={this.props.timerInterval}
+              addSteps={this.addSteps}
+            />
+            <VoteBox
+              roomId={this.props.roomId}
+              roomState={this.state.roomState}
+              currentVote={this.props.currentVote}
+              pointValues={this.props.pointValues}
+              storyId={this.state.currentStoryId}
+              addSteps={this.addSteps}
+            />
+          </div>
+          <div className="col-md-4">
+            <PeopleListBox
+              roomId={this.props.roomId}
+              roomState={this.state.roomState}
               addSteps={this.addSteps}
             />
           </div>

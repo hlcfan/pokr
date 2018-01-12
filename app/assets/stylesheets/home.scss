@@ -83,6 +83,10 @@ html {
       margin-left: -35px;
       font-weight: 300;
 
+      @media #{$mobile} {
+        font-size: 3rem;
+      }
+
       span {
         color: $default_font_color;
       }
@@ -102,6 +106,12 @@ html {
           margin-right: 3px;
           text-decoration: none;
           padding: 6px 12px;
+
+          @media #{$mobile} {
+            color: #46b8da;
+            border: 1px solid #46b8da;
+            border-radius: 4px;
+          }
         }
       }
       .btn-reg {
@@ -112,6 +122,10 @@ html {
           color: #fff;
           background: #46b8da;
           border: 1px solid #46b8da;
+        }
+
+        @media #{$mobile} {
+          display: none;
         }
       }
     }
@@ -153,7 +167,7 @@ html {
         font-size: 4rem;
       }
     }
-    h2 {
+    span {
       color: #a4acb1;
       margin:0 auto;
       max-width: 60%;
@@ -199,7 +213,7 @@ html {
   letter-spacing: .9px;
 
   .container {
-    padding: 80px 0;
+    padding: 60px 0;
     text-align: center;
     .image-section {
       img {
@@ -212,11 +226,16 @@ html {
       text-align: left;
       font-size: 1.2em;
 
-      p {
+      h2 {
+        font-size: 1.5em;
+      }
+
+      h3 {
         color: #848484;
         line-height: 1.4;
         margin-bottom: 20px;
         margin-top: 20px;
+        font-size: 1em;
       }
 
       ul {

@@ -11,7 +11,7 @@ class RoomRepository
   end
 
   def update_entity room, params
-    @params = params
+    @params = params.merge(status: nil)
     add_sequence_to_stories
     moderator_ids = (@params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
       0 == moderator_id && moderator_id.blank?

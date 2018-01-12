@@ -2,13 +2,42 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.8] - 2017-12-09
+### Changed
+- Refresh user/ticket list after updating room [c1d1189](https://github.com/hlcfan/pokr/commit/c1d11894f7aabe0ac942a19ca0e6bd3f8ae26190)
+- Wrap story name if too long [68bb389](https://github.com/hlcfan/pokr/commit/68bb3893041f301aa44792cf4758346d73e5bed0)
+
+## [0.5.7] - 2017-12-05
+### Changed
+- Fix ticket list isn't draggable [9506c0f](https://github.com/hlcfan/pokr/commit/9506c0f8d33e07f3cddbe5f2ca8cfd480929b966)
+
+## [0.5.6] - 2017-12-02
+### Changed
+Responsive implementation [#179](https://github.com/hlcfan/pokr/pull/179)
+
+## [0.5.5] - 2017-10-16
+### Changed
+- Fix removing invitatee bug [c8669df](https://github.com/hlcfan/pokr/commit/c8669dfadbfc65e40c461508ab241c6b5aadd61e)
+
+## [0.5.4] - 2017-10-16
+### Changed
+- SEO changes [#172](https://github.com/hlcfan/pokr/pull/172)
+
+## [0.5.3] - 2017-10-11
+### Added
+- Add new section to landing page about multiple schemes [#170](https://github.com/hlcfan/pokr/pull/170)
+
+## [0.5.2] - 2017-10-08
+### Added
+- T-shirt point scheme [#168](https://github.com/hlcfan/pokr/pull/168)
+
+### Changed
+- Minor UI fixes and language improvements [#167](https://github.com/hlcfan/pokr/pull/167)
+
 ## [0.5.1] - 2017-10-07
 ### Changed
 - Change room image
 - Change logo from Pokr to Pokrex in navigation bar [aeb09d1d1a345f4f2ee30340af3b725b1b2149cc](https://github.com/hlcfan/pokr/commit/aeb09d1d1a345f4f2ee30340af3b725b1b2149cc)
-
-## [0.5.1] - 2017-10-07
-### Changed
 - Language improvements [#165](https://github.com/hlcfan/pokr/pull/165)
 
 ## [0.5.0] - 2017-10-06

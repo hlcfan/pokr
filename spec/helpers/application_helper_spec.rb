@@ -31,4 +31,20 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "#is_mobile_request?" do
+    it "returns true if the request comes from a mobile device" do
+      mobile_user_agent = "Mozilla/5.0(iPhone;U;CPUiPhoneOS4_0likeMacOSX;en-us)AppleWebKit/532.9(KHTML,likeGecko)Version/4.0.5Mobile/8A293Safari/6531.22.7"
+      @request.user_agent = mobile_user_agent
+
+      expect(helper.is_mobile_request?).to be_truthy
+    end
+
+    it "returns false if the request does not come from a mobile device" do
+      non_mobile_user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+      @request.user_agent = non_mobile_user_agent
+
+      expect(helper.is_mobile_request?).to be_falsey
+    end
+  end
 end
