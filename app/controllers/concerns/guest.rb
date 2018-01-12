@@ -19,6 +19,12 @@ module Guest
     end
   end
 
+  def guest_user?
+    session[:guest_user_id].present?
+  end
+
+  private
+
   # find guest_user object associated with the current session,
   # creating one as needed
   def guest_user(with_retry = true)
@@ -27,10 +33,6 @@ module Guest
   rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
      session[:guest_user_id] = nil
      guest_user if with_retry
-  end
-
-  def guest_user?
-    session[:guest_user_id].present?
   end
 
   # called (once) when the user logs in, insert any code your application needs
