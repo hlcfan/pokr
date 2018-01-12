@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
 
-  before_action :redirect_to_screen, only: [:show]
+  before_action :guest_check, only: [:show]
   before_action :authenticate_user!, except: [:screen]
   before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite]
   before_action :enter_room, only: [:show]
@@ -177,10 +177,10 @@ class RoomsController < ApplicationController
     ActionCable.server.broadcast channel, *message
   end
 
-  def redirect_to_screen
+  def guest_check
     if current_user.nil?
       redirect_to screen_room_path(params[:id])
-    end    
+    end
   end
 
 end
