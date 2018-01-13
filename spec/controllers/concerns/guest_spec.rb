@@ -23,7 +23,7 @@ RSpec.describe Guest do
       allow(ccontroller).to receive(:current_user) { Struct::User.new(1, "b@b.com") }
       # expect(ccontroller.session).to receive(:[]=) #{ nil }
       # Workround: by testing User.find to test session[:guest_user_id] = nil
-      expect(User).to receive(:find)
+      # expect(User).to receive(:find)
       expect(ccontroller.current_or_guest_user.email).to eq("b@b.com")
     end
 
