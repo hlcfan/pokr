@@ -46,4 +46,11 @@ RSpec.describe Guest do
       expect(ccontroller.guest_user?).to be false
     end
   end
+
+  describe "#remove_guest_user" do
+    it "removes guest_user_id from session" do
+      allow(ccontroller).to receive(:session) { { guest_user_id: 1 } }
+      expect(ccontroller.remove_guest_user).to be_nil
+    end
+  end
 end

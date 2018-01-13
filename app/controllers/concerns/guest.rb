@@ -11,7 +11,7 @@ module Guest
         logging_in
         # reload guest_user to prevent caching problems before destruction
         guest_user(with_retry = false).try(:reload).try(:destroy)
-        session[:guest_user_id] = nil
+        remove_guest_user
       end
       current_user
     else
@@ -23,6 +23,10 @@ module Guest
     session[:guest_user_id].present?
   end
 
+  def remove_guest_user
+    session[:guest_user_id] = nil
+  end
+
   private
 
   # find guest_user object associated with the current session,
@@ -31,8 +35,8 @@ module Guest
     # Cache the value the first time it's gotten.
     @cached_guest_user ||= User.find(session[:guest_user_id] ||= create_guest_user.id)
   rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
-     session[:guest_user_id] = nil
-     guest_user if with_retry
+    remove_guest_user
+    guest_user if with_retry
   end
 
   # called (once) when the user logs in, insert any code your application needs

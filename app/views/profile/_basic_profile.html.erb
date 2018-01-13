@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">Personal Information</div>
   <div class="panel-body">
-    <%= form_for @user, url: {action: :update}, html: { class: "form", id: "edit-user-password", role: "form" } do |f| %>
+    <%= form_for @user, url: {action: :update}, html: { class: "form", id: "edit-user-info", role: "form" } do |f| %>
       <% if @user.errors.any? %>
         <h5><%= pluralize(@user.errors.count, "error") %> prohibited your profile from being saved:</h5>
 
