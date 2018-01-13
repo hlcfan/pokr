@@ -296,25 +296,6 @@ RSpec.describe RoomsController, type: :controller do
       expect(response.status).to eq 200
     end
   end
-<<<<<<< HEAD
-
-  describe "POST #timing" do
-    it "updates room duration" do
-      room = Room.create! valid_attributes
-
-      post :timing, params: {id: room.slug, duration: "10.2"}, session: valid_session
-      expect(Room.find(room.id).duration).to eq 10.2
-      expect(response.status).to eq 200
-    end
-
-    it "doesn't update room duration if invalid duration" do
-      room = Room.create! valid_attributes.merge(duration: 10.2)
-
-      post :timing, params: {id: room.slug, duration: "8.3"}, session: valid_session
-      expect(Room.find(room.id).duration).to eq 10.2
-      expect(response.status).to eq 200
-    end
-  end
 
   describe "GET #screen" do
     it "shows screen of a room if user not logged in" do
