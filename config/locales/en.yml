@@ -54,6 +54,8 @@ en:
     room_f_1: "Easy to use"
     room_f_2: "Automatically switches story"
     room_f_3: "Elegant vote status display"
+    room_f_4: "No sign up for participants, just share the link or QR code"
+    room_f_5: "Mobile friendly"
     dashboard: "Dashboard"
     dashboard_alt: "Pokrex Scrum Poker - Dashboard"
     dashboard_desc: "See all your past data, including statistics, history, rooms and recent stories/cards."
