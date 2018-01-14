@@ -1,4 +1,4 @@
-<style type="text/css">
+<% content_for :inline_style do %>
   .btn-pokrex-join {
     display: inline-block;
     font-size: 14px;
@@ -43,7 +43,7 @@
 
   .pokrex-invitation td.black { border-color: #000; }
   .pokrex-invitation td.white { border-color: #fff; }
-</style>
+<% end %>
 <h1>Join <%= @room_name %> on Pokrex</h1>
 <div class="pokrex-invitation">
   <%= @from_name %> (<%= @from_email %>) has invited you to join the Pokrex room <b><%= @room_name %></b>. Join now to start poker!<br>
