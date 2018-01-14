@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
 
   def update
     if @user.update_attributes profile_params
-      remove_guest_and_reset_password if guest_user?
+      remove_guest_and_reset_password if guest_user_updated_email?(@user.email)
       redirect_to profile_path, flash: { success: "Your profile updated successfully, we'll send you an email to reset your password" }
     else
       render :show
@@ -64,5 +64,9 @@ class ProfileController < ApplicationController
 
   def reset_guest_password
     current_user.send_reset_password_instructions
+  end
+
+  def guest_user_updated_email? email
+    guest_user? && !(email =~ /@pokrex.com\z/)
   end
 end
