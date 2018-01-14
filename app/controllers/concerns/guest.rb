@@ -53,7 +53,6 @@ module Guest
   def create_guest_user
     username = params[:username].to_s
     raise ArgumentError "Invalid username" if username.blank?
-    # binding.pry
     user = if username =~ User::VALID_EMAIL_REGEX
       User.create(:email => username)
     else

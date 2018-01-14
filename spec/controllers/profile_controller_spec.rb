@@ -53,6 +53,7 @@ RSpec.describe ProfileController, type: :controller do
         expect(User.last.email).to eq "b@b.com"
         expect(response).to redirect_to profile_path
         expect(session[:guest_user_id]).to be_nil
+        # expect(controller.current_user).to receive(:send_reset_password_instructions)
       end
     end
 
