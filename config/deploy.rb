@@ -142,9 +142,9 @@ namespace :god do
   task :start => :environment do
     command 'echo "------> Start God"'
     command %{
-      cd #{app_path}
+      cd #{fetch(:app_path)}
       bundle exec god -c config/puma.god
-      bundle exec god -c config/sidekiq.god
+      bundle exec god -c config/sidekiq.god -p 17770
     }
     command 'echo "------> God started"'
   end
@@ -153,7 +153,7 @@ namespace :god do
   task :stop do
     command 'echo "------> Stop God"'
     command %{
-      cd #{app_path}
+      cd #{fetch(:app_path)}
       bundle exec god stop puma
       bundle exec god stop sidekiq
     }
