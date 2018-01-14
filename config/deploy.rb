@@ -89,6 +89,8 @@ task :deploy => :environment do
       invoke :'whenever:update'
       invoke :'sitemap:create'
       invoke :'sidekiq:restart'
+      invoke :'god:stop'
+      invoke :'god:start'
     end
   end
 end
@@ -142,7 +144,9 @@ namespace :god do
     command %{
       cd #{app_path}
       bundle exec god -c config/puma.god
+      bundle exec god -c config/sidekiq.god
     }
+    command 'echo "------> God started"'
   end
 
   desc "Stop God"
@@ -151,7 +155,9 @@ namespace :god do
     command %{
       cd #{app_path}
       bundle exec god stop puma
+      bundle exec god stop sidekiq
     }
+    command 'echo "------> God stopped"'
   end
 end
 
