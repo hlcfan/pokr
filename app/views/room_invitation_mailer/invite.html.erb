@@ -1,5 +1,5 @@
 <style type="text/css">
-  .btn {
+  .btn-pokrex-join {
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
@@ -25,12 +25,34 @@
     margin-top: 20px;
     margin-bottom: 20px;
   }
+
+  .pokrex-invitation table {
+    border-width: 0;
+    border-style: none;
+    border-color: #0000ff;
+    border-collapse: collapse;
+  }
+
+  .pokrex-invitation td {
+    border-left: solid 10px #000;
+    padding: 0;
+    margin: 0;
+    width: 0px;
+    height: 10px;
+  }
+
+  .pokrex-invitation td.black { border-color: #000; }
+  .pokrex-invitation td.white { border-color: #fff; }
 </style>
 <h1>Join <%= @room_name %> on Pokrex</h1>
-<p>
+<div class="pokrex-invitation">
   <%= @from_name %> (<%= @from_email %>) has invited you to join the Pokrex room <b><%= @room_name %></b>. Join now to start poker!<br>
-  <%= link_to "Join Now", room_url(@room_slug), target: "_blank", class: "btn" %>
-</p><hr>
+  <%= link_to "Join Now", room_url(@room_slug), target: "_blank", class: "btn-pokrex-join" %>
+  <p>Or</p>
+  <div>
+    <%= RQRCode::QRCode.new(room_url(@room_slug)).as_html.html_safe %>
+  </div>
+</div><hr>
 <div>
   <div style="float:left;"><img src="https://pokrex.com/apple-icon-120x120.png" width="50" height="50" /></div>
   <div><a href="https://pokrex.com" target="_blank" style="line-height:50px;">Pokrex</a></div>
