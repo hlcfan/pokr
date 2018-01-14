@@ -18,7 +18,7 @@ class ProfileController < ApplicationController
 
   def update_password
     if guest_user?
-      set_password_for_guest
+      set_user_password
     else
       update_user_password
     end
@@ -42,10 +42,6 @@ class ProfileController < ApplicationController
     params.require(:user).permit(:password, :password_confirmation)
   end
 
-  def set_password_for_guest
-    set_user_password
-  end
-
   def update_user_password
     if @user.valid_password? params[:user][:current_password]
       set_user_password
@@ -67,6 +63,6 @@ class ProfileController < ApplicationController
   end
 
   def reset_guest_password
-
+    current_user.send_reset_password_instructions
   end
 end
