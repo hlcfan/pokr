@@ -183,7 +183,6 @@ class RoomsController < ApplicationController
 
   def handle_quick_join
     if request.post?
-      binding.pry
       if params[:username] =~ User::VALID_EMAIL_REGEX && User.exists?(email: params[:username])
         redirect_to new_user_session_path, flash: { success: "Your're already signed up, please sign in" }
       else
