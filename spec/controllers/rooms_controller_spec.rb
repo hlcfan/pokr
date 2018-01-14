@@ -315,7 +315,7 @@ RSpec.describe RoomsController, type: :controller do
   end
 
   describe "POST #screen" do
-    it "creates a guest and redirect to room" do
+    it "creates a guest and redirect to room with username" do
       room = Room.create! valid_attributes
       allow(controller).to receive(:current_user) { nil }
 
@@ -323,6 +323,25 @@ RSpec.describe RoomsController, type: :controller do
 
       expect(User.last.name).to eq "bob-dylan"
       expect(response).to redirect_to room_path(room.slug)
+    end
+
+    it "creates a guest and redirect to room with email address" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "Bob@Dylan.com"}
+
+      expect(User.last.name).to eq "Bob"
+      expect(response).to redirect_to room_path(room.slug)
+    end
+
+    it "redirects to sign in page if input email already exists" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "a@a.com"}
+
+      expect(response).to redirect_to new_user_session_path
     end
   end
 end

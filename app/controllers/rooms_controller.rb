@@ -129,10 +129,8 @@ class RoomsController < ApplicationController
     if current_user
       redirect_to room_path(params[:id])
     end
-    if request.post?
-      current_or_guest_user
-      redirect_to room_path(params[:id])
-    end
+
+    handle_quick_join
   end
 
   private
@@ -180,6 +178,18 @@ class RoomsController < ApplicationController
   def guest_check
     if current_user.nil?
       redirect_to screen_room_path(params[:id])
+    end
+  end
+
+  def handle_quick_join
+    if request.post?
+      binding.pry
+      if params[:username] =~ User::VALID_EMAIL_REGEX && User.exists?(email: params[:username])
+        redirect_to new_user_session_path, flash: { success: "Your're already signed up, please sign in" }
+      else
+        current_or_guest_user
+        redirect_to room_path(params[:id])
+      end
     end
   end
 

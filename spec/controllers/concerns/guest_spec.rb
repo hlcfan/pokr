@@ -10,8 +10,9 @@ RSpec.describe Guest do
   after { Object.send :remove_const, :FakesController }
   let(:ccontroller) { FakesController.new }
 
+  before(:all) { Struct.new("User", :id, :email) }
+
   describe "#current_or_guest_user" do
-    before { Struct.new("User", :id, :email) }
     it "returns current user if user is signed in and no guest user" do
       allow(ccontroller).to receive(:session) { {} }
       allow(ccontroller).to receive(:current_user) { Struct::User.new(1, "a@a.com") }
@@ -32,6 +33,14 @@ RSpec.describe Guest do
       allow(ccontroller).to receive(:params) { { username: "Bob" } }
       allow(ccontroller).to receive(:current_user) { nil }
       expect(ccontroller.current_or_guest_user.email).not_to be_nil
+    end
+
+    it "returns guest user if user inputs email" do
+      allow(ccontroller).to receive(:session) { {}  }
+      allow(ccontroller).to receive(:params) { {username: "email@email.com"} }
+      allow(ccontroller).to receive(:current_user) { nil }
+      ccontroller.current_or_guest_user
+      expect(User.last.email).to eq("email@email.com")
     end
   end
 

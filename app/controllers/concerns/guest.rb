@@ -51,11 +51,18 @@ module Guest
   end
 
   def create_guest_user
-    username = params[:username].to_s.parameterize
+    username = params[:username].to_s
     raise ArgumentError "Invalid username" if username.blank?
-    u = User.create(:name => username, :email => "#{username}_#{Time.now.to_i}#{rand(100)}@pokrex.com")
-    u.save!(:validate => false)
-    session[:guest_user_id] = u.id
-    u
+    # binding.pry
+    user = if username =~ User::VALID_EMAIL_REGEX
+      User.create(:email => username)
+    else
+      username = username.parameterize
+      User.create(:name => username, :email => "#{username}_#{Time.now.to_i}#{rand(100)}@pokrex.com")
+    end
+    user.save!(:validate => false)
+    session[:guest_user_id] = user.id
+
+    user
   end
 end
