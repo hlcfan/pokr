@@ -32,6 +32,13 @@ RSpec.describe RoomsController, type: :controller do
       get :show, params: {:id => room.slug}, session: valid_session
       expect(assigns(:room)).to eq(room)
     end
+
+    it "redirects to screen page if not logged in" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+      get :show, params: {:id => room.slug}, session: valid_session
+      expect(response).to redirect_to screen_room_path(room.slug)
+    end
   end
 
   describe "GET #new" do
@@ -287,6 +294,54 @@ RSpec.describe RoomsController, type: :controller do
 
       post :invite, params: {id: room.slug, emails: ["invalid-email", "alex@localhost"]}, session: valid_session
       expect(response.status).to eq 200
+    end
+  end
+
+  describe "GET #screen" do
+    it "shows screen of a room if user not logged in" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      get :screen, params: {id: room.slug}
+      expect(response).to render_template("screen")
+    end
+
+    it "redirect to room if user logged in" do
+      room = Room.create! valid_attributes
+
+      get :screen, params: {id: room.slug}
+      expect(response).to redirect_to room_path(room.slug)
+    end
+  end
+
+  describe "POST #screen" do
+    it "creates a guest and redirect to room with username" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "Bob Dylan"}
+
+      expect(User.last.name).to eq "bob-dylan"
+      expect(response).to redirect_to room_path(room.slug)
+    end
+
+    it "creates a guest and redirect to room with email address" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "Bob@Dylan.com"}
+
+      expect(User.last.name).to eq "Bob"
+      expect(response).to redirect_to room_path(room.slug)
+    end
+
+    it "redirects to sign in page if input email already exists" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "a@a.com"}
+
+      expect(response).to redirect_to new_user_session_path
     end
   end
 end

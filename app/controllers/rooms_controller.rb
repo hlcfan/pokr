@@ -1,6 +1,7 @@
 class RoomsController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :guest_check, only: [:show]
+  before_action :authenticate_user!, except: [:screen]
   before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite]
   before_action :enter_room, only: [:show]
 
@@ -124,6 +125,14 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def screen
+    if current_user
+      redirect_to room_path(params[:id])
+    end
+
+    handle_quick_join
+  end
+
   private
 
   def set_room
@@ -164,6 +173,23 @@ class RoomsController < ApplicationController
 
   def broadcaster channel, *message
     ActionCable.server.broadcast channel, *message
+  end
+
+  def guest_check
+    if current_user.nil?
+      redirect_to screen_room_path(params[:id])
+    end
+  end
+
+  def handle_quick_join
+    if request.post?
+      if params[:username] =~ User::VALID_EMAIL_REGEX && User.exists?(email: params[:username])
+        redirect_to new_user_session_path, flash: { success: "Your're already signed up, please sign in" }
+      else
+        current_or_guest_user
+        redirect_to room_path(params[:id])
+      end
+    end
   end
 
 end
