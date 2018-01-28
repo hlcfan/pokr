@@ -361,4 +361,15 @@ RSpec.describe Room, type: :model do
       expect(room.pv).to eq "0,1,2,3,5,8,13,20,40,100,?,coffee"
     end
   end
+
+  describe "#soft_delete" do
+    it "soft deletes room and belonging stories" do
+      room.name = "soft delete"
+      room.save!
+      story = room.stories.create(link: "soft delete link")
+      room.soft_delete
+
+      expect(room.reload.discarded_at).to eq story.reload.discarded_at
+    end
+  end
 end

@@ -1,5 +1,5 @@
 .dashboard {
-  .participated a.room-list-item, a.story-list-item {
+  .participated .room-list-item, .story-list-item {
     display: block;
     text-decoration: none;
     padding-left: 15px;
@@ -21,15 +21,23 @@
     .room-list-item-text, .story-list-item-text {
       margin-bottom: 15px;
 
-      span {
-        font-size: 13px;
+      span, span a {
+        font-size: 16px;
         color: #777;
+        cursor: pointer;
       }
 
       span.divider {
         color: #333;
         padding-left: 5px;
         padding-right: 5px;
+        cursor: default;
+      }
+
+      span.room__delete a {
+        &:hover {
+          color: #d44950;
+        }
       }
     }
 

@@ -138,13 +138,19 @@ RSpec.describe RoomsController, type: :controller do
       room = Room.create! valid_attributes
       expect {
         delete :destroy, params: {:id => room.slug}, session: valid_session
-      }.to change(Room, :count).by(-1)
+      }.to change{Room.available.count}.by(-1)
     end
 
     it "redirects to the rooms list" do
       room = Room.create! valid_attributes
       delete :destroy, params: {:id => room.slug}, session: valid_session
       expect(response).to redirect_to(rooms_url)
+    end
+
+    it "renders corresponding js" do
+      room = Room.create! valid_attributes
+      delete :destroy, params: {:id => room.slug}, session: valid_session, format: :js
+      expect(response).to render_template("rooms/destroy")
     end
   end
 

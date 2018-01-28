@@ -7,7 +7,7 @@ class UserPresenter < SimpleDelegator
       if page < 1
         []
       else
-        rooms.offset((page-1)*PER_PAGE).order("created_at DESC").limit(PER_PAGE).to_a
+        rooms.available.offset((page-1)*PER_PAGE).order("created_at DESC").limit(PER_PAGE).to_a
       end
     end
   end
@@ -31,7 +31,7 @@ class UserPresenter < SimpleDelegator
   def recent_stories
     # TODO: optimize it
     # Push mode: implement a worker to pre-pop the cache?
-    Story.joins(:user_story_points)
+    Story.available.joins(:user_story_points)
       .where("user_story_points.user_id = ?", id)
       .where("point IS NOT NULL")
       .order("updated_at DESC").limit(10)

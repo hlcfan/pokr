@@ -9,6 +9,7 @@ class Room < ApplicationRecord
   has_many :stories, -> { order(:sequence) }, dependent: :destroy
 
   belongs_to :creator, class_name: "User", foreign_key: :created_by
+  scope :available, -> { where(discarded_at: nil) }
 
   accepts_nested_attributes_for :stories, allow_destroy: true
 
@@ -185,6 +186,14 @@ class Room < ApplicationRecord
 
   def pv_for_form
     point_values.join(",")
+  end
+
+  def soft_delete
+    ActiveRecord::Base.transaction do
+      current = Time.current
+      self.discarded_at = current
+      self.stories.update_all(discarded_at: current) if self.save
+    end
   end
 
   private

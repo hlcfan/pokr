@@ -1,23 +1,31 @@
-<dl>
-  <a class="room-list-item" href="<%= room_path(room.slug) %>">
-    <dt><h4 class="room-list-item-heading"><%= room.name %></h4></dt>
-    <dd class="room-list-item-text">
-      <span>
-        <%= room.user_rooms.size %>
-        participants
-      </span>
+<dl class="room-list-item" data-room-id="<%= room.slug %>">
+  <dt>
+    <a href="<%= room_path(room.slug) %>">
+      <h4 class="room-list-item-heading"><%= room.name %></h4>
+    </a>
+  </dt>
+  <dd class="room-list-item-text">
+    <span>
+      <%= room.user_rooms.size %>
+      participants
+    </span>
+    <span class="divider">·</span>
+    <span>
+      <%= room.stories.size %>
+      stories
+    </span>
+    <span class="divider">·</span>
+    <span data-toggle="tooltip" data-placement="top" title="<%= l(room.created_at, format: :short) %>"><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
+    <% if room.duration.present? %>
       <span class="divider">·</span>
-      <span>
-        <%= room.stories.size %>
-        stories
-      </span>
-      <span class="divider">·</span>
-      <span data-toggle="tooltip" data-placement="top" title="<%= l(room.created_at, format: :short) %>"><%= distance_of_time_in_words_to_now(room.created_at) %> ago</span>
-      <% if room.duration.present? %>
-        <span class="divider">·</span>
-        <span>Took <%= distance_of_time_in_words(room.duration) %></span>
+      <span>Took <%= distance_of_time_in_words(room.duration) %></span>
+    <% end %>
+    <span class="divider">·</span>
+    <span class="room__delete">
+      <%= link_to room_path(room.slug), remote: true, method: :delete, data: {confirm: "Are you sure to delete '#{room.name}'?"} do %>
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
       <% end %>
-    </dd>
-    <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
-  </a>
+    </span>
+  </dd>
+  <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
 </dl>
