@@ -18,7 +18,7 @@ gem 'font-awesome-rails'
 gem 'awesome_nested_fields', git: 'https://github.com/hlcfan/awesome_nested_fields.git'
 gem 'devise'
 gem 'ruby-pinyin'
-gem 'paperclip', '~> 5.1.0'
+gem 'paperclip', '~> 5.2.1'
 gem 'letter_avatar'
 
 gem 'omniauth'
