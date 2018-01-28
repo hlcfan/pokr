@@ -369,7 +369,7 @@ RSpec.describe Room, type: :model do
       story = room.stories.create(link: "soft delete link")
       room.soft_delete
 
-      expect(room.discarded_at).to eq story.reload.discarded_at
+      expect(room.reload.discarded_at).to eq story.reload.discarded_at
     end
   end
 end
