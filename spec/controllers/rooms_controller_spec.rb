@@ -146,6 +146,12 @@ RSpec.describe RoomsController, type: :controller do
       delete :destroy, params: {:id => room.slug}, session: valid_session
       expect(response).to redirect_to(rooms_url)
     end
+
+    it "renders corresponding js" do
+      room = Room.create! valid_attributes
+      delete :destroy, params: {:id => room.slug}, session: valid_session, format: :js
+      expect(response).to render_template("rooms/destroy")
+    end
   end
 
   describe "POST #set_room_status" do
