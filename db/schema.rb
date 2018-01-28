@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180128011947) do
+ActiveRecord::Schema.define(version: 20180128022528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20180128011947) do
     t.datetime "updated_at", null: false
     t.string "point", limit: 255
     t.bigint "sequence"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_stories_on_discarded_at"
   end
 
   create_table "user_rooms", force: :cascade do |t|
