@@ -20,12 +20,14 @@
       <span class="divider">·</span>
       <span>Took <%= distance_of_time_in_words(room.duration) %></span>
     <% end %>
-    <span class="divider">·</span>
-    <span class="room__delete">
-      <%= link_to room_path(room.slug), remote: true, method: :delete, data: {confirm: "Are you sure to delete '#{room.name}'?"} do %>
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-      <% end %>
-    </span>
+    <% if room.created_by == current_user.id %>
+      <span class="divider">·</span>
+      <span class="room__delete">
+        <%= link_to room_path(room.slug), remote: true, method: :delete, data: {confirm: "Are you sure to delete '#{room.name}'?"} do %>
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        <% end %>
+      </span>
+    <% end %>
   </dd>
   <span class="status label <%= state_class(room) %> pull-right"><%= room.display_state %></span>
 </dl>
