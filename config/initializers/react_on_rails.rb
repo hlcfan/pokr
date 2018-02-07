@@ -15,7 +15,7 @@ ReactOnRails.configure do |config|
   # not affect performance.
   config.server_bundle_js_file = "webpack-bundle.js"
 
-  config.node_modules_location = ""
+  config.node_modules_location = "client"
 
   # If you are using the ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
   # with rspec then this controls what yarn command is run
