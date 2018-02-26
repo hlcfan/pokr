@@ -64,7 +64,7 @@ class Rooms
         wildcard: '%QUERY')
     matchedUsers.initialize()
 
-    $('#room_moderator_ids').tagsinput 
+    $('#room_moderator_ids').tagsinput
       typeaheadjs:
         name: 'matchedUsers'
         displayKey: 'name'
