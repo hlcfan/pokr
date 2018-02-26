@@ -134,23 +134,33 @@ RSpec.describe RoomsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    before do
+      allow(controller.current_user).to receive(:id) { 999 }
+    end
+
     it "destroys the requested room" do
-      room = Room.create! valid_attributes
+      room = Room.create! valid_attributes.merge(created_by: 999)
       expect {
         delete :destroy, params: {:id => room.slug}, session: valid_session
       }.to change{Room.available.count}.by(-1)
     end
 
     it "redirects to the rooms list" do
-      room = Room.create! valid_attributes
+      room = Room.create! valid_attributes.merge(created_by: 999)
       delete :destroy, params: {:id => room.slug}, session: valid_session
       expect(response).to redirect_to(rooms_url)
     end
 
     it "renders corresponding js" do
-      room = Room.create! valid_attributes
+      room = Room.create! valid_attributes.merge(created_by: 999)
       delete :destroy, params: {:id => room.slug}, session: valid_session, format: :js
       expect(response).to render_template("rooms/destroy")
+    end
+
+    it "renders nothing if room is not created by current user" do
+      room = Room.create! valid_attributes
+      delete :destroy, params: {:id => room.slug}, session: valid_session, format: :js
+      expect(response.body).to be_blank
     end
   end
 
