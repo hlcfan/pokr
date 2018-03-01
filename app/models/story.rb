@@ -10,4 +10,8 @@ class Story < ApplicationRecord
   belongs_to :room, counter_cache: true
   scope :available, -> { where(discarded_at: nil) }
 
+  def as_json options=nil
+    super({only: [:link, :desc, :point]})
+  end
+
 end

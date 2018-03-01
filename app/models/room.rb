@@ -199,6 +199,10 @@ class Room < ApplicationRecord
     end
   end
 
+  def as_json options=nil
+    super({only: [:name, :created_at]})
+  end
+
   private
 
   def moderators
