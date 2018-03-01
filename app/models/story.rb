@@ -1,5 +1,8 @@
 class Story < ApplicationRecord
 
+  include PgSearch
+  multisearchable :against => [:link, :desc], :if => :point?
+
   validates_presence_of :link
 
   has_many :user_room_stories

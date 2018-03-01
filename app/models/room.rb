@@ -2,6 +2,9 @@
 
 class Room < ApplicationRecord
 
+  include PgSearch
+  multisearchable :against => [:name], :unless => :discarded_at?
+
   validates_presence_of :name
 
   has_many :user_rooms
