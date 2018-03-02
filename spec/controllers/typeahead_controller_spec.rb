@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TypeaheadController, type: :controller do
 
   describe "#index" do
-    it "returns empty head if no query provided" do
+    it "returns 400 if no query provided" do
       get :index
       expect(response.status).to eq 400
     end
