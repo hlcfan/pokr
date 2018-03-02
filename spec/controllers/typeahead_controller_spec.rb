@@ -15,8 +15,8 @@ RSpec.describe TypeaheadController, type: :controller do
       PgSearch::Multisearch.rebuild(Story)
       get :index, format: :json, params: {query: "room"}
       expect(response.status).to eq 200
-      expect(JSON.parse(response.body)["Room"][0]["name"]).to eq("room name")
-      expect(JSON.parse(response.body)["Story"][0]["link"]).to eq("related room story")
+      expect(JSON.parse(response.body)[0]["title"]).to eq("related room story")
+      expect(JSON.parse(response.body)[1]["title"]).to eq("room name")
     end
   end
 end
