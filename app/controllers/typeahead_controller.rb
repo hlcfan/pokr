@@ -7,7 +7,6 @@ class TypeaheadController < ApplicationController
       search_object.searchable
     end.group_by { |search| search.class }
 
-    # binding.pry
     render json: format_typeahead_data(searches)
   end
 
@@ -25,7 +24,7 @@ class TypeaheadController < ApplicationController
     end
     data[Room].each do |json_object|
       array << {
-        type:      "room",
+        type:      "group",
         title:     json_object["name"],
         sub_title: json_object["created_at"].strftime("%Y-%d-%m"),
         indicator: ""

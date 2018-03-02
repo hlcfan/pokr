@@ -72,7 +72,7 @@ class Dashboard
           '</div>'
         ].join('\n'),
         suggestion: (data) ->
-          return '<p>' + '<i class="fa fa-search fa-' + data.type + '">' + '<i>' +  data.title + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="indicator">' + data.indicator + '</i>' + '</p>'
+          return '<p>' + '<i class="fa fa-' + data.type + '">' + '<i>' +  data.title + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="indicator">' + data.indicator + '</i>' + '</p>'
       }
 
 $(document).on 'ready', ->
