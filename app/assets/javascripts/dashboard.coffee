@@ -49,9 +49,31 @@ class Dashboard
           return
         url: '/dashboard/room_list?page=' + page
       ).done (data) ->
-        page += 1;
+        page += 1
         moreButton.data('page', page)
         moreButton.removeClass("loading")
+
+    storyRooms = new Bloodhound(
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value')
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+      remote:
+        url: '/typeahead.json?query=%QUERY',
+        wildcard: '%QUERY'
+    )
+
+    $('#typeahead-input').typeahead null,
+      name: 'story-rooms'
+      display: 'value'
+      source: storyRooms
+      templates: {
+        empty: [
+          '<div class="empty-message">',
+            'unable to find any Best Picture winners that match the current query',
+          '</div>'
+        ].join('\n'),
+        suggestion: (data) ->
+          return '<p>' + '<i class="fa fa-search fa-' + data.type + '">' + '<i>' +  data.title + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="indicator">' + data.indicator + '</i>' + '</p>'
+      }
 
 $(document).on 'ready', ->
   $('.dashboard.index').ready ->
