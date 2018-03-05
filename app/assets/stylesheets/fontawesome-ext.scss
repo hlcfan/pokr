@@ -21,10 +21,25 @@
   }
 
   .tt-menu {
-    width: 116%;
+    min-width: 116%;
 
     .tt-suggestion {
       padding: 3px 10px;
+
+      .title {
+        margin-left: 5px;
+        font-weight: bold;
+      }
+
+      .indicator {
+        font-style: normal;
+        margin-left: 5px;
+      }
+
+      sub {
+        color: #555;
+        margin-left: 5px;
+      }
     }
   }
 

@@ -14,7 +14,7 @@ class TypeaheadController < ApplicationController
 
   def format_typeahead_data data
     array = []
-    data[Story].each do |json_object|
+    (data[Story] || []).each do |json_object|
       array << {
         type:      "ticket",
         title:     json_object["link"],
@@ -22,7 +22,7 @@ class TypeaheadController < ApplicationController
         indicator: json_object["point"]
       }
     end
-    data[Room].each do |json_object|
+    (data[Room] || []).each do |json_object|
       array << {
         type:      "group",
         title:     json_object["name"],
