@@ -19,7 +19,8 @@ class TypeaheadController < ApplicationController
         type:      "ticket",
         title:     json_object["link"],
         sub_title: json_object["desc"],
-        indicator: json_object["point"]
+        indicator: json_object["point"],
+        link: room_path(Room.find(json_object["room_id"]).slug)
       }
     end
     (data[Room] || []).each do |json_object|
@@ -27,7 +28,8 @@ class TypeaheadController < ApplicationController
         type:      "group",
         title:     json_object["name"],
         sub_title: json_object["created_at"].strftime("%Y-%d-%m"),
-        indicator: ""
+        indicator: "",
+        link: room_path(json_object["slug"])
       }
     end
 
