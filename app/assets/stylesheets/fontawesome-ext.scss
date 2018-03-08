@@ -24,6 +24,12 @@
     min-width: 116%;
 
     .tt-suggestion {
+      &:hover {
+        sub {
+          color: #fff;
+        }
+      }
+
       padding: 3px 10px;
 
       .title {
@@ -39,6 +45,8 @@
       sub {
         color: #555;
         margin-left: 5px;
+        bottom: 0px;
+        font-size: 80%;
       }
     }
   }
