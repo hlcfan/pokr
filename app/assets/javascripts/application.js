@@ -18,3 +18,4 @@
 //= require rooms
 //= require feedback
 //= require dashboard
+//= require typeahead
