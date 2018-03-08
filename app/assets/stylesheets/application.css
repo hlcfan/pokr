@@ -23,4 +23,5 @@
  *= require profile
  *= require site
  *= require users
+ *= require typeahead
  */
