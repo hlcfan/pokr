@@ -4,6 +4,6 @@ PgSearch.multisearch_options = {
     :trigram => {
       :threshold => 0.5
     }
-  },
+  }
   # :ignoring => :accents
 }
