@@ -16,6 +16,7 @@ dist: trusty
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -U postgres -c "create extension pg_trgm"
   - cp config/database.yml.template config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate
   - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
