@@ -68,11 +68,11 @@ class Dashboard
       templates: {
         empty: [
           '<div class="empty-message">',
-            '😐',
+            '&nbsp;&nbsp; Nah 😐',
           '</div>'
         ].join('\n'),
         suggestion: (data) ->
-          return '<p>' + '<i class="fa fa-' + data.type + '">' + '</i>' + '<span class="title">' + data.title + '</span>' + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="label label-default indicator">' + data.indicator + '</i>' + '</p>'
+          return '<a href="' + data.link + '">' + '<i class="fa fa-' + data.type + '">' + '</i>' + '<span class="title">' + data.title + '</span>' + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="label label-default indicator">' + data.indicator + '</i>' + '</a>'
       }
 
 $(document).on 'ready', ->
