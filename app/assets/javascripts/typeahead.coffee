@@ -1,15 +1,17 @@
 $(document).on 'ready', ->
-  storyRooms = new Bloodhound(
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value')
+  window.storyRooms = new Bloodhound(
+    datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
     remote:
       url: '/typeahead.json?query=%QUERY',
       wildcard: '%QUERY'
   )
 
-  $('#typeahead-input').typeahead null,
+  $('#typeahead-input').typeahead {
+      minLength: 3,
+    },
     name: 'story-rooms'
-    display: 'value'
+    limit: 10
     source: storyRooms
     templates: {
       empty: [
