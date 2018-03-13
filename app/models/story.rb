@@ -1,7 +1,7 @@
 class Story < ApplicationRecord
 
   include PgSearch
-  multisearchable :against => [:link, :desc], :if => :point?
+  multisearchable :against => [:wrecked_link, :desc], :if => :point?
 
   validates_presence_of :link
 
@@ -12,6 +12,12 @@ class Story < ApplicationRecord
 
   def as_json options=nil
     super({only: [:link, :desc, :point]})
+  end
+
+  private
+
+  def wrecked_link
+    link.gsub /-|\s+/, " "
   end
 
 end
