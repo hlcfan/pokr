@@ -7,9 +7,7 @@ $(document).on 'ready', ->
       wildcard: '%QUERY'
   )
 
-  $('#typeahead-input').typeahead {
-      minLength: 3,
-    },
+  $('#typeahead-input').typeahead { minLength: 3 },
     name: 'story-rooms'
     limit: 10
     source: storyRooms

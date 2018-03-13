@@ -17,7 +17,7 @@ class Story < ApplicationRecord
   private
 
   def wrecked_link
-    link.gsub /-|\s+/, " "
+    link.gsub(/-|\s+/, " ")
   end
 
 end

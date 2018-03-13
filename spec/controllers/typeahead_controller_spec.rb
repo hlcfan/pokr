@@ -10,7 +10,7 @@ RSpec.describe TypeaheadController, type: :controller do
 
     it "returns grouped typeahead data" do
       room = Room.create(name: "room name")
-      story = Story.create(link: "related room story", desc: "description", room_id: room.id, point: "13")
+      Story.create(link: "related room story", desc: "description", room_id: room.id, point: "13")
       PgSearch::Multisearch.rebuild(Room)
       PgSearch::Multisearch.rebuild(Story)
       get :index, format: :json, params: {query: "room"}
