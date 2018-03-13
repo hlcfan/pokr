@@ -50,7 +50,6 @@ gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
 gem 'mina-sidekiq', :require => false
 gem 'rqrcode'
-gem 'pg_search'
 
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }

@@ -26,13 +26,4 @@ RSpec.describe Story, type: :model do
       expect(story.valid?).to be true
     end
   end
-
-  describe "#as_json" do
-    it "returns only link, description and point" do
-      story.link = "Link"
-      story.desc = "Ticket description"
-      story.point= "13"
-      expect(story.as_json).to eq({"link"=>"Link", "desc"=>"Ticket description", "point"=>"13"})
-    end
-  end
 end
