@@ -18,6 +18,6 @@ $(document).on 'ready', ->
         '</div>'
       ].join('\n'),
       suggestion: (data) ->
-        return '<a href="' + data.link + '">' + '<i class="fa fa-' + data.type + '">' + '</i>' + '<span class="title">' + data.title + '</span>' + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="label label-default indicator">' + data.indicator + '</i>' + '</a>'
+        return '<a href="' + data.link + '">' + '<i class="fa fa-' + data.type + '">' + '</i>' + '<span class="title">' + data.title + '</span>' + '</i>' + '<sub>' + data.sub_title + '</sub>' + '<i class="label label-info indicator">' + data.indicator + '</i>' + '</a>'
     }
 

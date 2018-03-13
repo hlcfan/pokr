@@ -1,4 +1,6 @@
 class TypeaheadController < ApplicationController
+  include StoryHelper
+
   def index
     query = params[:query]
     head :bad_request and return if query.blank?
@@ -19,7 +21,7 @@ class TypeaheadController < ApplicationController
         type:      "ticket",
         title:     json_object["link"],
         sub_title: json_object["desc"],
-        indicator: json_object["point"],
+        indicator: symbol_point_hash(json_object["point"]),
         link: room_path(Room.find(json_object["room_id"]).slug)
       }
     end
