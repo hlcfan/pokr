@@ -2,6 +2,9 @@
 
 class Room < ApplicationRecord
 
+  include PgSearch
+  multisearchable :against => [:name], :unless => :discarded_at?
+
   validates_presence_of :name
 
   has_many :user_rooms
@@ -194,6 +197,14 @@ class Room < ApplicationRecord
       self.discarded_at = current
       self.stories.update_all(discarded_at: current) if self.save
     end
+  end
+
+  def as_json options=nil
+    super({only: [:name, :created_at]})
+  end
+
+  def related_to_user? user_id
+    user_rooms.where(user_id: user_id).exists?
   end
 
   private

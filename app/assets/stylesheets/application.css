@@ -19,7 +19,9 @@
  *= require dashboard
  *= require_self
  *= require font-awesome
+ *= require fontawesome-ext
  *= require profile
  *= require site
  *= require users
+ *= require typeahead
  */
