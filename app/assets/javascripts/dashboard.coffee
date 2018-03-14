@@ -49,7 +49,7 @@ class Dashboard
           return
         url: '/dashboard/room_list?page=' + page
       ).done (data) ->
-        page += 1;
+        page += 1
         moreButton.data('page', page)
         moreButton.removeClass("loading")
 
