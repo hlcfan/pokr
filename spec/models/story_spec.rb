@@ -37,18 +37,22 @@ RSpec.describe Story, type: :model do
   end
 
   describe "#related_to_user?" do
-    it "returns true if user voted the story" do
-      story = Story.create(link: "story name")
+    it "returns true if user joined the room where the story belongs to" do
       user = User.create(email: 'a@a.com', password: 'password')
-      UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13")
+      room = Room.create!(name: "a room")
+      story = Story.create(link: "story name", room_id: room.id)
+      UserRoom.create(user_id: user.id, room_id: room.id)
       PgSearch::Multisearch.rebuild(Story)
+
       expect(story.related_to_user?(user.id)).to be true
     end
 
-    it "returns false if user ever never voted the story" do
-      story = Story.create(link: "story name")
+    it "returns false user joined the room where the story doesn't belong to" do
       user = User.create(email: 'a@a.com', password: 'password')
+      room = Room.create!(name: "a room")
+      story = Story.create(link: "story name", room_id: room.id)
       PgSearch::Multisearch.rebuild(Story)
+
       expect(story.related_to_user?(user.id)).to be false
     end
   end
