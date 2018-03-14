@@ -203,6 +203,10 @@ class Room < ApplicationRecord
     super({only: [:name, :created_at]})
   end
 
+  def related_to_user? user_id
+    user_rooms.where(user_id: user_id).exists?
+  end
+
   private
 
   def moderators

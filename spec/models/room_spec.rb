@@ -380,4 +380,23 @@ RSpec.describe Room, type: :model do
       expect(room.as_json).to eq({"name"=>"room name", "created_at"=>"Sat, 12 Dec 2048 00:00:00 UTC +00:00"})
     end
   end
+
+  describe "#related_to_user?" do
+    it "returns true if user joined the room" do
+      room.name = "room name"
+      room.save!
+      user = User.create(email: 'a@a.com', password: 'password')
+      UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::PARTICIPANT)
+      PgSearch::Multisearch.rebuild(Room)
+      expect(room.related_to_user?(user.id)).to be true
+    end
+
+    it "returns false if user ever never joined the room" do
+      room.name = "room name"
+      room.save!
+      user = User.create(email: 'a@a.com', password: 'password')
+      PgSearch::Multisearch.rebuild(Room)
+      expect(room.related_to_user?(user.id)).to be false
+    end
+  end
 end

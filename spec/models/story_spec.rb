@@ -35,4 +35,21 @@ RSpec.describe Story, type: :model do
       expect(story.as_json).to eq({"link"=>"Link", "desc"=>"Ticket description", "point"=>"13"})
     end
   end
+
+  describe "#related_to_user?" do
+    it "returns true if user voted the story" do
+      story = Story.create(link: "story name")
+      user = User.create(email: 'a@a.com', password: 'password')
+      UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13")
+      PgSearch::Multisearch.rebuild(Story)
+      expect(story.related_to_user?(user.id)).to be true
+    end
+
+    it "returns false if user ever never voted the story" do
+      story = Story.create(link: "story name")
+      user = User.create(email: 'a@a.com', password: 'password')
+      PgSearch::Multisearch.rebuild(Story)
+      expect(story.related_to_user?(user.id)).to be false
+    end
+  end
 end

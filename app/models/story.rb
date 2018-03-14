@@ -14,6 +14,10 @@ class Story < ApplicationRecord
     super({only: [:link, :desc, :point]})
   end
 
+  def related_to_user? user_id
+    user_story_points.where(user_id: user_id).exists?
+  end
+
   private
 
   def wrecked_link
