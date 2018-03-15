@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= yield(:title) + ' | ' if content_for?(:title) %>Pokrex</title>
+  <meta name="description" content="<%= content_for?(:description_meta_content) ? content_for(:description_meta_content) : default_description %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+  <%= render 'layouts/favicon' %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :page_head if content_for? :page_head %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= "#{controller_name} #{action_name}" %>">
+<%= render 'layouts/nav' %>
+<div class="container">
+  <div class="row post">
+    <div class="col-xs-2 col-md-2"></div>
+    <div class="col-xs-8 col-md-8">
+      <%= yield %>
+    </div>
+    <div class="col-xs-2 col-md-2"></div>
+  </div>
+</div>
+<%= render 'layouts/feedback' %>
+<% if Rails.env.production? %>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-7342688-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+<% end %>
+</body>
+</html>
