@@ -1,6 +1,14 @@
-a.invitation__link {
+a.invitation__link, a.edit__link {
   color: #444;
   text-decoration: none;
+}
+
+a.edit__link {
+  margin-left: 10px;
+}
+
+.link-divider {
+  padding: 0 5px;
 }
 
 .invitation {

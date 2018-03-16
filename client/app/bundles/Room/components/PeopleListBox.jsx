@@ -46,7 +46,7 @@ export default class PeopleListBox extends React.Component {
 
   edit = () => {
     this.setState(prevState => {
-      return { editable: true }
+      return { editable: !this.state.editable }
     })
   }
 
@@ -55,6 +55,23 @@ export default class PeopleListBox extends React.Component {
   }
 
   render() {
+    const editLink = (() => {
+      let icon, text
+      if (this.state.editable) {
+        icon = "fa-check"
+        text = "Complete"
+      } else {
+        icon = "fa-edit"
+        text = "Edit"
+      }
+
+      return(
+        <a className={`pull-right ${css.edit__link}`} href="javascript:;" onClick={this.edit}>
+          <i className={`fa ${icon}`}></i> {text}
+        </a>
+      )
+    })()
+
     return (
       <div className="panel panel-default" id="people">
         <div className="panel-heading">
@@ -62,11 +79,9 @@ export default class PeopleListBox extends React.Component {
           <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.invite}>
             <i className="fa fa-plus-circle"></i> Invite
           </a>
+          <span className={`pull-right ${css["link-divider"]}`}>|</span>
           {
-            this.props.role === 'Moderator' &&
-              <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.edit}>
-                <i className="fa fa-edit"></i> Edit
-              </a>
+            this.props.role === 'Moderator' && editLink
           }
         </div>
         <div id="peopleListArea" className="panel-body row">
