@@ -21,6 +21,7 @@
 <%= react_component(component_name,
   props: {roomId: @room.slug,
           roomName: @room.name,
+          currentUserId: current_user.id,
           role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
           roomState: @room.state,
           pointValues: @room.point_values,

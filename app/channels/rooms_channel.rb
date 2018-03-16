@@ -86,6 +86,19 @@ class RoomsChannel < ApplicationCable::Channel
     @room.update_duration data["duration"].to_f
   end
 
+  def remove_person data
+    set_room data["roomId"]
+    payload = data["data"]
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+
+    if user_room.moderator?
+      UserRoom.where(user_id: payload["user_id"], room_id: @room.id).destroy_all
+      broadcaster "rooms/#{@room.slug}",
+                    type: "evictUser",
+                    data: { userId: payload["user_id"] }
+    end
+  end
+
   private
 
   def set_room room_id

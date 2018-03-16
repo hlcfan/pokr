@@ -62,13 +62,22 @@ export default class PeopleListBox extends React.Component {
           <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.invite}>
             <i className="fa fa-plus-circle"></i> Invite
           </a>
-          <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.edit}>
-            <i className="fa fa-edit"></i> Edit
-          </a>
+          {
+            this.props.role === 'Moderator' &&
+              <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.edit}>
+                <i className="fa fa-edit"></i> Edit
+              </a>
+          }
         </div>
         <div id="peopleListArea" className="panel-body row">
           <div className="peopleListBox">
-            <PeopleList data={this.state.data} editable={this.state.editable} />
+            <PeopleList
+              data={this.state.data}
+              editable={this.state.editable}
+              role={this.props.role}
+              roomId={this.props.roomId}
+              currentUserId={this.props.currentUserId}
+            />
           </div>
         </div>
         {

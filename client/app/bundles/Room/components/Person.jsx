@@ -1,18 +1,46 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
+import EventEmitter from 'libs/eventEmitter'
 
 export default class Person extends React.Component {
 
+  remove = () => {
+    if (this.props.role === 'Moderator') {
+      App.rooms.perform('remove_person', {
+        roomId: this.props.roomId,
+        data: { user_id: this.props.id }
+      })
+    }
+  }
+
+  evictUser = (userId) => {
+    if (this.props.currentUserId === userId) {
+      window.location.href = "/"
+    }
+  }
+
+  componentDidMount() {
+    EventEmitter.subscribe("evictUser", this.evictUser)
+  }
+
   render() {
     const that = this;
-    const pointLabel = ((() => {
-      if (window.syncResult) {
+    const accessoryLabel = ((() => {
+      if (this.props.editable && this.props.currentUserId !== this.props.id) {
         return(
-          <span className="points pull-right">
-            {BarColors.emoji(that.props.points) || that.props.points}
+          <span className="accessory pull-right" onClick={this.remove}>
+            <i className="fa fa-trash-o"></i>
           </span>
         )
+      } else {
+        if (window.syncResult) {
+          return(
+            <span className="accessory pull-right">
+              {BarColors.emoji(that.props.points) || that.props.points}
+            </span>
+          )
+        }
       }
     }))()
 
@@ -28,7 +56,7 @@ export default class Person extends React.Component {
         </i>
         <a href="javascript:;" className="person">
           {this.props.name}
-          {pointLabel}
+          {accessoryLabel}
         </a>
       </li>
     )

@@ -180,6 +180,8 @@ export default class Room extends React.Component {
               roomId={this.props.roomId}
               roomState={this.state.roomState}
               addSteps={this.addSteps}
+              role={this.props.role}
+              currentUserId={this.props.currentUserId}
           />
             <ActionBox
               roomState={this.state.roomState}

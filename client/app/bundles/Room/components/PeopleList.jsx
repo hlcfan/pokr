@@ -13,8 +13,13 @@ export default class PeopleList extends React.Component {
         points={person.points}
         voted={person.voted}
         avatar={person.avatar_thumb}
-        />
-      )
+        role={this.props.role}
+        editable={this.props.editable}
+        roomId={this.props.roomId}
+        currentUserId={this.props.currentUserId}
+      />
+    )
+
     return (
       <div className="people-list col-md-12">
         <ul className="list-unstyled">
