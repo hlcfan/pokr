@@ -1,3 +1,5 @@
+#= require libs/Chart.bundle.min
+
 class Dashboard
   init: ->
     $('[data-toggle="tooltip"]').tooltip()

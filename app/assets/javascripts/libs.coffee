@@ -1,3 +1,9 @@
 #= require jquery2
 #= require jquery_ujs
-#= require_tree ./libs
+#= require libs/bootstrap-tagsinput.min
+#= require libs/bootstrap.min
+#= require libs/error-reporter
+#= require libs/jquery.readyselector
+#= require libs/js.cookie
+#= require libs/Sortable.min
+#= require libs/typeahead.bundle.min
