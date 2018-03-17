@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.0] - 2018-03-15
+### Added
+- Add posts pages, along with one post 😀 [#191](https://github.com/hlcfan/pokr/pull/191)
+
+## [0.8.0] - 2018-03-14
+### Added
+- Allow quick search tickets and rooms in navigation bar [#190](https://github.com/hlcfan/pokr/pull/190)
+
+## [0.7.0] - 2018-01-28
+### Added
+- Allow moderator to delete rooms [#183](https://github.com/hlcfan/pokr/pull/183)
+
+## [0.6.0] - 2018-01-14
+### Added
+- Support guest [#166](https://github.com/hlcfan/pokr/pull/166)
+- Add QR code in invitation email [#180](https://github.com/hlcfan/pokr/pull/180)
+
 ## [0.5.8] - 2017-12-09
 ### Changed
 - Refresh user/ticket list after updating room [c1d1189](https://github.com/hlcfan/pokr/commit/c1d11894f7aabe0ac942a19ca0e6bd3f8ae26190)
