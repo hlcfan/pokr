@@ -25,7 +25,6 @@ export default class Person extends React.Component {
   }
 
   render() {
-    const that = this;
     const accessoryLabel = ((() => {
       if (this.props.editable && this.props.currentUserId !== this.props.id) {
         return(
@@ -37,7 +36,7 @@ export default class Person extends React.Component {
         if (window.syncResult) {
           return(
             <span className="accessory pull-right">
-              {BarColors.emoji(that.props.points) || that.props.points}
+              {BarColors.emoji(this.props.points) || this.props.points}
             </span>
           )
         }
@@ -50,7 +49,7 @@ export default class Person extends React.Component {
     }
 
     return (
-      <li className={`${this.props.role} person ${votedClass}`} id={`u-${this.props.id}`} data-point={this.props.points}>
+      <li className={`${this.props.displayRole} person ${votedClass}`} id={`u-${this.props.id}`} data-point={this.props.points}>
         <i className="person--avatar">
           <img src={this.props.avatar} />
         </i>

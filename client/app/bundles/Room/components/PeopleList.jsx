@@ -9,7 +9,7 @@ export default class PeopleList extends React.Component {
         key={person.id}
         name={person.name}
         id={person.id}
-        role={person.display_role.toLowerCase()}
+        displayRole={person.display_role.toLowerCase()}
         points={person.points}
         voted={person.voted}
         avatar={person.avatar_thumb}
