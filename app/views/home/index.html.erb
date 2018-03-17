@@ -1,4 +1,4 @@
-<%# cache "#{I18n.locale}:#{Rails.root}" do %>
+<% cache "#{I18n.locale}:#{Rails.root}" do %>
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
@@ -29,7 +29,7 @@
       "screenshot": [
         "<%= image_url("room.png") %>",
         "<%= image_url("dashboard.jpg") %>",
-        "<%= image_url("scheme.png") %>"
+        "<%= image_url("scheme.jpg") %>"
       ],
       "author": {
         "@type": "Person",
@@ -120,7 +120,7 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "scheme.png", alt: t("intro.scheme_alt") %>
+          <%= image_tag "scheme.jpg", alt: t("intro.scheme_alt") %>
         </div>
         <div class="col-xs-4 col-md-4 text-section">
           <h2><%= t("intro.scheme") %></h2>
@@ -162,4 +162,4 @@
   </script>
 </body>
 </html>
-<%# end %>
+<% end %>
