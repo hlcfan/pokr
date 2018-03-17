@@ -17,5 +17,4 @@
 //= require jquery.nested-fields
 //= require rooms
 //= require feedback
-//= require dashboard
 //= require typeahead
