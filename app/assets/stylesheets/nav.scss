@@ -1,4 +1,6 @@
-.navbar{
+@import 'global_vars';
+
+.navbar {
   background-color: #fff;
   box-shadow: 0 1px 1px rgba(0,0,0,0.11);
   border: 0px;
@@ -11,5 +13,11 @@
 
   span {
     color: #5bc0de;
+  }
+}
+
+.navbar-collapse {
+  @media #{$desktop} {
+    float: right;
   }
 }
