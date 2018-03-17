@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.0] - 2018-03-17
+### Changed
+- Removes `fa-x` classes from stylesheets and jsx source code [a400fcb95395e342adec24f380c9a59356c37ebb](https://github.com/hlcfan/pokr/commit/a400fcb95395e342adec24f380c9a59356c37ebb)
+
 ## [0.9.0] - 2018-03-15
 ### Added
 - Add posts pages, along with one post 😀 [#191](https://github.com/hlcfan/pokr/pull/191)
