@@ -10,6 +10,7 @@
   <%= javascript_include_tag "application" %>
   <%= yield :page_head if content_for? :page_head %>
   <%= csrf_meta_tags %>
+  <link rel="prefetch" href="<%= asset_pack_path("vendor-bundle.js") %>">
 </head>
 <body class="<%= "#{controller_name} #{action_name}" %>">
 <%= render 'layouts/nav' %>
