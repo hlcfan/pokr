@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   def show
     if post_exists?
-      render template: "posts/pages/#{params[:id]}"
+      render template: relative_posts_path
     else
       render "errors/not_found", status: 404, layout: "application"
     end
@@ -25,6 +25,10 @@ class PostsController < ApplicationController
 
   def base_dir pattern
     Rails.root.join("app", "views", "posts", "pages", pattern)
+  end
+
+  def relative_posts_path
+    "posts/pages/#{params[:id]}"
   end
 
 end

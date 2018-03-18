@@ -3,10 +3,15 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :controller do
 
   describe "GET #show" do
-    xit "renders post if post exists" do
+    before do
+      controller.append_view_path("spec/fixtures")
+    end
+
+    it "renders post if post exists" do
       allow(controller).to receive(:post_exists?) { true }
+      allow(controller).to receive(:relative_posts_path) { "post" }
       get :show, params: { id: "post" }
-      expect(controller).to receive(:render)
+      expect(response.status).to eq(200)
     end
 
     it "renders 404 page if post not exists" do
