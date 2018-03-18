@@ -3,6 +3,6 @@
   <p class="story-list-item-text">
     <span>Point: </span><span class="label label-info"><%= symbol_point_hash(story.point) %></span>
     <span class="divider">·</span>
-    <span data-toggle="tooltip" data-placement="top" title="<%= l(story.updated_at, format: :short) %>"><%= distance_of_time_in_words_to_now(story.updated_at) %> ago</span>
+    <span data-toggle="tooltip" data-placement="top" title="<%= l(story.updated_at, format: :short) %>"><%= distance_of_time_in_words_to_now(story.updated_at) %> <%= t("ago") %></span>
   </p>
 </a>
