@@ -18,6 +18,12 @@ class Post
     file_path.match(find_post_regex).captures[0]
   end
 
+  def == other_post
+    file_path == other_post.file_path
+  end
+
+  private
+
   def meta_info
     @meta_info ||= begin
       File.open(file_path) do |io|

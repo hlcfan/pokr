@@ -3,10 +3,10 @@ class PostsController < ApplicationController
   layout "post"
 
   def show
-    if valid_page?
+    if post_exists?
       render template: "posts/pages/#{params[:id]}"
     else
-      render "errors/not_found", layout: "application"
+      render "errors/not_found", status: 404, layout: "application"
     end
   end
 
@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   private
 
-  def valid_page?
+  def post_exists?
     File.exist?(base_dir("#{params[:id]}.html.erb"))
   end
 
