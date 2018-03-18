@@ -71,3 +71,7 @@ en:
     scheme_f_1: "Fibonacci"
     scheme_f_2: "0-8"
     scheme_f_3: "T-shirt(XS-XXL)"
+
+  posts:
+    h1: "Posts"
+    description: "Articles related to agile software development, my knowledge and experiences of ideas while using online planning poker tool Pokrex."

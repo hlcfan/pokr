@@ -1,9 +1,9 @@
 <%
-  title "Posts"
-  description "Articles related to agile software development, my knowledge and experiences of ideas while using online planning poker tool Pokrex."
+  title t("posts.h1")
+  description t("posts.description")
 %>
 
-<h1>Posts</h1>
+<h1><%= t("posts.h1") %></h1>
 <ul class="list-unstyled">
   <% @posts.each do |post| %>
     <li><h3><%= link_to post.title, post_path(post.defacto_file_name) %> <%= post.date %></h3></li>

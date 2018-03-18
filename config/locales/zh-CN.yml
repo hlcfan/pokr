@@ -234,3 +234,7 @@ zh-CN:
     scheme_f_1: "斐波那契数列 Fibonacci"
     scheme_f_2: "0-8"
     scheme_f_3: "T 恤码号 T-shirt(XS-XXL)"
+
+  posts:
+    h1: "文章列表"
+    description: "所有关于敏捷开发的文章。包括在软件开发过程中，使用在线敏捷估算（计划）工具 Pokrex 的一些想法和经验。"
