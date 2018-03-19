@@ -3,14 +3,8 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :controller do
 
   describe "GET #show" do
-    before do
-      controller.append_view_path("spec/fixtures")
-    end
-
     it "renders post if post exists" do
-      allow(controller).to receive(:base_dir) { "spec/fixtures/post.html.erb" }
-      allow(controller).to receive(:relative_posts_path) { "post" }
-      get :show, params: { id: "post" }
+      get :show, params: { id: "grooming-session-is-important" }
       expect(response.status).to eq(200)
     end
 
