@@ -3,17 +3,32 @@ class PostsController < ApplicationController
   layout "post"
 
   def show
-    if valid_page?
-      render template: "posts/#{params[:id]}"
+    if post_exists?
+      render template: relative_posts_path
     else
-      render "errors/not_found", layout: "application"
+      render "errors/not_found", status: 404, layout: "application"
+    end
+  end
+
+  def index
+    post_paths = Dir.glob base_dir("*.html.erb")
+    @posts = post_paths.map do |post|
+      Post.new(post)
     end
   end
 
   private
 
-  def valid_page?
-    File.exist?(Rails.root.join("app", "views", "posts", "#{params[:id]}.html.erb"))
+  def post_exists?
+    File.exist?(base_dir("#{params[:id]}.html.erb"))
+  end
+
+  def base_dir pattern
+    Rails.root.join("app", "views", "posts", "pages", pattern)
+  end
+
+  def relative_posts_path
+    "posts/pages/#{params[:id]}"
   end
 
 end

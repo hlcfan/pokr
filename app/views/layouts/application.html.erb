@@ -18,6 +18,13 @@
   <%= flash_messages %>
   <%= yield %>
 </div>
+<% if controller_name != "rooms" %>
+  <div class="container-fluid">
+    <div class="row">
+      <%= render 'layouts/footer' %>
+    </div>
+  </div>
+<% end %>
 <%= render 'layouts/feedback' %>
 <% if Rails.env.production? %>
   <script>

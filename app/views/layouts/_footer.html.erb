@@ -1,32 +1,35 @@
-<div class="col-xs-4 col-md-4 text-section">
-  <h3>Pokrex</h3>
-</div>
-<div class="col-xs-6 col-md-6 text-section">
-  <h3><%= t("site.footer.links") %></h3>
-  <ul class="list-unstyled">
-    <li><a href="/about"><%= t("site.footer.about") %></a></li>
-    <li><a href="/faq"><%= t("site.footer.faq") %></a></li>
-    <li><a href="https://en.wikipedia.org/wiki/Planning_poker" target="_blank"><%= t("site.footer.what") %></a></li>
-  </ul>
-</div>
-<div class="col-xs-2 col-md-2 text-section">
-  <h3><%= t("site.footer.share") %></h3>
-  <ul class="list-unstyled">
-    <li>
-      <div id="fb-root"></div>  
-      <div class="fb-share-button provider" data-href="https://pokrex.com" data-layout="button"></div>
-    </li>
-    <li>
-      <div class="twitter provider">
-      <a href="https://twitter.com/share?text=Pretty awesome planning poker&hashtags=planningpoker,pointingpoker,agile" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
-    </li>
-    <li>
-      <div class="github provider">
-      <iframe src="https://ghbtns.com/github-btn.html?user=hlcfan&repo=pokr&type=star&count=false" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-    </div>
-    </li>
-  </ul>
+<div class="footer clearfix">
+  <div class="col-xs-4 col-md-4 text-section">
+    <h3>Pokrex</h3>
+  </div>
+  <div class="col-xs-6 col-md-6 text-section">
+    <h3><%= t("site.footer.links") %></h3>
+    <ul class="list-unstyled">
+      <li><a href="/about" target="_blank"><%= t("site.footer.about") %></a></li>
+      <li><a href="/faq" target="_blank"><%= t("site.footer.faq") %></a></li>
+      <li><a href="/posts" target="_blank"><%= t("site.footer.posts") %></a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Planning_poker" target="_blank"><%= t("site.footer.what") %></a></li>
+    </ul>
+  </div>
+  <div class="col-xs-2 col-md-2 text-section">
+    <h3><%= t("site.footer.share") %></h3>
+    <ul class="list-unstyled">
+      <li>
+        <div id="fb-root"></div>  
+        <div class="fb-share-button provider" data-href="https://pokrex.com" data-layout="button"></div>
+      </li>
+      <li>
+        <div class="twitter provider">
+        <a href="https://twitter.com/share?text=Pretty awesome planning poker&hashtags=planningpoker,pointingpoker,agile" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      </li>
+      <li>
+        <div class="github provider">
+        <iframe src="https://ghbtns.com/github-btn.html?user=hlcfan&repo=pokr&type=star&count=false" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <script>(function(d, s, id) {
