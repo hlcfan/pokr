@@ -8,7 +8,7 @@ RSpec.describe PostsController, type: :controller do
     end
 
     it "renders post if post exists" do
-      allow(controller).to receive(:post_exists?) { true }
+      allow(controller).to receive(:base_dir) { "spec/fixtures/post.html.erb" }
       allow(controller).to receive(:relative_posts_path) { "post" }
       get :show, params: { id: "post" }
       expect(response.status).to eq(200)
