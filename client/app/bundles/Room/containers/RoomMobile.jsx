@@ -194,6 +194,8 @@ export default class RoomMobile extends React.Component {
               roomId={this.props.roomId}
               roomState={this.state.roomState}
               addSteps={this.addSteps}
+              role={this.props.role}
+              currentUserId={this.props.currentUserId}
             />
           </div>
         </div>

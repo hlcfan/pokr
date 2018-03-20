@@ -48,6 +48,9 @@ export default {
           setTimeout(function(){
             $personElement.addClass("voted", 100)
           }, 200)
+        } else if(data.type === "evictUser") {
+          EventEmitter.dispatch("evictUser", data.data.userId)
+          EventEmitter.dispatch("refreshUsers")
         } else {
 
         }
