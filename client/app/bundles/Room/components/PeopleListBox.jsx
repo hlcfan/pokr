@@ -66,9 +66,12 @@ export default class PeopleListBox extends React.Component {
       }
 
       return(
-        <a className={`pull-right ${css.edit__link}`} href="javascript:;" onClick={this.edit}>
-          <i className={`fa ${icon}`}></i> {text}
-        </a>
+        <span>
+          <span className={`pull-right ${css["link-divider"]}`}>|</span>
+          <a className={`pull-right ${css.edit__link}`} href="javascript:;" onClick={this.edit}>
+            <i className={`fa ${icon}`}></i> {text}
+          </a>
+        </span>
       )
     })()
 
@@ -79,7 +82,6 @@ export default class PeopleListBox extends React.Component {
           <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.invite}>
             <i className="fa fa-plus-circle"></i> Invite
           </a>
-          <span className={`pull-right ${css["link-divider"]}`}>|</span>
           {
             this.props.role === 'Moderator' && editLink
           }
