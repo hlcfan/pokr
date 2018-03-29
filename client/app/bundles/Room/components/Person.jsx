@@ -29,7 +29,7 @@ export default class Person extends React.Component {
       if (this.props.editable && this.props.currentUserId !== this.props.id) {
         return(
           <span className="accessory pull-right" onClick={this.remove}>
-            <i className="fa fa-trash-o"></i>
+            ❌
           </span>
         )
       } else {
