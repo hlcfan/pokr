@@ -8,5 +8,6 @@ SitemapGenerator::Sitemap.create do
   add "/users/sign_up", changefreq: "monthly"
   add "/about", changefreq: "monthly"
   add "/faq", changefreq: "monthly"
+  add "/posts", changefreq: "weekly"
   add "/grooming-session-is-important", changefreq: "monthly"
 end
