@@ -1,41 +1,24 @@
-<% unless is_mobile_request? %>
-  <div class="feedback-holder">
-    <span>Give feedback or need help?</span>
-    &nbsp;
-    <strong class="close">x</strong>
-  </div>
-<% end %>
-<div id="feedback">
-  <div class="modal fade" tabIndex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title new-form">Please say something to us</h4>
-          <h4 class="modal-title submitted-form">Thank you!</h4>
-        </div>
-        <div class="modal-body">
-          <%= form_tag home_feedback_path, method: "post", class: 'form', role: 'form' do %>
-            <div class="new-form">
-              <% unless current_user %>
-                <div class="form-group">
-                  <%= text_field_tag :email, nil, class: 'form-control', placeholder: "Email address" %>
-                </div>
-              <% end %>
-              <div class="form-group clearfix">
-                <%= text_area_tag :message, nil, rows: "5", cols: "50", class: 'form-control col-xs-10', placeholder: "Your words here..." %>
-              </div>
-            </div>
-            <div class="submitted-form">
-              <h2>✅❤️💙💚💛💜😘</h2>
-            </div>
-          <% end %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="submit new-form btn btn-default btn-feedback">Submit</button>
-          <button type="button" class="btn btn-default submitted-form " data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Start of Async Drift Code -->
+<script>
+!function() {
+  var t;
+  if (t = window.driftt = window.drift = window.driftt || [], !t.init) return t.invoked ? void (window.console && console.error && console.error("Drift snippet included twice.")) : (t.invoked = !0,
+  t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+  t.factory = function(e) {
+    return function() {
+      var n;
+      return n = Array.prototype.slice.call(arguments), n.unshift(e), t.push(n), t;
+    };
+  }, t.methods.forEach(function(e) {
+    t[e] = t.factory(e);
+  }), t.load = function(t) {
+    var e, n, o, i;
+    e = 3e5, i = Math.ceil(new Date() / e) * e, o = document.createElement("script"),
+    o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + i + "/" + t + ".js",
+    n = document.getElementsByTagName("script")[0], n.parentNode.insertBefore(o, n);
+  });
+}();
+drift.SNIPPET_VERSION = '0.3.1';
+drift.load('itkzz4isvb7e');
+</script>
+<!-- End of Async Drift Code -->
