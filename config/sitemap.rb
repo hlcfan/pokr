@@ -9,5 +9,6 @@ SitemapGenerator::Sitemap.create do
   add "/about", changefreq: "monthly"
   add "/faq", changefreq: "monthly"
   add "/posts", changefreq: "weekly"
-  add "/grooming-session-is-important", changefreq: "monthly"
+  add "/posts/grooming-session-is-important", changefreq: "monthly"
+  add "/posts/ads", changefreq: "monthly"
 end
