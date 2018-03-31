@@ -2,7 +2,27 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.9.0] - 2018-03-17
+## [0.9.6] - 2018-03-29
+### Added
+- Add new post [Ads](https://pokrex.com/posts/ads) [a964773d7906d9d093ff230f95ea24fa9c7dd318](https://github.com/hlcfan/pokr/commit/a964773d7906d9d093ff230f95ea24fa9c7dd318)
+
+## [0.9.5] - 2018-03-29
+### Added
+- Use third party tool Drift to encourage users to communicate more [#196](https://github.com/hlcfan/pokr/pull/196)
+
+## [0.9.4] - 2018-03-29
+### Added
+- Show ads on right rail on dashboard page [#195](https://github.com/hlcfan/pokr/pull/195)
+
+## [0.9.3] - 2018-03-21
+### Added
+- Allow moderator to kick people out from room 😆 [#192](https://github.com/hlcfan/pokr/pull/192)
+
+## [0.9.2] - 2018-03-19
+### Added
+- Add global footer and add posts link to global footer, and posts listing page [#194](https://github.com/hlcfan/pokr/pull/194)
+
+## [0.9.1] - 2018-03-17
 ### Changed
 - Removes `fa-x` classes from stylesheets and jsx source code [a400fcb95395e342adec24f380c9a59356c37ebb](https://github.com/hlcfan/pokr/commit/a400fcb95395e342adec24f380c9a59356c37ebb)
 
