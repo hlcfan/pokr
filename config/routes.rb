@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'home/sign_up_form'
   get 'about', to: 'site#about'
   get 'faq', to: 'site#faq'
+  get 'donate', to: 'site#donate'
 
   mount ActionCable.server => '/cable'
 
