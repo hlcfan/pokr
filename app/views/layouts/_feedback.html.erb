@@ -20,5 +20,8 @@
 }();
 drift.SNIPPET_VERSION = '0.3.1';
 drift.load('itkzz4isvb7e');
+<% if current_user %>
+  drift.identify('<%= current_user.email %>',{email:'<%= current_user.email %>'});
+<% end %>
 </script>
 <!-- End of Async Drift Code -->
