@@ -7,23 +7,35 @@
   <div class="col-xs-2 col-md-2"></div>
   <div class="col-xs-8 col-md-8 main">
     <h1>常见问题</h1>
-    <h3>组员打完分后如何决定分数？</h3>
-    <p>组团打完分，翻牌后，<p>Action</p> 区域会出现彩色的分数条。作为 scrum master，你可以在这些分数条上点击选择对应的分数。如果你把鼠标放到分数条上，会出现一个对号图标。截图：<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAACEUlEQVQ4y4WTTUhUYRSGn3PnZs71tzBMqqGUQCkCS6J2QeDCAW0sXNmurei6zQwuWrTLdRCSC1dGICgkDUFgijTZIiL8YyhKSidvTDn33u+eFo5/5c+BF75z4LzvOe/hEwAe1HZTGaTOHjsXQ0Q5KFRlKbeYxbVT3F8eEh6e6D7VePpp7+V7hKKIwl4MAqhsvC0VHr19zJePn+8KT6rnOq91NGw07ScuqKV47joolFWUYzCMvHk+b0u5HXv3e5ZQwwMnj+kZXrWMEpiAWOYiUSuKlNsxW/F18U/2kLVdRhuHAWj90MFy4QeKohi10QBVc0C7cLv0Dhdqmpj4+ZL06hhEyjaZEYaPFKiTEtSHzQNoyaY2BD7563kcx6Hq9XFck9929at6FuqDerQcvcJU/RTP6kbAeIAH+CRPJnEch+RCEjfIFeseqAfqY6FACDO/ZshFc9w6n6CnugdCKPVKSTWlWAvW6J/vh5DdULC2EgvimTgAA80DVAaVDDYMggWJ2QREilf+h8TaWTQY2jPtIDDZPElXfRcTKxOkv6fBsOcEwiAFainZMt3A+NVxWmtaEYSqF1W4obv3gZbxLEJkF6tAfDqOICQ/JXED93/lbYiNIUtIw05iI4a26TbGvo1t7L5fGLIRbrKKQydW0aQi5vJzxR+0DwrACr0RxnnPDRaASwRU4GMOQcg6S6zSRw9DfwHergbUg2NtjwAAAABJRU5ErkJggg==" />。</p>
-    <h3>怎么开始一场计划扑克？</h3>
+    <ul>
+      <li><h3><a href="#decide-point">组员打完分后如何决定分数？</a></h3></li>
+      <li><h3><a href="#start-room">怎么开始一场计划扑克？</a></h3></li>
+      <li><h3><a href="#edit-room">怎么编辑一个房间？</a></h3></li>
+      <li><h3><a href="#sort-room">怎么对 story 进行排序？</a></h3></li>
+      <li><h3><a href="#voted-results">怎么查看已打分的 story？</a></h3></li>
+      <li><h3><a href="#skip-ticket">如何跳过当前 story？</a></h3></li>
+      <li><h3><a href="#clear-votes">如果清除当前轮次打分然后重新打分？</a></h3></li>
+      <li><h3><a href="#kick-people">如何踢人？</a></h3></li>
+      <li><h3><a href="#technology">Pokrex 都用了哪些技术？</h3></a></h3></li>
+      <li><h3><a href="#feedback">怎么进行反馈？</a></h3></li>
+    </ul>
+    <h3 id="decide-point">在组员打完分后如何决定分数？</h3>
+    <p>组团打完分，翻牌后，<b>Action</b> 区域会出现彩色的分数条。作为 scrum master，你可以在这些分数条上点击选择对应的分数。如果你把鼠标放到分数条上，会出现一个对号图标。截图：<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAACEUlEQVQ4y4WTTUhUYRSGn3PnZs71tzBMqqGUQCkCS6J2QeDCAW0sXNmurei6zQwuWrTLdRCSC1dGICgkDUFgijTZIiL8YyhKSidvTDn33u+eFo5/5c+BF75z4LzvOe/hEwAe1HZTGaTOHjsXQ0Q5KFRlKbeYxbVT3F8eEh6e6D7VePpp7+V7hKKIwl4MAqhsvC0VHr19zJePn+8KT6rnOq91NGw07ScuqKV47joolFWUYzCMvHk+b0u5HXv3e5ZQwwMnj+kZXrWMEpiAWOYiUSuKlNsxW/F18U/2kLVdRhuHAWj90MFy4QeKohi10QBVc0C7cLv0Dhdqmpj4+ZL06hhEyjaZEYaPFKiTEtSHzQNoyaY2BD7563kcx6Hq9XFck9929at6FuqDerQcvcJU/RTP6kbAeIAH+CRPJnEch+RCEjfIFeseqAfqY6FACDO/ZshFc9w6n6CnugdCKPVKSTWlWAvW6J/vh5DdULC2EgvimTgAA80DVAaVDDYMggWJ2QREilf+h8TaWTQY2jPtIDDZPElXfRcTKxOkv6fBsOcEwiAFainZMt3A+NVxWmtaEYSqF1W4obv3gZbxLEJkF6tAfDqOICQ/JXED93/lbYiNIUtIw05iI4a26TbGvo1t7L5fGLIRbrKKQydW0aQi5vJzxR+0DwrACr0RxnnPDRaASwRU4GMOQcg6S6zSRw9DfwHergbUg2NtjwAAAABJRU5ErkJggg==" />。</p>
+    <h3 id="start-room">怎么开始一场计划扑克？</h3>
     <p>点击右上角的 <a href="/rooms/new" target="_blank"><b>Create room</b></a>链接。</p>
-    <h3>怎么编辑一个房间？</h3>
+    <h3 id="edit-room">怎么编辑一个房间？</h3>
     <p>创建完一个房间后，你可以看到编辑按钮 <b>Edit button</b>，点击它会打开编辑页面。截图：<%= image_tag "edit-room.jpg", width: "100%" %></p>
-    <h3>怎么对 story 进行排序？</h3>
+    <h3 id="sort-room">怎么对 story 进行排序？</h3>
     <p>进入编辑页面，在 <b>Stories</b> 区域。把鼠标放到<b style="color:blue">↕</b>上，你会看到鼠标变成拖拽图标。点住图标进行拖拽对 story 进行排序。截图：<%= image_tag "room-sort.jpg", width: "100%" %></p>
-    <h3>怎么查看已打分的 story?</h3>
+    <h3 id="voted-results">怎么查看已打分的 story？</h3>
     <p>在 <b>Stories</b> 区域，点击 <b>Finished</b> 选项卡。截图：<%= image_tag "finished-tickets.jpg", width: "100%" %>。另外，你可以点击刷新小图标<i class="fa fa-refresh"></i>，来对 story 进行重新投分。</p>
-    <h3>如何跳过当前 story？</h3>
+    <h3 id="skip-ticket">如何跳过当前 story？</h3>
     <p>先翻牌，然后在 <b>Action</b> 区域会有个 <b>Skip</b> 按钮，点击之即可跳过当前 story。截图：<%= image_tag "skip-ticket.jpg", width: "100%" %></p>
-    <h3>如果清除当前轮次打分然后重新打分？</h3>
+    <h3 id="clear-votes">如果清除当前轮次打分然后重新打分？</h3>
     <p>先翻牌，然后在 <b>Action</b> 区域会有个 <b>Clear votes</b> 按钮，点击之即可重新对当前 story 进行打分。截图：<%= image_tag "clear-votes.jpg", width: "100%" %></p>
-    <h3>如果踢人？</h3>
+    <h3 id="kick-people">如何踢人？</h3>
     <p>在 <b>People</b> 区域点击 “<i class="fa fa-edit"></i>Edit”，点击 ❌ 踢出对应的人，然后点击 “<i clas="fa fa-check"></i> Complete”，完成。截图：<%= image_tag "kick-01.jpg", width: "100%" %><%= image_tag "kick-02.jpg", width: "100%" %></p>
-    <h3>Pokrex 都用了哪些技术？</h3>
+    <h3 id="technology">Pokrex 都用了哪些技术？</h3>
     <p>
       <ul>
         <li>Rails</li>
@@ -34,7 +46,7 @@
         <li>FontAwesome</li>
       </ul>
     </p>
-    <h3>怎么进行反馈？</h3>
+    <h3 id="feedback">怎么进行反馈？</h3>
     <p>
       <ul>
         <li>点击右下角的蓝色反馈图标来和我交流。</li>
