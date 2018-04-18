@@ -76,7 +76,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'skylight'
+  gem 'skylight', '2.0.0.beta3'
   gem 'god'
 end
 
