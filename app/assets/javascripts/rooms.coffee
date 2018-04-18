@@ -75,10 +75,20 @@ class Rooms
       allowDuplicates: false
       freeInput: false
 
+    $('#room_moderator_ids').on 'itemAdded', (event) ->
+      tags = JSON.parse(localStorage.getItem('moderators')) || []
+      tags = tags.concat(event.item)
+      localStorage.setItem('moderators', JSON.stringify(tags))
+
     $roomModerators = $("#room-moderators")
     roomModerators = JSON.parse($roomModerators.val())
     $.each roomModerators, (index, user) ->
       $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
+
+    previousModerators = JSON.parse(localStorage.getItem('moderators'))
+    $.each previousModerators, (index, user) ->
+      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
+    localStorage.removeItem('moderators')
 
     el = document.getElementById('story-row')
     sortable = Sortable.create(el, {
@@ -90,7 +100,8 @@ class Rooms
       sort: true
     })
 
+
 $(document).on "ready", ->
-  $(".rooms.new, .rooms.edit").ready ->
+  $(".rooms.new, .rooms.edit, .rooms.create, .rooms.update").ready ->
     rooms = new Rooms
     rooms.init()
