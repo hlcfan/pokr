@@ -46,6 +46,7 @@ class RoomsController < ApplicationController
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
     respond_to do |format|
       if repo.save @room
+        remove_memorization_of_moderators
         format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -60,6 +61,7 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if repo.update_entity @room, room_params
+        remove_memorization_of_moderators
         broadcaster "rooms/#{@room.slug}",
           user_id: current_user.id,
           data: 'next-story',
@@ -136,6 +138,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def remove_memorization_of_moderators
+    cookies.delete :moderators
+  end
 
   def set_room
     @room = Room.find_by(slug: params[:id])
