@@ -76,19 +76,23 @@ class Rooms
       freeInput: false
 
     $('#room_moderator_ids').on 'itemAdded', (event) ->
-      tags = JSON.parse(localStorage.getItem('moderators')) || []
-      tags = tags.concat(event.item)
-      localStorage.setItem('moderators', JSON.stringify(tags))
+      tags = JSON.parse(Cookies.get('moderators') || null) || []
+      moderatorExistance = ($.grep tags, (item, index) -> item.name == event.item.name)
+      if !moderatorExistance.length
+        tags = tags.concat(event.item)
+        Cookies.set('moderators', JSON.stringify(tags))
+
+    $('#room_moderator_ids').on 'itemRemoved', (event) ->
+      tags = JSON.parse(Cookies.get('moderators') || null) || []
+      moderatorExistance = ($.grep tags, (item, index) -> item.name == event.item.name)
+      if moderatorExistance.length
+        tags = $.grep tags, (item) -> item.name != event.item.name
+        Cookies.set('moderators', JSON.stringify(tags))
 
     $roomModerators = $("#room-moderators")
     roomModerators = JSON.parse($roomModerators.val())
     $.each roomModerators, (index, user) ->
       $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
-
-    previousModerators = JSON.parse(localStorage.getItem('moderators'))
-    $.each previousModerators, (index, user) ->
-      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
-    localStorage.removeItem('moderators')
 
     el = document.getElementById('story-row')
     sortable = Sortable.create(el, {
@@ -100,8 +104,16 @@ class Rooms
       sort: true
     })
 
+  create_or_update: ->
+    previousModerators = JSON.parse(Cookies.get('moderators') || null)
+    $.each previousModerators, (index, user) ->
+      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
 
 $(document).on "ready", ->
   $(".rooms.new, .rooms.edit, .rooms.create, .rooms.update").ready ->
     rooms = new Rooms
     rooms.init()
+
+  $(".rooms.create, .rooms.update").ready ->
+    rooms = new Rooms
+    rooms.create_or_update()
