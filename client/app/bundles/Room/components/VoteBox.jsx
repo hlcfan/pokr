@@ -15,7 +15,6 @@ export default class VoteBox extends React.Component {
     return("draw" === this.props.roomState || window.syncResult)
   }
 
-
   onItemClick = (e) => {
     if (!this.buttonDisabled()) {
       let targetPoint = e.target.getAttribute("data-point")
