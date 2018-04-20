@@ -11,6 +11,7 @@ export default {
 
   showResultSection() {
     window.syncResult = true
+    EventEmitter.dispatch("refreshVoteBox")
     EventEmitter.dispatch("refreshUsers")
   }
 
