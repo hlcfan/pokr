@@ -11,8 +11,13 @@ export default class VoteBox extends React.Component {
     }
   }
 
+  buttonDisabled = () => {
+    return("draw" === this.props.roomState || window.syncResult)
+  }
+
+
   onItemClick = (e) => {
-    if ("draw" !== this.props.roomState) {
+    if (!this.buttonDisabled()) {
       let targetPoint = e.target.getAttribute("data-point")
       this.setState({currentVote: targetPoint})
       App.rooms.perform('vote', {
@@ -24,6 +29,10 @@ export default class VoteBox extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("refreshStories", () => {
+      this.setState({ currentVote: null })
+    })
+
+    EventEmitter.subscribe("refreshVoteBox", () => {
       this.setState({ currentVote: null })
     })
 
@@ -40,7 +49,7 @@ export default class VoteBox extends React.Component {
     const pointsList = this.props.pointValues.map(point => {
       const currentVoteClassName = this.state.currentVote === point ? 'btn-info' : ''
       const displayPoint = BarColors.emoji(point) || point
-      const buttonStatusClassName = ('draw' === this.props.roomState) && "disabled"
+      const buttonStatusClassName = this.buttonDisabled() && "disabled"
 
       return (
         <li key={point} className="col-sm-2">
