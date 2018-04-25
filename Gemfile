@@ -44,7 +44,7 @@ gem "webpacker"
 gem 'puma'
 gem 'redis-rails', '~> 5.0.2'
 gem 'sidekiq'
-gem 'mina-puma', '1.0.1', require: false
+gem 'mina-puma', '1.1.0', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'mina-sitemap_generator', :require => false
