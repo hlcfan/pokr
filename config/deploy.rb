@@ -143,9 +143,9 @@ namespace :god do
     command 'echo "------> Start God"'
     command %{
       cd #{fetch(:app_path)}
-      bundle exec god -c config/puma.god
-      bundle exec god -c config/sidekiq.god -p 17770
+      bundle exec god -c #{fetch(:app_path)}/config/sidekiq.god -p 17770
     }
+    # bundle exec god -c config/puma.god
     command 'echo "------> God started"'
   end
 
@@ -154,9 +154,9 @@ namespace :god do
     command 'echo "------> Stop God"'
     command %{
       cd #{fetch(:app_path)}
-      bundle exec god stop puma
       bundle exec god stop sidekiq
     }
+    # bundle exec god stop puma
     command 'echo "------> God stopped"'
   end
 end
