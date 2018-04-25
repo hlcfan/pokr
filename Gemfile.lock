@@ -5,6 +5,13 @@ GIT
     awesome_nested_fields (0.6.5)
       rails (> 3.0.0)
 
+GIT
+  remote: https://github.com/hlcfan/mina-sitemap_generator.git
+  revision: 66d5ad10b22c45d486d1443fa4d8cdca08326129
+  specs:
+    mina-sitemap_generator (0.0.3)
+      mina (~> 1.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -127,8 +134,6 @@ GEM
       puma (>= 2.13)
     mina-sidekiq (1.0.2)
       mina (>= 1.0.2)
-    mina-sitemap_generator (0.0.3)
-      mina (~> 1.2.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     mini_racer (0.1.14)
@@ -363,7 +368,7 @@ DEPENDENCIES
   marked-rails
   mina-puma (= 1.1.0)
   mina-sidekiq
-  mina-sitemap_generator
+  mina-sitemap_generator!
   mini_racer
   omniauth
   omniauth-facebook
