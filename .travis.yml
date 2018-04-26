@@ -1,7 +1,10 @@
 language: ruby
 env:
-  - USE_OFFICIAL_GEM_SOURCE=1
-  - COVERAGE=true
+  global:
+    - USE_OFFICIAL_GEM_SOURCE=1
+    - COVERAGE=true
+    - RAILS_ENV=test
+    - CXX=g++-4.9
 
 services:
   - postgresql
@@ -14,6 +17,13 @@ rvm:
 
 sudo: true
 dist: trusty
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
