@@ -43,7 +43,8 @@ before_script:
   - psql -d "travis_ci_test" -U postgres -c "create extension pg_trgm"
   - cp config/database.yml.template config/database.yml
   - rake db:migrate
+  - cd client && yarn run test && cd ..
 
-script: yarn run test
+script: rspec
 cache: bundler
 cache: yarn
