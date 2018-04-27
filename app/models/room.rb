@@ -26,8 +26,9 @@ class Room < ApplicationRecord
   DRAW = 2
   POINT_SCHEMES = {
     "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
-    "0-8" => %w(0 1 2 3 4 5 6 7 8 ? coffee),
-    "XS-XXL" => %w(XS S M L XL XXL ? coffee)
+    "0-8"       => %w(0 1 2 3 4 5 6 7 8 ? coffee),
+    "XS-XXL"    => %w(XS S M L XL XXL ? coffee),
+    "hours"     => %w(0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 ? coffee)
   }
 
   FREESTYLE = 1
