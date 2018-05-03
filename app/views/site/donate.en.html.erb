@@ -6,19 +6,45 @@
   <div class="col-xs-2 col-md-2"></div>
   <div class="col-xs-8 col-md-8 main">
     <h1>Thanks for your donation!</h1>
-    <ul>
-      <li>
+    <div class="row">
+      <div class="col-md-4">
         <h3>❤️<a href="https://www.paypal.me/hlcfan" target="_blank">Donate via Paypal</a></h3>
-      </li>
-      <li>
+        <a href="https://www.paypal.me/hlcfan" target="_blank"><%= image_tag "paypal.jpg", size: "200x200" %></a>
+      </div>
+      <div class="col-md-4">
         <h3>💚Wechat QR code</h3>
         <%= image_tag "wechat.jpg", size: "200x200" %>
-      </li>
-      <li>
+      </div>
+      <div class="col-md-4">
         <h3>💙Alipay QR code</h3>
         <%= image_tag "alipay.jpg", size: "200x200" %>
-      </li>
-    </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="line-spliter">
+        <span><b>👉Hall of Fame👈</b></span>
+      </div>
+      <table class="table table-triped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @donations.each_with_index do |donation, index| %>
+            <tr>
+              <th scope="row"><%= index %></th>
+              <td><%= donation[:name] %></td>
+              <td><%= donation[:amount] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="col-xs-2 col-md-2"></div>
 </div>

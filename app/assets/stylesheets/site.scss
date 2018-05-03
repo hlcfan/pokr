@@ -1,4 +1,5 @@
 $serifFont: Georgia, Times, "Times New Roman", serif;
+$openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 .about, .faq, .post, .donate {
   h1 {
@@ -26,4 +27,21 @@ $serifFont: Georgia, Times, "Times New Roman", serif;
 
 .post {
   min-height: 400px;
+}
+
+.donate {
+  font-family: $openSansFont;
+
+  h1, h3 {
+    font-family: $openSansFont;
+  }
+  .line-spliter {
+    span {
+      top: -20px;
+    }
+
+    b {
+      font-size: 28px;
+    }
+  }
 }
