@@ -32,7 +32,11 @@ export default class Board extends React.Component {
   }
 
   render() {
+    let totalPoints = 0;
     const dataNodes = this.state.data.map(story => {
+      if(!isNaN(story.point)) {
+        totalPoints += Number(story.point)
+      }
       const point = BarColors.emoji(story.point) || story.point;
       return (
         <tr key={story.id}>
@@ -57,6 +61,14 @@ export default class Board extends React.Component {
                     <tr><th>Story</th><th>Point</th></tr>
                     {dataNodes}
                   </tbody>
+                  {totalPoints > 0 &&
+                    <tfoot>
+                      <tr>
+                        <td>Total</td>
+                        <td>{totalPoints}</td>
+                      </tr>
+                    </tfoot>
+                  }
                 </table>
               </div>
               <div className="modal-footer">
