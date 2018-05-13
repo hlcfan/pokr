@@ -13,7 +13,8 @@ true, sz: 16)
     @room.stories.each do |story|
       total_point += story.point.to_f
       point_for_display = story.point == "null" ? "skipped" : story.point
-      sheet.add_row [story.link, point_for_display, story.desc], style: row_style
+      sheet.add_row ["#{story.link}          ", point_for_display, story.desc], style:
+row_style
     end
     if total_point > 0
       tfoot_style = style.add_style(bg_color: "777777", fg_color: "ffffff",

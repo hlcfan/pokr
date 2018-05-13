@@ -32,7 +32,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename='#{@room.name}.xlsx'"
+        response.headers['Content-Disposition'] = "attachment; filename='#{excel_filename}.xlsx'"
       }
     end
   end
@@ -145,6 +145,14 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def excel_filename
+    if @room.name.parameterize.blank?
+      @room.slug
+    else
+      @room.name
+    end
+  end
 
   def remove_memorization_of_moderators
     cookies.delete :moderators
