@@ -46,6 +46,15 @@ RSpec.describe RoomsController, type: :controller do
       get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
       expect(response.header["Content-Disposition"]).to eq("attachment; filename='room name.xlsx'")
     end
+
+    it "returns Excel file which named by slug if room name being non-sense if request format is xlsx" do
+      room = Room.create! valid_attributes.merge(name: "...", slug: "slug-here")
+      room.update(slug: "slug-here")
+      story = room.stories.first
+      get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
+      binding.pry
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename='slug-here.xlsx'")
+    end
   end
 
   describe "GET #new" do
