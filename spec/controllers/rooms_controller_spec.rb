@@ -52,7 +52,6 @@ RSpec.describe RoomsController, type: :controller do
       room.update(slug: "slug-here")
       story = room.stories.first
       get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
-      binding.pry
       expect(response.header["Content-Disposition"]).to eq("attachment; filename='slug-here.xlsx'")
     end
   end
