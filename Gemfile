@@ -51,8 +51,8 @@ gem 'mina-sitemap_generator', :require => false, git: "https://github.com/hlcfan
 gem 'mina-sidekiq', :require => false
 gem 'rqrcode'
 gem 'pg_search'
-gem 'rubyzip', '~> 1.1.0'
-gem 'axlsx', '2.1.0.pre'
+gem 'rubyzip', '~> 1.2.1'
+gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }
