@@ -28,6 +28,13 @@ class RoomsController < ApplicationController
   # GET /rooms/1.json
   def show
     cookies[:room_id] = @room.slug
+
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename='#{@room.name}.xlsx'"
+      }
+    end
   end
 
   # GET /rooms/new

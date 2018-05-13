@@ -39,6 +39,13 @@ RSpec.describe RoomsController, type: :controller do
       get :show, params: {:id => room.slug}, session: valid_session
       expect(response).to redirect_to screen_room_path(room.slug)
     end
+
+    it "returns Excel file if request format is xlsx" do
+      room = Room.create! valid_attributes
+      story = room.stories.first
+      get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename='room name.xlsx'")
+    end
   end
 
   describe "GET #new" do

@@ -55,6 +55,13 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
+    axlsx (2.1.0.pre)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.1.7)
+    axlsx_rails (0.5.2)
+      actionpack (>= 3.1)
+      axlsx (>= 2.0.1)
     bcrypt (3.1.11)
     builder (3.2.3)
     chronic (0.10.2)
@@ -96,6 +103,7 @@ GEM
       activesupport (>= 4.2.0)
     god (0.13.7)
     hashie (3.5.6)
+    htmlentities (4.3.4)
     http_accept_language (2.1.1)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
@@ -291,6 +299,7 @@ GEM
     rspec-support (3.6.0)
     ruby-pinyin (0.5.0)
       rmmseg-cpp-new (~> 0.3.1)
+    rubyzip (1.1.7)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -354,6 +363,8 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_nested_fields!
+  axlsx (= 2.1.0.pre)
+  axlsx_rails
   codecov
   coffee-rails (~> 4.2.1)
   devise
@@ -392,6 +403,7 @@ DEPENDENCIES
   rqrcode
   rspec-rails (~> 3.6)
   ruby-pinyin
+  rubyzip (~> 1.1.0)
   sass-rails (~> 5.0)
   sidekiq
   sitemap_generator

@@ -73,6 +73,7 @@ export default class Board extends React.Component {
               </div>
               <div className="modal-footer">
                 <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
+                <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
