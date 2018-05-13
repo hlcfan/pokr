@@ -2,6 +2,45 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.15] - 2018-05-13
+### Added
+- Show total points in Board modal [#209](https://github.com/hlcfan/pokr/pull/209)
+- Allow user to download grooming report as Excel file [#210](https://github.com/hlcfan/pokr/pull/210)
+
+## [0.9.14] - 2018-05-03
+### Added
+- Hall of Fame for the one who donates [#207](https://github.com/hlcfan/pokr/pull/207)
+
+## [0.9.13] - 2018-05-02
+### Added
+- Keep showing tip in Action Panel unless user dismiss it [1855677](https://github.com/hlcfan/pokr/commit/185567704db4a58ba2fa71a76025d56bf242501d)
+
+## [0.9.12] - 2018-04-27
+### Added
+- Introduce hour based point scheme [07f8f5f](https://github.com/hlcfan/pokr/commit/07f8f5f5c158f5605f0b8f09faa62a8aaeb442d8)
+
+## [0.9.11] - 2018-04-25
+### Changed
+- Switch Ruby to 2.5 [#199](https://github.com/hlcfan/pokr/pull/199)
+
+## [0.9.10] - 2018-04-24
+### Changed
+- Replace sign up form with sign in form in screen page [#204](https://github.com/hlcfan/pokr/pull/204)
+
+## [0.9.9] - 2018-04-20
+### Changed
+- Fix issue [#200](https://github.com/hlcfan/pokr/issues/200)
+  [7c72eea](https://github.com/hlcfan/pokr/commit/7c72eea919c5aa74a0c7aa50fa29318e869e6c3e)
+[ed7558a](https://github.com/hlcfan/pokr/commit/ed7558a393d9c4bda99ee72a36812c314fed5776)
+
+## [0.9.8] - 2018-04-07
+### Changed
+- Better FAQ page [#198](https://github.com/hlcfan/pokr/pull/198)
+
+## [0.9.7] - 2018-04-01
+### Changed
+- Revert ads on right rail on dashboard page [#197](https://github.com/hlcfan/pokr/pull/197)
+
 ## [0.9.6] - 2018-03-29
 ### Added
 - Add new post [Ads](https://pokrex.com/posts/ads) [a964773d7906d9d093ff230f95ea24fa9c7dd318](https://github.com/hlcfan/pokr/commit/a964773d7906d9d093ff230f95ea24fa9c7dd318)
