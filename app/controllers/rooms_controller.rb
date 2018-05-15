@@ -32,7 +32,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename='#{excel_filename}.xlsx'"
+        response.headers['Content-Disposition'] = "attachment; filename=#{excel_filename}.xlsx"
       }
     end
   end
@@ -125,7 +125,7 @@ class RoomsController < ApplicationController
     emails = params[:emails].select { |email| email =~ User::VALID_EMAIL_REGEX }
     emails.each do |email_address|
       RoomInvitationMailer.invite(
-        from_email: current_user.email, 
+        from_email: current_user.email,
         from_name: current_user.display_name,
         to: email_address,
         room_name: @room.name,
