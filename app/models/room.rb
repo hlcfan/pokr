@@ -71,7 +71,7 @@ class Room < ApplicationRecord
     users.each do |user|
       users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
     end
-    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys)
+    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys).order("id ASC")
     user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
     user_story_points.each do |user_story_point|
       user_story_points_hash[user_story_point.story_id] << {
