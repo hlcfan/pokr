@@ -165,6 +165,10 @@
 #actionBox li.row {
   .bar {
     cursor: pointer;
+
+    > div {
+      box-shadow: 2px 1px 1px 0px rgba(0,0,0,.6)
+    }
   }
 
   .bar div:hover {
@@ -172,8 +176,19 @@
   }
 }
 
-#actionBox .openButton > div {
-  padding: 10px;
+#actionBox .openButton {
+  border-top: 1px solid #ddd;
+  margin-bottom: -10px;
+
+  a {
+    text-decoration: underline;
+    color: #46b8da;
+  }
+
+  > div {
+    text-align: center;
+    padding: 10px;
+  }
 }
 
 .room .room--share-link {

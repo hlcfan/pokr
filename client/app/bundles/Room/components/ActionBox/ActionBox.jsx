@@ -148,11 +148,12 @@ export default class ActionBox extends React.Component {
     buttonHtml = ((() => {
       if (onClickName && buttonText && buttonCount > 1) {
         return (
-          <div className="btn-group btn-group-lg btn-group-justified" role="group">
-            <a onClick={onClickName} className="btn btn-default btn-lg btn-info" href="javascript:;" role="button">
+          <div className="row" role="group" style={{textAlign: "center"}}>
+            <a onClick={onClickName} className="col-md-5" href="javascript:;" role="button">
               {buttonText}
             </a>
-            <a onClick={secondOnClickName} className="btn btn-default btn-lg btn-info" href="javascript:;" role="button">
+          <span className="col-md-2"></span>
+            <a onClick={secondOnClickName} className="col-md-5" href="javascript:;" role="button">
               {secondButtonText}
             </a>
           </div>
@@ -203,6 +204,9 @@ export default class ActionBox extends React.Component {
       }
     }
 
+    let showOpenButton = () => {
+      return this.state.roomState === "open" ? "openButton" : ""
+    }
     return (
       <div className="panel panel-default" id="action-box">
         <div className="panel-heading">
@@ -210,12 +214,15 @@ export default class ActionBox extends React.Component {
           {icon()}
         </div>
         <div className="panel-body row">
-          <div id="actionBox" className="row">
+          <div id="actionBox">
             { this.state.roomState === 'open' && tip }
             <ResultPanel roomId={this.props.roomId} role={this.props.role} storyId={this.props.storyId} />
-            <div className="openButton container-fluid">
-              {buttonHtml}
-            </div>
+            {
+              this.props.role === "Moderator" &&
+                <div className={`${showOpenButton()} container-fluid`}>
+                  {buttonHtml}
+                </div>
+            }
           </div>
         </div>
       </div>
