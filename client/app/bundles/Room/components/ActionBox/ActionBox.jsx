@@ -207,10 +207,11 @@ export default class ActionBox extends React.Component {
     let showOpenButton = () => {
       return this.state.roomState === "open" ? "openButton" : ""
     }
+
     return (
       <div className="panel panel-default" id="action-box">
         <div className="panel-heading">
-          Action
+          { this.props.role === "Moderator" ? "Action" : "Result" }
           {icon()}
         </div>
         <div className="panel-body row">
