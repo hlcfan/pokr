@@ -148,7 +148,7 @@ export default class ActionBox extends React.Component {
     buttonHtml = ((() => {
       if (onClickName && buttonText && buttonCount > 1) {
         return (
-          <div className="row" role="group" style={{textAlign: "center"}}>
+          <div className="row" role="group">
             <a onClick={onClickName} className="col-md-5" href="javascript:;" role="button">
               {buttonText}
             </a>
@@ -176,7 +176,7 @@ export default class ActionBox extends React.Component {
           <div className="container-fluid" style={{clear: 'both', width: '90%'}}>
             <div className="alert alert-success alert-dismissible" role="alert">
               <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismissTip}><span aria-hidden="true">&times;</span></button>
-              <strong>Tip!</strong> Click on the colorful bar below to decide the point.
+              Tip: click on the <b>colorful bar</b> below to decide the point.
             </div>
           </div>
         )
