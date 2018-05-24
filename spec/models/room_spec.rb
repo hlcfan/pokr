@@ -164,7 +164,7 @@ RSpec.describe Room, type: :model do
     let!(:story_3) { Story.create(link: "link_3", room_id: 1, point: 3) }
 
     it "returns stories grouped by whether it has point or not" do
-      sleep 1
+      sleep 0.1
       story_2.touch
       room.id = 1
       expect(room.grouped_stories.size).to eq 2
@@ -181,7 +181,7 @@ RSpec.describe Room, type: :model do
   #   it "returns time duration" do
   #     room.id = 1
   #     UserStoryPoint.create(user_id: 1, story_id: story_1.id, points: 1)
-  #     sleep 1
+  #     sleep 0.1
   #     UserStoryPoint.create(user_id: 1, story_id: story_2.id, points: 3)
   #     expect(room.time_duration).to eq 1.0
   #   end
@@ -205,7 +205,7 @@ RSpec.describe Room, type: :model do
         user2 = User.create(email: 'b@b.com', password: 'password')
         room = Room.create(name: 'test slug')
         UserRoom.create(user_id: user2.id, room_id: room.id)
-        sleep 1
+        sleep 0.1
         UserRoom.create(user_id: user1.id, room_id: room.id)
         story = Story.create(link: "link_1", room_id: room.id)
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
@@ -222,7 +222,7 @@ RSpec.describe Room, type: :model do
         user2 = User.create(email: 'b@b.com', password: 'password')
         room = Room.create(name: 'test slug')
         UserRoom.create(user_id: user2.id, room_id: room.id)
-        sleep 1
+        sleep 0.1
         UserRoom.create(user_id: user1.id, room_id: room.id)
         story = Story.create(link: "link_1", room_id: room.id)
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
@@ -251,7 +251,7 @@ RSpec.describe Room, type: :model do
       room = Room.create(name: 'test slug')
       UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
       UserRoom.create(user_id: watcher.id, room_id: room.id, role: 2)
-      sleep 1
+      sleep 0.1
       UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
 
       expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id, watcher.id])

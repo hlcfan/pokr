@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.4'
+gem 'rails', '~> 5.2.0'
 
 gem 'pg'
 
@@ -42,7 +42,6 @@ gem 'jbuilder', '~> 2.0'
 gem "react_on_rails", "~> 10"
 gem "webpacker"
 gem 'puma'
-gem 'redis-rails', '~> 5.0.2'
 gem 'sidekiq'
 gem 'mina-puma', '1.1.0', require: false
 gem 'sitemap_generator'
