@@ -61,6 +61,8 @@ module Guest
     end
     user.save!(:validate => false)
     session[:guest_user_id] = user.id
+    binding.pry
+    cookies.signed[:user_id] = user.id
 
     user
   end

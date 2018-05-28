@@ -1,3 +1,10 @@
+<script>
+  function trigger() {
+    if(isElectron()) {
+    window.Bridge.updateIssue("ACOM-7823", 13);
+    }
+  }
+</script>
 <nav class="navbar navbar-default">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,7 +20,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/donate" target="_blank">❤️Donate</a></li>
+        <li><a href="javascript:trigger();" target="_blank">❤️Donate</a></li>
         <% unless current_user %>
           <li><a href="<%= new_user_session_path %>">Sign in</a></li>
           <li><a class="vertical-spliter">|</a></li>

@@ -30,6 +30,7 @@ RSpec.describe Guest do
 
     it "returns guest user if no user logged in" do
       allow(ccontroller).to receive(:session) { {} }
+      # allow(ccontroller).to receive(:cookies) { {} }
       allow(ccontroller).to receive(:params) { { username: "Bob" } }
       allow(ccontroller).to receive(:current_user) { nil }
       expect(ccontroller.current_or_guest_user.email).not_to be_nil
@@ -37,6 +38,7 @@ RSpec.describe Guest do
 
     it "returns guest user if user inputs email" do
       allow(ccontroller).to receive(:session) { {}  }
+      # allow(ccontroller).to receive(:cookies) { {} }
       allow(ccontroller).to receive(:params) { {username: "email@email.com"} }
       allow(ccontroller).to receive(:current_user) { nil }
       ccontroller.current_or_guest_user
