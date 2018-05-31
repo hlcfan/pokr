@@ -4,6 +4,8 @@ import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 
+import css from './index.scss'
+
 export default class StoryListBox extends React.Component {
 
   state = {
@@ -62,10 +64,15 @@ export default class StoryListBox extends React.Component {
   }
 
   render() {
-    const defaultArray = [];
+    const defaultArray = []
     return (
       <div className="panel panel-default" id="stories">
-        <div className="panel-heading">Stories</div>
+        <div className="panel-heading">
+          Stories
+          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;">
+            <i className="fa fa-upload"></i> Sync
+          </a>
+        </div>
         <div id="storyListArea" className="panel-body row">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active">
