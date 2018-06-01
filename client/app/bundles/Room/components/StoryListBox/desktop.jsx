@@ -42,6 +42,12 @@ export default class StoryListBox extends React.Component {
     this.props.onNoStoryLeft()
   }
 
+  sync = () => {
+    if(isElectron()) {
+      window.Bridge.updateIssue("ACOM-7823", 13);
+    }
+  }
+
   componentDidMount() {
     this.loadStoryListFromServer()
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
@@ -69,7 +75,7 @@ export default class StoryListBox extends React.Component {
       <div className="panel panel-default" id="stories">
         <div className="panel-heading">
           Stories
-          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;">
+          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
             <i className="fa fa-upload"></i> Sync
           </a>
         </div>
