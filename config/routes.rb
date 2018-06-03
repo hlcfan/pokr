@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post :timing
       get :screen
       post :screen
+      post :sync_status
     end
   end
 

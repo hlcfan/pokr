@@ -17,7 +17,7 @@ export default {
       connected: function(){
       },
       received: function(data) {
-        // console.dir(data)
+        console.dir(data)
         if (data.type === 'action') {
           if (data.data === 'open') {
             RoomActions.showResultSection()
@@ -51,8 +51,9 @@ export default {
         } else if(data.type === "evictUser") {
           EventEmitter.dispatch("evictUser", data.data.userId)
           EventEmitter.dispatch("refreshUsers")
+        } else if(data.type === "sync") {
+          alert("test")
         } else {
-
         }
       }
     })
