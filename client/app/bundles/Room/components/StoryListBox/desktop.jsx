@@ -44,7 +44,15 @@ export default class StoryListBox extends React.Component {
 
   sync = () => {
     if(isElectron()) {
-      window.Bridge.updateIssue("ACOM-7823", 13);
+      window.Bridge.updateIssue({
+        roomId: this.props.roomId,
+        link: "http://localhost:8080/rest/api/2/issue/POK-3",
+        point: 14,
+        auth: {
+          username: "hlcfan",
+          password: "123456"
+        }
+      });
     }
   }
 
