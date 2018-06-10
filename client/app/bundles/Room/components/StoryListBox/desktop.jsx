@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
-import SynkCredential from './SynkCredential'
+import Synk from '../Synk/index'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 import Helper from 'libs/helper'
@@ -121,7 +121,7 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
-        <SynkCredential />
+        <Synk />
       </div>
     )
   }

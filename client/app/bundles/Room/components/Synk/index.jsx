@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default class SynkCredential extends React.Component {
+export default class Synk extends React.Component {
 
   state = {
     username: "",
@@ -59,7 +59,7 @@ export default class SynkCredential extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title">Jira credentials</h4>
+                <h4 className="modal-title">Sync to Jira</h4>
               </div>
               <div className="modal-body">
                 <form>
