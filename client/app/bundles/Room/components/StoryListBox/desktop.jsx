@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
+import SynkCredential from './SynkCredential'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 import Helper from 'libs/helper'
@@ -43,31 +44,37 @@ export default class StoryListBox extends React.Component {
     this.props.onNoStoryLeft()
   }
 
+  isJiraAccountSetup = () => {
+    return !$.isEmptyObject(Cookies.get("jira_username")) &&
+      !$.isEmptyObject(Cookies.get("jira_pw"))
+  }
+
   sync = () => {
-    if(isElectron()) {
-      this.state.data.groomed.forEach((ticket) => {
-        // alert(`Ticket: ${ticket.point}`)
-        window.Bridge.updateIssue({
-          roomId: this.props.roomId,
-          link: Helper.jiraTicketUrlForApi(ticket.link),
-          point: ticket.point,
-          auth: {
-            username: "hlcfan",
-            password: "123456"
-          }
+    // if(isElectron()) {
+      // alert(this.isJiraAccountSetup())
+      if(this.isJiraAccountSetup()) {
+        this.state.data.groomed.forEach((ticket) => {
+          // alert(`Ticket: ${ticket.point}`)
+          window.Bridge.updateIssue({
+            roomId: this.props.roomId,
+            link: Helper.jiraTicketUrlForApi(ticket.link),
+            point: ticket.point,
+            field: "customfield_10200",
+            auth: {
+              username: "hlcfan",
+              password: "123456"
+            }
+          })
         })
-      })
-    }
+      } else {
+        $('#synk-credential .modal').modal({keyboard: false, backdrop: 'static'})
+      }
+    // }
   }
 
   componentDidMount() {
     this.loadStoryListFromServer()
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
-    // EventEmitter.subscribe("sync", (data) => {
-    //   // this.setState([...data])
-    //   this.state.find( ticket => ticket.link === data.link )
-    //   alert(`${data.link} is successfully updated to ${data.point}`)
-    // })
 
     this.props.addSteps({
       title: 'Stories',
@@ -114,6 +121,7 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
+        <SynkCredential />
       </div>
     )
   }
