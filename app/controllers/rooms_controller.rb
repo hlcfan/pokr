@@ -146,8 +146,10 @@ class RoomsController < ApplicationController
   end
 
   def sync_status
+    # binding.pry
     broadcaster "rooms/#{@room.slug}",
-      type: 'sync'
+      type: 'sync',
+      data: {link: params[:link], point: params[:point]}
 
     head :ok
   end
