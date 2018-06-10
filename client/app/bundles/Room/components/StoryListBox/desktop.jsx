@@ -3,6 +3,7 @@ import React from 'react'
 import StoryList from '../StoryList'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
+import Helper from 'libs/helper'
 
 import css from './index.scss'
 
@@ -44,21 +45,29 @@ export default class StoryListBox extends React.Component {
 
   sync = () => {
     if(isElectron()) {
-      window.Bridge.updateIssue({
-        roomId: this.props.roomId,
-        link: "http://localhost:8080/rest/api/2/issue/POK-3",
-        point: 14,
-        auth: {
-          username: "hlcfan",
-          password: "123456"
-        }
-      });
+      this.state.data.groomed.forEach((ticket) => {
+        // alert(`Ticket: ${ticket.point}`)
+        window.Bridge.updateIssue({
+          roomId: this.props.roomId,
+          link: Helper.jiraTicketUrlForApi(ticket.link),
+          point: ticket.point,
+          auth: {
+            username: "hlcfan",
+            password: "123456"
+          }
+        })
+      })
     }
   }
 
   componentDidMount() {
     this.loadStoryListFromServer()
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
+    // EventEmitter.subscribe("sync", (data) => {
+    //   // this.setState([...data])
+    //   this.state.find( ticket => ticket.link === data.link )
+    //   alert(`${data.link} is successfully updated to ${data.point}`)
+    // })
 
     this.props.addSteps({
       title: 'Stories',

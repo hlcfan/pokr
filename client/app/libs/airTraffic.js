@@ -52,7 +52,8 @@ export default {
           EventEmitter.dispatch("evictUser", data.data.userId)
           EventEmitter.dispatch("refreshUsers")
         } else if(data.type === "sync") {
-          alert("test")
+          // alert(data.data.link)
+          EventEmitter.dispatch("ticketSynked", data.data)
         } else {
         }
       }
