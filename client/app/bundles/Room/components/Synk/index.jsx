@@ -76,7 +76,10 @@ export default class Synk extends React.Component {
     const defaultPassword = Cookies.get("jira_password")
     const tickets = this.props.tickets.map((ticket, index) => {
       return(
-        <tr key={ticket.link}><td>{ticket.link}</td><td>{ticket.synked ? "Synked" : "Not synked"}</td></tr>
+        <tr key={ticket.link}>
+          <td>{ticket.link}</td>
+          <td>{ticket.synked ? <i className='fa fa-check'></i> : "Not sync"}</td>
+        </tr>
       )
     })
 
