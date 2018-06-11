@@ -4,7 +4,6 @@ import StoryList from '../StoryList'
 import Synk from '../Synk/index'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
-import Helper from 'libs/helper'
 
 import css from './index.scss'
 
@@ -44,31 +43,9 @@ export default class StoryListBox extends React.Component {
     this.props.onNoStoryLeft()
   }
 
-  isJiraAccountSetup = () => {
-    return !$.isEmptyObject(Cookies.get("jira_username")) &&
-      !$.isEmptyObject(Cookies.get("jira_pw"))
-  }
-
   sync = () => {
     // if(isElectron()) {
-      // alert(this.isJiraAccountSetup())
-      if(this.isJiraAccountSetup()) {
-        this.state.data.groomed.forEach((ticket) => {
-          // alert(`Ticket: ${ticket.point}`)
-          window.Bridge.updateIssue({
-            roomId: this.props.roomId,
-            link: Helper.jiraTicketUrlForApi(ticket.link),
-            point: ticket.point,
-            field: "customfield_10200",
-            auth: {
-              username: "hlcfan",
-              password: "123456"
-            }
-          })
-        })
-      } else {
-        $('#synk-credential .modal').modal({keyboard: false, backdrop: 'static'})
-      }
+    $('#synk-credential .modal').modal({keyboard: false, backdrop: 'static'})
     // }
   }
 
@@ -121,7 +98,7 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
-        <Synk />
+        <Synk roomId={this.props.roomId} tickets={this.state.data.groomed || []} />
       </div>
     )
   }

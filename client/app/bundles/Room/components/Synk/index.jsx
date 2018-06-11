@@ -1,14 +1,41 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import EventEmitter from 'libs/eventEmitter'
+import Helper from 'libs/helper'
 
 export default class Synk extends React.Component {
 
-  state = {
-    username: "",
-    password: ""
+  componentWillReceiveProps = (nextProps) => {
+    let tickets = {}
+    nextProps.tickets.forEach(ticket => {
+      tickets[ticket.link] = ticket
+    })
+    console.dir(nextProps.tickets)
+    this.state = {
+      tickets: tickets
+    }
+  }
+
+  ticketSynked = (data) => {
+    // alert(`${data.link}===${this.props.link}`)
+    // alert(Helper.jiraTicketUrlForClient(data.link))
+    const ticketClientUrl = Helper.jiraTicketUrlForClient(data.link)
+    let newTickets = this.state.tickets
+    // alert("first key" + Object.keys(newTickets)[0])
+    let theTicket = newTickets[ticketClientUrl]
+    theTicket["synked"] = true
+    let newState = {
+      tickets: newTickets
+    }
+    // alert(`new: ${newState}`)
+    this.setState(newState)
+    // if(Helper.jiraTicketUrlForClient(data.link) === this.props.link) {
+    //   this.setState({synked: true})
+    // }
   }
 
   componentDidMount() {
+    EventEmitter.subscribe("ticketSynked", this.ticketSynked)
     $('#synk-credential .modal').on('hidden.bs.modal', (e) => {
       // this.setState({
       //   username: "",
@@ -17,40 +44,41 @@ export default class Synk extends React.Component {
     })
   }
 
-  handleUsernameChange = (event) => {
-    const username = event.target.value
-
-    this.setState(prevState => {
-      return {
-        username: username,
-        password: prevState.password
-      }
-    })
-  }
-
-  handlePasswordChange = (event) => {
-    const password = event.target.value
-
-    this.setState(prevState => {
-      return {
-        username: prevState.username,
-        password: password
-      }
-    })
+  isJiraAccountSetup = () => {
+    return !$.isEmptyObject(Cookies.get("jira_username")) &&
+      !$.isEmptyObject(Cookies.get("jira_password"))
   }
 
   saveCredential = () => {
-    if(this.state.username.length && this.state.password.length) {
+    if(this.usernameInput.value.length && this.passwordInput.value.length) {
       // TODO: Encrypt password at local
-      Cookies.set("jira_username", this.state.username)
-      Cookies.set("jira_password", this.state.password)
-      $("#synk-credential .modal").modal("hide")
+      Cookies.set("jira_username", this.usernameInput.value)
+      Cookies.set("jira_password", this.passwordInput.value)
+      // $("#synk-credential .modal").modal("hide")
+      this.props.tickets.forEach((ticket) => {
+        // alert(`Ticket: ${Helper.jiraTicketUrlForApi(ticket.link)}`)
+        window.Bridge.updateIssue({
+          roomId: this.props.roomId,
+          link: Helper.jiraTicketUrlForApi(ticket.link),
+          point: ticket.point,
+          field: "customfield_10200",
+          auth: {
+            username: this.usernameInput.value,
+            password: this.passwordInput.value
+          }
+        })
+      })
     }
   }
 
   render() {
-    const defaultUsername = Cookies.get("jira_username") || this.state.username
-    const defaultPassword = Cookies.get("jira_password") || this.state.password
+    const defaultUsername = Cookies.get("jira_username")
+    const defaultPassword = Cookies.get("jira_password")
+    const tickets = this.props.tickets.map((ticket, index) => {
+      return(
+        <tr key={ticket.link}><td>{ticket.link}</td><td>{ticket.synked ? "Synked" : "Not synked"}</td></tr>
+      )
+    })
 
     return(
       <div id="synk-credential" className="synk-credential">
@@ -62,27 +90,40 @@ export default class Synk extends React.Component {
                 <h4 className="modal-title">Sync to Jira</h4>
               </div>
               <div className="modal-body">
-                <form>
-                  <div className="alert alert-info" role="alert">We won't store your credential at server side. Instead, it's stored in your browser cookies.</div>
-                  <div className="form-group">
-                    <label htmlFor="credential-username">Username</label>
-                    <input type="text"
-                      id="credential-username"
-                      className="form-control"
-                      placeholder="Username"
-                      defaultValue={defaultUsername}
-                      onBlur={this.handleUsernameChange} />
+                <div className="alert alert-info" role="alert">We won't store your credential at server side. Instead, it's stored in your browser cookies.</div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <form>
+                      <div className="form-group">
+                        <label htmlFor="credential-username">Username</label>
+                        <input type="text"
+                          ref={c => this.usernameInput = c}
+                          id="credential-username"
+                          className="form-control"
+                          placeholder="Username"
+                          defaultValue={defaultUsername} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="credential-password">Password</label>
+                        <input type="text"
+                          ref={c => this.passwordInput = c}
+                          className="form-control"
+                          id="credential-password"
+                          placeholder="Password"
+                          defaultValue={defaultPassword} />
+                      </div>
+                      <button type="button" className="btn btn-default" onClick={this.saveCredential}>Sync</button>
+                    </form>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="credential-password">Password</label>
-                    <input type="text"
-                      className="form-control"
-                      id="credential-password"
-                      placeholder="Password"
-                      defaultValue={defaultPassword}
-                      onBlur={this.handlePasswordChange} />
+                  <div className="col-md-8">
+                    <table className="table">
+                      <thead><tr><th>Ticket</th><th>Sync status</th></tr></thead>
+                      <tbody>
+                        {tickets}
+                      </tbody>
+                    </table>
                   </div>
-                </form>
+                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

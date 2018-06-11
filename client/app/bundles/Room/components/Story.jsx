@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
-import EventEmitter from 'libs/eventEmitter'
 import Helper from 'libs/helper'
 
 export default class Story extends React.Component {
@@ -18,25 +17,10 @@ export default class Story extends React.Component {
     }
   }
 
-  ticketSynked = (data) => {
-    // alert(`${data.link}===${this.props.link}`)
-    // alert(Helper.jiraTicketUrlForApi(data.link))
-    if(Helper.jiraTicketUrlForClient(data.link) === this.props.link) {
-      this.setState({synked: true})
-      console.log(`${this.props.link} is updated ===`)
-    }
-  }
-
-  componentDidMount() {
-    EventEmitter.subscribe("ticketSynked", this.ticketSynked)
-  }
-
   render() {
     const that = this;
     let revoteIcon;
     let liElementClass;
-    let aa = Helper.jiraTicketUrlForApi(this.props.link)
-    console.log(`A: ${aa}`)
     revoteIcon = (() => {
       if (this.props.role === 'Moderator' && that.props.tab === "groomed" && this.props.roomState !== "draw") {
         return(
