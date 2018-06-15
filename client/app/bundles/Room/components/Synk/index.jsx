@@ -52,16 +52,19 @@ export default class Synk extends React.Component {
   saveCredential = () => {
     if(this.usernameInput.value.length && this.passwordInput.value.length) {
       // TODO: Encrypt password at local
-      Cookies.set("jira_username", this.usernameInput.value)
-      Cookies.set("jira_password", this.passwordInput.value)
+      Cookies.set("jira_username", this.usernameInput.value, { expires: 7 })
+      Cookies.set("jira_password", this.passwordInput.value, { expires: 7 })
+      Cookies.set("jira_field", this.fieldInput.value, { expires: 7 })
       // $("#synk-credential .modal").modal("hide")
       this.props.tickets.forEach((ticket) => {
         // alert(`Ticket: ${Helper.jiraTicketUrlForApi(ticket.link)}`)
+        // alert(ticket.point)
+        let ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
         window.Bridge.updateIssue({
           roomId: this.props.roomId,
           link: Helper.jiraTicketUrlForApi(ticket.link),
-          point: ticket.point,
-          field: "customfield_10200",
+          point: ticketPoint,
+          field: this.fieldInput.value,
           auth: {
             username: this.usernameInput.value,
             password: this.passwordInput.value
@@ -74,6 +77,7 @@ export default class Synk extends React.Component {
   render() {
     const defaultUsername = Cookies.get("jira_username")
     const defaultPassword = Cookies.get("jira_password")
+    const defaultField = Cookies.get("jira_field")
     const tickets = this.props.tickets.map((ticket, index) => {
       return(
         <tr key={ticket.link}>
@@ -114,6 +118,15 @@ export default class Synk extends React.Component {
                           id="credential-password"
                           placeholder="Password"
                           defaultValue={defaultPassword} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="credential-field">Field</label>
+                        <input type="text"
+                          ref={c => this.fieldInput = c}
+                          className="form-control"
+                          id="credential-field"
+                          placeholder="Field to update"
+                          defaultValue={defaultField} />
                       </div>
                       <button type="button" className="btn btn-default" onClick={this.saveCredential}>Sync</button>
                     </form>
