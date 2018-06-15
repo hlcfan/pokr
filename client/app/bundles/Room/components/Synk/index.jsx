@@ -65,6 +65,7 @@ export default class Synk extends React.Component {
           link: Helper.jiraTicketUrlForApi(ticket.link),
           point: ticketPoint,
           field: this.fieldInput.value,
+          fieldListUrl: `${Helper.jiraHostFromUrl(ticket.link)}/rest/api/2/field`,
           auth: {
             username: this.usernameInput.value,
             password: this.passwordInput.value

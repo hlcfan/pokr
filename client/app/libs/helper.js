@@ -26,5 +26,11 @@ export default {
     anchorTag.href = apiUrl
     const [, ticketId] = /\/rest\/api\/2\/issue\/(.*)/.exec(anchorTag.pathname)
     return `${anchorTag.origin}/browse/${ticketId}`
+  },
+
+  jiraHostFromUrl(url) {
+    const anchorTag = document.createElement("a")
+    anchorTag.href = url
+    return anchorTag.origin
   }
 }
