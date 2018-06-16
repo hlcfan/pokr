@@ -6,11 +6,7 @@ import ActionCable from 'actioncable'
 window.App = {}
 
 export default {
-  setupChannelSubscription(roomId, roomState) {
-    if (roomState === "draw") {
-      return false
-    }
-
+  setupChannelSubscription(roomId) {
     App.cable = ActionCable.createConsumer()
 
     App.rooms = App.cable.subscriptions.create({channel: 'RoomsChannel', room: roomId}, {
@@ -52,7 +48,6 @@ export default {
           EventEmitter.dispatch("evictUser", data.data.userId)
           EventEmitter.dispatch("refreshUsers")
         } else if(data.type === "sync") {
-          // alert(data.data.link)
           EventEmitter.dispatch("ticketSynked", data.data)
         } else {
         }
