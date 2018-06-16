@@ -17,7 +17,6 @@ export default class Synk extends React.Component {
   }
 
   ticketSynked = (data) => {
-    // alert(`${data.link}===${this.props.link}`)
     // alert(Helper.jiraTicketUrlForClient(data.link))
     const ticketClientUrl = Helper.jiraTicketUrlForClient(data.link)
     let newTickets = this.state.tickets
@@ -58,7 +57,7 @@ export default class Synk extends React.Component {
       // $("#synk-credential .modal").modal("hide")
       this.props.tickets.forEach((ticket) => {
         // alert(`Ticket: ${Helper.jiraTicketUrlForApi(ticket.link)}`)
-        // alert(ticket.point)
+        // alert(isNaN(ticket.point))
         let ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
         window.Bridge.updateIssue({
           roomId: this.props.roomId,

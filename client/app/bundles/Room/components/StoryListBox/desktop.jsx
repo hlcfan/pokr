@@ -44,9 +44,7 @@ export default class StoryListBox extends React.Component {
   }
 
   sync = () => {
-    // if(isElectron()) {
-    $('#synk-credential .modal').modal({keyboard: false, backdrop: 'static'})
-    // }
+    $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
   }
 
   componentDidMount() {
@@ -72,13 +70,21 @@ export default class StoryListBox extends React.Component {
 
   render() {
     const defaultArray = []
+    const syncLink = (() => {
+      if (isElectron()) {
+        return(
+          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
+            <i className="fa fa-upload"></i> Sync
+          </a>
+        )
+      }
+    })()
+
     return (
       <div className="panel panel-default" id="stories">
         <div className="panel-heading">
           Stories
-          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
-            <i className="fa fa-upload"></i> Sync
-          </a>
+          {syncLink}
         </div>
         <div id="storyListArea" className="panel-body row">
           <ul className="nav nav-tabs" role="tablist">
