@@ -375,4 +375,14 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to redirect_to new_user_session_path
     end
   end
+
+  describe "#sync_status" do
+    it "broadcast data" do
+      room = Room.create! valid_attributes
+
+      expect(controller).to receive(:broadcaster).once.with("rooms/room-name", {:type=>"sync", :data=>{:link=>"link", :point=>"13"}})
+      post :sync_status, params: {id: room.slug, link: "link", point: 13}
+      expect(response.status).to eq 200
+    end
+  end
 end
