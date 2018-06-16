@@ -17,7 +17,6 @@ export default class StoryList extends React.Component {
         roomId={this.props.roomId}
         role={this.props.role}
         roomState={this.props.roomState}
-        syncStatus={this.props.syncStatus}
       />)
     return (
       <div className="storyList col-md-12">

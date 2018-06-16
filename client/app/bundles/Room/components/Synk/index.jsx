@@ -10,42 +10,25 @@ export default class Synk extends React.Component {
     nextProps.tickets.forEach(ticket => {
       tickets[ticket.link] = ticket
     })
-    console.dir(nextProps.tickets)
+
     this.state = {
       tickets: tickets
     }
   }
 
   ticketSynked = (data) => {
-    // alert(Helper.jiraTicketUrlForClient(data.link))
     const ticketClientUrl = Helper.jiraTicketUrlForClient(data.link)
     let newTickets = this.state.tickets
-    // alert("first key" + Object.keys(newTickets)[0])
     let theTicket = newTickets[ticketClientUrl]
     theTicket["synked"] = true
     let newState = {
       tickets: newTickets
     }
-    // alert(`new: ${newState}`)
     this.setState(newState)
-    // if(Helper.jiraTicketUrlForClient(data.link) === this.props.link) {
-    //   this.setState({synked: true})
-    // }
   }
 
   componentDidMount() {
     EventEmitter.subscribe("ticketSynked", this.ticketSynked)
-    $('#synk-credential .modal').on('hidden.bs.modal', (e) => {
-      // this.setState({
-      //   username: "",
-      //   password: ""
-      // })
-    })
-  }
-
-  isJiraAccountSetup = () => {
-    return !$.isEmptyObject(Cookies.get("jira_username")) &&
-      !$.isEmptyObject(Cookies.get("jira_password"))
   }
 
   saveCredential = () => {
@@ -54,11 +37,8 @@ export default class Synk extends React.Component {
       Cookies.set("jira_username", this.usernameInput.value, { expires: 7 })
       Cookies.set("jira_password", this.passwordInput.value, { expires: 7 })
       Cookies.set("jira_field", this.fieldInput.value, { expires: 7 })
-      // $("#synk-credential .modal").modal("hide")
       this.props.tickets.forEach((ticket) => {
-        // alert(`Ticket: ${Helper.jiraTicketUrlForApi(ticket.link)}`)
-        // alert(isNaN(ticket.point))
-        let ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
+        const ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
         window.Bridge.updateIssue({
           roomId: this.props.roomId,
           link: Helper.jiraTicketUrlForApi(ticket.link),

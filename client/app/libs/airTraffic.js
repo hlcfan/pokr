@@ -13,7 +13,7 @@ export default {
       connected: function(){
       },
       received: function(data) {
-        console.dir(data)
+        // console.dir(data)
         if (data.type === 'action') {
           if (data.data === 'open') {
             RoomActions.showResultSection()

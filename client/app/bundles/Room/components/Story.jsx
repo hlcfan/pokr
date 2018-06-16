@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
-import Helper from 'libs/helper'
 
 export default class Story extends React.Component {
-
-  state = {}
-
   revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
     if (this.props.role === 'Moderator') {
@@ -53,21 +49,11 @@ export default class Story extends React.Component {
       }
     })()
 
-    const synkedStatus = (() => {
-      if(this.state.synked) {
-        return(
-          <a href="javascript:;" className="synk pull-right"><i className="fa fa-check"></i></a>
-        )
-      }
-    })()
-
     return (
       <li className={liElementClass} id={`story-${this.props.id}`} data-id={this.props.id}>
         {storyTitle}
         <span className="label label-info story--voted-point">{BarColors.emoji(this.props.point) || this.props.point}</span>
         {revoteIcon}
-        {synkedStatus}
-        {this.props.syncStatus}
         <p className="story-desc">
           {this.props.desc}
         </p>

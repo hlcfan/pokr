@@ -16,7 +16,7 @@ export default class RoomMobile extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === this.props.roomState ) ? true : false
-    AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
+    AirTraffic.setupChannelSubscription(this.props.roomId)
 
     this.state = {
       roomState: props.roomState,
