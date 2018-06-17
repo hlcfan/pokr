@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import EventEmitter from 'libs/eventEmitter'
-import Helper from 'libs/helper'
+import { jiraTicketUrlForClient, jiraTicketUrlForApi, jiraHostFromUrl } from 'libs/helper'
 
 export default class Synk extends React.Component {
 
@@ -17,7 +17,7 @@ export default class Synk extends React.Component {
   }
 
   ticketSynked = (data) => {
-    const ticketClientUrl = Helper.jiraTicketUrlForClient(data.link)
+    const ticketClientUrl = jiraTicketUrlForClient(data.link)
     let newTickets = this.state.tickets
     let theTicket = newTickets[ticketClientUrl]
     theTicket["synked"] = true
@@ -41,10 +41,10 @@ export default class Synk extends React.Component {
         const ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
         window.Bridge.updateIssue({
           roomId: this.props.roomId,
-          link: Helper.jiraTicketUrlForApi(ticket.link),
+          link: jiraTicketUrlForApi(ticket.link),
           point: ticketPoint,
           field: this.fieldInput.value,
-          fieldListUrl: `${Helper.jiraHostFromUrl(ticket.link)}/rest/api/2/field`,
+          fieldListUrl: `${jiraHostFromUrl(ticket.link)}/rest/api/2/field`,
           auth: {
             username: this.usernameInput.value,
             password: this.passwordInput.value
@@ -77,53 +77,62 @@ export default class Synk extends React.Component {
                 <h4 className="modal-title">Sync to Jira</h4>
               </div>
               <div className="modal-body">
-                <div className="alert alert-info" role="alert">We won't store your credential at server side. Instead, it's stored in your browser cookies.</div>
                 <div className="row">
-                  <div className="col-md-4">
-                    <form>
+                  <div className="col-md-6">
+                    <form className="form-horizontal">
                       <div className="form-group">
-                        <label htmlFor="credential-username">Username</label>
-                        <input type="text"
-                          ref={c => this.usernameInput = c}
-                          id="credential-username"
-                          className="form-control"
-                          placeholder="Username"
-                          defaultValue={defaultUsername} />
+                        <label htmlFor="credential-username" className="col-sm-3 control-label">Username</label>
+                        <div className="col-sm-9">
+                          <input type="text"
+                           ref={c => this.usernameInput = c}
+                           id="credential-username"
+                           className="form-control"
+                           placeholder="Username"
+                           defaultValue={defaultUsername} />
+                        </div>
                       </div>
                       <div className="form-group">
-                        <label htmlFor="credential-password">Password</label>
-                        <input type="text"
-                          ref={c => this.passwordInput = c}
-                          className="form-control"
-                          id="credential-password"
-                          placeholder="Password"
-                          defaultValue={defaultPassword} />
+                        <label htmlFor="credential-password" className="col-sm-3 control-label">Password</label>
+                        <div className="col-sm-9">
+                          <input type="text"
+                           ref={c => this.passwordInput = c}
+                            className="form-control"
+                            id="credential-password"
+                            placeholder="Password"
+                            defaultValue={defaultPassword} />
+                        </div>
                       </div>
                       <div className="form-group">
-                        <label htmlFor="credential-field">Field</label>
-                        <input type="text"
-                          ref={c => this.fieldInput = c}
-                          className="form-control"
-                          id="credential-field"
-                          placeholder="Field to update"
-                          defaultValue={defaultField} />
+                        <label htmlFor="credential-field" className="col-sm-3 control-label">Field</label>
+                        <div className="col-sm-9">
+                          <input type="text"
+                           ref={c => this.fieldInput = c}
+                            className="form-control"
+                            id="credential-field"
+                            placeholder="Field to update"
+                            defaultValue={defaultField} />
+                        </div>
                       </div>
-                      <button type="button" className="btn btn-default" onClick={this.saveCredential}>Sync</button>
+                      <div className="form-group">
+                        <div className="col-sm-offset-3 col-sm-9">
+                          <button type="button" className="btn btn-default" onClick={this.saveCredential}>Sync</button>
+                        </div>
+                      </div>
                     </form>
                   </div>
-                  <div className="col-md-8">
-                    <table className="table">
-                      <thead><tr><th>Ticket</th><th>Sync status</th></tr></thead>
-                      <tbody>
-                        {tickets}
-                      </tbody>
-                    </table>
+                  <div className="col-md-6">
+                    <div className="alert alert-info" role="alert"><i className="fa fa-exclamation-triangle" aria-hidden="true"></i> All your credentials are stored locally. All JIRA issue update happens locally. It's safe.</div>
                   </div>
                 </div>
+                <table className="table">
+                  <thead><tr><th>Ticket</th><th>Sync status</th></tr></thead>
+                  <tbody>
+                    {tickets}
+                  </tbody>
+                </table>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-info" onClick={this.saveCredential}>Save</button>
               </div>
             </div>
           </div>
