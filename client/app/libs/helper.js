@@ -16,15 +16,15 @@ export function  jiraTicketUrlForApi(clientUrl) {
   // http://localhost:8080/browse/POK-4
   const anchorTag = document.createElement('a')
   anchorTag.href = clientUrl
-  const [, ticketId] = /\/browse\/(.*)/.exec(anchorTag.pathname)
-  return `${anchorTag.origin}/rest/api/2/issue/${ticketId}`
+  const matches = /\/browse\/(.*)/.exec(anchorTag.pathname)
+  return matches && `${anchorTag.origin}/rest/api/2/issue/${matches[1]}`
 }
 
 export function jiraTicketUrlForClient(apiUrl) {
   const anchorTag = document.createElement("a")
   anchorTag.href = apiUrl
-  const [, ticketId] = /\/rest\/api\/2\/issue\/(.*)/.exec(anchorTag.pathname)
-  return `${anchorTag.origin}/browse/${ticketId}`
+  const matches = /\/rest\/api\/2\/issue\/(.*)/.exec(anchorTag.pathname)
+  return matches && `${anchorTag.origin}/browse/${matches[1]}`
 }
 
 export function jiraHostFromUrl(url) {

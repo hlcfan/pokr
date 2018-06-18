@@ -39,17 +39,19 @@ export default class Synk extends React.Component {
       Cookies.set("jira_field", this.fieldInput.value, { expires: 7 })
       this.props.tickets.forEach((ticket) => {
         const ticketPoint = isNaN(ticket.point) ? ticket.point : parseFloat(ticket.point)
-        window.Bridge.updateIssue({
-          roomId: this.props.roomId,
-          link: jiraTicketUrlForApi(ticket.link),
-          point: ticketPoint,
-          field: this.fieldInput.value,
-          fieldListUrl: `${jiraHostFromUrl(ticket.link)}/rest/api/2/field`,
-          auth: {
-            username: this.usernameInput.value,
-            password: this.passwordInput.value
-          }
-        })
+        if(ticket.link.isValidUrl()) {
+          window.Bridge.updateIssue({
+            roomId: this.props.roomId,
+            link: jiraTicketUrlForApi(ticket.link),
+            point: ticketPoint,
+            field: this.fieldInput.value,
+            fieldListUrl: `${jiraHostFromUrl(ticket.link)}/rest/api/2/field`,
+            auth: {
+              username: this.usernameInput.value,
+              password: this.passwordInput.value
+            }
+          })
+        }
       })
     }
   }
