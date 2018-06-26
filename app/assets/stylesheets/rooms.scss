@@ -248,6 +248,10 @@
     list-style-type: none;
   }
 
+  #story-row .row:first-child .remove-btn {
+    display: none;
+  }
+
   .stories-section .import {
     text-decoration: none;
   }
