@@ -96,7 +96,7 @@ export default class Synk extends React.Component {
                       <div className="form-group">
                         <label htmlFor="credential-password" className="col-sm-3 control-label">Password</label>
                         <div className="col-sm-9">
-                          <input type="text"
+                          <input type="password"
                            ref={c => this.passwordInput = c}
                             className="form-control"
                             id="credential-password"
