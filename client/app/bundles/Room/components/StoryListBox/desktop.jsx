@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
+import Synk from '../Synk/index'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
+
+import css from './index.scss'
 
 export default class StoryListBox extends React.Component {
 
@@ -40,6 +43,10 @@ export default class StoryListBox extends React.Component {
     this.props.onNoStoryLeft()
   }
 
+  sync = () => {
+    $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
+  }
+
   componentDidMount() {
     this.loadStoryListFromServer()
     EventEmitter.subscribe("refreshStories", this.loadStoryListFromServer)
@@ -62,10 +69,23 @@ export default class StoryListBox extends React.Component {
   }
 
   render() {
-    const defaultArray = [];
+    const defaultArray = []
+    const syncLink = (() => {
+      if (isElectron()) {
+        return(
+          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
+            <i className="fa fa-upload"></i> Sync
+          </a>
+        )
+      }
+    })()
+
     return (
       <div className="panel panel-default" id="stories">
-        <div className="panel-heading">Stories</div>
+        <div className="panel-heading">
+          Stories
+          {syncLink}
+        </div>
         <div id="storyListArea" className="panel-body row">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active">
@@ -84,6 +104,7 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
+        <Synk roomId={this.props.roomId} tickets={this.state.data.groomed || []} />
       </div>
     )
   }

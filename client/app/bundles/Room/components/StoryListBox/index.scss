@@ -11,3 +11,11 @@
     word-break: break-all;
   }
 }
+
+.stories--sync {
+  color: #444;
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}

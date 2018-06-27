@@ -10,13 +10,13 @@ import Board from '../components/Board'
 import AirTraffic from 'libs/airTraffic'
 import update from 'immutability-helper'
 import EventEmitter from 'libs/eventEmitter'
-import Helper from 'libs/helper'
+import { ieBrowser11 } from 'libs/helper'
 
 export default class Room extends React.Component {
   constructor(props) {
     super(props)
     window.syncResult = ('open' === this.props.roomState ) ? true : false
-    AirTraffic.setupChannelSubscription(this.props.roomId, this.props.roomState)
+    AirTraffic.setupChannelSubscription(this.props.roomId)
 
     this.state = {
       roomState: props.roomState,
@@ -198,7 +198,7 @@ export default class Room extends React.Component {
             <Board roomId={this.props.roomId} roomState={this.state.roomState} />
         }
         {
-          !this.roomClosed() && this.props.role === "Moderator" && !Helper.ieBrowser11() &&
+          !this.roomClosed() && this.props.role === "Moderator" && !ieBrowser11() &&
             <TimeCounter roomId={this.props.roomId} initialDuration={this.props.duration}/>
         }
       </div>

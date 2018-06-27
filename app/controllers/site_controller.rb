@@ -20,4 +20,8 @@ class SiteController < ApplicationController
     render "donate.#{I18n.locale}"
   end
 
+  def apps
+
+  end
+
 end

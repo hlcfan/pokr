@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'about', to: 'site#about'
   get 'faq', to: 'site#faq'
   get 'donate', to: 'site#donate'
+  get 'apps', to: 'site#apps'
 
   mount ActionCable.server => '/cable'
 
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
       post :timing
       get :screen
       post :screen
+      post :sync_status
     end
   end
 

@@ -23,4 +23,11 @@ RSpec.describe SiteController, type: :controller do
       expect(response).to render_template "donate.en"
     end
   end
+
+  describe "GET #apps" do
+    it "renders apps page" do
+      get :apps
+      expect(response).to render_template "apps"
+    end
+  end
 end
