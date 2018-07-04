@@ -71,7 +71,7 @@ export default class StoryListBox extends React.Component {
   render() {
     const defaultArray = []
     const syncLink = (() => {
-      if (isElectron()) {
+      if (isElectron() && this.props.role === "Moderator") {
         return(
           <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
             <i className="fa fa-upload"></i> Sync
