@@ -213,6 +213,12 @@ html {
   letter-spacing: 0.9px;
 
   &.logos {
+    border-bottom: 1px solid #ddd;
+
+    h3 {
+      color: #848484;
+    }
+
     .row:first-child {
       margin-bottom: 20px;
     }
@@ -265,6 +271,7 @@ html {
   color: #4e4e4e;
   line-height: 30px;
   padding: 50px 200px;
+  border-top: 1px solid #ddd;
 
   .text-section {
     h3 {
