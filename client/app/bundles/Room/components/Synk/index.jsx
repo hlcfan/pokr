@@ -59,7 +59,7 @@ export default class Synk extends React.Component {
   render() {
     const defaultUsername = Cookies.get("jira_username")
     const defaultPassword = Cookies.get("jira_password")
-    const defaultField = Cookies.get("jira_field")
+    const defaultField = Cookies.get("jira_field") || "Story points"
     const tickets = this.props.tickets.map((ticket, index) => {
       return(
         <tr key={ticket.link}>
