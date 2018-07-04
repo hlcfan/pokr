@@ -77,7 +77,7 @@ html {
       text-decoration: none;
       color: #848484;
       font-size: 4rem;
-      line-height: 90px;
+      line-height: 60px;
       left: 50%;
       width: 90px;
       margin-left: -35px;
@@ -93,7 +93,7 @@ html {
     }
 
     .header-actions {
-      line-height: 90px;
+      line-height: 60px;
 
       .link {
         font-weight: 300;
@@ -210,7 +210,17 @@ html {
   color: #2e3033;
   text-shadow: none;
   font-weight: 300;
-  letter-spacing: .9px;
+  letter-spacing: 0.9px;
+
+  &.logos {
+    .row:first-child {
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 100px;
+    }
+  }
 
   .container {
     padding: 60px 0;
