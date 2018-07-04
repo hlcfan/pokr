@@ -32,7 +32,7 @@ export default class Board extends React.Component {
   }
 
   handleSync = () => {
-    $(".modal").modal("hide")
+    $("#board .modal").modal("hide")
     $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
   }
 
