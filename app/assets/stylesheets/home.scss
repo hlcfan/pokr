@@ -217,9 +217,10 @@ html {
 
     h3 {
       color: #848484;
+      margin-top: 0;
     }
 
-    .row:first-child {
+    .row:first-child, .row:nth-child(2) {
       margin-bottom: 20px;
     }
 
