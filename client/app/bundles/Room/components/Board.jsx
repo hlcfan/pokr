@@ -31,6 +31,11 @@ export default class Board extends React.Component {
     })
   }
 
+  handleSync = () => {
+    $("#board .modal").modal("hide")
+    $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
+  }
+
   render() {
     let totalPoints = 0;
     const dataNodes = this.state.data.map(story => {
@@ -74,6 +79,10 @@ export default class Board extends React.Component {
               <div className="modal-footer">
                 <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
                 <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
+                {
+                  this.props.role === "Moderator" && isElectron() &&
+                  <a className="pull-left" href="javascript:;" style={{marginLeft: 10+'px'}} onClick={this.handleSync}>Sync to Jira</a>
+                }
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>

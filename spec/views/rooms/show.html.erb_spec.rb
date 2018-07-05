@@ -10,6 +10,7 @@ RSpec.describe "rooms/show", type: :view do
 
     user = User.find_by(email: 'a@a.com')
     UserRoom.create(user_id: user.id, room_id: @room.id)
+    Rails.cache.delete "user_room:#{user.id}:#{@room.id}"
   end
 
   it "renders attributes in <p>" do

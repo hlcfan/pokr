@@ -195,7 +195,7 @@ export default class Room extends React.Component {
         </div>
         {
           this.roomClosed() &&
-            <Board roomId={this.props.roomId} roomState={this.state.roomState} />
+            <Board roomId={this.props.roomId} roomState={this.state.roomState} role={this.props.role} />
         }
         {
           !this.roomClosed() && this.props.role === "Moderator" && !ieBrowser11() &&
