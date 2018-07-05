@@ -80,7 +80,7 @@ export default class Board extends React.Component {
                 <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
                 <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
                 {
-                  this.props.role === "Moderator" &&
+                  this.props.role === "Moderator" && isElectron() &&
                   <a className="pull-left" href="javascript:;" style={{marginLeft: 10+'px'}} onClick={this.handleSync}>Sync to Jira</a>
                 }
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
