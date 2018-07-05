@@ -123,7 +123,7 @@ export default class Synk extends React.Component {
                     </form>
                   </div>
                   <div className="col-md-6">
-                    <div className="alert alert-info" role="alert"><i className="fa fa-exclamation-triangle" aria-hidden="true"></i> All your credentials are stored locally. All JIRA issue update happens locally. It's safe. <b>Ticket link must be Jira issue URL.</b></div>
+                    <div className="alert alert-info" role="alert"><i className="fa fa-exclamation-triangle" aria-hidden="true"></i> All your credentials are stored locally. All Jira issue update happens locally. It's safe. <b>Ticket link must be Jira issue URL.</b></div>
                   </div>
                 </div>
                 <table className="table">
