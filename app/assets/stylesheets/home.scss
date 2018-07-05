@@ -225,6 +225,10 @@ html {
 
     img {
       width: 100px;
+
+      @media #{$mobile} {
+        width: 100%;
+      }
     }
   }
 
