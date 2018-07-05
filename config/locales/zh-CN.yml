@@ -214,6 +214,9 @@ zh-CN:
         password: "密码"
         password_confirmation: "再次输入密码"
 
+  logos:
+    title: "超过一千多家公司在使用 Pokrex"
+
   intro:
     room: "房间"
     room_alt: "Pokrex 计划扑克 - 房间"
