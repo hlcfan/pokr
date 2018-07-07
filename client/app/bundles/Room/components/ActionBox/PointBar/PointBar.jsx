@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
-import CursorImage from './check.png'
+import CursorImage from './check.cur'
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
