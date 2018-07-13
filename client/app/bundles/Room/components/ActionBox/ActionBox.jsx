@@ -80,7 +80,7 @@ export default class ActionBox extends React.Component {
   }
 
   dismissTip = () => {
-    Cookies.set('tipClosed', true)
+    Cookies.set("tipClosed", true)
   }
 
   componentDidMount() {
@@ -172,10 +172,15 @@ export default class ActionBox extends React.Component {
     const tip = ((() => {
       // if tip not closed yet, which means keep showing tip
       if (!Cookies.get('tipClosed') && this.props.role === 'Moderator') {
+        let pointClicked = Cookies.get("pointClicked")
+
         return (
           <div className="container-fluid" style={{clear: 'both', width: '90%'}}>
             <div className="alert alert-success alert-dismissible" role="alert">
-              <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismissTip}><span aria-hidden="true">&times;</span></button>
+              {
+                pointClicked &&
+                  <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismissTip}><span aria-hidden="true">&times;</span></button>
+              }
               Tip: click on the <b>colorful bar</b> below to decide the point.
             </div>
           </div>

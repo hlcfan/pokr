@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
-import CursorImage from './check.png'
+import CursorImage from './check.cur'
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
     if (this.props.role === 'Moderator') {
+      Cookies.set("pointClicked", true)
       App.rooms.perform('set_story_point', {
         roomId: this.props.roomId,
         data: { point: this.props.point, story_id: this.props.storyId }
-      });
+      })
     }
   }
 
