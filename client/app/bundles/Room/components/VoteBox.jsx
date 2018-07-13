@@ -51,7 +51,7 @@ export default class VoteBox extends React.Component {
 
     return (
       <div className="panel panel-default" id="deck">
-        <div className="panel-heading">Deck</div>
+        <div className="panel-heading">Vote</div>
         <div className="vote-list panel-body">
           <ul className="list-inline">
             {pointsList}
