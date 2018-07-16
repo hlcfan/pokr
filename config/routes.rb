@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :schemes
+
   namespace :users do
     get :autocomplete
   end
