@@ -25,7 +25,7 @@ class Rooms
       $('.import').toggle()
       return
 
-    $(".schemes-type .label").on "click", ->
+    $(".schemes-type span.label").on "click", ->
       $(".schemes-type .label").removeClass("label-info").addClass('label-default')
       $(this).addClass("label-info")
       $(".point-values").removeClass("active")

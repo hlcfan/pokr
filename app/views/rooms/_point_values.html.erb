@@ -3,6 +3,7 @@
     <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
       <span class="label <%= scheme_type == @room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_type %>"><%= scheme_type %></span>
     <% end %>
+    <a class="label label-warning" target="_blank" href="/point-scheme">customize</a>
   </div>
   <hr />
   <div>
