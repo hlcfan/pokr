@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301050252) do
+ActiveRecord::Schema.define(version: 2018_07_16_105314) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "authorizations", force: :cascade do |t|
@@ -53,6 +54,14 @@ ActiveRecord::Schema.define(version: 20180301050252) do
     t.index ["discarded_at"], name: "index_rooms_on_discarded_at"
     t.index ["name"], name: "index_rooms_on_name"
     t.index ["slug"], name: "index_rooms_on_slug", unique: true
+  end
+
+  create_table "schemes", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "points", null: false, array: true
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stories", force: :cascade do |t|
