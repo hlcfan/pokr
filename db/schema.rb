@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2018_07_16_105314) do
 
   create_table "schemes", force: :cascade do |t|
     t.string "name", null: false
+    t.string "slug", null: false
     t.string "points", null: false, array: true
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
