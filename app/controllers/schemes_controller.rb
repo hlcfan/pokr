@@ -1,7 +1,7 @@
 class SchemesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_scheme, except: [:index]
+  before_action :set_scheme, except: [:index, :new, :create]
 
   def index
     @schemes = Scheme.where user_id: current_user.id
@@ -13,9 +13,11 @@ class SchemesController < ApplicationController
 
   def create
     @scheme = Scheme.new scheme_params.merge(user_id: current_user.id)
-    @scheme.save
-
-    redirect_to schemes_path
+    if @scheme.save
+      redirect_to schemes_path
+    else
+      render :new
+    end
   end
 
   def edit
