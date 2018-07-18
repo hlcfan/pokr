@@ -30,4 +30,8 @@ module RoomsHelper
     end
   end
 
+  def my_point_schemes
+    Room::POINT_SCHEMES.merge User.point_schemes_of(current_user.id)
+  end
+
 end

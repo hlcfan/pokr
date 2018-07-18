@@ -3,7 +3,7 @@ class SchemesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-
+    @schemes = Scheme.where user_id: current_user.id
   end
 
   def new
@@ -12,8 +12,8 @@ class SchemesController < ApplicationController
 
   def create
     @scheme = Scheme.new scheme_params.merge(user_id: current_user.id)
-    binding.pry
     @scheme.save
+
     redirect_to schemes_path
   end
 
@@ -28,6 +28,9 @@ class SchemesController < ApplicationController
   private
 
   def scheme_params
-    params.require(:scheme).permit(:name, points: [])
+    scheme_attributes = params.require(:scheme).permit(:name, points: [])
+    scheme_attributes[:points].reject!(&:blank?)
+
+    scheme_attributes
   end
 end

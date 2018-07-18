@@ -10,6 +10,29 @@
       </div>
       <div class="panel-body">
         <a href="<%= new_scheme_path %>" class="btn btn-default">Create scheme</a>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Content</th>
+              <th>Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @schemes.each_with_index do |scheme, index| %>
+              <tr>
+                <td><%= index %></td>
+                <td><%= scheme.name %></th>
+                <td><%= scheme.points.join(", ") %></th>
+                <td>
+                  <a href="#">Manage</a>
+                  <a href="#">Remove</a>
+                </th>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

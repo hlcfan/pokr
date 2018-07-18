@@ -1,21 +1,23 @@
 <% if @room.new_record? %>
   <div class="schemes-type">
-    <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
-      <span class="label <%= scheme_type == @room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_type %>"><%= scheme_type %></span>
+    <% my_point_schemes.each do |scheme_type, numbers| %>
+      <% scheme_type_id = scheme_type.parameterize %>
+      <span class="label <%= scheme_type == @room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_type_id %>"><%= scheme_type %></span>
     <% end %>
     <a class="label label-warning" target="_blank" href="<%= schemes_path %>">customize</a>
   </div>
   <hr />
   <div>
-    <% Room::POINT_SCHEMES.each do |scheme_type, numbers| %>
-      <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values row <%= "active" if @room.scheme == scheme_type %>">
+    <% my_point_schemes.each do |scheme_type, numbers| %>
+      <% scheme_type_id = scheme_type.parameterize %>
+      <ul data-scheme-type="<%= scheme_type_id %>" class="<%= scheme_type_id %> list-inline point-values row <%= "active" if @room.scheme == scheme_type %>">
         <%= render_point_values(true, numbers, @room.point_values) %>
       </ul>
     <% end %>
   </div>
 <% else %>
   <%= scheme_type = @room.scheme %>
-  <ul data-scheme-type="<%= scheme_type %>" class="<%= scheme_type %> list-inline point-values row <%= "active" if @room.scheme == scheme_type %>">
+  <ul data-scheme-type="<%= scheme_type.parameterize %>" class="<%= scheme_type.parameterize %> list-inline point-values row <%= "active" if @room.scheme == scheme_type %>">
     <%= render_point_values(false, Room::POINT_SCHEMES[scheme_type], @room.point_values) %>
   </ul>
 <% end %>

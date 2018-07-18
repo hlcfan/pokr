@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :user_story_points
   has_many :created_rooms, class_name: "Room", foreign_key: :created_by
   has_many :authorizations
+  has_many :schemes
 
   after_initialize :default_values
 
@@ -101,6 +102,14 @@ class User < ApplicationRecord
 
   def email_verified?
     self.email && self.email =~ VALID_EMAIL_REGEX
+  end
+
+  def self.point_schemes_of user_id
+    Scheme.where(user_id: user_id).inject({}) do |hsh, scheme|
+      hsh[scheme.name] = scheme.points
+
+      hsh
+    end
   end
 
   private
