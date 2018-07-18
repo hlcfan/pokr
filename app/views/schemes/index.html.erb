@@ -26,8 +26,8 @@
                 <td><%= scheme.name %></th>
                 <td><%= scheme.points.join(", ") %></th>
                 <td>
-                  <a href="#">Manage</a>
-                  <a href="#">Remove</a>
+                  <%= link_to "Edit", edit_scheme_path(scheme.slug) %>
+                  <%= link_to "Remove", scheme_path(scheme.slug), remote: true, method: :delete, data: {confirm: "Are you sure to delete '#{scheme.name}'?"}%>
                 </th>
               </tr>
             <% end %>

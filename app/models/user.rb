@@ -104,14 +104,6 @@ class User < ApplicationRecord
     self.email && self.email =~ VALID_EMAIL_REGEX
   end
 
-  def self.point_schemes_of user_id
-    Scheme.where(user_id: user_id).inject({}) do |hsh, scheme|
-      hsh[scheme.name] = scheme.points
-
-      hsh
-    end
-  end
-
   private
 
   def default_values
