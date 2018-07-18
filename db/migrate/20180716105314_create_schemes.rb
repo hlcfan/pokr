@@ -8,5 +8,8 @@ class CreateSchemes < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :schemes, :slug, unique: true
+    add_index :schemes, :user_id
   end
 end

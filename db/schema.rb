@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2018_07_16_105314) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_schemes_on_slug", unique: true
+    t.index ["user_id"], name: "index_schemes_on_user_id"
   end
 
   create_table "stories", force: :cascade do |t|
