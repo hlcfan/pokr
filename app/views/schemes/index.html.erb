@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @schemes.each_with_index do |scheme, index| %>
-              <tr>
+              <tr data-scheme-id="<%= scheme.slug %>">
                 <td><%= index %></td>
                 <td><%= scheme.name %></th>
                 <td><%= scheme.points.join(", ") %></th>

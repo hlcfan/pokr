@@ -1,0 +1,16 @@
+<%= form_for @scheme, url: scheme_path(@scheme.slug), html: {class: "form-inline scheme-form", role: "form"} do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control scheme-form--name", placeholder: "Scheme name" %>
+  </div>
+  <div class="form-group">
+    <label for="scheme-point">Point</label>
+    <input type="text" id="scheme-point" class="form-control scheme-form--input" placeholder="Type here" />
+  </div>
+  <button type="button" class="btn btn-default scheme-form--add">Add</button>
+  <hr />
+  <%= f.select :points, @scheme.points||[], {}, {multiple: true} %>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Save</button>
+  </div>
+<% end %>
