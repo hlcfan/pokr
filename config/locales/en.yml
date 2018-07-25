@@ -72,10 +72,11 @@ en:
     dashboard_f_4: "Review recent stories/cards"
     scheme: "Multiple schemes"
     scheme_alt: "Pokrex Scrum Poker - Point scheme"
-    scheme_desc: "We offer multiple story point schemes to meet different requirements from our users."
+    scheme_desc: "We offer multiple story point schemes and customized point schemes to meet different requirements from our users."
     scheme_f_1: "Fibonacci"
     scheme_f_2: "0-8"
     scheme_f_3: "T-shirt(XS-XXL)"
+    scheme_f_4: "Customization"
 
   posts:
     h1: "Posts"
