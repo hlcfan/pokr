@@ -18,6 +18,6 @@
 <% else %>
   <%= scheme_type = @room.scheme %>
   <ul data-scheme-type="<%= scheme_type.parameterize %>" class="<%= scheme_type.parameterize %> list-inline point-values row <%= "active" if @room.scheme == scheme_type %>">
-    <%= render_point_values(false, Room::POINT_SCHEMES[scheme_type], @room.point_values) %>
+    <%= render_point_values(false, Scheme.find_scheme(scheme_type), @room.point_values) %>
   </ul>
 <% end %>
