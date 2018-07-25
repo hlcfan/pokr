@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { User.new }
 
+  describe "Associations" do
+    it { should have_many(:schemes) }
+  end
+
   describe "#name" do
     it "is invalid if name is blank" do
       expect(user.valid?).to be false

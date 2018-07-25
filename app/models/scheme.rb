@@ -2,7 +2,7 @@ class Scheme < ApplicationRecord
 
   belongs_to :user
 
-  validates_presence_of :name, :points
+  validates_presence_of :name, :points, :user_id
 
   before_create :slug!
 
@@ -32,6 +32,25 @@ class Scheme < ApplicationRecord
   }
 
   def slug!
-    self.slug = name.parameterize
+    # if it's latin letters
+    permlink = if /^[a-zA-Z0-9_\-\/+ ]*$/ =~ name
+      name.parameterize
+    else
+      PinYin.permlink(name).downcase
+    end
+
+    if Scheme.exists?(slug: permlink)
+      permlink = "#{permlink}-#{SecureRandom.random_number(100000)}"
+    end
+
+    # Solution 2:
+    # self.slug = loop do
+    #   token = SecureRandom.hex(10)
+    #   unless Room.find_by(slug: permlink).exists?
+    #     break token
+    #   end
+    # end
+
+    self.slug = permlink
   end
 end
