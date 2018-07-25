@@ -15,8 +15,23 @@ RSpec.describe Scheme, type: :model do
 
   describe "#slug!" do
     it "generates slug before creation" do
-      room = Scheme.create(name: "test slug", user_id: 1, points: ["2", "3"])
-      expect(room.slug).to eq "test-slug"
+      scheme = Scheme.create(name: "test slug", user_id: 1, points: ["2", "3"])
+      expect(scheme.slug).to eq "test-slug"
+    end
+
+    it "re-generates slug if scheme with slug exists" do
+      scheme_1 = Scheme.create(name: 'test slug', user_id: 1, points: ["a"])
+      scheme_2 = Scheme.create(name: 'test slug', user_id: 1, points: ["a"])
+
+      expect(scheme_2.slug).to be_present
+      expect(scheme_2.slug).not_to eq scheme_1.slug
+    end
+
+    it "translates name when Chinese" do
+      scheme = Scheme.create(name: '测试', user_id: 1, points: ["a"])
+
+      expect(scheme.slug).to eq "ce-shi"
+      expect(scheme.slug).to be_present
     end
   end
 
