@@ -50,7 +50,7 @@ class SchemesController < ApplicationController
 
   def scheme_params
     scheme_attributes = params.require(:scheme).permit(:name, points: [])
-    scheme_attributes[:points].reject!(&:blank?)
+    scheme_attributes[:points]&.reject!(&:blank?)
 
     scheme_attributes
   end
