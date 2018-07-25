@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :user_story_points
   has_many :created_rooms, class_name: "Room", foreign_key: :created_by
   has_many :authorizations
+  has_many :schemes
 
   after_initialize :default_values
 

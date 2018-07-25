@@ -30,4 +30,16 @@ module RoomsHelper
     end
   end
 
+  def my_point_schemes
+    @my_point_schemes ||= begin
+      user_schemes = if current_user
+                       Scheme.schemes_of(current_user.id)
+                     else
+                       {}
+                     end
+
+      Scheme.default_schemes.merge(user_schemes)
+    end
+  end
+
 end

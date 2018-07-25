@@ -1,0 +1,43 @@
+<%
+  title "Schemes"
+%>
+<div class="row scheme">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Schemes</h3>
+      </div>
+      <div class="panel-body">
+        <a href="<%= new_scheme_path %>" class="btn btn-default">Create scheme</a>
+        <hr />
+        <% if @schemes.blank? %>
+          <div class="alert alert-info scheme--empty-list">You haven't created any schemes</div>
+        <% else %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Content</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @schemes.each_with_index do |scheme, index| %>
+                <tr data-scheme-id="<%= scheme.slug %>">
+                  <td><%= index %></td>
+                  <td><%= scheme.name %></th>
+                  <td><%= scheme.points.join(", ") %></th>
+                  <td>
+                    <%= link_to "Edit", edit_scheme_path(scheme.slug) %>
+                    <%= link_to "Remove", scheme_path(scheme.slug), remote: true, method: :delete, data: {confirm: "Are you sure to delete scheme '#{scheme.name}'?"}%>
+                  </th>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

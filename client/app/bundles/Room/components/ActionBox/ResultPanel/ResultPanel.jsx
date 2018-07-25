@@ -51,7 +51,7 @@ export default class ResultPanel extends React.Component {
       point = keys[i]
       count = pointHash[point]
       barWidth = count/maxPointCount * 100
-      color = BarColors.color(point)
+      color = BarColors.color(point) || BarColors.randomColor()
       pointArray.push({ point, count, barWidth, color })
     }
 

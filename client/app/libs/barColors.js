@@ -46,6 +46,11 @@ export default {
     return barColors[point]
   },
 
+  randomColor() {
+    let randomIndex = Math.floor(Math.random() * 27)
+    return Object.values( barColors )[randomIndex]
+  },
+
   emoji(point) {
     return pointEmojis[point]
   }

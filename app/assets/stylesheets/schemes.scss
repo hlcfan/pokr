@@ -1,0 +1,25 @@
+// Place all the styles related to the schemes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'global_vars';
+
+.scheme {
+  .scheme--empty-list {
+    text-align: center;
+  }
+
+  .panel {
+    min-height: 280px;
+  }
+
+  .scheme-form--add {
+    @media #{$mobile} {
+      display: block;
+      margin-left: 15px;
+      margin-top: 10px;
+    }
+  }
+  .scheme-form--save-btn {
+    margin-top: 20px;
+  }
+}

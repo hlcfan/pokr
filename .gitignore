@@ -35,3 +35,5 @@ active_record_log_subscriber.rb
 /public/packs
 /public/webpack
 /public/packs-test
+
+.gitattributes

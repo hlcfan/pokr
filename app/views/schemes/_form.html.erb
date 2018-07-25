@@ -1,0 +1,34 @@
+<% form_url = @scheme.new_record? ? "/schemes" : scheme_path(@scheme.slug) %>
+<%= form_for @scheme, url: form_url, html: {class: "form-horizontal scheme-form", role: "form"} do |f| %>
+  <% if @scheme.errors.any? %>
+    <h2><%= pluralize(@scheme.errors.count, "error") %> prohibited this scheme from being saved:</h2>
+
+    <ul class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+      <% @scheme.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name, class: "col-sm-1 control-label" %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, class: "form-control scheme-form--name", placeholder: "Scheme name" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="scheme-point" class="col-sm-1 control-label">Point</label>
+    <div class="col-sm-6">
+      <input type="text" id="scheme-point" class="form-control scheme-form--input" placeholder="Type here" />
+    </div>
+    <button type="button" class="btn btn-default scheme-form--add col-sm-1">Add</button>
+  </div>
+  <hr />
+  <%= f.select :points, @scheme.points||[], {}, {multiple: true} %>
+  <div class="form-group">
+    <div class="col-sm-10 scheme-form--save-btn">
+      <button type="submit" class="btn btn-default">Save</button>
+    </div>
+  </div>
+<% end %>
