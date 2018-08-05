@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
 import Synk from '../Synk/index'
+import SynkGuide from '../Synk/Guide'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 
@@ -44,7 +45,11 @@ export default class StoryListBox extends React.Component {
   }
 
   sync = () => {
-    $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
+    if( isElectron() ) {
+      $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
+    } else {
+      $("#synk-guide .modal").modal()
+    }
   }
 
   componentDidMount() {
@@ -71,7 +76,7 @@ export default class StoryListBox extends React.Component {
   render() {
     const defaultArray = []
     const syncLink = (() => {
-      if (isElectron() && this.props.role === "Moderator") {
+      if (this.props.role === "Moderator") {
         return(
           <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
             <i className="fa fa-upload"></i> Sync
@@ -105,6 +110,7 @@ export default class StoryListBox extends React.Component {
           </div>
         </div>
         <Synk roomId={this.props.roomId} tickets={this.state.data.groomed || []} />
+        <SynkGuide />
       </div>
     )
   }

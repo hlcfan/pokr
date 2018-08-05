@@ -76,7 +76,7 @@ export default class Synk extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title">Sync to Jira</h4>
+                <h4 className="modal-title">Sync to JIRA</h4>
               </div>
               <div className="modal-body">
                 <div className="row">
@@ -123,7 +123,7 @@ export default class Synk extends React.Component {
                     </form>
                   </div>
                   <div className="col-md-6">
-                    <div className="alert alert-info" role="alert"><i className="fa fa-exclamation-triangle" aria-hidden="true"></i> All your credentials are stored locally. All Jira issue update happens locally. It's safe. <b>Ticket link must be Jira issue URL.</b></div>
+                    <div className="alert alert-info" role="alert"><i className="fa fa-exclamation-triangle" aria-hidden="true"></i> All your credentials are stored locally. All JIRA issue update happens locally. It's safe. <b>Ticket link must be JIRA issue URL.</b></div>
                   </div>
                 </div>
                 <table className="table">
