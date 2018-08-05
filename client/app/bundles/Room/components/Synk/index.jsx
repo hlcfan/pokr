@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import EventEmitter from 'libs/eventEmitter'
+import BarColors from 'libs/barColors'
 import { jiraTicketUrlForClient, jiraTicketUrlForApi, jiraHostFromUrl } from 'libs/helper'
 
 export default class Synk extends React.Component {
@@ -64,6 +65,7 @@ export default class Synk extends React.Component {
       return(
         <tr key={ticket.link}>
           <td>{ticket.link}</td>
+          <td>{BarColors.emoji(ticket.point) || ticket.point}</td>
           <td>{ticket.synked ? <i className='fa fa-check'></i> : "Not sync"}</td>
         </tr>
       )
@@ -127,7 +129,13 @@ export default class Synk extends React.Component {
                   </div>
                 </div>
                 <table className="table">
-                  <thead><tr><th>Ticket</th><th>Sync status</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Ticket</th>
+                    <th>Points</th>
+                    <th>Sync status</th>
+                  </tr>
+                </thead>
                   <tbody>
                     {tickets}
                   </tbody>
