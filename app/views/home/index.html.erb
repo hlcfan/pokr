@@ -27,9 +27,10 @@
       "applicationCategory": "Tool, agile estimating",
       "operatingSystem": "OSX, Windows, iOS, Android",
       "screenshot": [
-        "<%= image_url("room.png") %>",
-        "<%= image_url("dashboard.jpg") %>",
-        "<%= image_url("scheme.jpg") %>"
+        "<%= image_url("home/room.jpg") %>",
+        "<%= image_url("home/dashboard.jpg") %>",
+        "<%= image_url("home/scheme.jpg") %>"
+        "<%= image_url("home/synk.jpg") %>"
       ],
       "author": {
         "@type": "Person",
@@ -131,7 +132,7 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "room.png", alt: t("intro.room_alt") %>
+          <%= image_tag "home/room.jpg", alt: t("intro.room_alt") %>
         </div>
 
         <div class="col-xs-4 col-md-4 text-section">
@@ -150,6 +151,40 @@
     <div class="row view-section">
       <div class="container">
         <div class="col-xs-4 col-md-4 text-section">
+          <h2><%= t("intro.scheme") %></h2>
+          <h3><%= t("intro.scheme_desc") %></h3>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_1") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_2") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_3") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_4") %></li>
+          </ul>
+        </div>
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "home/scheme.jpg", alt: t("intro.scheme_alt") %>
+        </div>
+      </div>
+    </div>
+    <div class="row view-section">
+      <div class="container">
+        <div class="col-xs-8 col-md-8 image-section">
+          <%= image_tag "home/synk.jpg", alt: t("intro.synk_alt") %>
+        </div>
+        <div class="col-xs-4 col-md-4 text-section">
+          <h2><%= t("intro.synk") %></h2>
+          <h3><%= t("intro.synk_desc") %></h3>
+          <ul class="list-unstyled">
+            <li><i class="fa fa-check"></i><%= t("intro.synk_f_1") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.synk_f_2") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.synk_f_3") %></li>
+            <li><i class="fa fa-check"></i><%= t("intro.synk_f_4") %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row view-section">
+      <div class="container">
+        <div class="col-xs-4 col-md-4 text-section">
           <h2><%= t("intro.dashboard") %></h2>
           <h3><%= t("intro.dashboard_desc") %></h3>
           <ul class="list-unstyled">
@@ -160,24 +195,7 @@
           </ul>
         </div>
         <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "dashboard.jpg", alt: t("intro.dashboard_alt") %>
-        </div>
-      </div>
-    </div>
-    <div class="row view-section">
-      <div class="container">
-        <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "scheme.jpg", alt: t("intro.scheme_alt") %>
-        </div>
-        <div class="col-xs-4 col-md-4 text-section">
-          <h2><%= t("intro.scheme") %></h2>
-          <h3><%= t("intro.scheme_desc") %></h3>
-          <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_1") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_2") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_3") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_4") %></li>
-          </ul>
+          <%= image_tag "home/dashboard.jpg", alt: t("intro.dashboard_alt") %>
         </div>
       </div>
     </div>
