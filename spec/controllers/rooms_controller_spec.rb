@@ -374,6 +374,15 @@ RSpec.describe RoomsController, type: :controller do
 
       expect(response).to redirect_to new_user_session_path
     end
+
+    it "redirects to sign in page if input email is upcase already exists" do
+      room = Room.create! valid_attributes
+      allow(controller).to receive(:current_user) { nil }
+
+      post :screen, params: {id: room.slug, username: "A@A.com"}
+
+      expect(response).to redirect_to new_user_session_path
+    end
   end
 
   describe "#sync_status" do
