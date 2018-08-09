@@ -23,7 +23,7 @@ Yet another planning poker, aiming at efficiency & user experience.
 + Puma
 
 ## Screenshot
-![Pokrex](./app/assets/images/room.png)
+![Pokrex](./app/assets/images/home/room.jpg)
 
 ## 🔧 Contribution
 
