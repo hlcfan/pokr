@@ -20,7 +20,7 @@ export default class Guide extends React.Component {
                 </h3>
               </div>
               <div className="panel-footer">
-                <div classNam="alert alert-success" role="alert">
+                <div className="alert alert-success" role="alert">
                   <p><i className="fa fa-question-circle"></i> Because the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank">CORS policy</a>, Pokrex cannot send/receive data from JIRA, thus we have to create desktop applications to send/receive data to JIRA from your computer, just like what you do in browser. It's totally secure, we do not store any of your credentials, all requests are made locally.</p>
                 </div>
               </div>
