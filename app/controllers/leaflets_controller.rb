@@ -7,8 +7,8 @@ class LeafletsController < ApplicationController
   protect_from_forgery except: :sync_status
 
   def new
-    @room = Room.new
-    @room.stories.build
+    @leaflet = Room.new
+    @leaflet.stories.build
   end
 
   def show

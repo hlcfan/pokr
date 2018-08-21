@@ -44,7 +44,7 @@
     <%= f.label "Point values" %>
     <%= f.hidden_field :pv, id: 'point-values', value: @room.pv_for_form %>
     <%= f.hidden_field :scheme %>
-    <%= render "rooms/point_values" %>
+    <%= render partial: "rooms/point_values", locals: { room: @room } %>
   </div>
   <section class="stories-section panel panel-default" id="story-section">
     <div class="panel-heading clearfix">
