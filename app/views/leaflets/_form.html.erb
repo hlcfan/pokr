@@ -1,0 +1,58 @@
+<% form_url = @room.new_record? ? "/leaflets" : leaflet_path(@room.slug) %>
+<%= form_for @room, url: form_url, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
+  <% if @room.errors.any? %>
+    <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
+
+    <ul class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+      <% @room.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, placeholder: 'Room name', class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label "Point values" %>
+    <%= f.hidden_field :pv, id: 'point-values', value: @room.pv_for_form %>
+    <%= f.hidden_field :scheme %>
+    <%= render "rooms/point_values" %>
+  </div>
+  <section class="stories-section panel panel-default" id="story-section">
+    <div class="panel-heading clearfix">
+      <h3 class="panel-title pull-left">Stories</h3>
+      <% if @room.new_record? %>
+        <a class="pull-right import" href="javascript:;" data-status="input">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          Import from list
+        </a>
+      <% end %>
+    </div>
+    <div class="panel-body" id="story-row">
+      <%= render partial: 'rooms/story_form', locals: { f: f } %>
+      <% if @room.new_record? %>
+        <div class="row bulk-links" style="display: none;">
+          <input type="hidden" name="room[bulk]" id="room_bulk">
+          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One story per line", class: 'form-control col-xs-10' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <button type="button" class="add btn btn-info">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </section>
+  <div class="actions form-group">
+    <%= f.submit "Submit", class: 'btn btn-default' %>
+  </div>
+<% end %>
+<input type="hidden" id="room-moderators" value='<%= @room.moderator_hash.to_json %>' />

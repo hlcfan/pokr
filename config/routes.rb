@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :leaflets
+
   resources :schemes
 
   namespace :users do

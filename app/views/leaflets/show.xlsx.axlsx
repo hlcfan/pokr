@@ -1,0 +1,25 @@
+workbook = xlsx_package.workbook
+workbook.styles do |style|
+  thead_style = style.add_style(bg_color: "5bc0de", fg_color: "ffffff", bold:
+true, sz: 16)
+  row_style = style.add_style(alignment: { horizontal: :left }, sz: 15)
+
+  workbook.add_worksheet(name: @room.name) do |sheet|
+    total_point = 0
+    sheet.add_row [room_url(@room.slug)], sz: 16
+    sheet.add_hyperlink location: room_url(@room.slug), ref: sheet.rows.first.cells.first
+    sheet.merge_cells "A1:B1"
+    sheet.add_row ["Ticket", "Point", "Description"], style: thead_style
+    @room.stories.each do |story|
+      total_point += story.point.to_f
+      point_for_display = story.point == "null" ? "skipped" : story.point
+      sheet.add_row ["#{story.link}          ", point_for_display, story.desc], style:
+row_style
+    end
+    if total_point > 0
+      tfoot_style = style.add_style(bg_color: "777777", fg_color: "ffffff",
+alignment: { horizontal: :left }, sz: 16)
+      sheet.add_row ["Total", total_point, nil], style: tfoot_style
+    end
+  end
+end

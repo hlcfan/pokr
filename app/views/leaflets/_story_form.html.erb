@@ -1,0 +1,20 @@
+<%= f.nested_fields_for :stories do |story| %>
+  <div class="row">
+    <div class="form-group col-xs-1 form-group-sm move-btn">
+      <a href="javascript:;" class="move">↕️</a>
+    </div>
+    <div class="form-group col-md-5 col-sm-5 col-xs-9 form-group-sm">
+      <%= story.label :link, 'Story', class: 'type-name' %>
+      <%= story.text_field :link, class: 'form-control', placeholder: 'Link or title' %>
+    </div>
+    <div class="form-group col-xs-5 form-group-sm story-form__desc">
+      <%= story.label :desc, 'Short Description', class: 'type-name' %>
+      <%= story.text_area :desc, class: 'form-control', placeholder: 'Description - optional' %>
+    </div>
+    <div class="form-group col-xs-1 form-group-sm remove-btn">
+      <a href="javascript:;" class="remove">⛔️</a>
+    </div>
+    <%= story.hidden_field :id %>
+    <%= story.hidden_field :_destroy %>
+  </div>
+<% end %>

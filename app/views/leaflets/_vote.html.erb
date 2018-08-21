@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Vote</div>
+  <div class="vote-list panel-body row">
+    <div class="col-md-12">
+      <ul class="list-inline">
+        <% [0, 2, 3, 5, 8, 13, 20, 40, 100, 'coffee'].each do |point| %>
+          <li><input class="btn btn-default btn-lg <%= 'btn-info' if points == point.to_s %>" type="button" value="<%= point %>"></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

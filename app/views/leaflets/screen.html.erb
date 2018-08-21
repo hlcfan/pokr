@@ -1,0 +1,27 @@
+<%
+  title "Screen"
+%>
+<div class="row screen">
+  <div class="col-xs-0 col-md-4"></div>
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Quik join or just sign up</div>
+      <div class="panel-body">
+        <%= form_tag screen_room_path, method: "post", class: 'form-inline', role: 'form' do %>
+          <div class="form-group">
+            <label for="username" class="sr-only">Email/Name</label>
+            <div class="col-md-12 col-xs-9">
+              <input type="text" autofocus="true" class="form-control" id="username" name="username" placeholder="Email or Username">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default">Join</button>
+        <% end %>
+        <div class="line-spliter">
+          <span><b>Or</b></span>
+        </div>
+        <%= render template: "devise/sessions/sign_in_form" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-0 col-md-4"></div>
+</div>
