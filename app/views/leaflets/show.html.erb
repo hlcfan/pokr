@@ -2,12 +2,28 @@
   title @room.name
 %>
 
-<script src="https://cdn.ravenjs.com/3.17.0/raven.min.js"
-    crossorigin="anonymous"></script>
-<%= javascript_pack_tag('vendor-bundle') %>
-<%= javascript_pack_tag('app-bundle') %>
-<%= stylesheet_pack_tag('app-bundle') %>
-<%= stylesheet_link_tag "libs/joyride" %>
+<div class="row leaflet">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Leaflet</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <% @room.stories.each do |story| %>
+            <li class="list-group-item">
+              <%= story.link %>
+              <%= @room.point_values %>
+              <%= render partial: "rooms/point_values", locals: { room: @room } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="panel-footer">Panel footer</div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
 <input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />
@@ -18,22 +34,6 @@
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
 <%= action_cable_meta_tag %>
 
-<%= react_component(component_name,
-  props: {roomId: @room.slug,
-          roomName: @room.name,
-          currentUserId: current_user.id,
-          role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
-          roomState: @room.state,
-          pointValues: @room.point_values,
-          timerInterval: @room.timer_interval,
-          freeStyle: @room.free_style?,
-          storyListUrl: "/rooms/#{@room.slug}/story_list.json",
-          peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
-          currentVote: current_user.points_of_story(@room.current_story_id),
-          currentStoryId: @room.current_story_id,
-          duration: @room.duration
-          },
-  prerender: false) %>
 <script type="text/javascript">
   Raven.config('https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730').install()
 </script>
