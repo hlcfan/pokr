@@ -1,0 +1,17 @@
+// Place all the styles related to the leaflets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.leaflet {
+  .point-values {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+
+    li input {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+  }
+}

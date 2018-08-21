@@ -13,13 +13,16 @@
           <% @room.stories.each do |story| %>
             <li class="list-group-item">
               <%= story.link %>
-              <%= @room.point_values %>
-              <%= render partial: "rooms/point_values", locals: { room: @room } %>
+              <%= render partial: "leaflets/point_options", locals: { room: @room } %>
             </li>
           <% end %>
         </ul>
       </div>
-      <div class="panel-footer">Panel footer</div>
+      <div class="panel-footer">
+        <div class="form-group">
+          <input type="submit" name="commit" value="Submit" class="btn btn-default" data-disable-with="Submit">
+        </div>
+      </div>
     </div>
   </div>
 </div>
