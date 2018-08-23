@@ -7,7 +7,7 @@ module LeafletsHelper
     room.point_values.inject(''.html_safe) do |html, value|
       html + content_tag(:li) do
         btn_class = if user_story_points[story.id] == value
-          "btn btn-info"
+          "btn btn-default btn-info"
         else
           "btn btn-default"
         end
