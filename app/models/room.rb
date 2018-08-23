@@ -25,10 +25,11 @@ class Room < ApplicationRecord
   OPEN = 1
   DRAW = 2
 
-  FREESTYLE = 1
+  FREE_STYLE     = 1
+  LEAFLET_STYLE = 2
 
   def state
-    if FREESTYLE == self.style
+    if FREE_STYLE == self.style
       { Room::OPEN => 'open' }
     else
       { Room::OPEN => 'open', Room::DRAW => 'draw' }
@@ -36,7 +37,7 @@ class Room < ApplicationRecord
   end
 
   def free_style?
-    FREESTYLE == self.style
+    FREE_STYLE == self.style
   end
 
   def display_state
