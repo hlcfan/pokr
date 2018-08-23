@@ -13,7 +13,7 @@
           <% @room.stories.each do |story| %>
             <li class="list-group-item">
               <%= story.link %>
-              <%= render partial: "leaflets/point_options", locals: { room: @room, story: story } %>
+              <%= render partial: "rooms/leaflets/point_options", locals: { room: @room, story: story } %>
             </li>
           <% end %>
         </ul>

@@ -44,7 +44,7 @@ class RoomsController < ApplicationController
     @room.stories.build
 
     if params.key?(:leaflet)
-      render "leaflets/new"
+      render "rooms/leaflets/new"
     else
       render "rooms/new"
     end
@@ -173,13 +173,13 @@ class RoomsController < ApplicationController
   def leaflet_view
     redirect_to room_path(@room) and return if @room.created_by != current_user.id
 
-
+    render "rooms/leaflets/view"
   end
   private
 
   def room_template
     if @room.style == Room::LEAFLET_STYLE
-      "leaflets"
+      "rooms/leaflets"
     else
       "rooms"
     end

@@ -1,0 +1,25 @@
+<%
+  title @room.name
+%>
+
+<div class="row leaflet">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Leaflet overview</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <% @room.stories.each do |story| %>
+            <li class="list-group-item">
+              <%= story.link %>
+
+              <%= render partial: "rooms/leaflets/point_options", locals: { room: @room, story: story } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
