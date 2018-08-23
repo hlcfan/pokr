@@ -167,7 +167,7 @@ class RoomsController < ApplicationController
                           point)
     end
 
-    render json: { success: true }
+    redirect_to room_path(@room.slug), flash: { success: "Submitted successfully." }
   end
 
   def leaflet_view
