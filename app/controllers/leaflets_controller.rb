@@ -24,6 +24,7 @@ class LeafletsController < ApplicationController
     end
   end
 
+
   def show
 
   end

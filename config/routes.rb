@@ -35,10 +35,10 @@ Rails.application.routes.draw do
       get :screen
       post :screen
       post :sync_status
+      post :submit_vote
+      get :view, to: 'rooms#leaflet_view'
     end
   end
-
-  resources :leaflets
 
   resources :schemes
 

@@ -25,7 +25,7 @@ class Room < ApplicationRecord
   OPEN = 1
   DRAW = 2
 
-  FREE_STYLE     = 1
+  FREE_STYLE    = 1
   LEAFLET_STYLE = 2
 
   def state
@@ -201,6 +201,15 @@ class Room < ApplicationRecord
 
   def related_to_user? user_id
     user_rooms.where(user_id: user_id).exists?
+  end
+
+  def leaflet_options current_user_id
+    UserStoryPoint.where(user_id: current_user_id, story_id: stories.pluck(:id)).inject({}) do |hash, user_story_point|
+      hash[user_story_point.story_id] = user_story_point.points
+
+      hash
+    end
+
   end
 
   private

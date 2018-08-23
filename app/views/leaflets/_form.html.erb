@@ -1,12 +1,13 @@
-<% form_url = @leaflet.new_record? ? "/leaflets" : leaflet_path(@leaflet.slug) %>
-<%= form_for @leaflet, url: form_url, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
-  <% if @leaflet.errors.any? %>
-    <h2><%= pluralize(@leaflet.errors.count, "error") %> prohibited this room from being saved:</h2>
+<% form_url = @room.new_record? ? "/rooms" : leaflet_path(@room.slug) %>
+<%= form_for @room, url: form_url, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
+  <%= f.hidden_field :style, value: Room::LEAFLET_STYLE %>
+  <% if @room.errors.any? %>
+    <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
 
     <ul class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-      <% @leaflet.errors.full_messages.each do |message| %>
+      <% @room.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
@@ -22,14 +23,14 @@
   </div>
   <div class="form-group">
     <%= f.label "Point values" %>
-    <%= f.hidden_field :pv, id: 'point-values', value: @leaflet.pv_for_form %>
+    <%= f.hidden_field :pv, id: 'point-values', value: @room.pv_for_form %>
     <%= f.hidden_field :scheme %>
-    <%= render partial: "rooms/point_values", locals: { room: @leaflet } %>
+    <%= render partial: "rooms/point_values", locals: { room: @room } %>
   </div>
   <section class="stories-section panel panel-default" id="story-section">
     <div class="panel-heading clearfix">
       <h3 class="panel-title pull-left">Stories</h3>
-      <% if @leaflet.new_record? %>
+      <% if @room.new_record? %>
         <a class="pull-right import" href="javascript:;" data-status="input">
           <i class="fa fa-list" aria-hidden="true"></i>
           Import from list
@@ -38,7 +39,7 @@
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
-      <% if @leaflet.new_record? %>
+      <% if @room.new_record? %>
         <div class="row bulk-links" style="display: none;">
           <input type="hidden" name="room[bulk]" id="room_bulk">
           <%= text_area_tag "room[bulk_links]", nil, placeholder: "One story per line", class: 'form-control col-xs-10' %>
@@ -55,4 +56,4 @@
     <%= f.submit "Submit", class: 'btn btn-default' %>
   </div>
 <% end %>
-<input type="hidden" id="room-moderators" value='<%= @leaflet.moderator_hash.to_json %>' />
+<input type="hidden" id="room-moderators" value='<%= @room.moderator_hash.to_json %>' />

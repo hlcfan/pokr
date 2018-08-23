@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :submit_vote, :leaflet_view]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status
 
@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
     cookies[:room_id] = @room.slug
 
     respond_to do |format|
-      format.html
+      format.html { render "#{room_template}/show" }
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=#{excel_filename}.xlsx"
       }
@@ -42,6 +42,12 @@ class RoomsController < ApplicationController
   def new
     @room = Room.new
     @room.stories.build
+
+    if params.key?(:leaflet)
+      render "leaflets/new"
+    else
+      render "rooms/new"
+    end
   end
 
   # GET /rooms/1/edit
@@ -153,7 +159,31 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def submit_vote
+    params["votes"].each do |story_id, point|
+      next unless @room.stories.pluck(:id).include?(story_id.to_i)
+      UserStoryPoint.vote(current_user.id,
+                          story_id,
+                          point)
+    end
+
+    render json: { success: true }
+  end
+
+  def leaflet_view
+    redirect_to room_path(@room) and return if @room.created_by != current_user.id
+
+
+  end
   private
+
+  def room_template
+    if @room.style == Room::LEAFLET_STYLE
+      "leaflets"
+    else
+      "rooms"
+    end
+  end
 
   def excel_filename
     if @room.name.parameterize.blank?
