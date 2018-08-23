@@ -15,7 +15,7 @@ class Leaflets
 
     $(".leaflet__submit").on "click", ->
       $.ajax(
-        url: "/rooms/#{roomId}/submit_vote"
+        url: "/rooms/#{roomId}/leaflet_submit"
         method: "POST"
         data: { votes: leafletOptions }
         cache: false

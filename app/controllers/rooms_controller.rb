@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :submit_vote, :leaflet_view]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status
 
@@ -159,7 +159,7 @@ class RoomsController < ApplicationController
     head :ok
   end
 
-  def submit_vote
+  def leaflet_submit
     params["votes"].each do |story_id, point|
       next unless @room.stories.pluck(:id).include?(story_id.to_i)
       UserStoryPoint.vote(current_user.id,
