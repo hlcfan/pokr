@@ -2,6 +2,8 @@
   title @room.name
 %>
 
+<input type="hidden" id="roomId" value="<%= @room.slug %>" />
+
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
     <div class="panel panel-default">
@@ -13,14 +15,14 @@
           <table class="table">
             <thead>
               <th>User</th>
-              <th>Ticket link</th>
+              <th>Point</th>
               <th>Comment</th>
               <th>Operation</th>
             </thead>
             <tbody>
               <p class="lead"><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></p>
               <% story_item[:individuals].each do |individual| %>
-                <tr>
+                <tr data-vote-id="<%= individual[:user_story_point_id] %>">
                   <td>
                     <a href="javascript:void(0);" class="person">
                       <i class="person__avatar"><%= image_tag individual[:user_avatar], class: "profile-image img-circle"%></i>
@@ -28,11 +30,11 @@
                     </a>
                   </td>
                   <td>
-                    <%= individual[:user_points] %>
+                    <%= individual[:user_point] %>
                   </td>
                   <td></td>
-                  <td>
-                    <a href="javascript:void(0);">Finalize</a>
+                  <td class="table__finalize-btn-col">
+                    <a href="javascript:void(0);" class="table__finalize-btn" data-story-id="<%= story_item[:id]%>" data-story-point="<%= individual[:user_point]%>">Finalize</a>
                   </td>
                 </tr>
               <% end %>
