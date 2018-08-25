@@ -172,6 +172,7 @@ class RoomsController < ApplicationController
 
   def leaflet_view
     redirect_to room_path(@room) and return if @room.created_by != current_user.id
+    @story_points = @room.leaflet_votes_summary
 
     render "rooms/leaflets/view"
   end

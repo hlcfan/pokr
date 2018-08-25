@@ -61,7 +61,32 @@ class Room < ApplicationRecord
   end
 
   def summary
-    story_ids = stories.map &:id
+    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
+
+    stories_list.map do |story|
+      {
+        id: story[0],
+        link: story[1],
+        point: story[2],
+        individuals: user_votes_summary[story[0]]
+      }
+    end
+  end
+
+  def leaflet_votes_summary
+    stories_list = stories.pluck(:id, :link, :point)
+    stories_list.map do |story|
+      {
+        id: story[0],
+        link: story[1],
+        point: story[2],
+        individuals: user_votes_summary[story[0]]
+      }
+    end
+  end
+
+  def user_votes_summary
+    story_ids = stories.pluck(:id)
     users_hash = {}
     users.each do |user|
       users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
@@ -77,16 +102,7 @@ class Room < ApplicationRecord
       }
     end
 
-    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
-
-    stories_list.map do |story|
-      {
-        id: story[0],
-        link: story[1],
-        point: story[2],
-        individuals: user_story_points_hash[story[0]]
-      }
-    end
+    user_story_points_hash
   end
 
   def current_story_id
