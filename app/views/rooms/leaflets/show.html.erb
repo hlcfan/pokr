@@ -2,6 +2,7 @@
   title @room.name
 %>
 
+<input type="hidden" id="leafletVotes" value="<%= @room.leaflet_options(current_user.id).to_json %>" />
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
     <div class="panel panel-default">

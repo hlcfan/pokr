@@ -5,19 +5,20 @@
 
 class Leaflets
   show: ->
-    window.leafletOptions = {}
+    window.leafletVotes = JSON.parse($("#leafletVotes").val()) || {}
+
     roomId = $("#roomId").val()
     $(".leaflet .point-values .btn").on "click", ->
       $that = $(this)
       $that.parents(".point-values").find(".btn").removeClass("btn-info")
       $that.toggleClass("btn-info")
-      leafletOptions[$that.parents(".point-values").data("ticket-id")] = $that.val()
+      leafletVotes[$that.parents(".point-values").data("ticket-id")] = $that.val()
 
     $(".leaflet__submit").on "click", ->
       $.ajax(
         url: "/rooms/#{roomId}/leaflet_submit"
         method: "POST"
-        data: { votes: leafletOptions }
+        data: { votes: leafletVotes }
         cache: false
       ).done((data) ->
         return

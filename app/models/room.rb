@@ -231,7 +231,6 @@ class Room < ApplicationRecord
 
       hash
     end
-
   end
 
   private
