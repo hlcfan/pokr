@@ -30,6 +30,9 @@ class RoomsController < ApplicationController
   def show
     cookies[:room_id] = @room.slug
 
+    if @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
+      redirect_to view_room_path(@room.slug) and return
+    end
     respond_to do |format|
       format.html { render "#{room_template_path}/show" }
       format.xlsx {
@@ -55,12 +58,20 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if repo.save @room
         remove_memorization_of_moderators
-        format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
+        format.html { redirect_to room_path(@room.slug), notice: "Room was successfully created." }
         format.json { render :show, status: :created, location: @room }
       else
         format.html { render :new }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def room_path_by_mode
+    if @room.async_room? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
+      view_room_path(@room.slug)
+    else
+      room_path(@room.slug)
     end
   end
 

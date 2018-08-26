@@ -40,7 +40,7 @@ class Room < ApplicationRecord
     FREE_STYLE == self.style
   end
 
-  def leaflet_style?
+  def async_mode?
     LEAFLET_STYLE == self.style
   end
 
