@@ -41,10 +41,7 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
-    @room.style = Room:LEAFLET_STYLE if params.key?(:leaflet)
     @room.stories.build
-
-    render "#{room_template_path}/new"
   end
 
   # GET /rooms/1/edit

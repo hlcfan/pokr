@@ -14,7 +14,7 @@
         <ul class="list-group">
           <% @room.stories.each do |story| %>
             <li class="list-group-item">
-              <h4><%= link_to show_story_link(story.link), story.link, target: "_blank" %></h4>
+              <h4><%= link_to story.link, show_story_link(story.link), target: "_blank" %></h4>
               <p><%= story.desc %></p>
               <%= render partial: "rooms/leaflets/point_options", locals: { room: @room, story: story } %>
             </li>
