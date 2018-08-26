@@ -28,7 +28,7 @@ class Leaflets
         return
       )
 
-    $(".finalize-btn-col__finalize-btn").on "click", ->
+    $(".finalize-link-col__finalize-link").on "click", ->
       $that = $(this)
 
       $.ajax(
@@ -37,7 +37,10 @@ class Leaflets
         data: { voteId: $that.parents("tr").data("voteId") },
         cache: false
       ).done((data) ->
-        $that.parents("table").find("tr .finalize-btn-col__finalize-btn, tr .finalize-btn-col__check-icon").toggleClass("hidden")
+        $that.parents("table").find("tr .finalize-link-col__finalize-link").removeClass("hidden")
+        $that.parents("table").find("tr .finalize-link-col__check-icon").addClass("hidden")
+        $that.addClass("hidden")
+        $that.prev().removeClass("hidden")
         return
       ).fail((xhr, status, err) ->
         console.error status, err.toString()

@@ -3,12 +3,14 @@
 %>
 
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
+<input type="hidden" id="leafletVotes" value="<%= @room.leaflet_options(current_user.id).to_json %>" />
 
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Leaflet overview</h3>
+        <strong>Leaflet overview</strong>
+        <a href="<%= edit_room_path(@room.slug)%>" class="leaflet__edit-link pull-right"><i class="fa fa-edit"></i> Edit</a>
       </div>
       <div class="panel-body">
         <% @story_points.each do |story_item| %>
@@ -33,11 +35,11 @@
                     <%= individual[:user_point] %>
                   </td>
                   <td></td>
-                  <td class="table__finalize-btn-col">
-                    <span class="finalize-btn-col__check-icon <%= "hidden" unless individual[:user_story_point_finalized] %>">
+                  <td class="table__finalize-link-col">
+                    <span class="finalize-link-col__check-icon <%= "hidden" unless individual[:user_story_point_finalized] %>">
                       ✅
                     </span>
-                    <a href="javascript:void(0);" class="finalize-btn-col__finalize-btn <%= "hidden" if individual[:user_story_point_finalized] %>">Finalize</a>
+                    <a href="javascript:void(0);" class="finalize-link-col__finalize-link <%= "hidden" if individual[:user_story_point_finalized] %>">Finalize</a>
                   </td>
                 </tr>
               <% end %>
