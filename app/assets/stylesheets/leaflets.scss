@@ -3,6 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .leaflet {
   .point-values {
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
 
     &.active {
       display: block;

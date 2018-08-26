@@ -1,4 +1,4 @@
-<% form_url = @room.new_record? ? "/rooms" : leaflet_path(@room.slug) %>
+<% form_url = @room.new_record? ? "/rooms" : room_path(@room.slug) %>
 <%= form_for @room, url: form_url, html: { id: 'room-form', class: 'form', role: 'form' } do |f| %>
   <%= f.hidden_field :style, value: Room::LEAFLET_STYLE %>
   <% if @room.errors.any? %>

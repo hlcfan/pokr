@@ -52,6 +52,11 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1/edit
   def edit
+    if params.key?(:leaflet)
+      render "rooms/leaflets/edit"
+    else
+      render "rooms/edit"
+    end
   end
 
   # POST /rooms
