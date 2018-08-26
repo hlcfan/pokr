@@ -26,19 +26,16 @@ class Leaflets
         return
       )
 
-    $(".leaflet .table__finalize-btn").on "click", ->
+    $(".finalize-btn-col__finalize-btn").on "click", ->
       $that = $(this)
-      data = {storyId: $that.data("story-id"), storyPoint: $that.data("story-point") }
 
       $.ajax(
         url: "/rooms/#{roomId}/leaflet_finalize_point"
         method: "POST"
-        data: data,
+        data: { voteId: $that.parents("tr").data("voteId") },
         cache: false
       ).done((data) ->
-        parentTd = $that.parent()
-        $that.parents("table").find(".table__finalize-btn-col").html("")
-        parentTd.html("✅")
+        $that.parents("table").find("tr .finalize-btn-col__finalize-btn, tr .finalize-btn-col__check-icon").toggleClass("hidden")
         return
       ).fail((xhr, status, err) ->
         console.error status, err.toString()

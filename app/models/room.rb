@@ -95,11 +95,12 @@ class Room < ApplicationRecord
     user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
     user_story_points.each do |user_story_point|
       user_story_points_hash[user_story_point.story_id] << {
-        user_id:             user_story_point.user_id,
-        user_point:         user_story_point.points,
-        user_name:           users_hash[user_story_point.user_id][:name],
-        user_avatar:         users_hash[user_story_point.user_id][:avatar],
-        user_story_point_id: user_story_point.id
+        user_id:                    user_story_point.user_id,
+        user_point:                 user_story_point.points,
+        user_name:                  users_hash[user_story_point.user_id][:name],
+        user_avatar:                users_hash[user_story_point.user_id][:avatar],
+        user_story_point_id:        user_story_point.encoded_id,
+        user_story_point_finalized: user_story_point.finalized
       }
     end
 

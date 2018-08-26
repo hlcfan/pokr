@@ -178,11 +178,14 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
+    user_story_point = UserStoryPoint.find UserStoryPoint.decoded_id(params[:voteId])
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    if user_room.moderator? && @room.valid_vote_point?(params[:point])
-      story = Story.find_by id: params[:story_id], room_id: @room.id
-      story.update_attribute :point, params[:point] if story
+    if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
+      story = Story.find_by id: user_story_point.story_id, room_id: @room.id
+      story.update_attribute :point, user_story_point.points if story
+      UserStoryPoint.where(story_id: story.id).where.not(finalized: nil).update_all(finalized: nil)
+      user_story_point.update_attribute(:finalized, true)
 
       head :ok
     end

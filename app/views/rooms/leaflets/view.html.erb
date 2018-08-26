@@ -34,7 +34,11 @@
                   </td>
                   <td></td>
                   <td class="table__finalize-btn-col">
-                    <a href="javascript:void(0);" class="table__finalize-btn" data-story-id="<%= story_item[:id]%>" data-story-point="<%= individual[:user_point]%>">Finalize</a>
+                    <%# binding.pry %>
+                    <span class="finalize-btn-col__check-icon <%= "hidden" unless individual[:user_story_point_finalized] %>">
+                      ✅
+                    </span>
+                    <a href="javascript:void(0);" class="finalize-btn-col__finalize-btn <%= "hidden" if individual[:user_story_point_finalized] %>">Finalize</a>
                   </td>
                 </tr>
               <% end %>
