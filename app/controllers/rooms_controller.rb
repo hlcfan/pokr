@@ -166,8 +166,7 @@ class RoomsController < ApplicationController
                           story_id,
                           point)
     end
-
-    redirect_to room_path(@room.slug), flash: { success: "Submitted successfully." }
+    flash[:success] = "Submitted successfully"
   end
 
   def leaflet_view

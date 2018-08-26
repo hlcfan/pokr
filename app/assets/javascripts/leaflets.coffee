@@ -21,6 +21,7 @@ class Leaflets
         data: { votes: leafletVotes }
         cache: false
       ).done((data) ->
+        location.reload()
         return
       ).fail((xhr, status, err) ->
         console.error status, err.toString()
