@@ -46,7 +46,6 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1/edit
   def edit
-    render "#{room_template_path}/edit"
   end
 
   # POST /rooms
