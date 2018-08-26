@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
     cookies[:room_id] = @room.slug
 
     respond_to do |format|
-      format.html { render "#{room_template}/show" }
+      format.html { render "#{room_template_path}/show" }
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=#{excel_filename}.xlsx"
       }
@@ -41,22 +41,15 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @room.style = Room:LEAFLET_STYLE if params.key?(:leaflet)
     @room.stories.build
 
-    if params.key?(:leaflet)
-      render "rooms/leaflets/new"
-    else
-      render "rooms/new"
-    end
+    render "#{room_template_path}/new"
   end
 
   # GET /rooms/1/edit
   def edit
-    if params.key?(:leaflet)
-      render "rooms/leaflets/edit"
-    else
-      render "rooms/edit"
-    end
+    render "#{room_template_path}/edit"
   end
 
   # POST /rooms
@@ -198,7 +191,7 @@ class RoomsController < ApplicationController
 
   private
 
-  def room_template
+  def room_template_path
     if @room.style == Room::LEAFLET_STYLE
       "rooms/leaflets"
     else

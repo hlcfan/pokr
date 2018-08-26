@@ -40,6 +40,10 @@ class Room < ApplicationRecord
     FREE_STYLE == self.style
   end
 
+  def leaflet_style?
+    LEAFLET_STYLE == self.style
+  end
+
   def display_state
     if state == "draw"
       "Finished"

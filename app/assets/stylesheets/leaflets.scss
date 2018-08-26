@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .leaflet {
+  .leaflet__edit-link {
+    text-decoration: none;
+    color: #444;
+  }
+
   .point-values {
     padding-top: 15px;
     border-top: 1px dashed #ccc;
