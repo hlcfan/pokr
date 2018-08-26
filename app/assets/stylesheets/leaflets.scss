@@ -20,4 +20,23 @@
       margin-bottom: 15px;
     }
   }
+
+  .leaflet__view-summary {
+    line-height: 2;
+  }
+}
+
+.leaflet_view {
+  hr {
+    border-color: #ccc;
+  }
+
+  h4 {
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 10px;
+  }
+
+  .table__finalize-link-col {
+    text-align: center;
+  }
 }

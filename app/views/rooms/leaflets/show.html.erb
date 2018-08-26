@@ -21,9 +21,8 @@
         </ul>
       </div>
       <div class="panel-footer">
-        <div class="form-group">
-          <input type="button" name="submit" value="Submit" class="btn btn-default leaflet__submit" data-disable-with="Submit">
-        </div>
+        <input type="button" name="submit" value="Submit" class="btn btn-default leaflet__submit" data-disable-with="Submit">
+        <a href="<%= summary_room_path(@room.slug) %>" class="pull-right leaflet__view-summary" target="_blank">View summary</a>
       </div>
     </div>
   </div>

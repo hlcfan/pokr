@@ -14,37 +14,42 @@
       </div>
       <div class="panel-body">
         <% @story_points.each do |story_item| %>
-          <table class="table">
-            <thead>
-              <th>User</th>
-              <th>Point</th>
-              <th>Comment</th>
-              <th>Operation</th>
-            </thead>
-            <tbody>
-              <p class="lead"><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></p>
-              <% story_item[:individuals].each do |individual| %>
-                <tr data-vote-id="<%= individual[:user_story_point_id] %>">
-                  <td>
-                    <a href="javascript:void(0);" class="person">
-                      <i class="person__avatar"><%= image_tag individual[:user_avatar], class: "profile-image img-circle"%></i>
-                      <%= individual[:user_name] %>
-                    </a>
-                  </td>
-                  <td>
-                    <%= individual[:user_point] %>
-                  </td>
-                  <td></td>
-                  <td class="table__finalize-link-col">
-                    <span class="finalize-link-col__check-icon <%= "hidden" unless individual[:user_story_point_finalized] %>">
-                      ✅
-                    </span>
-                    <a href="javascript:void(0);" class="finalize-link-col__finalize-link <%= "hidden" if individual[:user_story_point_finalized] %>">Finalize</a>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <h4><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></h4>
+          <% if story_item[:individuals].blank? %>
+            <div class="alert alert-info" role="alert">No one vote yet...</div>
+          <% else %>
+            <table class="table">
+              <thead>
+                <th class="col-md-3">Participant</th>
+                <th class="col-md-1">Point</th>
+                <th class="col-md-7">Comment</th>
+                <th class="col-md-1">Operation</th>
+              </thead>
+              <tbody>
+                <% story_item[:individuals].each do |individual| %>
+                  <tr data-vote-id="<%= individual[:user_story_point_id] %>">
+                    <td>
+                      <a href="javascript:void(0);" class="person">
+                        <i class="person__avatar"><%= image_tag individual[:user_avatar], class: "profile-image img-circle"%></i>
+                        <%= individual[:user_name] %>
+                      </a>
+                    </td>
+                    <td>
+                      <%= individual[:user_point] %>
+                    </td>
+                    <td></td>
+                    <td class="table__finalize-link-col">
+                      <span class="finalize-link-col__check-icon <%= "hidden" unless individual[:user_story_point_finalized] %>">
+                        ✅
+                      </span>
+                      <a href="javascript:void(0);" class="finalize-link-col__finalize-link <%= "hidden" if individual[:user_story_point_finalized] %>">Finalize</a>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+          <hr class="row" />
         <% end %>
       </div>
     </div>
