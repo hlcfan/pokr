@@ -3,8 +3,8 @@ class UserStoryPoint < ApplicationRecord
   belongs_to :user
   belongs_to :story
 
-  def self.vote user_id, story_id, points
-    user_point = UserStoryPoint.find_or_initialize_by user_id: user_id, story_id: story_id
+  def self.vote user_id, story_id, points, comment=nil
+    user_point = UserStoryPoint.find_or_initialize_by user_id: user_id, story_id: story_id, comment: comment
     if user_point.update points: points
       yield user_point if block_given?
     end

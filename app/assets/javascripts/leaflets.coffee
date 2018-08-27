@@ -12,21 +12,12 @@ class Leaflets
       $that = $(this)
       $that.parents(".point-values").find(".btn").removeClass("btn-info")
       $that.toggleClass("btn-info")
-      leafletVotes[$that.parents(".point-values").data("ticket-id")] = $that.val()
-
-    $(".leaflet__submit").on "click", ->
-      $.ajax(
-        url: "/rooms/#{roomId}/leaflet_submit"
-        method: "POST"
-        data: { votes: leafletVotes }
-        cache: false
-      ).done((data) ->
-        location.reload()
-        return
-      ).fail((xhr, status, err) ->
-        console.error status, err.toString()
-        return
-      )
+      ticketId = $that.parents(".point-values").data("ticket-id")
+      point = $that.val()
+      comment = $that.parents(".point-values").next().val()
+      $("input[value=" + ticketId + "]").siblings(".leaflet__vote-point").val(point)
+      $("input[value=" + ticketId + "]").siblings(".leaflet__vote-comment").val(comment)
+      # leafletVotes[$that.parents(".point-values").data("ticket-id")] = { point: $that.val(), comment: comment }
 
     $(".finalize-link-col__finalize-link").on "click", ->
       $that = $(this)

@@ -30,9 +30,9 @@ class RoomsController < ApplicationController
   def show
     cookies[:room_id] = @room.slug
 
-    if @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
-      redirect_to view_room_path(@room.slug) and return
-    end
+    # if @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
+    #   redirect_to view_room_path(@room.slug) and return
+    # end
     respond_to do |format|
       format.html { render "#{room_template_path}/show" }
       format.xlsx {
@@ -167,11 +167,9 @@ class RoomsController < ApplicationController
   def leaflet_submit
     head(:bad_request) and return if params[:votes].blank?
 
-    params[:votes].each do |story_id, point|
-      next unless @room.stories.pluck(:id).include?(story_id.to_i)
-      UserStoryPoint.vote(current_user.id,
-                          story_id,
-                          point)
+    params[:votes].values.each do |vote|
+      next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
+      UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
     end
     flash[:success] = "Submitted successfully"
   end

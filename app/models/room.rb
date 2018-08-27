@@ -227,7 +227,7 @@ class Room < ApplicationRecord
 
   def leaflet_options current_user_id
     UserStoryPoint.where(user_id: current_user_id, story_id: stories.pluck(:id)).inject({}) do |hash, user_story_point|
-      hash[user_story_point.story_id] = user_story_point.points
+      hash[user_story_point.story_id] = { point: user_story_point.points, comment: user_story_point.comment }
 
       hash
     end

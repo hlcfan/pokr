@@ -1,30 +1,42 @@
 <%
   title @room.name
+  scheme_type = @room.scheme 
+  user_story_points = @room.leaflet_options(current_user.id)
 %>
 
 <input type="hidden" id="leafletVotes" value="<%= @room.leaflet_options(current_user.id).to_json %>" />
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>Leaflet</strong>
+    <form action="<%= leaflet_submit_room_path(@room.slug) %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Leaflet</strong>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% @room.stories.each.with_index do |story, index| %>
+              <% current_vote = user_story_points[story.id]&.[](:point) %>
+              <% current_comment = user_story_points[story.id]&.[](:comment)%>
+              <li class="list-group-item">
+                <input type="hidden" class="leaflet__vote-story-id" name="votes[<%= index %>][story_id]" value="<%= story.id %>" />
+                <input type="hidden" class="leaflet__vote-point" name="votes[<%= index %>][point]" value="<%= current_vote %>" />
+                <h4><%= link_to story.link, show_story_link(story.link), target: "_blank" %></h4>
+                <p><%= story.desc %></p>
+                <ul class="<%= scheme_type.parameterize %> list-inline point-values" data-ticket-id="<%= story.id %>">
+                  <%= render_leaflet_option(current_vote, @room, story) %>
+                </ul>
+                <textarea name="votes[<%= index%>][comment]" rows="3"><%= current_comment %></textarea>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <input type="submit" name="submit" value="Submit" class="btn btn-default leaflet__submit" data-disable-with="Submit">
+          <a href="<%= summary_room_path(@room.slug) %>" class="pull-right leaflet__view-summary" target="_blank">View summary</a>
+        </div>
       </div>
-      <div class="panel-body">
-        <ul class="list-group">
-          <% @room.stories.each do |story| %>
-            <li class="list-group-item">
-              <h4><%= link_to story.link, show_story_link(story.link), target: "_blank" %></h4>
-              <p><%= story.desc %></p>
-              <%= render partial: "rooms/leaflets/point_options", locals: { room: @room, story: story } %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="panel-footer">
-        <input type="button" name="submit" value="Submit" class="btn btn-default leaflet__submit" data-disable-with="Submit">
-        <a href="<%= summary_room_path(@room.slug) %>" class="pull-right leaflet__view-summary" target="_blank">View summary</a>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
