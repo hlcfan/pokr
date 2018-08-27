@@ -171,7 +171,7 @@ class RoomsController < ApplicationController
       next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
       UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
     end
-    flash[:success] = "Submitted successfully"
+    redirect_to room_path(@room.slug), flash: { success: "Submitted successfully" }
   end
 
   def leaflet_view
