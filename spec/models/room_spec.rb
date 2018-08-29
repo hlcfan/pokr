@@ -193,8 +193,19 @@ RSpec.describe Room, type: :model do
       expect(room.free_style?).to be_truthy
     end
 
-    it "is true if style equals 1" do
+    it "is false if style doesn't equals 1" do
       expect(room.free_style?).to be_falsy
+    end
+  end
+
+  describe "#async_mode?" do
+    it "is true if style equals 2" do
+      room.style = 2
+      expect(room.async_mode?).to be_truthy
+    end
+
+    it "is false if style doesn't equals 2" do
+      expect(room.async_mode?).to be_falsy
     end
   end
 
@@ -403,6 +414,17 @@ RSpec.describe Room, type: :model do
       user = User.create(email: 'a@a.com', password: 'password')
       PgSearch::Multisearch.rebuild(Room)
       expect(room.related_to_user?(user.id)).to be false
+    end
+  end
+
+  describe "#async_votes_hash" do
+    it "returns votes hash of an user" do
+      room = Room.create(name: "test slug")
+      user = User.create(email: 'a@a.com', password: 'password')
+      story = Story.create(link: "link_1", room_id: room.id)
+      vote = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13", comment: "My comments")
+
+      expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
     end
   end
 end

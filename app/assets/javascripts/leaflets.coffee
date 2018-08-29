@@ -5,8 +5,6 @@
 
 class Leaflets
   show: ->
-    window.leafletVotes = JSON.parse($("#leafletVotes").val()) || {}
-
     roomId = $("#roomId").val()
     $(".leaflet .point-values .btn").on "click", ->
       $that = $(this)
@@ -17,7 +15,6 @@ class Leaflets
       comment = $that.parents(".point-values").next().val()
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-point").val(point)
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-comment").val(comment)
-      # leafletVotes[$that.parents(".point-values").data("ticket-id")] = { point: $that.val(), comment: comment }
 
     $(".finalize-link-col__finalize-link").on "click", ->
       $that = $(this)

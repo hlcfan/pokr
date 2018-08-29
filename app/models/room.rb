@@ -66,50 +66,11 @@ class Room < ApplicationRecord
 
   def summary
     stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
-
-    stories_list.map do |story|
-      {
-        id: story[0],
-        link: story[1],
-        point: story[2],
-        individuals: user_votes_summary[story[0]]
-      }
-    end
+    summary_by_condition(stories_list)
   end
 
   def leaflet_votes_summary
-    stories_list = stories.pluck(:id, :link, :point)
-    stories_list.map do |story|
-      {
-        id: story[0],
-        link: story[1],
-        point: story[2],
-        individuals: user_votes_summary[story[0]]
-      }
-    end
-  end
-
-  def user_votes_summary
-    story_ids = stories.pluck(:id)
-    users_hash = {}
-    users.each do |user|
-      users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
-    end
-    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys).order("id ASC")
-    user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
-    user_story_points.each do |user_story_point|
-      user_story_points_hash[user_story_point.story_id] << {
-        user_id:                    user_story_point.user_id,
-        user_point:                 user_story_point.points,
-        user_name:                  users_hash[user_story_point.user_id][:name],
-        user_avatar:                users_hash[user_story_point.user_id][:avatar],
-        user_story_point_id:        user_story_point.encoded_id,
-        user_story_point_finalized: user_story_point.finalized,
-        user_story_point_comment: user_story_point.comment
-      }
-    end
-
-    user_story_points_hash
+    summary_by_condition(stories.pluck(:id, :link, :point))
   end
 
   def current_story_id
@@ -226,7 +187,7 @@ class Room < ApplicationRecord
     user_rooms.where(user_id: user_id).exists?
   end
 
-  def leaflet_options current_user_id
+  def async_votes_hash current_user_id
     UserStoryPoint.where(user_id: current_user_id, story_id: stories.pluck(:id)).inject({}) do |hash, user_story_point|
       hash[user_story_point.story_id] = { point: user_story_point.points, comment: user_story_point.comment }
 
@@ -235,6 +196,41 @@ class Room < ApplicationRecord
   end
 
   private
+
+  def summary_by_condition stories_list
+    stories_list.map do |story|
+      {
+        id: story[0],
+        link: story[1],
+        point: story[2],
+        individuals: user_votes_summary[story[0]]
+      }
+    end
+  end
+
+  def user_votes_summary
+    story_ids = stories.pluck(:id)
+    users_hash = {}
+    users.each do |user|
+      users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
+    end
+    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys).order("id ASC")
+    user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
+    user_story_points.each do |user_story_point|
+      user_story_points_hash[user_story_point.story_id] << {
+        user_id:                    user_story_point.user_id,
+        user_point:                 user_story_point.points,
+        user_name:                  users_hash[user_story_point.user_id][:name],
+        user_avatar:                users_hash[user_story_point.user_id][:avatar],
+        user_story_point_id:        user_story_point.encoded_id,
+        user_story_point_finalized: user_story_point.finalized,
+        user_story_point_comment: user_story_point.comment
+      }
+    end
+
+    user_story_points_hash
+  end
+
 
   def moderators
     @moderator ||= begin

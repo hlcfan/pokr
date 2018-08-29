@@ -3,7 +3,6 @@
 %>
 
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
-<input type="hidden" id="leafletVotes" value="<%= @room.leaflet_options(current_user.id).to_json %>" />
 
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">

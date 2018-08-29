@@ -1,10 +1,9 @@
 <%
   title @room.name
   scheme_type = @room.scheme 
-  user_story_points = @room.leaflet_options(current_user.id)
+  user_story_points = @room.async_votes_hash(current_user.id)
 %>
 
-<input type="hidden" id="leafletVotes" value="<%= @room.leaflet_options(current_user.id).to_json %>" />
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
     <form action="<%= leaflet_submit_room_path(@room.slug) %>" method="post">
