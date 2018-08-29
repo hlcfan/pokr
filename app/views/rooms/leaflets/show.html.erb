@@ -10,7 +10,8 @@
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <strong>Leaflet</strong>
+          <strong><%= @room.name %></strong>
+          <span class="pull-right"><i class="fa fa-info-circle"></i> Click to vote</span>
         </div>
         <div class="panel-body">
           <ul class="list-group">

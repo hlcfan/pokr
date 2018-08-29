@@ -106,21 +106,12 @@ export default class StatusBar extends React.Component {
       }
     })();
 
-    const copyLink = () => {
-      const aField = document.getElementById("hiddenField");
-      aField.hidden   = false;
-      aField.value    = window.location.href;
-      aField.select();
-      document.execCommand("copy");
-      aField.hidden = true;
-    };
-
     const operationButtons = (() => {
       if (this.props.roomState !== "draw") {
         return(
           <div className="btn-group pull-right" role="group">
             {editButton}
-            <button type="button" onClick={copyLink} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
+            <button type="button" onClick={copyToClipboard} className="btn btn-default" data-toggle="tooltip" data-placement="bottom">📻 Share link</button>
             {roomStatusButton}
           </div>
         )

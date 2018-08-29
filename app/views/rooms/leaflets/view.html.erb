@@ -8,14 +8,23 @@
   <div class="col-md-10 col-md-offset-1">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Leaflet overview</strong>
-        <a href="<%= edit_room_path(@room.slug)%>" class="leaflet__edit-link pull-right"><i class="fa fa-edit"></i> Edit</a>
+        <h3 class="panel-title">Async room overview</h3>
       </div>
       <div class="panel-body">
+        <div class="clearfix">
+          <div class="pull-left"><h3 class="leaflet__name"><%= @room.name %></h3></div>
+          <div class="btn-group pull-right" role="group">
+            <a href="<%= edit_room_path(@room.slug) %>" class="btn btn-default">✏️ Edit room</a>
+            <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
+            <div id="tooltip-area"></div>
+            <input type="text" id="hiddenField" class="leaflet__room-share-link" />
+          </div>
+        </div>
+        <hr class="leaflet__view-split"/>
         <% @story_points.each do |story_item| %>
           <h4><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></h4>
           <% if story_item[:individuals].blank? %>
-            <div class="alert alert-info" role="alert">No one vote yet...</div>
+            <div class="alert alert-info" role="alert">No one vote yet...Start sending the room link to your team members.</div>
           <% else %>
             <table class="table">
               <thead>

@@ -5,3 +5,12 @@ function storyLinkHref(link) {
     return "javascript:;"
   }
 }
+
+function copyToClipboard() {
+  var aField = document.getElementById("hiddenField");
+  aField.hidden = false;
+  aField.value = window.location.href;
+  aField.select();
+  document.execCommand("copy");
+  aField.hidden = true;
+}

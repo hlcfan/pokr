@@ -31,6 +31,25 @@
     border-color: #ccc;
   }
 
+  .leaflet__name {
+    margin-top: 10px;
+  }
+
+  .leaflet__view-split {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .leaflet__room-share-link {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
   h4 {
     border-bottom: 1px dashed #ccc;
     padding-bottom: 10px;

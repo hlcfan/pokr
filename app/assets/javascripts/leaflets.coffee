@@ -5,7 +5,6 @@
 
 class Leaflets
   show: ->
-    roomId = $("#roomId").val()
     $(".leaflet .point-values .btn").on "click", ->
       $that = $(this)
       $that.parents(".point-values").find(".btn").removeClass("btn-info")
@@ -16,6 +15,8 @@ class Leaflets
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-point").val(point)
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-comment").val(comment)
 
+  leaflet_view: ->
+    roomId = $("#roomId").val()
     $(".finalize-link-col__finalize-link").on "click", ->
       $that = $(this)
 
@@ -35,8 +36,30 @@ class Leaflets
         return
       )
 
+    originalTitle = "Copy to clipboard"
+    $('[data-toggle="tooltip"]').tooltip(
+        container: '#tooltip-area'
+        title: originalTitle
+    ).on('click', ->
+      $(this).attr('title', 'Copied!').tooltip('fixTitle').tooltip 'show'
+      return
+    ).mouseleave ->
+      $(this).attr('title', originalTitle).tooltip 'fixTitle'
+      return
+
+    copyLink = () ->
+      aField = document.getElementById("hiddenField");
+      aField.hidden   = false
+      aField.value    = window.location.href
+      aField.select()
+      document.execCommand("copy")
+      aField.hidden = true
 
 $(document).on "ready", ->
-  $(".rooms.new .leaflet, .rooms.show .leaflet, .rooms.leaflet_view, .rooms.create, .rooms.update").ready ->
+  $(".rooms.new .leaflet, .rooms.show .leaflet, .rooms.create, .rooms.update").ready ->
     leaflet = new Leaflets
     leaflet.show()
+
+  $(".rooms.leaflet_view").ready ->
+    leaflet = new Leaflets
+    leaflet.leaflet_view()
