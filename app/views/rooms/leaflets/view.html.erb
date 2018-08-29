@@ -16,6 +16,7 @@
           <div class="btn-group pull-right" role="group">
             <a href="<%= edit_room_path(@room.slug) %>" class="btn btn-default">✏️ Edit room</a>
             <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
+            <a href="<%= summary_room_path(@room.slug)%>" class="btn btn-default ">📊 Summary</a>
             <div id="tooltip-area"></div>
             <input type="text" id="hiddenField" class="leaflet__room-share-link" />
           </div>
