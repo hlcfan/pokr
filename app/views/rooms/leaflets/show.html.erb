@@ -1,0 +1,58 @@
+<%
+  title @room.name
+  scheme_type = @room.scheme 
+  user_story_points = @room.async_votes_hash(current_user.id)
+%>
+
+<div class="row leaflet">
+  <div class="col-md-10 col-md-offset-1">
+    <form action="<%= leaflet_submit_room_path(@room.slug) %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong><%= @room.name %></strong>
+          <span class="pull-right"><i class="fa fa-info-circle"></i> Click to vote</span>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% @room.stories.each.with_index do |story, index| %>
+              <% current_vote = user_story_points[story.id]&.[](:point) %>
+              <% current_comment = user_story_points[story.id]&.[](:comment)%>
+              <li class="list-group-item">
+                <input type="hidden" class="leaflet__vote-story-id" name="votes[<%= index %>][story_id]" value="<%= story.id %>" />
+                <input type="hidden" class="leaflet__vote-point" name="votes[<%= index %>][point]" value="<%= current_vote %>" />
+                <h4><%= link_to story.link, show_story_link(story.link), target: "_blank" %></h4>
+                <p><%= story.desc %></p>
+                <ul class="<%= scheme_type.parameterize %> list-inline point-values" data-ticket-id="<%= story.id %>">
+                  <%= render_leaflet_option(current_vote, @room.point_values) %>
+                </ul>
+                <div class="form-group">
+                  <label class="type-name">Comment</label>
+                  <textarea class="form-control" name="votes[<%= index%>][comment]" rows="3"><%= current_comment %></textarea>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <input type="submit" name="submit" value="Submit my votes" class="btn btn-default leaflet__submit" data-disable-with="Submit">
+          <a href="<%= summary_room_path(@room.slug) %>" class="pull-right leaflet__view-summary" target="_blank">View summary</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
+<input type="hidden" id="roomId" value="<%= @room.slug %>" />
+<input type="hidden" id="roomName" value="<%= @room.name %>" />
+<input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />
+<input type="hidden" id="currentVote" value="<%= current_user.points_of_story(@room.current_story_id) %>" />
+<input type="hidden" id="roomState" value="<%= @room.state %>" />
+<input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
+<input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
+<input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
+<%= action_cable_meta_tag %>
+
+<script type="text/javascript">
+  Raven.config('https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730').install()
+</script>

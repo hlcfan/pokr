@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require jquery.nested-fields
 //= require rooms
+//= require leaflets
 //= require feedback
 //= require typeahead
 //= require schemes

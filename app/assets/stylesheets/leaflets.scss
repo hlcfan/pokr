@@ -1,0 +1,61 @@
+// Place all the styles related to the leaflets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.leaflet {
+  .leaflet__edit-link {
+    text-decoration: none;
+    color: #444;
+  }
+
+  .point-values {
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+
+    &.active {
+      display: block;
+    }
+
+    li input {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+  }
+
+  .leaflet__view-summary {
+    line-height: 2;
+  }
+}
+
+.leaflet_view {
+  hr {
+    border-color: #ccc;
+  }
+
+  .leaflet__name {
+    margin-top: 10px;
+  }
+
+  .leaflet__view-split {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .leaflet__room-share-link {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 10px;
+  }
+
+  .table__finalize-link-col {
+    text-align: center;
+  }
+}

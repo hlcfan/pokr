@@ -193,8 +193,19 @@ RSpec.describe Room, type: :model do
       expect(room.free_style?).to be_truthy
     end
 
-    it "is true if style equals 1" do
+    it "is false if style doesn't equals 1" do
       expect(room.free_style?).to be_falsy
+    end
+  end
+
+  describe "#async_mode?" do
+    it "is true if style equals 2" do
+      room.style = 2
+      expect(room.async_mode?).to be_truthy
+    end
+
+    it "is false if style doesn't equals 2" do
+      expect(room.async_mode?).to be_falsy
     end
   end
 
@@ -310,8 +321,8 @@ RSpec.describe Room, type: :model do
       user_bob = User.create(email: 'b@b.com', password: 'password')
       UserRoom.create(user_id: user_alex.id, room_id: room.id, role: UserRoom::PARTICIPANT)
       UserRoom.create(user_id: user_bob.id, room_id: room.id, role: UserRoom::PARTICIPANT)
-      UserStoryPoint.create(user_id: user_alex.id, story_id: story.id, points: 13)
-      UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
+      vote_alex = UserStoryPoint.create(user_id: user_alex.id, story_id: story.id, points: 13)
+      vote_bob = UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
 
       expect(room.summary).to eq [{
         id: story.id,
@@ -320,15 +331,21 @@ RSpec.describe Room, type: :model do
         individuals: [
           {
             user_id: user_alex.id,
-            user_points: "13",
+            user_point: "13",
             user_name: user_alex.display_name,
-            user_avatar: user_alex.letter_avatar
+            user_avatar: user_alex.letter_avatar,
+            user_story_point_id: vote_alex.encoded_id,
+            user_story_point_finalized: nil,
+            user_story_point_comment: nil
           },
           {
             user_id: user_bob.id,
-            user_points: "8",
+            user_point: "8",
             user_name: user_bob.display_name,
-            user_avatar: user_bob.letter_avatar
+            user_avatar: user_bob.letter_avatar,
+            user_story_point_id: vote_bob.encoded_id,
+            user_story_point_finalized: nil,
+            user_story_point_comment: nil
           }
         ]
       }]
@@ -397,6 +414,17 @@ RSpec.describe Room, type: :model do
       user = User.create(email: 'a@a.com', password: 'password')
       PgSearch::Multisearch.rebuild(Room)
       expect(room.related_to_user?(user.id)).to be false
+    end
+  end
+
+  describe "#async_votes_hash" do
+    it "returns votes hash of an user" do
+      room = Room.create(name: "test slug")
+      user = User.create(email: 'a@a.com', password: 'password')
+      story = Story.create(link: "link_1", room_id: room.id)
+      vote = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13", comment: "My comments")
+
+      expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
     end
   end
 end

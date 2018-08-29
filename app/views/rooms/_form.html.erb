@@ -27,16 +27,9 @@
     </div>
     <div class="col-xs-2">
       <div class="form-group">
-        <label>
-          Style
-        </label>
-        <div class="checkbox">
-          <label>
-            <%= f.check_box :style %>
-            Free Style?
-            <i class="fa fa-info-circle room--style--icon" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Free Style? (aka. one story mode, is old-style way which only focus on vote.)"></i>
-          </label>
-        </div>
+        <%= f.label :style, "Mode" %>
+        <i class="fa fa-info-circle room--style--icon" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="Free Style? (aka. one story mode, is old-style way which only focus on vote.)"></i>
+        <%= f.select :style, { "Free style" => 1, "Async mode" => 2 }, { include_blank: "Normal" }, class: 'form-control' %>
       </div>
     </div>
   </div>
@@ -44,7 +37,7 @@
     <%= f.label "Point values" %>
     <%= f.hidden_field :pv, id: 'point-values', value: @room.pv_for_form %>
     <%= f.hidden_field :scheme %>
-    <%= render "rooms/point_values" %>
+    <%= render partial: "rooms/point_values", locals: { room: @room } %>
   </div>
   <section class="stories-section panel panel-default" id="story-section">
     <div class="panel-heading clearfix">

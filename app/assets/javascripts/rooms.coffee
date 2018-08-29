@@ -20,10 +20,13 @@ class Rooms
       afterInsert: (item, e) ->
         return
 
-    $('#room_style').on 'click', ->
-      $('.add.btn').toggle()
-      $('.import').toggle()
-      return
+    $('#room_style').on 'change', ->
+      if($(this).val() == "1")
+        $('.add.btn').hide()
+        $('.import').hide()
+      else
+        $('.add.btn').show()
+        $('.import').show()
 
     $(".schemes-type span.label").on "click", ->
       $(".schemes-type .label").removeClass("label-info").addClass('label-default')

@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status
 
@@ -28,10 +28,11 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    cookies[:room_id] = @room.slug
+    redirect_to(view_room_path(@room.slug)) and return if moderator_of_async_room?
 
+    cookies[:room_id] = @room.slug
     respond_to do |format|
-      format.html
+      format.html { render "#{room_template_path}/show" }
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=#{excel_filename}.xlsx"
       }
@@ -55,7 +56,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if repo.save @room
         remove_memorization_of_moderators
-        format.html { redirect_to room_path(@room.slug), notice: 'Room was successfully created.' }
+        format.html { redirect_to room_path(@room.slug), notice: "Room was successfully created." }
         format.json { render :show, status: :created, location: @room }
       else
         format.html { render :new }
@@ -153,7 +154,50 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def leaflet_submit
+    head(:bad_request) and return if params[:votes].blank?
+
+    params[:votes].values.each do |vote|
+      next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
+      UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
+    end
+    redirect_to room_path(@room.slug), flash: { success: "Thanks for your votes, moderator will see your votes!" }
+  end
+
+  def leaflet_view
+    redirect_to room_path(@room.slug) and return if @room.created_by != current_user.id
+    @story_points = @room.leaflet_votes_summary
+
+    render "rooms/leaflets/view"
+  end
+
+  def leaflet_finalize_point
+    user_story_point = UserStoryPoint.find UserStoryPoint.decoded_id(params[:voteId])
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+
+    if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
+      story = Story.find_by id: user_story_point.story_id, room_id: @room.id
+      story.update_attribute :point, user_story_point.points if story
+      UserStoryPoint.where(story_id: story.id).where.not(finalized: nil).update_all(finalized: nil)
+      user_story_point.update_attribute(:finalized, true)
+
+      head :ok
+    end
+  end
+
   private
+
+  def moderator_of_async_room?
+    @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
+  end
+
+  def room_template_path
+    if @room.style == Room::LEAFLET_STYLE
+      "rooms/leaflets"
+    else
+      "rooms"
+    end
+  end
 
   def excel_filename
     if @room.name.parameterize.blank?

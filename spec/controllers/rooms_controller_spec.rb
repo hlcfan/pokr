@@ -33,6 +33,18 @@ RSpec.describe RoomsController, type: :controller do
       expect(assigns(:room)).to eq(room)
     end
 
+    it "renders room show template" do
+      room = Room.create! valid_attributes
+      get :show, params: {:id => room.slug}, session: valid_session
+      expect(response).to render_template("show")
+    end
+
+    it "renders async room show template if async room" do
+      room = Room.create! valid_attributes.merge(style: Room::LEAFLET_STYLE)
+      get :show, params: {:id => room.slug}, session: valid_session
+      expect(response).to render_template("leaflets/show")
+    end
+
     it "redirects to screen page if not logged in" do
       room = Room.create! valid_attributes
       allow(controller).to receive(:current_user) { nil }
@@ -53,6 +65,14 @@ RSpec.describe RoomsController, type: :controller do
       story = room.stories.first
       get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
       expect(response.header["Content-Disposition"]).to eq("attachment; filename=slug-here.xlsx")
+    end
+
+    it "redirects to room view page if moderator of async room" do
+      room = Room.create! valid_attributes.merge(name: "async room", style: Room::LEAFLET_STYLE)
+      UserRoom.create(user_id: User.find_by(email: "a@a.com").id, room_id: room.id, role: UserRoom::MODERATOR)
+
+      get :show, params: {id: room.slug}, session: valid_session
+      expect(response).to redirect_to(view_room_path(room.slug))
     end
   end
 
@@ -391,6 +411,50 @@ RSpec.describe RoomsController, type: :controller do
 
       expect(controller).to receive(:broadcaster).once.with("rooms/room-name", {:type=>"sync", :data=>{:link=>"link", :point=>"13"}})
       post :sync_status, params: {id: room.slug, link: "link", point: 13}
+      expect(response.status).to eq 200
+    end
+  end
+
+  describe "#leaflet_submit" do
+    it "returns bad request if no votes in params" do
+      room = Room.create! valid_attributes
+      post :leaflet_submit, params: { id: room.slug }
+      expect(response.status).to eq 400
+    end
+
+    it "saves votes and redirect to room page if valid votes" do
+      room = Room.create! valid_attributes
+      story_1 = Story.create(room_id: room.id, link: "story title")
+      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.id, point: "13" }}}
+      expect(response).to redirect_to room_path(room.slug)
+    end
+  end
+
+  describe "#leaflet_view" do
+    it "shows async room view page for moderator" do
+      allow(controller.current_user).to receive(:id) { 999 }
+      room = Room.create! valid_attributes.merge(created_by: 999)
+      get :leaflet_view, params: {id: room.slug}
+      expect(response).to render_template "rooms/leaflets/view"
+    end
+
+    it "redirect to asycn room show page if not moderator" do
+      room = Room.create! valid_attributes.merge(created_by: 999)
+      get :leaflet_view, params: {id: room.slug}
+      expect(response).to redirect_to room_path(room.slug)
+    end
+  end
+
+  describe "#leaflet_finalize_point" do
+    it "finalizes story point for async room" do
+      allow(controller.current_user).to receive(:id) { 999 }
+      room = Room.create! valid_attributes.merge(created_by: 999)
+      UserRoom.create(user_id: 999, room_id: room.id, role: UserRoom::MODERATOR)
+      story= Story.create(room_id: room.id, link: "story title")
+      user_story_point = UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
+      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.encoded_id }
+
+      expect(story.reload.point).to eq("13")
       expect(response.status).to eq 200
     end
   end

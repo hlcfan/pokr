@@ -35,6 +35,9 @@ Rails.application.routes.draw do
       get :screen
       post :screen
       post :sync_status
+      post :leaflet_submit
+      get :view, to: 'rooms#leaflet_view'
+      post :leaflet_finalize_point
     end
   end
 

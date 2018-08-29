@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_16_105314) do
+ActiveRecord::Schema.define(version: 2018_08_25_134933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -95,6 +95,9 @@ ActiveRecord::Schema.define(version: 2018_07_16_105314) do
     t.string "points", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comment"
+    t.boolean "finalized"
+    t.index ["finalized"], name: "index_user_story_points_on_finalized"
     t.index ["story_id"], name: "index_user_story_points_on_story_id"
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
