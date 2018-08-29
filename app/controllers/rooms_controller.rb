@@ -28,11 +28,9 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    cookies[:room_id] = @room.slug
+    redirect_to(view_room_path(@room.slug)) and return if moderator_of_async_room?
 
-    # if @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
-    #   redirect_to view_room_path(@room.slug) and return
-    # end
+    cookies[:room_id] = @room.slug
     respond_to do |format|
       format.html { render "#{room_template_path}/show" }
       format.xlsx {
@@ -64,14 +62,6 @@ class RoomsController < ApplicationController
         format.html { render :new }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def room_path_by_mode
-    if @room.async_room? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
-      view_room_path(@room.slug)
-    else
-      room_path(@room.slug)
     end
   end
 
@@ -175,7 +165,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_view
-    redirect_to room_path(@room) and return if @room.created_by != current_user.id
+    redirect_to room_path(@room.slug) and return if @room.created_by != current_user.id
     @story_points = @room.leaflet_votes_summary
 
     render "rooms/leaflets/view"
@@ -196,6 +186,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def moderator_of_async_room?
+    @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?
+  end
 
   def room_template_path
     if @room.style == Room::LEAFLET_STYLE
