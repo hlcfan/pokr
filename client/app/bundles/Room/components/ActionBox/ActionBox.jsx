@@ -71,6 +71,7 @@ export default class ActionBox extends React.Component {
     this.setState(newState)
 
     if (this.state.roomState !== "draw" && this.props.countDown > 0) {
+      clearInterval(this.intervalId)
       this.intervalId = setInterval(this.timer, 1000)
     }
   }
@@ -112,10 +113,10 @@ export default class ActionBox extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.state = {
+    this.setState({
       roomState: nextProps.roomState,
-      countDown: nextProps.countDown,
-    }
+      countDown: this.state.countDown
+    })
   }
 
   componentWillUnmount() {
@@ -190,7 +191,7 @@ export default class ActionBox extends React.Component {
 
     const icon = () => {
       if ("draw" !== this.props.roomState && this.props.countDown) {
-        if (this.props.countDown < 1) {
+        if (this.state.countDown < 1) {
           return(
             <span className="timer pull-right">
               <i className="fa warning">⚠️</i>
@@ -202,7 +203,7 @@ export default class ActionBox extends React.Component {
             <span className="timer pull-right">
               <i className="fa sandglass">⌛</i>
               &nbsp;
-              <i className="counter">{this.props.countDown}</i>
+              <i className="counter">{this.state.countDown}</i>
             </span>
           )
         }
