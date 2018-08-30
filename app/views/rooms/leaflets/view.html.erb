@@ -18,7 +18,7 @@
             <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
             <a href="<%= summary_room_path(@room.slug)%>" class="btn btn-default ">📊 Summary</a>
             <div id="tooltip-area"></div>
-            <input type="text" id="hiddenField" class="leaflet__room-share-link" />
+            <input type="text" id="hiddenField" class="leaflet__room-share-link" value="<%= room_url(@room.slug) %>" />
           </div>
         </div>
         <hr class="leaflet__view-split"/>
