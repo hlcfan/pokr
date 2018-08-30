@@ -22,7 +22,7 @@
     <div class="col-xs-2">
       <div class="form-group">
         <%= f.label :timer, "Egg Timer" %>
-        <%= f.select :timer, {"1 min" => 1, "2 min" => 2, "3 min" => 3, "4 min" => 4, "5 min" => 5}, { include_blank: "No timer", selected: f.object.timer.to_i }, class: 'form-control' %>
+        <%= f.select :timer, {"1 min" => 1, "2 min" => 2, "3 min" => 3, "4 min" => 4, "5 min" => 5, "10 min" => 10, "15 min" => 15}, { include_blank: "No timer", selected: f.object.timer.to_i }, class: 'form-control' %>
       </div>
     </div>
     <div class="col-xs-2">
