@@ -438,10 +438,17 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to render_template "rooms/leaflets/view"
     end
 
-    it "redirect to asycn room show page if not moderator" do
+    it "redirects to asycn room show page if not moderator" do
       room = Room.create! valid_attributes.merge(created_by: 999)
       get :leaflet_view, params: {id: room.slug}
       expect(response).to redirect_to room_path(room.slug)
+    end
+
+    it "redirects to room screen page if not sign in" do
+      allow(controller).to receive(:current_user) { nil }
+      room = Room.create! valid_attributes
+      get :leaflet_view, params: {id: room.slug}
+      expect(response).to redirect_to screen_room_path(room.slug)
     end
   end
 
