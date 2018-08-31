@@ -53,8 +53,6 @@ gem 'pg_search'
 gem 'rubyzip', '~> 1.2.1'
 gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
-gem 'websocket-driver', git: 'https://github.com/faye/websocket-driver-ruby', ref: 'ee39af83d03ae3059c775583e4c4b291641257b8'
-
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }
 # #<Errno::ETIMEDOUT: Operation timed out - user specified timeout>
