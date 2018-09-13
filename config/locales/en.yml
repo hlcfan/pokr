@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  plan_price: "$%{price}"
   ago: "ago"
   site:
     title: "Online Planning Poker"
@@ -83,6 +84,19 @@ en:
     synk_f_2:       "Totally secure"
     synk_f_3:       "JIRA cloud supported"
     synk_f_4:       "JIRA self-hosted supported"
+
+  pricing:
+    free:
+      free_1: "Unlimited rooms"
+      free_2: "1 customized point scheme"
+      free_3: "JIRA integration"
+      free_4: "10 participants"
+    pro:
+      pro_1: "Unlimited rooms"
+      pro_2: "Customized point schemes"
+      pro_3: "JIRA integration"
+      pro_4: "Unlimited parcitipants"
+      pro_5: "Async game mode"
 
   posts:
     h1: "Posts"

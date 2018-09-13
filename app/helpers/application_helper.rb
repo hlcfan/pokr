@@ -30,6 +30,15 @@ module ApplicationHelper
     mobile_agent_platforms.match(request.user_agent) || mobile_agent_prefixes.match(request.user_agent[0..3])
   end
 
+  def plan_price price
+    case I18n.locale
+    when :"zh-CN"
+      price*4
+    else
+      price
+    end
+  end
+
   private
 
   def bootstrap_class_for flash_type

@@ -47,4 +47,16 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.is_mobile_request?).to be_falsey
     end
   end
+
+  describe "#plan_price" do
+    it "returns 4 times of the price if zh-cn" do
+      allow(I18n).to receive(:locale) { :"zh-CN" }
+      expect(plan_price(5)).to eq(20)
+    end
+
+    it "returns the price if other locales" do
+      allow(I18n).to receive(:locale) { :en }
+      expect(plan_price(5)).to eq(5)
+    end
+  end
 end
