@@ -164,6 +164,14 @@ html {
   .neck__video {
     height: 380px;
 
+    @media #{$mobile} {
+      display: none;
+    }
+
+    @media #{$tablet} {
+      display: none;
+    }
+
     img {
       position: absolute;
       height: 380px;
