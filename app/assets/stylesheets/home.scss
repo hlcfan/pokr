@@ -243,8 +243,26 @@ html {
   font-weight: 500;
   letter-spacing: 0.9px;
 
+  h3 {
+    color: #5e646e;
+    margin-top: 0;
+    font-weight: 300;
+
+    @media #{$mobile} {
+      font-size: 15px;
+    }
+
+    @media #{tablet} {
+      font-size: 15px;
+    }
+  }
+
   &.view-section__intro-1, &.view-section__intro-3 {
     background: #f9f9f9;
+  }
+
+  &.view-section__intro-5 {
+    border-top: 1px solid #ddd;
   }
 
   &.logos {
@@ -263,20 +281,6 @@ html {
           padding-left: 10px;
           padding-right: 10px;
         }
-      }
-    }
-
-    h3 {
-      color: #5e646e;
-      margin-top: 0;
-      font-weight: 300;
-
-      @media #{$mobile} {
-        font-size: 15px;
-      }
-
-      @media #{tablet} {
-        font-size: 15px;
       }
     }
 
@@ -396,5 +400,71 @@ html {
 #sign-up-form .modal-dialog {
   @media #{$desktop} {
     width: 30%;
+  }
+}
+
+.pricing {
+  background: #f9f9f9;
+
+  .container {
+    @media #{$mobile} {
+      padding-bottom: 0;
+    }
+  }
+
+  h3 {
+    margin-bottom: 30px;
+
+    @media #{$mobile} {
+      margin-bottom: 20px;
+    }
+  }
+
+  .pricing__plan {
+    border: 1px solid #ddd;
+    padding-top: 30px;
+    height: 400px;
+    background: #fff;
+    border-radius: 3px;
+
+    @media #{$mobile} {
+      border: none;
+      height: auto;
+      padding-bottom: 20px;
+    }
+
+    .plan__amount {
+      font-size: 36px;
+    }
+
+    .plan__duration {
+      font-size: 13px;
+      color: #5e646e;
+    }
+
+    ul {
+      text-align: left;
+      list-style-type: none;
+      padding-left: 30px;
+      margin-top: 30px;
+
+      li {
+        position: relative;
+
+        p {
+          padding-left: 25px;
+        }
+
+        .plan__check {
+          position: absolute;
+          top: 2px;
+          background: image-url("home/price_check.svg") no-repeat 0 0,-webkit-gradient(linear,left top,left bottom,from(transparent),to(transparent));
+          background: image-url("home/price_check.svg") no-repeat 0 0,-moz-linear-gradient(transparent,transparent);
+          background: image-url("home/price_check.svg") no-repeat 0 0,linear-gradient(transparent,transparent);
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
   }
 }
