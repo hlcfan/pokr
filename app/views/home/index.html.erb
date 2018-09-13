@@ -27,7 +27,7 @@
       "applicationCategory": "Tool, agile estimating",
       "operatingSystem": "OSX, Windows, iOS, Android",
       "screenshot": [
-        "<%= image_url("home/room.jpg") %>",
+        "<%= image_url("home/room.png") %>",
         "<%= image_url("home/dashboard.jpg") %>",
         "<%= image_url("home/scheme.jpg") %>"
         "<%= image_url("home/synk.jpg") %>"
@@ -65,21 +65,26 @@
       </div>
     </div>
     <div class="row neck">
-      <div class="slogan">
-        <h1><%= t("site.slogan") %></h1>
-        <span><%= t("site.sub_slogan") %></span>
+      <div class="col-xs-12 col-md-6 neck__hero-text">
+        <div class="slogan">
+          <h1><%= t("site.slogan") %></h1>
+          <h2><%= t("site.sub_slogan") %></h2>
+        </div>
+        <div class="row neck__sign-up">
+          <div class="get-started col-md-8">
+            <div class="input-group input-group-lg">
+              <input type="email" name="email" class="form-control email" value="" placeholder="<%= t("user.email_address") %>">
+              <a class="input-group-btn" id="sign-up-btn" href="<%= new_user_registration_path %>" target="_blank">
+                <button class="btn btn-info" type="button"><%= t("user.join") %></button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6 neck__video">
+        <img src="<%= image_path("home/hero1.png") %>" />
       </div>
       <div class="sign-up container">
-        <div class="row action input">
-          <div class="get-started col-md-5">
-              <div class="input-group input-group-lg">
-                <input type="email" name="email" class="form-control email" value="" placeholder="<%= t("user.email_address") %>">
-                <a class="input-group-btn" id="sign-up-btn" href="<%= new_user_registration_path %>" target="_blank">
-                  <button class="btn btn-info" type="button"><%= t("user.join") %></button>
-                </a>
-              </div>
-          </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
       </div>
     </div>
     <div class="row view-section logos">
@@ -87,7 +92,7 @@
         <div class="row">
           <h3><%= t("logos.title") %></h3>
         </div>
-        <div class="row">
+        <div class="row logos__row-1">
           <div class="col-xs-2 col-md-2">
             <%= image_tag "logos/activenetwork.jpg", alt: "ActiveNetwork" %>
           </div>
@@ -107,7 +112,7 @@
             <%= image_tag "logos/hobsons.jpg", alt: "Hobsons" %>
           </div>
         </div>
-        <div class="row">
+        <div class="row logos__row-2">
           <div class="col-xs-2 col-md-2">
             <%= image_tag "logos/pwc.png", alt: "PWC" %>
           </div>
@@ -129,72 +134,72 @@
         </div>
       </div>
     </div>
-    <div class="row view-section">
+    <div class="row view-section view-section__intro-1">
       <div class="container">
-        <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "home/room.jpg", alt: t("intro.room_alt") %>
+        <div class="col-xs-12 col-md-8 image-section">
+          <%= image_tag "home/room.png", alt: t("intro.room_alt") %>
         </div>
 
-        <div class="col-xs-4 col-md-4 text-section">
+        <div class="col-xs-12 col-md-4 text-section">
           <h2><%= t("intro.room") %></h2>
           <h3><%= t("intro.room_desc") %></h3>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i><%= t("intro.room_f_1") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.room_f_2") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.room_f_3") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.room_f_4") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.room_f_1") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.room_f_2") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.room_f_3") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.room_f_4") %></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="row view-section">
+    <div class="row view-section view-section__intro-2">
       <div class="container">
-        <div class="col-xs-4 col-md-4 text-section">
+        <div class="col-xs-12 col-md-8 image-section pull-right">
+          <%= image_tag "home/scheme.jpg", alt: t("intro.scheme_alt") %>
+        </div>
+        <div class="col-xs-12 col-md-4 text-section">
           <h2><%= t("intro.scheme") %></h2>
           <h3><%= t("intro.scheme_desc") %></h3>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_1") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_2") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_3") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.scheme_f_4") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.scheme_f_1") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.scheme_f_2") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.scheme_f_3") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.scheme_f_4") %></li>
           </ul>
-        </div>
-        <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "home/scheme.jpg", alt: t("intro.scheme_alt") %>
         </div>
       </div>
     </div>
-    <div class="row view-section">
+    <div class="row view-section view-section__intro-3">
       <div class="container">
-        <div class="col-xs-8 col-md-8 image-section">
+        <div class="col-xs-12 col-md-8 image-section">
           <%= image_tag "home/synk.jpg", alt: t("intro.synk_alt") %>
         </div>
-        <div class="col-xs-4 col-md-4 text-section">
+        <div class="col-xs-12 col-md-4 text-section">
           <h2><%= t("intro.synk") %></h2>
           <h3><%= t("intro.synk_desc") %></h3>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i><%= t("intro.synk_f_1") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.synk_f_2") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.synk_f_3") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.synk_f_4") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_1") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_2") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_3") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_4") %></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="row view-section">
+    <div class="row view-section view-section__intro-4">
       <div class="container">
-        <div class="col-xs-4 col-md-4 text-section">
+        <div class="col-xs-12 col-md-8 image-section pull-right">
+          <%= image_tag "home/dashboard.jpg", alt: t("intro.dashboard_alt") %>
+        </div>
+        <div class="col-xs-12 col-md-4 text-section">
           <h2><%= t("intro.dashboard") %></h2>
           <h3><%= t("intro.dashboard_desc") %></h3>
           <ul class="list-unstyled">
-            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_1") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_2") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_3") %></li>
-            <li><i class="fa fa-check"></i><%= t("intro.dashboard_f_4") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.dashboard_f_1") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.dashboard_f_2") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.dashboard_f_3") %></li>
+            <li><i class="fa fa-check-circle"></i><%= t("intro.dashboard_f_4") %></li>
           </ul>
-        </div>
-        <div class="col-xs-8 col-md-8 image-section">
-          <%= image_tag "home/dashboard.jpg", alt: t("intro.dashboard_alt") %>
         </div>
       </div>
     </div>
@@ -218,6 +223,8 @@
   </div>
   <%= render "layouts/feedback" %>
   <%= render "layouts/tracking" %>
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>WebFont.load({google:{families:["Source Sans Pro:400,600,700"]}});</script>
 </body>
 </html>
 <% end %>
