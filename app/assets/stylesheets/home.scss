@@ -1,26 +1,32 @@
 @import 'global_vars';
 
 $default_font_color: #46b8da;
+$gray_bg_color: #f9f9f9;
+$main_dark_color: #25272b;
+
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Light/OpenSans-Light.eot?v=1.1.0");
   src: asset-url("Light/OpenSans-Light.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Light/OpenSans-Light.woff2?v=1.1.0") format("woff2"), asset-url("Light/OpenSans-Light.woff?v=1.1.0") format("woff"), asset-url("Light/OpenSans-Light.ttf?v=1.1.0") format("truetype"), asset-url("Light/OpenSans-Light.svg?v=1.1.0#Light") format("svg");
   font-weight: 300;
-  font-style: normal; }
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Regular/OpenSans-Regular.eot?v=1.1.0");
   src: asset-url("Regular/OpenSans-Regular.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Regular/OpenSans-Regular.woff2?v=1.1.0") format("woff2"), asset-url("Regular/OpenSans-Regular.woff?v=1.1.0") format("woff"), asset-url("Regular/OpenSans-Regular.ttf?v=1.1.0") format("truetype"), asset-url("Regular/OpenSans-Regular.svg?v=1.1.0#Regular") format("svg");
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Semibold/OpenSans-Semibold.eot?v=1.1.0");
   src: asset-url("Semibold/OpenSans-Semibold.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Semibold/OpenSans-Semibold.woff2?v=1.1.0") format("woff2"), asset-url("Semibold/OpenSans-Semibold.woff?v=1.1.0") format("woff"), asset-url("Semibold/OpenSans-Semibold.ttf?v=1.1.0") format("truetype"), asset-url("Semibold/OpenSans-Semibold.svg?v=1.1.0#Semibold") format("svg");
   font-weight: 600;
-  font-style: normal; }
+  font-style: normal;
+}
 
 html {
   background-color: transparent;
@@ -40,14 +46,17 @@ html {
   height: 50px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   width: 100%;
+
   .nav-inner {
-    background: #FFFFFF;
+    background: #ffffff;
   }
+
   .container {
     position: relative;
     width: 1080px;
     margin: 0 auto;
     text-align: center;
+
     .right {
       float: right;
       span.text {
@@ -55,10 +64,12 @@ html {
       }
     }
   }
+
   .nav-logo {
     line-height: 50px;
     font-size: 2em;
     margin-bottom: -45px;
+
     a {
       width: 120px;
       margin: 0 auto;
@@ -73,9 +84,6 @@ html {
   border-bottom: 1px solid #d0d4d9;
   -webkit-box-shadow: 0px 1px 1px #d0d4d9;
   box-shadow: 0px 1px 1px #d0d4d9;
-  // position: fixed;
-  // z-index: 2;
-  // width: 100%;
 
   .container {
     text-align: center;
@@ -83,13 +91,13 @@ html {
     a.logo {
       position: absolute;
       text-decoration: none;
-      color: #848484;
+      color: $main_dark_color;
       font-size: 4rem;
       line-height: 60px;
       left: 50%;
       width: 90px;
       margin-left: -35px;
-      font-weight: 300;
+      font-weight: 600;
 
       @media #{$mobile} {
         font-size: 3rem;
@@ -145,16 +153,8 @@ html {
   background: -moz-linear-gradient(left,#f8f9fc 0,#fff 100%);
   background: linear-gradient(90deg,#f8f9fc,#fff);
 
-  @media #{$desktop} {
-    // height: 440px;
-  }
-
   @media #{$tablet} {
     height: 450px;
-  }
-
-  @media #{$mobile} {
-    // height: 900px;
   }
 
   .neck__hero-text {
@@ -177,7 +177,7 @@ html {
   }
 
   .slogan {
-    color: #FFFFFF;
+    color: #ffffff;
     padding-top: 50px;
 
     @media #{$tablet} {
@@ -191,7 +191,7 @@ html {
     h1 {
       font-size: 4.5rem;
       font-weight: 100;
-      color: #25272b;
+      color: $main_dark_color;
 
       @media #{$mobile} {
         font-size: 4rem;
@@ -252,13 +252,13 @@ html {
       font-size: 15px;
     }
 
-    @media #{tablet} {
+    @media #{$tablet} {
       font-size: 15px;
     }
   }
 
   &.view-section__intro-1, &.view-section__intro-3 {
-    background: #f9f9f9;
+    background: $gray_bg_color;
   }
 
   &.view-section__intro-5 {
@@ -300,6 +300,7 @@ html {
   &.view-section__intro-3 {
     .container {
       img {
+        -webkit-filter: drop-shadow(5px 4px 10px #777);
         filter: drop-shadow(5px 4px 10px #777);
       }
     }
@@ -331,7 +332,7 @@ html {
       }
 
       h3 {
-        color: #25272b;
+        color: $main_dark_color;
         line-height: 1.4;
         margin-bottom: 20px;
         margin-top: 20px;
@@ -355,7 +356,7 @@ html {
 }
 
 .footer {
-  background-color: #f8f8f8;
+  background-color: #fff;
   color: #4e4e4e;
   line-height: 30px;
   padding: 50px 200px;
@@ -404,7 +405,7 @@ html {
 }
 
 .pricing {
-  background: #f9f9f9;
+  background: $gray_bg_color;
 
   .container {
     @media #{$mobile} {
