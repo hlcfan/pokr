@@ -20,11 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  plan_price: "$%{price}"
   ago: "ago"
   site:
     title: "Online Planning Poker"
     desc: "Pokrex is an easy, efficient planning poker (a.k.a. scrum poker or pointing poker) for agile/scrum teams."
-    slogan: "Planning/scrum poker made easy"
+    slogan: "Planning poker made easy"
     sub_slogan: "Agile estimation and planning, aimed at simplicity and efficiency."
     footer:
       links: "Links"
@@ -59,7 +60,7 @@ en:
     room_alt:       "Pokrex Scrum Poker - Room"
     room_desc:      "Here is where planning and grooming happen. Invite participants by sending them a link or inviting them."
     room_f_1:       "Clean UI, easy to use"
-    room_f_2:       "No sign up for participants, just share the link or QR code"
+    room_f_2:       "No sign up for participants"
     room_f_3:       "Mobile friendly"
     room_f_4:       "Asynchronous mode for distributed teams"
     dashboard:      "Dashboard"
@@ -83,6 +84,18 @@ en:
     synk_f_2:       "Totally secure"
     synk_f_3:       "JIRA cloud supported"
     synk_f_4:       "JIRA self-hosted supported"
+
+  pricing:
+    free:
+      free_1: "Unlimited rooms"
+      free_2: "1 customized point scheme"
+      free_3: "10 participants"
+    pro:
+      pro_1: "Unlimited rooms"
+      pro_2: "Customized point schemes"
+      pro_3: "Unlimited parcitipants"
+      pro_4: "JIRA integration"
+      pro_5: "Async game mode"
 
   posts:
     h1: "Posts"

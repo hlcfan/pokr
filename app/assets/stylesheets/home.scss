@@ -1,32 +1,39 @@
 @import 'global_vars';
 
 $default_font_color: #46b8da;
+$gray_bg_color: #f9f9f9;
+$main_dark_color: #25272b;
+
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Light/OpenSans-Light.eot?v=1.1.0");
   src: asset-url("Light/OpenSans-Light.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Light/OpenSans-Light.woff2?v=1.1.0") format("woff2"), asset-url("Light/OpenSans-Light.woff?v=1.1.0") format("woff"), asset-url("Light/OpenSans-Light.ttf?v=1.1.0") format("truetype"), asset-url("Light/OpenSans-Light.svg?v=1.1.0#Light") format("svg");
   font-weight: 300;
-  font-style: normal; }
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Regular/OpenSans-Regular.eot?v=1.1.0");
   src: asset-url("Regular/OpenSans-Regular.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Regular/OpenSans-Regular.woff2?v=1.1.0") format("woff2"), asset-url("Regular/OpenSans-Regular.woff?v=1.1.0") format("woff"), asset-url("Regular/OpenSans-Regular.ttf?v=1.1.0") format("truetype"), asset-url("Regular/OpenSans-Regular.svg?v=1.1.0#Regular") format("svg");
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'Open Sans';
   src: asset-url("Semibold/OpenSans-Semibold.eot?v=1.1.0");
   src: asset-url("Semibold/OpenSans-Semibold.eot?#iefix&v=1.1.0") format("embedded-opentype"), asset-url("Semibold/OpenSans-Semibold.woff2?v=1.1.0") format("woff2"), asset-url("Semibold/OpenSans-Semibold.woff?v=1.1.0") format("woff"), asset-url("Semibold/OpenSans-Semibold.ttf?v=1.1.0") format("truetype"), asset-url("Semibold/OpenSans-Semibold.svg?v=1.1.0#Semibold") format("svg");
   font-weight: 600;
-  font-style: normal; }
+  font-style: normal;
+}
 
 html {
   background-color: transparent;
   // background-image: image-url('/assets/bg.png');
   body.home {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    // font-family: Source Sans Pro,sans-serif;
   }
 }
 
@@ -39,14 +46,17 @@ html {
   height: 50px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   width: 100%;
+
   .nav-inner {
-    background: #FFFFFF;
+    background: #ffffff;
   }
+
   .container {
     position: relative;
     width: 1080px;
     margin: 0 auto;
     text-align: center;
+
     .right {
       float: right;
       span.text {
@@ -54,10 +64,12 @@ html {
       }
     }
   }
+
   .nav-logo {
     line-height: 50px;
     font-size: 2em;
     margin-bottom: -45px;
+
     a {
       width: 120px;
       margin: 0 auto;
@@ -69,19 +81,22 @@ html {
 
 .header-section {
   background: #fff;
+  border-bottom: 1px solid #d0d4d9;
+  -webkit-box-shadow: 0px 1px 1px #d0d4d9;
+  box-shadow: 0px 1px 1px #d0d4d9;
+
   .container {
     text-align: center;
 
     a.logo {
       position: absolute;
       text-decoration: none;
-      color: #848484;
+      color: $main_dark_color;
       font-size: 4rem;
       line-height: 60px;
       left: 50%;
-      width: 90px;
-      margin-left: -35px;
-      font-weight: 300;
+      margin-left: -67px;
+      font-weight: 600;
 
       @media #{$mobile} {
         font-size: 3rem;
@@ -133,22 +148,44 @@ html {
 }
 
 .neck {
-  height: 380px;
-  background-image: image-url('texture.png');
-  background-size: 450px 450px;
-  background-color: #262626;
+  overflow: hidden;
+  background: -webkit-gradient(linear,left top,right top,from(#f8f9fc),to(#fff));
+  background: -moz-linear-gradient(left,#f8f9fc 0,#fff 100%);
+  background: linear-gradient(90deg,#f8f9fc,#fff);
 
   @media #{$tablet} {
     height: 450px;
   }
 
-  @media #{$mobile} {
-    height: 500px;
+  .neck__hero-text {
+    z-index: 1;
+  }
+
+  .neck__video {
+    height: 380px;
+
+    @media #{$mobile} {
+      display: none;
+    }
+
+    @media #{$tablet} {
+      display: none;
+    }
+
+    img {
+      position: absolute;
+      height: 380px;
+      right: -20px;
+    }
+  }
+
+  .neck__sign-up {
+    margin-top: 40px;
+    padding-bottom: 20px;
   }
 
   .slogan {
-    color: #FFFFFF;
-    text-align: center;
+    color: #ffffff;
     padding-top: 50px;
 
     @media #{$tablet} {
@@ -156,23 +193,25 @@ html {
     }
 
     @media #{$mobile} {
-      padding-top: 30px;
+      padding-top: 0;
     }
 
     h1 {
       font-size: 4.5rem;
       font-weight: 100;
+      color: $main_dark_color;
 
       @media #{$mobile} {
         font-size: 4rem;
       }
     }
-    span {
-      color: #a4acb1;
-      margin:0 auto;
-      max-width: 60%;
+
+    h2 {
+      color: #5e646e;
+      padding-top: 20px;
+      max-width: 70%;
       font-size: 2.5rem;
-      font-weight: 100;
+      font-weight: 300;
       line-height: 1.3;
 
       @media #{$tablet} {
@@ -209,15 +248,48 @@ html {
   background: #fff;
   color: #2e3033;
   text-shadow: none;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.9px;
 
-  &.logos {
-    border-bottom: 1px solid #ddd;
+  h3 {
+    color: #5e646e;
+    margin-top: 0;
+    font-weight: 300;
 
-    h3 {
-      color: #848484;
-      margin-top: 0;
+    @media #{$mobile} {
+      font-size: 15px;
+    }
+
+    @media #{$tablet} {
+      font-size: 15px;
+    }
+  }
+
+  &.view-section__intro-1, &.view-section__intro-3 {
+    background: $gray_bg_color;
+  }
+
+  &.view-section__intro-5 {
+    border-top: 1px solid #ddd;
+  }
+
+  &.logos {
+    @media #{$mobile} {
+      padding: 0 10px;
+    }
+
+    .logos__row-1, .logos__row-2 {
+      @media #{$desktop} {
+        margin-left: 80px;
+        margin-right: 80px;
+      }
+
+      @media #{$mobile} {
+        div {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
     }
 
     .row:first-child, .row:nth-child(2) {
@@ -225,7 +297,7 @@ html {
     }
 
     img {
-      width: 100px;
+      width: 80px;
 
       @media #{$mobile} {
         width: 100%;
@@ -233,13 +305,28 @@ html {
     }
   }
 
+  &.view-section__intro-3 {
+    .container {
+      img {
+        -webkit-filter: drop-shadow(5px 4px 10px #777);
+        filter: drop-shadow(5px 4px 10px #777);
+      }
+    }
+  }
+
   .container {
-    padding: 60px 0;
     text-align: center;
+
+    @media #{$desktop} {
+      padding: 60px 0;
+    }
+
+    @media #{$mobile} {
+      padding: 20px 0;
+    }
     .image-section {
       img {
-        width: 80%;
-        box-shadow: 1px 1px 10px #bbb;
+        width: 90%;
       }
     }
 
@@ -249,21 +336,26 @@ html {
 
       h2 {
         font-size: 1.5em;
+        font-weight: 400;
       }
 
       h3 {
-        color: #848484;
+        color: $main_dark_color;
         line-height: 1.4;
         margin-bottom: 20px;
         margin-top: 20px;
-        font-size: 1em;
+        font-size: 0.9em;
+        font-weight: 500;
       }
 
       ul {
         li {
           padding: 3px 0;
+          font-size: 0.9em;
+          color: #3e4249;
+
           .fa {
-            margin-right: 5px;
+            margin-right: 10px;
           }
         }
       }
@@ -272,7 +364,7 @@ html {
 }
 
 .footer {
-  background-color: #f8f8f8;
+  background-color: #fff;
   color: #4e4e4e;
   line-height: 30px;
   padding: 50px 200px;
@@ -317,5 +409,71 @@ html {
 #sign-up-form .modal-dialog {
   @media #{$desktop} {
     width: 30%;
+  }
+}
+
+.pricing {
+  background: $gray_bg_color;
+
+  .container {
+    @media #{$mobile} {
+      padding-bottom: 0;
+    }
+  }
+
+  h3 {
+    margin-bottom: 30px;
+
+    @media #{$mobile} {
+      margin-bottom: 20px;
+    }
+  }
+
+  .pricing__plan {
+    border: 1px solid #ddd;
+    padding-top: 30px;
+    height: 400px;
+    background: #fff;
+    border-radius: 3px;
+
+    @media #{$mobile} {
+      border: none;
+      height: auto;
+      padding-bottom: 20px;
+    }
+
+    .plan__amount {
+      font-size: 36px;
+    }
+
+    .plan__duration {
+      font-size: 13px;
+      color: #5e646e;
+    }
+
+    ul {
+      text-align: left;
+      list-style-type: none;
+      padding-left: 30px;
+      margin-top: 30px;
+
+      li {
+        position: relative;
+
+        p {
+          padding-left: 25px;
+        }
+
+        .plan__check {
+          position: absolute;
+          top: 2px;
+          background: image-url("home/price_check.svg") no-repeat 0 0,-webkit-gradient(linear,left top,left bottom,from(transparent),to(transparent));
+          background: image-url("home/price_check.svg") no-repeat 0 0,-moz-linear-gradient(transparent,transparent);
+          background: image-url("home/price_check.svg") no-repeat 0 0,linear-gradient(transparent,transparent);
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 zh-CN:
   ago: "前"
+  plan_price: "¥%{price}"
   activerecord:
     errors:
       messages:
@@ -246,6 +247,18 @@ zh-CN:
     synk_f_2:       "绝对安全"
     synk_f_3:       "支持云托管的 JIRA"
     synk_f_4:       "支持独立托管的 JIRA"
+
+  pricing:
+    free:
+      free_1: "无限房间"
+      free_2: "一个自定义分数"
+      free_3: "10 个参加者"
+    pro:
+      pro_1: "无限房间"
+      pro_2: "无限自定义分数"
+      pro_3: "无限参加者"
+      pro_4: "JIRA 集成"
+      pro_5: "异步模式"
 
   posts:
     h1: "文章列表"
