@@ -89,13 +89,12 @@ en:
     free:
       free_1: "Unlimited rooms"
       free_2: "1 customized point scheme"
-      free_3: "JIRA integration"
-      free_4: "10 participants"
+      free_3: "10 participants"
     pro:
       pro_1: "Unlimited rooms"
       pro_2: "Customized point schemes"
-      pro_3: "JIRA integration"
-      pro_4: "Unlimited parcitipants"
+      pro_3: "Unlimited parcitipants"
+      pro_4: "JIRA integration"
       pro_5: "Async game mode"
 
   posts:

@@ -252,13 +252,12 @@ zh-CN:
     free:
       free_1: "无限房间"
       free_2: "一个自定义分数"
-      free_3: "JIRA 集成"
-      free_4: "10 个参加者"
+      free_3: "10 个参加者"
     pro:
       pro_1: "无限房间"
       pro_2: "无限自定义分数"
-      pro_3: "JIRA 集成"
-      pro_4: "无限参加者"
+      pro_3: "无限参加者"
+      pro_4: "JIRA 集成"
       pro_5: "异步模式"
 
   posts:
