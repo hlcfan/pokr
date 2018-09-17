@@ -72,7 +72,7 @@ en:
     dashboard_f_4:  "Review recent stories/cards"
     scheme:         "Multiple schemes"
     scheme_alt:     "Pokrex Scrum Poker - Point scheme"
-    scheme_desc:    "We offer multiple story point schemes and customized point schemes to meet different requirements from our users."
+    scheme_desc:    "We offer multiple story point schemes and custom point schemes to meet different requirements from our users."
     scheme_f_1:     "Fibonacci"
     scheme_f_2:     "0-8"
     scheme_f_3:     "T-shirt(XS-XXL)"
@@ -88,11 +88,11 @@ en:
   pricing:
     free:
       free_1: "Unlimited rooms"
-      free_2: "1 customized point scheme"
+      free_2: "1 custom point scheme"
       free_3: "10 participants"
     pro:
       pro_1: "Unlimited rooms"
-      pro_2: "Customized point schemes"
+      pro_2: "Unlimited custom point schemes"
       pro_3: "Unlimited parcitipants"
       pro_4: "JIRA integration"
       pro_5: "Async game mode"
