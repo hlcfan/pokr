@@ -58,6 +58,17 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:show, :index]
+  resources :payments do
+    collection do
+      get :canceled
+      get :success
+    end
+  end
+  resources :orders do
+    collection do
+      get :checkout
+    end
+  end
 
   get 'typeahead' => 'typeahead#index'
 
