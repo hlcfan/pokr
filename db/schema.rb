@@ -27,12 +27,18 @@ ActiveRecord::Schema.define(version: 2018_09_14_131111) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price", precision: 8, scale: 2
     t.integer "user_id", null: false
     t.string "ip"
-    t.string "express_token"
-    t.string "express_payer_id"
+    t.string "payment_id"
+    t.string "payer_id"
+    t.integer "status"
+    t.string "currency"
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
