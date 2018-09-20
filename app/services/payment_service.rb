@@ -44,4 +44,11 @@ module PaymentService
       }
     }
   end
+
+  def self.execute_payment(payment_id:, payer_id:)
+    payment = PayPal::SDK::REST::Payment.find(payment_id)
+    payment.execute(payer_id: payer_id) unless payment.error
+
+    payment
+  end
 end

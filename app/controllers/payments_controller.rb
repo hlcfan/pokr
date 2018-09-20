@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
 
   def new
     # Build Payment object
-    order = Order.create({
+    order = Order.new({
       name: "Monthly",
       quantity: 1,
       price: 5,
@@ -25,32 +25,25 @@ class PaymentsController < ApplicationController
     payment_id = params.fetch(:paymentId, nil)
     if payment_id.present?
       @order = ::Order.find_by(payment_id: payment_id)
-        # token: payment_id,
-      @payment = execute_payment(
+      @payment = PaymentService.execute_payment(
         payment_id: payment_id,
         payer_id: params[:PayerID]
       )
     end
 
-    binding.pry
     if @order && @payment && @payment.success?
       # set transaction status to success and save some data
-      @order.update_attribute(:status, 1)
+      @order.update_attribute(:status, Order::SUCCESS)
       render plain: "Paid successfully!"
     else
       # show error message
-      render plain: "payment failure" and return
+      render plain: "payment failure"
     end
   end
 
   def cancel
+    redirect_back(fallback_location: root_path)
   end
 
-  def execute_payment(payment_id:, payer_id:)
-    payment = PayPal::SDK::REST::Payment.find(payment_id)
-    payment.execute(payer_id: payer_id) unless payment.error
-
-    payment
-  end
 end
 
