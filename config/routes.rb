@@ -64,11 +64,7 @@ Rails.application.routes.draw do
       get :success
     end
   end
-  resources :orders do
-    collection do
-      get :checkout
-    end
-  end
+  get 'billing' => 'billing#show'
 
   get 'typeahead' => 'typeahead#index'
 
