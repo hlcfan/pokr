@@ -11,12 +11,40 @@
       <div class="panel-body">
         <div class="billing__plan">
           <div class="row">
-            <div class="col-md-3">
-              Plan:
+            <div class="col-md-2">
+              Plan
             </div>
-            <div class="col-md-9">
-              Free/Premium
-              <a class="btn btn-success pull-right">Upgrade</a>
+            <div class="col-md-10">
+              Premium
+              Eligible to 2019-11-13
+              <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-2">
+              Purchase
+            </div>
+            <div class="col-md-10">
+              <form class="form-inline">
+                <div class="form-group">
+                  <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                  <div class="input-group">
+                    <select class="form-control">
+                      <option>1 Month</option>
+                      <option>2 Months</option>
+                      <option>3 Months</option>
+                      <option>4 Months</option>
+                      <option>5 Months</option>
+                    </select>
+                  </div>
+                  <label class="plan__amount">
+                    $7.00
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-success plan__submit">Upgrade</button>
+              </form>
+              <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
             </div>
           </div>
           <hr />

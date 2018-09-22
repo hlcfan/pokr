@@ -1,6 +1,7 @@
 class PaymentsController < ApplicationController
 
   def new
+    # binding.pry
     # Build Payment object
     order = Order.new({
       name: "Monthly",
@@ -12,8 +13,9 @@ class PaymentsController < ApplicationController
     })
 
     payment = PaymentService.create order, success_payments_url, canceled_payments_url
+    binding.pry
     if payment.error.present?
-      @payment.error  # Error Hash
+      payment.error  # Error Hash
     else
       order = order.update_attribute :payment_id, payment.id
       redirection_url = payment.links.find{|v| v.method == "REDIRECT" }.href
