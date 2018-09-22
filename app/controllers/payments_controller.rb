@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
     order = Order.new({
       name: "Monthly",
       quantity: 1,
-      price: 5,
+      price: 7,
       user_id: current_user.id,
       currency: "USD",
       status: Order::INITIAL
@@ -47,5 +47,27 @@ class PaymentsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def create
+    binding.pry
+    month = params[:billing][:month]
+    order = Order.new({
+      name: "Monthly",
+      quantity: month,
+      price: 7,
+      user_id: current_user.id,
+      currency: "USD",
+      status: Order::INITIAL
+    })
+
+    payment = PaymentService.create order, success_payments_url, canceled_payments_url
+    binding.pry
+    if payment.error.present?
+      payment.error  # Error Hash
+    else
+      order = order.update_attribute :payment_id, payment.id
+      redirection_url = payment.links.find{|v| v.method == "REDIRECT" }.href
+      redirect_to redirection_url and return
+    end
+  end
 end
 

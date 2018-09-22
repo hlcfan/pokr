@@ -38,7 +38,7 @@ module PaymentService
         ]
       },
       amount: {
-        total: number_with_precision(order.price, precision: 2),
+        total: number_with_precision(order.price*order.quantity, precision: 2),
         currency: order.currency,
         description: "Monthly payment for Pokrex"
       }
