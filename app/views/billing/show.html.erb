@@ -26,16 +26,23 @@
               Purchase
             </div>
             <div class="col-md-10">
-              <form class="form-inline">
+              <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
                 <div class="form-group">
                   <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                   <div class="input-group">
-                    <select class="form-control">
-                      <option>1 Month</option>
-                      <option>2 Months</option>
-                      <option>3 Months</option>
-                      <option>4 Months</option>
-                      <option>5 Months</option>
+                    <select class="form-control plan__month-select" name="billing[month]">
+                      <option value="1">1 Month</option>
+                      <option value="2">2 Months</option>
+                      <option value="3">3 Months</option>
+                      <option value="4">4 Months</option>
+                      <option value="5">5 Months</option>
+                      <option value="6">6 Months</option>
+                      <option value="7">7 Months</option>
+                      <option value="8">8 Months</option>
+                      <option value="9">9 Months</option>
+                      <option value="10">10 Months</option>
+                      <option value="11">11 Months</option>
+                      <option value="12">12 Months</option>
                     </select>
                   </div>
                   <label class="plan__amount">
@@ -43,7 +50,7 @@
                   </label>
                 </div>
                 <button type="submit" class="btn btn-success plan__submit">Upgrade</button>
-              </form>
+              <% end %>
               <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
             </div>
           </div>
