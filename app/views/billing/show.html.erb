@@ -57,9 +57,26 @@
           <hr />
           <div class="billing__history">
             <h4>Payment history</h4>
-            <div class="well">
-              <div class="text-center">You have not made any payments.</div>
-            </div>
+            <% if @orders.blank? %>
+              <div class="well">
+                <div class="text-center">You have not made any payments.</div>
+              </div>
+            <% else %>
+              <table class="table">
+                <tbody>
+                  <% @orders.each do |order| %>
+                    <tr>
+                      <td><%= l order.created_at, format: :short %></td>
+                      <td><%= order.name %></td>
+                      <td><%= number_to_currency order.price, unit: order.currency %></td>
+                      <td><%= order.quantity %></td>
+                      <td><%= number_with_precision(order.price * order.quantity, precision: 2) %></td>
+                      <td><%= order.status %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
           </div>
         </div>
       </div>
