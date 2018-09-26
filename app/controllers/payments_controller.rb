@@ -1,7 +1,6 @@
 class PaymentsController < ApplicationController
 
   def new
-    # binding.pry
     # Build Payment object
     order = Order.new({
       name: "Monthly",
@@ -13,7 +12,6 @@ class PaymentsController < ApplicationController
     })
 
     payment = PaymentService.create order, success_payments_url, canceled_payments_url
-    binding.pry
     if payment.error.present?
       payment.error  # Error Hash
     else
@@ -36,6 +34,7 @@ class PaymentsController < ApplicationController
     if @order && @payment && @payment.success?
       # set transaction status to success and save some data
       @order.update_attribute(:status, Order::SUCCESS)
+      current_user.expand_premium_expiration @order.quantity * 1.month
       render plain: "Paid successfully!"
     else
       # show error message
@@ -48,7 +47,6 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    binding.pry
     month = params[:billing][:month]
     order = Order.new({
       name: "Monthly",
@@ -60,7 +58,7 @@ class PaymentsController < ApplicationController
     })
 
     payment = PaymentService.create order, success_payments_url, canceled_payments_url
-    binding.pry
+
     if payment.error.present?
       payment.error  # Error Hash
     else
