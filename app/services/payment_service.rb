@@ -31,7 +31,7 @@ module PaymentService
         items: [
           {
             name: order.name,
-            price: order.price,
+            price: number_with_precision(order.price, precision: 2),
             currency: order.currency,
             quantity: order.quantity
           }
