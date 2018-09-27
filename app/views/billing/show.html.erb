@@ -18,7 +18,7 @@
               <b>
                 <%= current_user.premium? ? "Premium" : "Free"%>
               </b>
-              <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :long %></span>
+              <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :brief %></span>
             </div>
           </div>
           <hr />
@@ -29,7 +29,7 @@
             <div class="col-md-10">
               <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
                 <div class="form-group">
-                  <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                  <label class="sr-only">Amount (in dollars)</label>
                   <div class="input-group">
                     <select class="form-control plan__month-select" name="billing[month]">
                       <option value="1">1 Month</option>
@@ -77,7 +77,7 @@
                 <tbody>
                   <% @orders.each do |order| %>
                     <tr>
-                      <td><%= l order.created_at, format: "%Y-%m-%d %H:%M" %></td>
+                      <td><%= l order.created_at, format: :brief %></td>
                       <td><%= order.name %></td>
                       <td><%= number_to_currency order.price, unit: "$" %></td>
                       <td><%= order.quantity %></td>
