@@ -1,30 +1,5 @@
 class PaymentsController < ApplicationController
 
-  def success
-    payment_id = params.fetch(:paymentId, nil)
-    if payment_id.present?
-      @order = ::Order.find_by(payment_id: payment_id)
-      @payment = PaymentService.execute_payment(
-        payment_id: payment_id,
-        payer_id: params[:PayerID]
-      )
-    end
-
-    if @order && @payment && @payment.success?
-      # set transaction status to success and save some data
-      @order.update_attribute(:status, Order::SUCCESS)
-      current_user.expand_premium_expiration @order.quantity * 1.month
-      render plain: "Paid successfully!"
-    else
-      # show error message
-      render plain: "payment failure"
-    end
-  end
-
-  def cancel
-    redirect_back(fallback_location: root_path)
-  end
-
   def create
     month = params[:billing][:month]
     order = Order.new({
@@ -46,5 +21,31 @@ class PaymentsController < ApplicationController
       redirect_to redirection_url and return
     end
   end
+
+  def success
+    payment_id = params.fetch(:paymentId, nil)
+    if payment_id.present?
+      @order = ::Order.find_by(payment_id: payment_id)
+      @payment = PaymentService.execute_payment(
+        payment_id: payment_id,
+        payer_id: params[:PayerID]
+      )
+    end
+
+    if @order && @payment && @payment.success?
+      # set transaction status to success and save some data
+      @order.update_attribute(:status, Order::SUCCESS)
+      current_user.expand_premium_expiration @order.quantity * 1.month
+      redirect_to billing_path, flash: { success: "Thanks for your payment, we'll work hard to serve you well 🤗" }
+    else
+      Rails.logger.error("Payment failure, order id: #{@order.id}, error: #{@payment.error}")
+      redirect_to billing_path, flash: { error: "Payment failed :-|" }
+    end
+  end
+
+  def cancel
+    redirect_back(fallback_location: root_path)
+  end
+
 end
 
