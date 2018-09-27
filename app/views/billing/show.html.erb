@@ -82,7 +82,7 @@
                       <td><%= number_to_currency order.price, unit: "$" %></td>
                       <td><%= order.quantity %></td>
                       <td><%= number_with_precision(order.price * order.quantity, precision: 2) %></td>
-                      <td><%= order.friendly_status %></td>
+                      <td><span class="label label-default label-<%= order.friendly_status.downcase %>"><%= order.friendly_status %></span></td>
                     </tr>
                   <% end %>
                 </tbody>

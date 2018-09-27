@@ -8,7 +8,7 @@ class Order < ApplicationRecord
 
   def friendly_status
     {
-      INITIAL =>  "Outdated",
+      INITIAL =>  "Canceled",
       FAILED =>   "Failed",
       SUCCESS =>  "Success"
     }.fetch(status, "Unknown")
