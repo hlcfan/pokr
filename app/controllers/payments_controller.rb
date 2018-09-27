@@ -1,26 +1,5 @@
 class PaymentsController < ApplicationController
 
-  def new
-    # Build Payment object
-    order = Order.new({
-      name: "Monthly",
-      quantity: 1,
-      price: 7,
-      user_id: current_user.id,
-      currency: "USD",
-      status: Order::INITIAL
-    })
-
-    payment = PaymentService.create order, success_payments_url, canceled_payments_url
-    if payment.error.present?
-      payment.error  # Error Hash
-    else
-      order = order.update_attribute :payment_id, payment.id
-      redirection_url = payment.links.find{|v| v.method == "REDIRECT" }.href
-      redirect_to redirection_url and return
-    end
-  end
-
   def success
     payment_id = params.fetch(:paymentId, nil)
     if payment_id.present?
@@ -49,7 +28,7 @@ class PaymentsController < ApplicationController
   def create
     month = params[:billing][:month]
     order = Order.new({
-      name: "Monthly",
+      name: "Monthly premium payment",
       quantity: month,
       price: 7,
       user_id: current_user.id,
