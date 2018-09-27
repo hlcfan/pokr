@@ -11,18 +11,19 @@
       <div class="panel-body">
         <div class="billing__plan">
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 plan__key">
               Plan
             </div>
             <div class="col-md-10">
-              Premium
-              Eligible to 2019-11-13
-              <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
+              <b>
+                <%= current_user.premium? ? "Premium" : "Free"%>
+              </b>
+              <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :long %></span>
             </div>
           </div>
           <hr />
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 plan__key">
               Purchase
             </div>
             <div class="col-md-10">
@@ -49,7 +50,7 @@
                     $7.00
                   </label>
                 </div>
-                <button type="submit" class="btn btn-success plan__submit">Upgrade</button>
+                <button type="submit" class="btn btn-success pull-right plan__submit">Upgrade</button>
               <% end %>
               <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
             </div>
@@ -63,15 +64,25 @@
               </div>
             <% else %>
               <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Plan</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <% @orders.each do |order| %>
                     <tr>
-                      <td><%= l order.created_at, format: :short %></td>
+                      <td><%= l order.created_at, format: "%Y-%m-%d %H:%M" %></td>
                       <td><%= order.name %></td>
-                      <td><%= number_to_currency order.price, unit: order.currency %></td>
+                      <td><%= number_to_currency order.price, unit: "$" %></td>
                       <td><%= order.quantity %></td>
                       <td><%= number_with_precision(order.price * order.quantity, precision: 2) %></td>
-                      <td><%= order.status %></td>
+                      <td><%= order.friendly_status %></td>
                     </tr>
                   <% end %>
                 </tbody>

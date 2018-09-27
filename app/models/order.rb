@@ -6,4 +6,12 @@ class Order < ApplicationRecord
 
   belongs_to :user
 
+  def friendly_status
+    {
+      INITIAL =>  "Outdated",
+      FAILED =>   "Failed",
+      SUCCESS =>  "Success"
+    }.fetch(status, "Unknown")
+  end
+
 end

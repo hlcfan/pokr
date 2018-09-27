@@ -114,6 +114,10 @@ class User < ApplicationRecord
     Rails.logger.error "Expand premium expiration failure for #{id}, duration: #{duration}"
   end
 
+  def premium?
+    self.premium_expiration && self.premium_expiration >= Time.now.utc
+  end
+
   private
 
   def default_values
