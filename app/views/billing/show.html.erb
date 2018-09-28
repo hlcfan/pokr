@@ -18,7 +18,9 @@
               <b>
                 <%= current_user.premium? ? "Premium" : "Free"%>
               </b>
-              <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :brief %></span>
+              <% if current_user.premium? %>
+                <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :brief %></span>
+              <% end %>
             </div>
           </div>
           <hr />
