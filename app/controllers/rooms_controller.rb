@@ -1,5 +1,7 @@
 class RoomsController < ApplicationController
 
+  include Premium
+
   before_action :guest_check, only: [:show, :leaflet_view]
   before_action :authenticate_user!, except: [:screen]
   before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point]
@@ -53,6 +55,7 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
+    premium_check(billing_path, "Only premium user can create async rooms, be our premium member.", !current_user.premium?); return if performed?
     respond_to do |format|
       if repo.save @room
         remove_memorization_of_moderators
@@ -230,6 +233,9 @@ class RoomsController < ApplicationController
   end
 
   def enter_room
+    redirection_path = signed_in? ? dashboard_index_path : screen_room_path(@room.slug)
+    premium_check(redirection_path, "Non-premium moderator can only create room with 10 participants at most, tell your moderator to be our premium member.", @room.created_by != current_user.id, @room.users.count > 9); return if performed?
+
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
