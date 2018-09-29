@@ -3,7 +3,7 @@ module Premium
 
   def premium_check redirection_path, message, *conditions
     if conditions.all? { |condition| true == condition }
-      redirect_to(redirection_path, flash: { alert: message }) and return
+      redirect_to(redirection_path, flash: { error: message }) and return
     end
   end
 end
