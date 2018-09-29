@@ -21,9 +21,15 @@ class Rooms
         return
 
     $('#room_style').on 'change', ->
-      if($(this).val() == "1")
+      selectedMode = $(this).val()
+      if(selectedMode == "1")
         $('.add.btn').hide()
         $('.import').hide()
+      else if(selectedMode == "2")
+        nonPremiumUser = "false" == $("#premium-user-identifier").val()
+        if(nonPremiumUser)
+          $(this).val("")
+          $("#billing-modal").modal({keyboard: false, backdrop: "static"})
       else
         $('.add.btn').show()
         $('.import').show()
