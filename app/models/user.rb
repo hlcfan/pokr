@@ -115,7 +115,7 @@ class User < ApplicationRecord
   end
 
   def premium?
-    self.premium_expiration && self.premium_expiration >= Time.now.utc
+    !!(self.premium_expiration && self.premium_expiration >= Time.now.utc)
   end
 
   private
