@@ -11,11 +11,19 @@ module PaymentService
         get_item_list(order)
       ]
     })
-
     payment.create
 
     payment
   end
+
+  def self.execute_payment(payment_id:, payer_id:)
+    payment = PayPal::SDK::REST::Payment.find(payment_id)
+    payment.execute(payer_id: payer_id) unless payment.error
+
+    payment
+  end
+
+  private
 
   def self.get_item_list order
     {
@@ -35,13 +43,6 @@ module PaymentService
         description: "Monthly payment for Pokrex"
       }
     }
-  end
-
-  def self.execute_payment(payment_id:, payer_id:)
-    payment = PayPal::SDK::REST::Payment.find(payment_id)
-    payment.execute(payer_id: payer_id) unless payment.error
-
-    payment
   end
 
 end
