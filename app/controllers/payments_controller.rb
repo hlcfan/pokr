@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
       status: Order::INITIAL
     })
 
-    payment = PaymentService.create order, success_payments_url, canceled_payments_url
+    payment = PaymentService.create order, success_payments_url, cancel_payments_url
 
     if payment.error.present?
       payment.error  # Error Hash
