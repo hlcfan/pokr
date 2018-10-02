@@ -55,7 +55,9 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = repo.new_entity(room_params.merge(created_by: current_user.id))
-    premium_check(billing_path, "Only premium user can create async rooms, be our premium member.", !current_user.premium?); return if performed?
+    if @room.async_mode?
+      premium_check(billing_path, "Only premium user can create async rooms, be our premium member.", !current_user.premium?); return if performed?
+    end
     respond_to do |format|
       if repo.save @room
         remove_memorization_of_moderators
