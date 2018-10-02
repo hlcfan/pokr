@@ -5,6 +5,10 @@ RSpec.describe User, type: :model do
 
   describe "Associations" do
     it { should have_many(:schemes) }
+
+    it "has many orders" do
+      expect(User.reflect_on_association(:orders).macro).to eq(:has_many)
+    end
   end
 
   describe "#name" do
