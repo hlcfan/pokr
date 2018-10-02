@@ -19,7 +19,7 @@ RSpec.describe RoomsController, type: :controller do
   let(:valid_session) { {} }
   login_user
   describe "GET #index" do
-    it "assigns all rooms as @rooms" do
+    it "redirects to dashboard page if signed in" do
       room = Room.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to redirect_to dashboard_index_path
