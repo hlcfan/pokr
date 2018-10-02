@@ -58,9 +58,9 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:show, :index]
-  resources :payments do
+  resources :payments, only: [:create] do
     collection do
-      get :canceled
+      get :cancel
       get :success
     end
   end

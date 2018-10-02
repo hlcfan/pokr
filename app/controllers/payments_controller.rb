@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
   def success
     payment_id = params.fetch(:paymentId, nil)
     if payment_id.present?
-      @order = ::Order.find_by(payment_id: payment_id)
+      @order = Order.find_by(payment_id: payment_id)
       @payment = PaymentService.execute_payment(
         payment_id: payment_id,
         payer_id: params[:PayerID]
