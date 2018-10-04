@@ -25,7 +25,7 @@ RSpec.describe PaymentsController, type: :controller do
   describe "#success" do
     it "redirects to billing path once gets called if success payment returned from paypal" do
       user = User.find_by email: "a@a.com"
-      order = Order.create(user_id: user.id, payment_id: "payment-id", quantity: 2)
+      Order.create(user_id: user.id, payment_id: "payment-id", quantity: 2)
       payment_id = "payment-id"
       payer_id = "payer-id"
       allow(PaymentService).to receive(:execute_payment).with({payment_id: payment_id, payer_id: payer_id}) {

@@ -44,5 +44,6 @@ module PaymentService
       }
     }
   end
+  private_class_method :get_item_list
 
 end

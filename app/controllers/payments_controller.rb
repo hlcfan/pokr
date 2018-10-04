@@ -17,7 +17,7 @@ class PaymentsController < ApplicationController
       payment.error  # Error Hash
       redirect_to billing_path, flash: { error: payment.error }
     else
-      order = order.update_attribute :payment_id, payment.id
+      order.update_attribute :payment_id, payment.id
       redirection_url = payment.links.find{|v| v.method == "REDIRECT" }.href
       redirect_to redirection_url
     end

@@ -31,7 +31,7 @@ RSpec.describe SchemesController, type: :controller do
     end
 
     it "redirects to billing page if non premium member and already has a scheme created" do
-      scheme = Scheme.create! valid_attributes.merge(name: "scheme 2")
+      Scheme.create! valid_attributes.merge(name: "scheme 2")
       get :new, session: valid_session
       expect(response).to redirect_to(billing_path)
       expect(flash[:error]).to eq("Non-premium user cannot create more than 1 custom schemes.")
@@ -89,7 +89,7 @@ RSpec.describe SchemesController, type: :controller do
       end
 
       it "redirects to billing page if non premium member and already has a scheme created" do
-        scheme = Scheme.create! valid_attributes.merge(name: "scheme 1")
+        Scheme.create! valid_attributes.merge(name: "scheme 1")
         post :create, params: {:scheme => valid_attributes}, session: valid_session
         expect(response).to redirect_to(billing_path)
         expect(flash[:error]).to eq("Non-premium user cannot create more than 1 custom schemes.")
