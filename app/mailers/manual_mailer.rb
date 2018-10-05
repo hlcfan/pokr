@@ -5,7 +5,6 @@ class ManualMailer < ApplicationMailer
 
   def create to:, message:
     @message = message
-    @to = to
     mail(to: to, subject: 'Alex from Pokrex')
   end
 

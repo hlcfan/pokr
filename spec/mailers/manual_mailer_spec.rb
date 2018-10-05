@@ -21,7 +21,7 @@ RSpec.describe ManualMailer, type: :mailer do
     end
 
     it "assigns @message" do
-      expect(mail.body.encoded).to match "Hope you're doing well."
+      expect(mail.body.encoded).to match "message"
     end
   end
 end
