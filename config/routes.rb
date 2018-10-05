@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   constraints admin_constraint do
     mount Logster::Web => "/logs"
     mount Sidekiq::Web => '/sidekiq'
+    get 'marketing/send_email'
+    post 'marketing/send_email'
   end
 
   resources :rooms do
