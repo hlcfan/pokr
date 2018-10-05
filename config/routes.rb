@@ -63,8 +63,6 @@ Rails.application.routes.draw do
 
   get 'typeahead' => 'typeahead#index'
 
-
-
   match "/404" => "errors#not_found", via: [ :get, :post, :patch, :delete ], as: :not_found
 
   root 'home#index'
