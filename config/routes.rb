@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   constraints admin_constraint do
     mount Logster::Web => "/logs"
     mount Sidekiq::Web => '/sidekiq'
+    get 'marketing/send_email'
+    post 'marketing/send_email'
   end
 
   resources :rooms do
@@ -60,6 +62,8 @@ Rails.application.routes.draw do
   resources :posts, only: [:show, :index]
 
   get 'typeahead' => 'typeahead#index'
+
+
 
   match "/404" => "errors#not_found", via: [ :get, :post, :patch, :delete ], as: :not_found
 

@@ -1,0 +1,24 @@
+<%
+    title "Send mails"
+%>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">Send email</div>
+      <div class="panel-body">
+        <%= form_tag marketing_send_email_path, class: "", method: "POST" do %>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Reveivers</label>
+            <%= text_area_tag :receivers, nil, placeholder: "Separated by comma", class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Content</label>
+            <%= text_area_tag :content, nil, class: "form-control" %>
+          </div>
+          <button type="submit" class="btn btn-info">Send</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
