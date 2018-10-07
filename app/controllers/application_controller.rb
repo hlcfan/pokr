@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
+  private
+
   def after_sign_in_path_for(resource)
     cookies.signed[:user_id] = current_user.id
     session[:previous_url] || root_path
@@ -22,8 +24,6 @@ class ApplicationController < ActionController::Base
     cookies.delete :user_id
     root_path
   end
-
-  private
 
   def set_locale
     I18n.locale = params[:locale] ||
