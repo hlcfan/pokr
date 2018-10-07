@@ -26,7 +26,7 @@ RSpec.describe Story, type: :model do
       expect(story.valid?).to be true
     end
 
-    it "is valid if description is less than 500 chars" do
+    it "is invalid if description is longer than 500 chars" do
       story = Story.create(link: "link", desc: "descr"*101)
       expect(story.errors[:desc][0]).to eq("is too long (maximum is 500 characters)")
       expect(story.valid?).to be false
