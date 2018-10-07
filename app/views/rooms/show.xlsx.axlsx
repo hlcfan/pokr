@@ -4,7 +4,7 @@ workbook.styles do |style|
 true, sz: 16)
   row_style = style.add_style(alignment: { horizontal: :left }, sz: 15)
 
-  workbook.add_worksheet(name: @room.name) do |sheet|
+  workbook.add_worksheet(name: "Estimation") do |sheet|
     total_point = 0
     sheet.add_row [room_url(@room.slug)], sz: 16
     sheet.add_hyperlink location: room_url(@room.slug), ref: sheet.rows.first.cells.first

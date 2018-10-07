@@ -56,15 +56,22 @@ RSpec.describe RoomsController, type: :controller do
       room = Room.create! valid_attributes
       story = room.stories.first
       get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
-      expect(response.header["Content-Disposition"]).to eq("attachment; filename=room name.xlsx")
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename=room-name.xlsx")
     end
 
-    it "returns Excel file which named by slug if room name being non-sense if request format is xlsx" do
-      room = Room.create! valid_attributes.merge(name: "...", slug: "slug-here")
-      room.update(slug: "slug-here")
+    it "returns Excel file with at most 30 chars as filename" do
+      room = Room.create! valid_attributes.merge(name: "...", slug: "slug-here-12345678909876543212345678900987654321")
+      room.update(slug: "slug-hereslug-here-12345678909876543212345678900987654321")
       story = room.stories.first
       get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
-      expect(response.header["Content-Disposition"]).to eq("attachment; filename=slug-here.xlsx")
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename=slug-hereslug-here-12345678909.xlsx")
+    end
+
+    it "returns Excel file with worksheet name equals 'Estimation'" do
+      room = Room.create! valid_attributes.merge(name: "2018/01/01")
+      story = room.stories.first
+      get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename=2018-01-01.xlsx")
     end
 
     it "redirects to room view page if moderator of async room" do

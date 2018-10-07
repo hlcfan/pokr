@@ -200,11 +200,7 @@ class RoomsController < ApplicationController
   end
 
   def excel_filename
-    if @room.name.parameterize.blank?
-      @room.slug
-    else
-      @room.name
-    end
+    @room.slug[0..29]
   end
 
   def remove_memorization_of_moderators
