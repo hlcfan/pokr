@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_25_134933) do
+ActiveRecord::Schema.define(version: 2018_10_07_045803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2018_08_25_134933) do
   create_table "stories", force: :cascade do |t|
     t.bigint "room_id"
     t.string "link", limit: 255
-    t.string "desc", limit: 255
+    t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "point", limit: 255
