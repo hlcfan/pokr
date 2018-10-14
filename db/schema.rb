@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_26_142016) do
+ActiveRecord::Schema.define(version: 2018_10_07_045803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "authorizations", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "provider", limit: 255
-    t.string "uid", limit: 255
-    t.string "access_token", limit: 255
+    t.integer "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.string "access_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authorizations_on_user_id"
@@ -51,20 +51,20 @@ ActiveRecord::Schema.define(version: 2018_09_26_142016) do
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
   end
 
-  create_table "rooms", force: :cascade do |t|
-    t.string "name", limit: 191, null: false
-    t.bigint "status"
+  create_table "rooms", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "slug", limit: 255, null: false
-    t.bigint "created_by"
-    t.string "pv", limit: 255
+    t.string "slug", null: false
+    t.integer "created_by"
+    t.string "pv"
     t.float "timer"
-    t.bigint "stories_count"
-    t.bigint "user_rooms_count"
-    t.bigint "style"
-    t.string "scheme", limit: 255
+    t.integer "stories_count"
+    t.integer "user_rooms_count"
+    t.integer "style"
     t.float "duration"
+    t.string "scheme"
     t.datetime "discarded_at"
     t.index ["created_by"], name: "index_rooms_on_created_by"
     t.index ["discarded_at"], name: "index_rooms_on_discarded_at"
@@ -83,32 +83,32 @@ ActiveRecord::Schema.define(version: 2018_09_26_142016) do
     t.index ["user_id"], name: "index_schemes_on_user_id"
   end
 
-  create_table "stories", force: :cascade do |t|
-    t.bigint "room_id"
-    t.string "link", limit: 255
-    t.string "desc", limit: 255
+  create_table "stories", id: :serial, force: :cascade do |t|
+    t.integer "room_id"
+    t.string "link"
+    t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "point", limit: 255
-    t.bigint "sequence"
+    t.string "point"
+    t.integer "sequence"
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_stories_on_discarded_at"
   end
 
-  create_table "user_rooms", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "room_id", null: false
+  create_table "user_rooms", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "role"
+    t.integer "role"
     t.index ["room_id"], name: "index_user_rooms_on_room_id"
     t.index ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true
   end
 
-  create_table "user_story_points", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "story_id"
-    t.string "points", limit: 255
+  create_table "user_story_points", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "story_id"
+    t.string "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comment"
@@ -118,26 +118,26 @@ ActiveRecord::Schema.define(version: 2018_09_26_142016) do
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.bigint "role"
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", limit: 255, default: "", null: false
-    t.string "encrypted_password", limit: 255, default: "", null: false
-    t.string "reset_password_token", limit: 255
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.bigint "sign_in_count", default: 0, null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip", limit: 255
-    t.string "last_sign_in_ip", limit: 255
-    t.string "avatar_file_name", limit: 255
-    t.string "avatar_content_type", limit: 255
-    t.bigint "avatar_file_size"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string "image", limit: 255
+    t.string "image"
     t.datetime "premium_expiration"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
