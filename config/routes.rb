@@ -60,6 +60,13 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:show, :index]
+  resources :payments, only: [:create] do
+    collection do
+      get :cancel
+      get :success
+    end
+  end
+  get 'billing' => 'billing#show'
 
   get 'typeahead' => 'typeahead#index'
 

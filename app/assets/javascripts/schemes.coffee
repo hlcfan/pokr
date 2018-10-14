@@ -29,8 +29,19 @@ class Schemes
         return false
       return
 
+  index: ->
+    $(".scheme__create-btn").on "click", (e)->
+      nonPremiumUser = "false" == $("#premium-user-identifier").val()
+      if(nonPremiumUser)
+        e.preventDefault()
+        $("#billing-modal").modal({keyboard: false, backdrop: "static"})
+
 $(document).on "ready", ->
   $(".schemes.new, .schemes.edit, .schemes.create, .schemes.update").ready ->
     schemes = new Schemes
     schemes.init()
+
+  $(".schemes.index").ready ->
+    schemes = new Schemes
+    schemes.index()
 

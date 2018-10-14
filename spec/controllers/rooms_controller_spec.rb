@@ -6,7 +6,7 @@ RSpec.describe RoomsController, type: :controller do
   # Room. As you add validations to Room, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { name: "room name", timer: 1, pv: "1,3,5,13", moderator_ids: "", stories_attributes: { 0 => { link: "http://jira.com/123" } } }
+    { name: "room name", timer: 1, pv: "1,3,5,13", created_by: User.first.id, moderator_ids: "", stories_attributes: { 0 => { link: "http://jira.com/123" } } }
   }
 
   let(:invalid_attributes) {
@@ -19,7 +19,7 @@ RSpec.describe RoomsController, type: :controller do
   let(:valid_session) { {} }
   login_user
   describe "GET #index" do
-    it "assigns all rooms as @rooms" do
+    it "redirects to dashboard page if signed in" do
       room = Room.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to redirect_to dashboard_index_path
@@ -81,6 +81,26 @@ RSpec.describe RoomsController, type: :controller do
       get :show, params: {id: room.slug}, session: valid_session
       expect(response).to redirect_to(view_room_path(room.slug))
     end
+
+    context "if room is up to 10 participants for non premium moderator" do
+      it "redirects back to dashboard page if signed in" do
+        moderator = User.find_by email: "a@a.com"
+        room = Room.create! valid_attributes.merge(created_by: moderator.id)
+        1.upto(10).each do
+          begin
+            user = User.create(email: "a-#{SecureRandom.rand(50)}@pokrex.com", password: "password")
+            UserRoom.create(user_id: user.id, room_id: room.id)
+          rescue
+            retry
+          end
+        end
+        allow(controller.current_user).to receive(:id) { 999 }
+        get :show, params: {:id => room.slug}, session: valid_session
+
+        expect(response).to redirect_to dashboard_index_path
+        expect(flash[:error]).to eq("Non-premium moderator can only create room with 10 participants at most, tell your moderator to be our premium member.")
+      end
+    end
   end
 
   describe "GET #new" do
@@ -115,6 +135,11 @@ RSpec.describe RoomsController, type: :controller do
       it "redirects to the created room" do
         post :create, params: {:room => valid_attributes}, session: valid_session
         expect(response).to redirect_to(room_path(Room.last.slug))
+      end
+
+      it "redirects to billing page if creating async room without premium privilege" do
+        post :create, params: {:room => valid_attributes.merge(style: Room::LEAFLET_STYLE)}, session: valid_session
+        expect(response).to redirect_to billing_path
       end
     end
 

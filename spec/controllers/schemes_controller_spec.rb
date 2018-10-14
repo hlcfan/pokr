@@ -29,6 +29,21 @@ RSpec.describe SchemesController, type: :controller do
       get :new, params: {}, session: valid_session
       expect(assigns(:scheme)).to be_a_new(Scheme)
     end
+
+    it "redirects to billing page if non premium member and already has a scheme created" do
+      Scheme.create! valid_attributes.merge(name: "scheme 2")
+      get :new, session: valid_session
+      expect(response).to redirect_to(billing_path)
+      expect(flash[:error]).to eq("Non-premium user cannot create more than 1 custom schemes.")
+    end
+
+    it "renders new page if premium member" do
+      Scheme.create! valid_attributes.merge(name: "scheme 1")
+      Scheme.create! valid_attributes.merge(name: "scheme 2")
+      allow(controller.current_user).to receive(:premium_expiration) { Time.now + 10.days }
+      get :new, session: valid_session
+      expect(response).to render_template("new")
+    end
   end
 
   describe "GET #edit" do
@@ -36,6 +51,21 @@ RSpec.describe SchemesController, type: :controller do
       scheme = Scheme.create! valid_attributes
       get :edit, params: {:id => scheme.slug}, session: valid_session
       expect(assigns(:scheme)).to eq(scheme)
+    end
+
+    it "redirects to billing page if non premium member and already has a scheme created" do
+      scheme = Scheme.create! valid_attributes.merge(name: "scheme 2")
+      get :edit, params: {:id => scheme.slug}, session: valid_session
+      expect(response).to redirect_to(billing_path)
+      expect(flash[:error]).to eq("Non-premium user cannot create more than 1 custom schemes.")
+    end
+
+    it "renders edit page if user is premium member" do
+      Scheme.create! valid_attributes.merge(name: "scheme 1")
+      scheme = Scheme.create! valid_attributes.merge(name: "scheme 2")
+      allow(controller.current_user).to receive(:premium_expiration) { Time.now + 10.days }
+      get :edit, params: {:id => scheme.slug}, session: valid_session
+      expect(response).to render_template("edit")
     end
   end
 
@@ -56,6 +86,13 @@ RSpec.describe SchemesController, type: :controller do
       it "redirects to the scheme list page" do
         post :create, params: {:scheme => valid_attributes}, session: valid_session
         expect(response).to redirect_to(schemes_path)
+      end
+
+      it "redirects to billing page if non premium member and already has a scheme created" do
+        Scheme.create! valid_attributes.merge(name: "scheme 1")
+        post :create, params: {:scheme => valid_attributes}, session: valid_session
+        expect(response).to redirect_to(billing_path)
+        expect(flash[:error]).to eq("Non-premium user cannot create more than 1 custom schemes.")
       end
     end
 

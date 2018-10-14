@@ -20,6 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  time:
+    formats:
+      brief: "%Y-%m-%d %H:%M"
+
   plan_price: "$%{price}"
   ago: "ago"
   site:

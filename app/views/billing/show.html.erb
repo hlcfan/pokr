@@ -1,0 +1,98 @@
+<%
+  title "Billing"
+%>
+
+<div class="row billing">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Billing overview</h3>
+      </div>
+      <div class="panel-body">
+        <div class="billing__plan">
+          <div class="row">
+            <div class="col-md-2 plan__key">
+              Plan
+            </div>
+            <div class="col-md-10">
+              <b>
+                <%= current_user.premium? ? "Premium" : "Free"%>
+              </b>
+              <% if current_user.premium? %>
+                <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :brief %></span>
+              <% end %>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-2 plan__key">
+              Purchase
+            </div>
+            <div class="col-md-10">
+              <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
+                <div class="form-group">
+                  <label class="sr-only">Amount (in dollars)</label>
+                  <div class="input-group">
+                    <select class="form-control plan__month-select" name="billing[month]">
+                      <option value="1">1 Month</option>
+                      <option value="2">2 Months</option>
+                      <option value="3">3 Months</option>
+                      <option value="4">4 Months</option>
+                      <option value="5">5 Months</option>
+                      <option value="6">6 Months</option>
+                      <option value="7">7 Months</option>
+                      <option value="8">8 Months</option>
+                      <option value="9">9 Months</option>
+                      <option value="10">10 Months</option>
+                      <option value="11">11 Months</option>
+                      <option value="12">12 Months</option>
+                    </select>
+                  </div>
+                  <label class="plan__amount">
+                    $7.00
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-success pull-right plan__submit">Upgrade</button>
+              <% end %>
+              <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
+            </div>
+          </div>
+          <hr />
+          <div class="billing__history">
+            <h4>Payment history</h4>
+            <% if @orders.blank? %>
+              <div class="well">
+                <div class="text-center">You have not made any payments.</div>
+              </div>
+            <% else %>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Plan</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @orders.each do |order| %>
+                    <tr>
+                      <td><%= l order.created_at, format: :brief %></td>
+                      <td><%= order.name %></td>
+                      <td><%= number_to_currency order.price, unit: "$" %></td>
+                      <td><%= order.quantity %></td>
+                      <td><%= number_with_precision(order.price * order.quantity, precision: 2) %></td>
+                      <td><span class="label label-default label-<%= order.friendly_status.downcase %>"><%= order.friendly_status %></span></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

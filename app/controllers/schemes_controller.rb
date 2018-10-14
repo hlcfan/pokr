@@ -1,7 +1,10 @@
 class SchemesController < ApplicationController
 
+  include Premium
+
   before_action :authenticate_user!
   before_action :set_scheme, except: [:index, :new, :create]
+  before_action -> { premium_check(billing_path, "Non-premium user cannot create more than 1 custom schemes.", !current_user.premium?, current_user.schemes.count >= 1) }, only: [:new, :create, :edit]
 
   def index
     @schemes = Scheme.where user_id: current_user.id

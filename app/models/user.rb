@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :created_rooms, class_name: "Room", foreign_key: :created_by
   has_many :authorizations
   has_many :schemes
+  has_many :orders
 
   after_initialize :default_values
 
@@ -102,6 +103,19 @@ class User < ApplicationRecord
 
   def email_verified?
     self.email && self.email =~ VALID_EMAIL_REGEX
+  end
+
+  def expand_premium_expiration duration
+    self.premium_expiration ||= Time.now.utc
+    self.premium_expiration += duration
+
+    save!
+  rescue
+    Rails.logger.error "Expand premium expiration failure for #{id}, duration: #{duration}"
+  end
+
+  def premium?
+    self.premium_expiration.present? && self.premium_expiration >= Time.now.utc
   end
 
   private

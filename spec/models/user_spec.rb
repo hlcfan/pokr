@@ -5,6 +5,10 @@ RSpec.describe User, type: :model do
 
   describe "Associations" do
     it { should have_many(:schemes) }
+
+    it "has many orders" do
+      expect(User.reflect_on_association(:orders).macro).to eq(:has_many)
+    end
   end
 
   describe "#name" do
@@ -147,4 +151,28 @@ RSpec.describe User, type: :model do
     end
   end
 
+  require 'active_support/testing/time_helpers'
+  include ActiveSupport::Testing::TimeHelpers
+  describe "#expand_premium_expiration" do
+    it "expands user premium expiration date" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      time = Time.parse("2018-11-13 14:12 UTC")
+      travel_to time
+      allow(Time.now).to receive(:utc) { time }
+      expect(user.expand_premium_expiration(1.day)).to eq(true)
+      expect(user.reload.premium_expiration).to eq(time + 1.day)
+    end
+  end
+
+  describe "#premium?" do
+    it "returns true if premium member" do
+      user = User.create(email: 'a@a.com', password: 'password', premium_expiration: Time.now + 10.days)
+      expect(user.premium?).to be true
+    end
+
+    it "returns false if non premium member" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      expect(user.premium?).to be false
+    end
+  end
 end

@@ -1,6 +1,9 @@
 <%
   title "Schemes"
 %>
+<% content_for(:premium_identifier) do %>
+  <input type="hidden" id="premium-user-identifier" value="<%= allow_to_create_schems? %>" />
+<% end %>
 <div class="row scheme">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">
@@ -8,7 +11,7 @@
         <h3 class="panel-title">Schemes</h3>
       </div>
       <div class="panel-body">
-        <a href="<%= new_scheme_path %>" class="btn btn-default">Create scheme</a>
+        <a href="<%= new_scheme_path %>" class="btn btn-default scheme__create-btn">Create scheme</a>
         <hr />
         <% if @schemes.blank? %>
           <div class="alert alert-info scheme--empty-list">You haven't created any schemes</div>

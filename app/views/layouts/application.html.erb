@@ -38,5 +38,37 @@
   <% end %>
   <%= render "layouts/feedback" %>
   <%= render "layouts/tracking" %>
+  <% if content_for(:premium_identifier) %>
+    <%= yield(:premium_identifier) %>
+  <% else %>
+    <input type="hidden" id="premium-user-identifier" value="<%= signed_in? && current_user.premium? %>" />
+  <% end %>
+  <div class="modal fade" tabindex="-1" role="dialog" id="billing-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">😎Be our premium member</h4>
+        </div>
+        <div class="modal-body">
+          <h4>Premium member will have following privileges:</h4>
+          <div class="pricing">
+            <div class="pricing__plan">
+              <ul>
+                <li><div class="plan__check pull-left"></div><p>Unlimited rooms</p></li>
+                <li><div class="plan__check pull-left"></div><p>Customized point schemes</p></li>
+                <li><div class="plan__check pull-left"></div><p>Unlimited parcitipants</p></li>
+                <li><div class="plan__check pull-left"></div><p>JIRA integration</p></li>
+                <li><div class="plan__check pull-left"></div><p>Async game mode</p></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-info" target="_blank" href="<%= billing_path %>">Be premium</a>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </body>
 </html>
