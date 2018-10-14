@@ -236,7 +236,7 @@ class RoomsController < ApplicationController
 
   def enter_room
     redirection_path = signed_in? ? dashboard_index_path : screen_room_path(@room.slug)
-    premium_check(redirection_path, "Non-premium moderator can only create room with 10 participants at most, tell your moderator to be our premium member.", @room.created_by != current_user.id, @room.users.count > 9); return if performed?
+    premium_check(redirection_path, "Non-premium moderator can only create room with 10 participants at most, tell your moderator to be our premium member.", !@room.creator.premium?, @room.created_by != current_user.id, @room.users.count > 9); return if performed?
 
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
     if user_room.new_record?

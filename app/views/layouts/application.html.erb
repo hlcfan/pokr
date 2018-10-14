@@ -41,7 +41,7 @@
   <% if content_for(:premium_identifier) %>
     <%= yield(:premium_identifier) %>
   <% else %>
-    <input type="hidden" id="premium-user-identifier" value="<%= current_user.premium? %>" />
+    <input type="hidden" id="premium-user-identifier" value="<%= signed_in? && current_user.premium? %>" />
   <% end %>
   <div class="modal fade" tabindex="-1" role="dialog" id="billing-modal">
     <div class="modal-dialog" role="document">
