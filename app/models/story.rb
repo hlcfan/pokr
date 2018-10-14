@@ -4,6 +4,7 @@ class Story < ApplicationRecord
   multisearchable :against => [:wrecked_link, :desc], :if => :point?
 
   validates_presence_of :link
+  validates_length_of :desc, :maximum => 500
 
   has_many :user_room_stories
   has_many :user_story_points
