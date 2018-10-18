@@ -13,7 +13,7 @@ class SiteController < ApplicationController
 
   def donate
     @donations = [
-      { name: "Steve",   amount: print_money(395) },
+      { name: "Steve",   amount: print_money(400) },
       { name: "Matthew", amount: print_money(193) },
       { name: "Noah",    amount: print_money(53) },
       { name: "Renee",   amount: print_money(5) },
