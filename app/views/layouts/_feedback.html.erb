@@ -1,4 +1,4 @@
-<% if Rails.env.production? %>
+<% if Rails.env.production? && !is_mobile_request? %>
   <!-- Start of Async Drift Code -->
   <script>
   !function() {
