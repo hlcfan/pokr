@@ -3,9 +3,10 @@ module Api
     class RoomsController < ActionController::API
       include ActionView::Rendering
 
+      before_action :authenticate_user!
+
       def index
         @rooms = UserPresenter.new(current_user).participated_rooms
-        render "index"
       end
     end
   end
