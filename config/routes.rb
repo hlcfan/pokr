@@ -72,5 +72,11 @@ Rails.application.routes.draw do
 
   match "/404" => "errors#not_found", via: [ :get, :post, :patch, :delete ], as: :not_found
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :rooms
+    end
+  end
+
   root 'home#index'
 end
