@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   before_action :authenticate_user!, except: [:screen]
   before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point]
   before_action :enter_room, only: [:show]
-  protect_from_forgery except: :sync_status
+  protect_from_forgery except: :sync_status, unless: -> { request.format.json? }
 
   def index
     redirect_to dashboard_index_path
