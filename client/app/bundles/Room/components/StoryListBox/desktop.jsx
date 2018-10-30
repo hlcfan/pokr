@@ -45,9 +45,8 @@ export default class StoryListBox extends React.Component {
   }
 
   sync = () => {
-    if( isElectron() ) {
-      $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
-    } else {
+    const extensionCheckElement = document.getElementById("browser-extension-check")
+    if(typeof(extensionCheckElement) === 'undefined' || extensionCheckElement === null || extensionCheckElement.innerText.length <= 0) {
       $("#synk-guide .modal").modal()
     }
   }
