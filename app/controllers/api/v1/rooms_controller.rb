@@ -11,6 +11,10 @@ module Api
       end
 
       def show
+        @stories = @room.groomed_stories.inject({}) do |hash, story|
+          hash[story[1]] = { point: story[2] }
+          hash
+        end
       end
 
       private
