@@ -1,2 +1,2 @@
 json.success "true"
-json.data @custom_schemes
+json.data @schemes
