@@ -25,7 +25,6 @@ addons:
       - g++-4.9
 
 before_install:
-  - nvm install 10.13.0
   - gem install bundler
 
 install:
