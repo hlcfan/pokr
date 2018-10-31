@@ -3,12 +3,13 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def autocomplete
-    query = params[:term]
+    query = params[:term].to_s.downcase
     head :bad_request and return if query.blank?
 
-    users = User.where("name like ? OR email like ?", "#{query}%", "#{query}%").pluck(:id, :name).map do |id, name|
+    users = User.where("LOWER(name) like ? OR LOWER( email ) like ?", "#{query}%", "#{query}%").pluck(:id, :name).map do |id, name|
       next if id == current_user.id
-      { value: id, name: name }
+      # { value: id, name: name }
+      { id: id, value: name }
     end.compact
 
     render json: users
