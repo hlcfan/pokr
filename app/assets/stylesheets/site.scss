@@ -48,3 +48,61 @@ $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
   }
 }
+
+.pricing_page {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+
+  table {
+    // border-collapse: separate;
+    border-radius: 6px;
+
+    tr {
+      line-height: 40px;
+      min-height: 40px;
+      height: 40px;
+
+      &.pricing-page__feature:last-child {
+        border-bottom: 1px solid #ddd;
+      }
+
+      td {
+        border-bottom: none;
+        border-right: none;
+        vertical-align: middle;
+      }
+
+      .feature__title {
+        border-left: 1px solid #ddd;
+        color: #5e646e;
+        font-weight: bold;
+      }
+
+      .pricing-page__plan .feature__title {
+
+      }
+
+      .plan__col {
+        font-size: 2rem;
+        text-align: center;
+        border-top: 1px solid #ddd !important;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      .feature__option {
+        // color: #46b8da;
+        // font-size: 2rem;
+        text-align: center;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+
+        .option--check {
+          fill: currentColor;
+          color: #28a745 !important;
+        }
+      }
+    }
+  }
+}
