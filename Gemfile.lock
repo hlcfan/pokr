@@ -128,7 +128,7 @@ GEM
       launchy (~> 2.2)
     libv8 (6.7.288.46.1)
     logster (1.2.11)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
