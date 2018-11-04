@@ -12,4 +12,5 @@ SitemapGenerator::Sitemap.create do
   add "/apps", changefreq: "monthly"
   add "/posts/grooming-session-is-important", changefreq: "monthly"
   add "/posts/ads", changefreq: "monthly"
+  add "/posts/sustainable-service", changefreq: "monthly"
 end
