@@ -476,4 +476,15 @@ html {
       }
     }
   }
+
+  .plan__sign-up, .plan__see-more {
+    margin-top: 30px;
+  }
+
+  .plan__see-more {
+    font-size: 1.6rem;
+    text-decoration: underline;
+    padding-top: 15px;
+    display: inline-block;
+  }
 }

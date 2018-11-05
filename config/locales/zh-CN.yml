@@ -197,7 +197,7 @@ zh-CN:
   user:
     login: "登陆"
     signup: "注册"
-    join: "快速加入"
+    join: "开始使用"
     email_address: "邮箱"
     log_in: "登陆"
     log_in_desc: "登陆 Pokrex 来体验完整的计划扑克之旅。"
@@ -260,6 +260,9 @@ zh-CN:
       pro_3: "无限参加者"
       pro_4: "JIRA 集成"
       pro_5: "异步模式"
+
+    get_started: "开始使用"
+    see_more: "更多价格"
 
   posts:
     h1: "文章列表"
