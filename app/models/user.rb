@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :authorizations
   has_many :schemes
   has_many :orders
+  has_many :subscriptions
 
   after_initialize :default_values
 
