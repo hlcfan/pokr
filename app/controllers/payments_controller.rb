@@ -74,7 +74,6 @@ class PaymentsController < ApplicationController
     user = User.find_by(email: paddle_params[:email])
 
     {
-      status: status,
       name: paddle_params[:plan_name],
       quantity: paddle_params[:quantity],
       price: paddle_params[:unit_price],
@@ -97,7 +96,7 @@ class PaymentsController < ApplicationController
     order_params.merge({status: Order::FAILED, name: "Monthly premium payment"})
   end
 
-  def subscription_params
+  def subscription_creation_params
     paddle_params = params.slice(:cancel_url, :email, :subscription_id, :subscription_plan_id, :update_url)
     user = User.find_by(email: paddle_params[:email])
 
