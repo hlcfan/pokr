@@ -50,8 +50,18 @@ class PaymentsController < ApplicationController
   end
 
   def hook
-    order = Order.create(order_params)
-    order.user.expand_premium_expiration order.quantity * 1.month
+    case params[:alert_name]
+    when "subscription_payment_succeeded"
+      order = Order.create! success_params
+      order.user.expand_premium_expiration order.quantity * 1.month
+    when "subscription_payment_failed"
+      Order.create! fail_params
+    when "subscription_created"
+      Subscription.create! subscription_creation_params
+    when "subscription_cancelled"
+      Subscription.create! subscription_cancellation_params
+    end
+
 
     head :no_content
   end
@@ -60,8 +70,6 @@ class PaymentsController < ApplicationController
 
   def order_params
     paddle_params = params.slice(:checkout_id, :coupon, :currency, :email, :order_id, :payment_method, :plan_name, :quantity, :receipt_url, :subscription_id, :unit_price)
-
-    status = params[:alert_name] == "subscription_payment_succeeded" ? Order::SUCCESS : Order::FAILED
 
     user = User.find_by(email: paddle_params[:email])
 
@@ -81,5 +89,39 @@ class PaymentsController < ApplicationController
     }
   end
 
+  def success_params
+    order_params.merge(status: Order::SUCCESS)
+  end
+
+  def fail_params
+    order_params.merge({status: Order::FAILED, name: "Monthly premium payment"})
+  end
+
+  def subscription_params
+    paddle_params = params.slice(:cancel_url, :email, :subscription_id, :subscription_plan_id, :update_url)
+    user = User.find_by(email: paddle_params[:email])
+
+    {
+      user_id: user.id,
+      status: Subscription::ACTIVE,
+      subscription_id: paddle_params[:subscription_id],
+      subscription_plan_id: paddle_params[:subscription_plan_id],
+      update_url: paddle_params[:update_url],
+      cancel_url: paddle_params[:cancel_url]
+    }
+  end
+
+  def subscription_cancellation_params
+    paddle_params = params.slice(:email, :subscription_id, :subscription_plan_id, :cancellation_effective_date)
+    user = User.find_by(email: paddle_params[:email])
+
+    {
+      user_id: user.id,
+      status: Subscription::DELETED,
+      subscription_id: paddle_params[:subscription_id],
+      subscription_plan_id: paddle_params[:subscription_plan_id],
+      cancellation_effective_date: paddle_params[:cancellation_effective_date]
+    }
+  end
 end
 
