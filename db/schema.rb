@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_103043) do
+ActiveRecord::Schema.define(version: 2018_11_06_114621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -99,6 +99,18 @@ ActiveRecord::Schema.define(version: 2018_11_06_103043) do
     t.integer "sequence"
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_stories_on_discarded_at"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "subscription_id"
+    t.string "subscription_plan_id"
+    t.string "update_url"
+    t.string "cancel_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "user_rooms", id: :serial, force: :cascade do |t|
