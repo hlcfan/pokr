@@ -119,6 +119,14 @@ class User < ApplicationRecord
     self.premium_expiration.present? && self.premium_expiration >= Time.now.utc
   end
 
+  def subscription_active?
+    subscriptions && subscriptions.last&.active?
+  end
+
+  def subscription_cancel_url
+    subscriptions && subscriptions.last&.cancel_url
+  end
+
   private
 
   def default_values

@@ -179,4 +179,32 @@ RSpec.describe User, type: :model do
       expect(user.premium?).to be false
     end
   end
+
+  describe "#subscription_active?" do
+    it "returns true if user's latest subscription is active" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      Subscription.create(user_id: user.id, status: 1)
+      expect(user.subscription_active?).to be true
+    end
+
+    it "returns false if user's latest subscription is delete" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      Subscription.create(user_id: user.id, status: 0)
+      expect(user.subscription_active?).to be false
+    end
+  end
+
+  describe "#subscription_cancel_url" do
+    it "returns cancel url if has active subscription" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      Subscription.create(user_id: user.id, status: 1, cancel_url: "http://cancel-url")
+      expect(user.subscription_cancel_url).to eq("http://cancel-url")
+    end
+
+    it "returns nil if no active subscription" do
+      user = User.create(email: 'a@a.com', password: 'password')
+      expect(user.subscription_cancel_url).to be_nil
+    end
+
+  end
 end
