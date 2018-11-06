@@ -31,8 +31,12 @@
               Purchase
             </div>
             <div class="col-md-10">
-              <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
-                <a href="#!" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent>Upgrade</a>
+              <% if current_user.subscription_active? %>
+                <a href="<%= current_user.subscription_cancel_url %>">Cancel subscription</a>
+              <% else %>
+                <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
+                  <a href="#!" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent>Upgrade</a>
+                <% end %>
               <% end %>
             </div>
           </div>
