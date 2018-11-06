@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_151104) do
+ActiveRecord::Schema.define(version: 2018_11_06_103043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -32,13 +32,19 @@ ActiveRecord::Schema.define(version: 2018_10_14_151104) do
     t.integer "user_id", null: false
     t.string "ip"
     t.string "payment_id"
-    t.string "payer_id"
     t.integer "status"
     t.string "currency"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "coupon"
+    t.string "checkout_id"
+    t.string "payment_method"
+    t.string "receipt_url"
+    t.string "subscription_id"
     t.index ["payment_id"], name: "index_orders_on_payment_id"
+    t.index ["payment_method"], name: "index_orders_on_payment_method"
+    t.index ["subscription_id"], name: "index_orders_on_subscription_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
