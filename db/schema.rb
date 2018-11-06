@@ -103,10 +103,12 @@ ActiveRecord::Schema.define(version: 2018_11_06_114621) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.integer "status"
     t.string "subscription_id"
     t.string "subscription_plan_id"
     t.string "update_url"
     t.string "cancel_url"
+    t.datetime "cancellation_effective_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id"

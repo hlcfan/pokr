@@ -2,10 +2,12 @@ class CreateSubscriptions < ActiveRecord::Migration[5.2]
   def change
     create_table :subscriptions do |t|
       t.integer :user_id, null: false
+      t.integer :status
       t.string :subscription_id
       t.string :subscription_plan_id
       t.string :update_url
       t.string :cancel_url
+      t.datetime :cancellation_effective_date
 
       t.timestamps
     end
