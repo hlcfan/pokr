@@ -1,3 +1,5 @@
+@import 'global_vars';
+
 $serifFont: Georgia, Times, "Times New Roman", serif;
 $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -45,6 +47,84 @@ $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     b {
       font-size: 28px;
+    }
+  }
+}
+
+.pricing_page {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+
+  .pricing-page__title {
+    text-align: center;
+  }
+
+  .pricing-page__sub-title {
+    color: #555;
+    font-size: 2rem;
+
+    @media #{$desktop} {
+      padding: 10px 60px;
+    }
+  }
+
+  table {
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    tr {
+      line-height: 40px;
+      min-height: 40px;
+      height: 40px;
+
+      &.pricing-page__feature:last-child {
+        border-bottom: 1px solid #ddd;
+      }
+
+      td {
+        border-bottom: none;
+        border-right: none;
+        vertical-align: middle;
+      }
+
+      .feature__title {
+        border-left: 1px solid #ddd;
+        color: #5e646e;
+        font-weight: bold;
+      }
+
+      .pricing-page__plan .feature__title {
+
+      }
+
+      .plan__col {
+        font-size: 1.5rem;
+        text-align: center;
+        border-top: 1px solid #ddd !important;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-radius: 6px;
+        font-weight: bold;
+
+        .col__package {
+          font-size: 1.5rem;
+          margin-top: 20px;
+          color: #555;
+          font-weight: normal;
+        }
+      }
+
+      .feature__option {
+        text-align: center;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+
+        .option--check {
+          fill: currentColor;
+          color: #28a745 !important;
+        }
+      }
     }
   }
 }

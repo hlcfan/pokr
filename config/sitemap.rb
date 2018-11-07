@@ -10,6 +10,8 @@ SitemapGenerator::Sitemap.create do
   add "/faq", changefreq: "monthly"
   add "/posts", changefreq: "weekly"
   add "/apps", changefreq: "monthly"
+  add "/pricing", changefreq: "monthly"
+  add "/donate", changefreq: "monthly"
   add "/posts/grooming-session-is-important", changefreq: "monthly"
   add "/posts/ads", changefreq: "monthly"
   add "/posts/sustainable-service", changefreq: "monthly"
