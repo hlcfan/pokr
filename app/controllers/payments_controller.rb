@@ -62,7 +62,6 @@ class PaymentsController < ApplicationController
       Subscription.create! subscription_cancellation_params
     end
 
-
     head :no_content
   end
 
