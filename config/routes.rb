@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'faq', to: 'site#faq'
   get 'donate', to: 'site#donate'
   get 'apps', to: 'site#apps'
+  get 'pricing', to: 'site#pricing_page'
 
   mount ActionCable.server => '/cable'
 
