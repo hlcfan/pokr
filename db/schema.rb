@@ -111,8 +111,9 @@ ActiveRecord::Schema.define(version: 2018_11_06_114621) do
     t.datetime "cancellation_effective_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_subscriptions_on_status"
     t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id"
-    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+    t.index ["user_id", "status"], name: "index_subscriptions_on_user_id_and_status"
   end
 
   create_table "user_rooms", id: :serial, force: :cascade do |t|

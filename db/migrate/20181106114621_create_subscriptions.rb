@@ -12,7 +12,8 @@ class CreateSubscriptions < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :subscriptions, :user_id
+    add_index :subscriptions, [:user_id, :status]
     add_index :subscriptions, :subscription_id
+    add_index :subscriptions, :status
   end
 end
