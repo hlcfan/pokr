@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_151104) do
+ActiveRecord::Schema.define(version: 2018_11_06_114621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -32,13 +32,19 @@ ActiveRecord::Schema.define(version: 2018_10_14_151104) do
     t.integer "user_id", null: false
     t.string "ip"
     t.string "payment_id"
-    t.string "payer_id"
     t.integer "status"
     t.string "currency"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "coupon"
+    t.string "checkout_id"
+    t.string "payment_method"
+    t.string "receipt_url"
+    t.string "subscription_id"
     t.index ["payment_id"], name: "index_orders_on_payment_id"
+    t.index ["payment_method"], name: "index_orders_on_payment_method"
+    t.index ["subscription_id"], name: "index_orders_on_subscription_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -93,6 +99,21 @@ ActiveRecord::Schema.define(version: 2018_10_14_151104) do
     t.integer "sequence"
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_stories_on_discarded_at"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "status"
+    t.string "subscription_id"
+    t.string "subscription_plan_id"
+    t.string "update_url"
+    t.string "cancel_url"
+    t.datetime "cancellation_effective_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_subscriptions_on_status"
+    t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id"
+    t.index ["user_id", "status"], name: "index_subscriptions_on_user_id_and_status"
   end
 
   create_table "user_rooms", id: :serial, force: :cascade do |t|

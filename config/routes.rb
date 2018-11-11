@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     collection do
       get :cancel
       get :success
+      post :hook
     end
   end
   get 'billing' => 'billing#show'

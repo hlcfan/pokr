@@ -20,4 +20,3 @@
 //= require feedback
 //= require typeahead
 //= require schemes
-//= require billing
