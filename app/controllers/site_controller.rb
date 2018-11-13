@@ -26,6 +26,9 @@ class SiteController < ApplicationController
   def apps
   end
 
+  def pricing_page
+  end
+
   private
 
   RATIO = 50

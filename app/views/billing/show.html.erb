@@ -2,6 +2,11 @@
   title "Billing"
 %>
 
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+<script type="text/javascript">
+  Paddle.Setup({ vendor: 36288 });
+</script>
+
 <div class="row billing">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">
@@ -18,9 +23,6 @@
               <b>
                 <%= current_user.premium? ? "Premium" : "Free"%>
               </b>
-              <% if current_user.premium? %>
-                <span class="pull-right">Expires at: <%= l current_user.premium_expiration, format: :brief %></span>
-              <% end %>
             </div>
           </div>
           <hr />
@@ -29,32 +31,11 @@
               Purchase
             </div>
             <div class="col-md-10">
-              <%= form_tag payments_path, method: "POST", class: "form-inline" do %>
-                <div class="form-group">
-                  <label class="sr-only">Amount (in dollars)</label>
-                  <div class="input-group">
-                    <select class="form-control plan__month-select" name="billing[month]">
-                      <option value="1">1 Month</option>
-                      <option value="2">2 Months</option>
-                      <option value="3">3 Months</option>
-                      <option value="4">4 Months</option>
-                      <option value="5">5 Months</option>
-                      <option value="6">6 Months</option>
-                      <option value="7">7 Months</option>
-                      <option value="8">8 Months</option>
-                      <option value="9">9 Months</option>
-                      <option value="10">10 Months</option>
-                      <option value="11">11 Months</option>
-                      <option value="12">12 Months</option>
-                    </select>
-                  </div>
-                  <label class="plan__amount">
-                    $7.00
-                  </label>
-                </div>
-                <button type="submit" class="btn btn-success pull-right plan__submit">Upgrade</button>
+              <% if current_user.subscription_active? %>
+                <a href="<%= current_user.subscription_cancel_url %>">Cancel subscription</a>
+              <% else %>
+                <a href="#!" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent="true" data-success="/billing">Upgrade</a>
               <% end %>
-              <%# <a class="btn btn-success pull-right" href="<%= new_payment_path %1>">Upgrade</a> %>
             </div>
           </div>
           <hr />

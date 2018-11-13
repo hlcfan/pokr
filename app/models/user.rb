@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :authorizations
   has_many :schemes
   has_many :orders
+  has_many :subscriptions
 
   after_initialize :default_values
 
@@ -116,6 +117,14 @@ class User < ApplicationRecord
 
   def premium?
     self.premium_expiration.present? && self.premium_expiration >= Time.now.utc
+  end
+
+  def subscription_active?
+    subscriptions && subscriptions.last&.active?
+  end
+
+  def subscription_cancel_url
+    subscriptions && subscriptions.last&.cancel_url
   end
 
   private

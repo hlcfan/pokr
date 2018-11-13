@@ -28,7 +28,7 @@ en:
   ago: "ago"
   site:
     title: "Online Planning Poker"
-    desc: "Pokrex is an easy, efficient planning poker (a.k.a. scrum poker or pointing poker) for agile/scrum teams."
+    desc: "Pokrex is an easy, efficient online planning poker tool (a.k.a. scrum poker, agile poker or pointing poker) for agile/scrum teams."
     slogan: "Planning poker made easy"
     sub_slogan: "Agile estimation and planning, aimed at simplicity and efficiency."
     footer:
@@ -37,13 +37,14 @@ en:
       faq: "FAQs"
       posts: "Posts"
       apps: "Apps"
+      pricing: "Pricing"
       donate: "Donate"
       what: "What is planning poker?"
       share: "Share"
   user:
     login: "Login"
     signup: "Sign up"
-    join: "Sign up"
+    join: "GET STARTED"
     email_address: "Email address"
     log_in: "Log in"
     log_in_desc: "Log in Pokrex to experience holistic way of online planning/pointing poker."
@@ -100,6 +101,9 @@ en:
       pro_3: "Unlimited parcitipants"
       pro_4: "JIRA integration"
       pro_5: "Async game mode"
+
+    get_started: "GET STARTED"
+    see_more: "More pricing"
 
   posts:
     h1: "Posts"

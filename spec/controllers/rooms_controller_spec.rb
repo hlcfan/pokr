@@ -86,6 +86,7 @@ RSpec.describe RoomsController, type: :controller do
       it "redirects back to dashboard page if signed in" do
         moderator = User.find_by email: "a@a.com"
         room = Room.create! valid_attributes.merge(created_by: moderator.id)
+        user = nil
         1.upto(10).each do
           begin
             user = User.create(email: "a-#{SecureRandom.rand(50)}@pokrex.com", password: "password")
@@ -98,7 +99,11 @@ RSpec.describe RoomsController, type: :controller do
         get :show, params: {:id => room.slug}, session: valid_session
 
         expect(response).to redirect_to dashboard_index_path
-        expect(flash[:error]).to eq("Non-premium moderator can only create room with 10 participants at most, tell your moderator to be our premium member.")
+        expect(flash[:error]).to eq("Non-premium moderator can only create room with 10 participants at most, please tell your moderator to be our premium member.")
+
+        allow(controller.current_user).to receive(:id) { user.id }
+        get :show, params: {:id => room.slug}, session: valid_session
+        expect(response).to render_template("show")
       end
     end
   end

@@ -18,7 +18,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe "#default_description" do
     it "returns default description" do
-      expect(helper.default_description).to eq "Pokrex is an easy, efficient planning poker (a.k.a. scrum poker or pointing poker) for agile/scrum teams."
+      expect(helper.default_description).to eq "Pokrex is an easy, efficient online planning poker tool (a.k.a. scrum poker, agile poker or pointing poker) for agile/scrum teams."
     end
   end
 

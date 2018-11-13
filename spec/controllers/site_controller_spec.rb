@@ -30,4 +30,11 @@ RSpec.describe SiteController, type: :controller do
       expect(response).to render_template "apps"
     end
   end
+
+  describe "GET pricing_page" do
+    it "renders pricing page" do
+      get :pricing_page
+      expect(response).to render_template "pricing_page"
+    end
+  end
 end
