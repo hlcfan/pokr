@@ -92,7 +92,7 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy
-    render :nothing => true, :status => :bad_request and return if @room.created_by != current_user.id
+    head :bad_request and return if @room.created_by != current_user.id
     @room.soft_delete
     respond_to do |format|
       format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }

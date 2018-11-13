@@ -384,6 +384,7 @@ RSpec.describe RoomsController, type: :controller do
     it "shows screen of a room if user not logged in" do
       room = Room.create! valid_attributes
       allow(controller).to receive(:current_user) { nil }
+      allow(controller).to receive(:signed_in?) { false }
 
       get :screen, params: {id: room.slug}
       expect(response).to render_template("screen")
