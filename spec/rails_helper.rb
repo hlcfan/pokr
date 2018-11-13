@@ -33,7 +33,6 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
-  config.render_views = true
   # Ensure that if we are running js tests, we are using latest webpack assets
   # This will use the defaults of :js and :server_rendering meta tags
   ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config, :requires_webpack_assets)

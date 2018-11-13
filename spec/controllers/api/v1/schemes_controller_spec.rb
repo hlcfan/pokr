@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::SchemesController, type: :controller do
 
+  render_views
   # This should return the minimal set of attributes required to create a valid
   # Room. As you add validations to Room, be sure to
   # adjust the attributes here as well.
