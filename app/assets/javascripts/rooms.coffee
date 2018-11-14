@@ -76,11 +76,11 @@ class Rooms
     $('#room_moderator_ids').tagsinput
       typeaheadjs:
         name: 'matchedUsers'
-        displayKey: 'name'
+        displayKey: 'value'
 #        valueKey: 'name'
         source: matchedUsers.ttAdapter()
-      itemValue: 'value'
-      itemText: 'name'
+      itemValue: 'id'
+      itemText: 'value'
       allowDuplicates: false
       freeInput: false
 
