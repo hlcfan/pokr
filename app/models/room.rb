@@ -302,7 +302,7 @@ class Room < ApplicationRecord
 
   def default_values
     self.scheme ||= "fibonacci"
-    self.pv ||= Scheme.default_schemes["fibonacci"].join(",")
+    self.pv ||= Scheme.find_scheme(self.scheme).join(",")
   end
 
 end

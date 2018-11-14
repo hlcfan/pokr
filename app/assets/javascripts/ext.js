@@ -14,5 +14,5 @@ Array.prototype.remove = function(v) {
 
 String.prototype.isValidUrl = function() {
   var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-  return !!regex .test(this)
+  return !!regex.test(this)
 }

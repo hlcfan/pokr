@@ -10,7 +10,7 @@ RSpec.describe UsersController, type: :controller do
         get :autocomplete, params: { term: "b" }
         body = JSON.parse(response.body)
 
-        expect(body).to eq [{"value"=>bob.id, "name"=>bob.name }]
+        expect(body).to eq [{"id" => bob.id, "value" => bob.name }]
       end
 
       it "renders bad request if no query passed in" do

@@ -45,9 +45,8 @@ export default class StoryListBox extends React.Component {
   }
 
   sync = () => {
-    if( isElectron() ) {
-      $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
-    } else {
+    const extensionCheckElement = document.getElementById("browser-extension-check")
+    if(typeof(extensionCheckElement) === 'undefined' || extensionCheckElement === null || extensionCheckElement.innerText.length <= 0) {
       $("#synk-guide .modal").modal()
     }
   }
@@ -78,7 +77,7 @@ export default class StoryListBox extends React.Component {
     const syncLink = (() => {
       if (this.props.role === "Moderator") {
         return(
-          <a className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
+          <a id="synk-link" className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
             <i className="fa fa-upload"></i> Sync
           </a>
         )
