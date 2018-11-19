@@ -65,7 +65,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :user_name => ENV['MAILER_USERNAME'],
     :password => ENV['MAILER_PASSWORD'],
-    :domain => 'pokrex.com',
+    :domain => 'mail.pokrex.com',
     :address => 'smtp.sendgrid.net',
     :port => 2525,
     :authentication => :plain,
