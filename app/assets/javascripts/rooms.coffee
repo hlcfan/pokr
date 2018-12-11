@@ -101,7 +101,7 @@ class Rooms
     $roomModerators = $("#room-moderators")
     roomModerators = JSON.parse($roomModerators.val())
     $.each roomModerators, (index, user) ->
-      $('#room_moderator_ids').tagsinput('add', { value: user.value, name: user.name })
+      $('#room_moderator_ids').tagsinput('add', { "id": user.value, "value": user.name })
 
     el = document.getElementById('story-row')
     sortable = Sortable.create(el, {
