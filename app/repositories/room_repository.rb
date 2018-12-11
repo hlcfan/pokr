@@ -20,10 +20,11 @@ class RoomRepository
     if room.update_attributes @params
       if moderator_ids.length > room.moderator_ids_ary.length
         delta = moderator_ids - room.moderator_ids_ary
-        user_room_attrs = delta.map do |moderator_id|
-          { user_id: moderator_id, room_id: room.id, role: UserRoom::MODERATOR }
+        ActiveRecord::Base.transaction do
+          delta.each do |moderator_id|
+            UserRoom.find_or_create_by(user_id: moderator_id, room_id: room.id).update!(role: UserRoom::MODERATOR)
+          end
         end
-        UserRoom.create user_room_attrs
       elsif moderator_ids.length < room.moderator_ids_ary.length
         delta = room.moderator_ids_ary - moderator_ids
         UserRoom.where(user_id: delta).destroy_all
