@@ -73,6 +73,8 @@ RSpec.describe RoomRepository do
       }
       room = repo.new_entity(room_params)
       room = repo.save room
+      # Make sure it updates existing participant to moderator
+      UserRoom.create(user_id: catlin.id, room_id: room.id)
       room = repo.update_entity room, new_room_params
       room = Room.find room.id
 
