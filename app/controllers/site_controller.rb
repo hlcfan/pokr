@@ -24,9 +24,13 @@ class SiteController < ApplicationController
   end
 
   def apps
+    redirect_to :extensions, :status => 301
   end
 
   def pricing_page
+  end
+
+  def extensions
   end
 
   private

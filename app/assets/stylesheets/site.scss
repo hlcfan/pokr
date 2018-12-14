@@ -3,7 +3,7 @@
 $serifFont: Georgia, Times, "Times New Roman", serif;
 $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-.about, .faq, .post, .donate, .apps {
+.about, .faq, .post, .donate, .extensions {
   h1 {
     font-family: $serifFont;
     margin-bottom: 20px;
@@ -48,6 +48,13 @@ $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     b {
       font-size: 28px;
     }
+  }
+}
+
+.extensions {
+  .installation-image {
+    width: 100%;
+    padding: 20px;
   }
 }
 
