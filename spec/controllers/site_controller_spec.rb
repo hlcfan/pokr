@@ -25,9 +25,17 @@ RSpec.describe SiteController, type: :controller do
   end
 
   describe "GET #apps" do
-    it "renders apps page" do
+    it "redirects to extensions page" do
       get :apps
-      expect(response).to render_template "apps"
+      expect(response).to redirect_to "/extensions"
+      expect(response.status).to eq(301)
+    end
+  end
+
+  describe "GET #extensions" do
+    it "renders extensions page" do
+      get :extensions
+      expect(response).to render_template "extensions"
     end
   end
 
