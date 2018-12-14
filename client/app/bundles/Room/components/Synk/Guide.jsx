@@ -15,6 +15,9 @@ export default class Guide extends React.Component {
                 <h4 className="modal-title">Install Chrome extension - Pokrex JIRA Assistant</h4>
               </div>
               <div className="modal-body">
+                <h4>
+                  Install Chrome extension to update points to JIRA within 1 minute
+                </h4>
                 <ol>
                   <li><a href="/pokrex-chrome-extention-pack.zip"><b>Download</b></a> and extract extension zip file (95kb)</li>
                   <li>Open URL: <b>chrome://extensions/</b> in Chrome</li>
