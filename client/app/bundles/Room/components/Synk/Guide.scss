@@ -1,8 +1,9 @@
 .synk-guide {
-  .installation-link {
-    text-decoration: underline;
-    a {
-    color: #333;
-    }
+  ol {
+    padding-left: 16px;
+  }
+
+  .installation-screenshot {
+    width: 100%;
   }
 }
