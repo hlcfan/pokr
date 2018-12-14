@@ -6,7 +6,7 @@ class Feedback
 
     $('#sign-up-form .modal-body').load '/home/sign_up_form'
 
-    $('#sign-up-btn, #get-started-btn').on 'click', (e) ->
+    $('#sign-up-btn, #get-started-btn, #try-free-btn').on 'click', (e) ->
       e.preventDefault()
       $('#sign-up-form .modal').modal modalOptions
       email = $('.get-started input[name=email]').val()

@@ -102,8 +102,8 @@ en:
       pro_4: "JIRA integration"
       pro_5: "Async game mode"
 
-    get_started: "GET STARTED"
-    see_more: "More pricing"
+    get_started: "Let me try it!"
+    try_free: "Try free for 3o days"
 
   posts:
     h1: "Posts"
