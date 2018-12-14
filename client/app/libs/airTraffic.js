@@ -47,8 +47,6 @@ export default {
         } else if(data.type === "evictUser") {
           EventEmitter.dispatch("evictUser", data.data.userId)
           EventEmitter.dispatch("refreshUsers")
-        } else if(data.type === "sync") {
-          EventEmitter.dispatch("ticketSynked", data.data)
         } else {
         }
       }
