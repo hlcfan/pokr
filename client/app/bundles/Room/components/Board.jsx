@@ -32,8 +32,11 @@ export default class Board extends React.Component {
   }
 
   handleSync = () => {
-    $("#board .modal").modal("hide")
-    $("#synk-credential .modal").modal({keyboard: false, backdrop: "static"})
+    const extensionCheckElement = document.getElementById("browser-extension-check")
+    if(typeof(extensionCheckElement) === 'undefined' || extensionCheckElement === null || extensionCheckElement.innerText.length <= 0) {
+      $("#board .modal").modal("hide")
+      $("#synk-guide .modal").modal({keyboard: false, backdrop: "static"})
+    }
   }
 
   render() {
@@ -80,8 +83,8 @@ export default class Board extends React.Component {
                 <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
                 <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
                 {
-                  this.props.role === "Moderator" && isElectron() &&
-                  <a className="pull-left" href="javascript:;" style={{marginLeft: 10+'px'}} onClick={this.handleSync}>Sync to Jira</a>
+                  this.props.role === "Moderator" &&
+                    <button type="button" className="btn btn-info" id="synk-button" onClick={this.handleSync}>Update to JIRA</button>
                 }
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
               </div>

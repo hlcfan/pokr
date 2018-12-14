@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
-import Synk from '../Synk/index'
 import SynkGuide from '../Synk/Guide'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
@@ -108,7 +107,6 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
-        <Synk roomId={this.props.roomId} tickets={this.state.data.groomed || []} />
         <SynkGuide />
       </div>
     )
