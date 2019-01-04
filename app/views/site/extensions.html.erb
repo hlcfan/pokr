@@ -4,8 +4,7 @@ description "Pokrex browser extensions allows user to import tickets into Pokrex
 %>
 
 <div class="row extensions">
-  <div class="col-xs-2 col-md-2"></div>
-  <div class="col-xs-8 col-md-8 main">
+  <div class="col-xs-12 col-md-8 main col-md-offset-2 col-xs-offset-0">
     <h1>Install browser extension</h1>
     <div class="row">
       <div class="col-md-6 text-center">
@@ -21,6 +20,26 @@ description "Pokrex browser extensions allows user to import tickets into Pokrex
         <p><a href="https://addons.mozilla.org/en-US/firefox/addon/pokrex-jira-assistant/">Install from Firefox Add-ons center</a></p>
       </div>
     </div>
+    <div class="row">
+      <div class="line-spliter">
+        <span><b>👉Extension quick introduction👈</b></span>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">"Add to Pokrex" button</h3>
+        <%= image_tag "extensions/add-to-pokrex.png", class: "img-thumbnail", alt: 'Click "Add to Pokrex" to add tickets to preparation bucket' %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">Prepare a room</h3>
+        <%= image_tag "extensions/prepare.png", class: "img-thumbnail", alt: 'Prepare a room' %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">Update to JIRA</h3>
+        <%= image_tag "extensions/sync.png", class: "img-thumbnail", alt: "Update points to JIRA" %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">See your recent rooms</h3>
+        <%= image_tag "extensions/rooms.png", class: "img-thumbnail", alt: "List your recent rooms" %>
+      </div>
+    </div>
   </div>
-  <div class="col-xs-2 col-md-2"></div>
 </div>
