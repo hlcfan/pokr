@@ -38,10 +38,10 @@ RSpec.describe Scheme, type: :model do
   describe ".default_schemes" do
     it "returns default schemes" do
       expect(Scheme.default_schemes).to eq({
-        "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
-        "0-8"       => %w(0 1 2 3 4 5 6 7 8 ? coffee),
-        "XS-XXL"    => %w(XS S M L XL XXL ? coffee),
-        "hours"     => %w(0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 ? coffee)
+        "fibonacci" => { :name => "Fibonacci", :points =>  %w(0 1 2 3 5 8 13 20 40 100 ? coffee) },
+        "0-8"       => { :name => "0-8", :points =>  %w(0 1 2 3 4 5 6 7 8 ? coffee) },
+        "xs-xxl"    => { :name => "XS-XXL", :points => %w(XS S M L XL XXL ? coffee) },
+        "hours"     => { :name => "Hours", :points =>  %w(0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 ? coffee) }
       })
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe Scheme, type: :model do
       scheme.points = ["1", "2", "3"]
       scheme.name = "sample scheme"
       scheme.save!
-      expect(Scheme.schemes_of(1)["sample scheme"]).to eq(["1", "2", "3"])
+      expect(Scheme.schemes_of(1)["sample-scheme"][:points]).to eq(["1", "2", "3"])
     end
   end
 end

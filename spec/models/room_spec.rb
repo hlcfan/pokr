@@ -73,7 +73,7 @@ RSpec.describe Room, type: :model do
 
   describe "#point_values" do
     it "returns default fibonacci scheme if pv is blank" do
-      expect(room.point_values).to eq Scheme.default_schemes["fibonacci"]
+      expect(room.point_values).to eq Scheme.default_schemes["fibonacci"][:points]
     end
 
     it "returns pv splited with comma if pv is present" do
@@ -92,7 +92,7 @@ RSpec.describe Room, type: :model do
     end
 
     it "is true if point is part of point values" do
-      Scheme.default_schemes["fibonacci"].each do |point|
+      Scheme.default_schemes["fibonacci"][:points].each do |point|
         expect(room.valid_vote_point?(point)).to be true
       end
     end
