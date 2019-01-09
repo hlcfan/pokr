@@ -5,7 +5,6 @@
 
     <ul class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
       <% @room.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -15,8 +14,11 @@
   <div class="row">
     <div class="col-xs-8">
       <div class="form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, placeholder: 'Room name', class: 'form-control' %>
+        <%= f.label :name do %>
+          Name
+          <b class="required">*</b>
+        <% end %>
+        <%= f.text_field :name, placeholder: "Room name", class: "form-control", required: true%>
       </div>
     </div>
     <div class="col-xs-2">
