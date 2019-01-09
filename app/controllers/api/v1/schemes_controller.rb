@@ -7,7 +7,8 @@ module Api
 
       def index
         default_schemes = Scheme.default_schemes.inject({}) do |hash, (k,v)|
-          hash[k] = k.parameterize
+          # binding.pry
+          hash[v[:name]] = k
           hash
         end
 
