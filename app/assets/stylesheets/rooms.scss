@@ -209,6 +209,10 @@
 }
 
 .room form {
+  .required {
+    color: #f00;
+  }
+
   .room--style--icon {
     cursor: pointer;
   }

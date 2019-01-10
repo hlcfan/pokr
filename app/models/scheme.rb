@@ -11,12 +11,12 @@ class Scheme < ApplicationRecord
   end
 
   def self.find_scheme scheme_type
-    default_schemes[scheme_type] || find_by(slug: scheme_type)&.points
+    default_schemes[scheme_type]&.[](:points) || find_by(slug: scheme_type)&.points
   end
 
   def self.schemes_of user_id
     Scheme.where(user_id: user_id).inject({}) do |hsh, scheme|
-      hsh[scheme.name] = scheme.points
+      hsh[scheme.slug] = { :name => scheme.name, :points => scheme.points }
 
       hsh
     end
@@ -25,10 +25,10 @@ class Scheme < ApplicationRecord
   private
 
   POINT_SCHEMES = {
-    "fibonacci" => %w(0 1 2 3 5 8 13 20 40 100 ? coffee),
-    "0-8"       => %w(0 1 2 3 4 5 6 7 8 ? coffee),
-    "XS-XXL"    => %w(XS S M L XL XXL ? coffee),
-    "hours"     => %w(0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 ? coffee)
+    "fibonacci" => { :name => "Fibonacci", :points => %w(0 1 2 3 5 8 13 20 40 100 ? coffee) },
+    "0-8"       => { :name => "0-8", :points => %w(0 1 2 3 4 5 6 7 8 ? coffee) },
+    "xs-xxl"    => { :name => "XS-XXL", :points => %w(XS S M L XL XXL ? coffee) },
+    "hours"     => { :name => "Hours", :points => %w(0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 ? coffee) }
   }
 
   def slug!

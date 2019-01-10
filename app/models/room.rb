@@ -271,7 +271,7 @@ class Room < ApplicationRecord
   def sort_point_values
     if self.pv_changed? || self.scheme_changed?
       self.pv = self.pv.split(',').sort_by do |value|
-        Scheme.find_scheme(self.scheme).index value
+        Scheme.find_scheme(self.scheme)&.index value
       end.join(',')
     end
   end
@@ -302,7 +302,7 @@ class Room < ApplicationRecord
 
   def default_values
     self.scheme ||= "fibonacci"
-    self.pv ||= Scheme.find_scheme(self.scheme).join(",")
+    self.pv ||= Scheme.find_scheme(self.scheme)&.join(",")
   end
 
 end

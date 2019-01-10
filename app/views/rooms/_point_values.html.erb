@@ -1,23 +1,20 @@
 <% if room.new_record? %>
   <div class="schemes-type">
-    <% my_point_schemes.each do |scheme_type, numbers| %>
-      <% scheme_type_id = scheme_type.parameterize %>
-      <span class="label <%= scheme_type == room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_type_id %>"><%= scheme_type %></span>
+    <% my_point_schemes.each do |scheme_id, scheme| %>
+      <%
+          scheme_name = scheme[:name]
+      scheme_points = scheme[:points]
+    %>
+      <span class="label <%= scheme_id == room.scheme ? "label-info" : "label-default" %>" data-target="<%= scheme_id %>"><%= scheme_name %></span>
     <% end %>
     <a class="label label-warning" target="_blank" href="<%= schemes_path %>">customize</a>
   </div>
   <hr />
-  <div>
-    <% my_point_schemes.each do |scheme_type, numbers| %>
-      <% scheme_type_id = scheme_type.parameterize %>
-      <ul data-scheme-type="<%= scheme_type_id %>" class="<%= scheme_type_id %> list-inline point-values <%= "active" if room.scheme == scheme_type %>">
-        <%= render_point_values(true, numbers, room.point_values) %>
-      </ul>
-    <% end %>
-  </div>
-<% else %>
-  <% scheme_type = room.scheme %>
-  <ul data-scheme-type="<%= scheme_type.parameterize %>" class="<%= scheme_type.parameterize %> list-inline point-values <%= "active" if room.scheme == scheme_type %>">
-    <%= render_point_values(false, Scheme.find_scheme(scheme_type), room.point_values) %>
-  </ul>
 <% end %>
+<div>
+  <% my_point_schemes.each do |scheme_id, scheme| %>
+    <ul data-scheme-type="<%= scheme_id %>" class="<%= scheme_id %> list-inline point-values <%= "active" if room.scheme == scheme_id %>">
+      <%= render_point_values(room.new_record?, scheme[:points], room.point_values) %>
+    </ul>
+  <% end %>
+</div>

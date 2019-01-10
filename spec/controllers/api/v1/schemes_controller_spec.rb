@@ -23,7 +23,7 @@ RSpec.describe Api::V1::SchemesController, type: :controller do
     it "lists all schemes including custom schemes" do
       Scheme.create!(valid_attributes)
       get :index, params: { format: "json" }
-      expect(response.body).to eq("{\"success\":\"true\",\"data\":{\"fibonacci\":\"fibonacci\",\"0-8\":\"0-8\",\"XS-XXL\":\"xs-xxl\",\"hours\":\"hours\",\"scheme-name\":\"scheme name\"}}")
+      expect(response.body).to eq("{\"success\":\"true\",\"data\":{\"Fibonacci\":\"fibonacci\",\"0-8\":\"0-8\",\"XS-XXL\":\"xs-xxl\",\"Hours\":\"hours\",\"scheme-name\":\"scheme name\"}}")
     end
   end
 end
