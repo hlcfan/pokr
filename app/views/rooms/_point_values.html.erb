@@ -14,7 +14,7 @@
 <div>
   <% my_point_schemes.each do |scheme_id, scheme| %>
     <ul data-scheme-type="<%= scheme_id %>" class="<%= scheme_id %> list-inline point-values <%= "active" if room.scheme == scheme_id %>">
-      <%= render_point_values(true, scheme[:points], room.point_values) %>
+      <%= render_point_values(room.new_record?, scheme[:points], room.point_values) %>
     </ul>
   <% end %>
 </div>
