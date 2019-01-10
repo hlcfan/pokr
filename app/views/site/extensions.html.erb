@@ -1,23 +1,45 @@
 <%
   title "Browser extensions"
-description "Pokrex browser extensions allows user to import tickets into Pokrex and update story points or story size back to JIRA."
+description "Pokrex browser extensions allows user to import tickets into Pokrex and update story points or story size back to JIRA. We have extensions for both Chrome and Firefox."
 %>
 
 <div class="row extensions">
-  <div class="col-xs-2 col-md-2"></div>
-  <div class="col-xs-8 col-md-8 main">
-    <h1>Steps to install Chrome extension</h1>
-    <h4>
-      Install Chrome extension to update points to JIRA within 1 minute
-    </h4>
+  <div class="col-xs-12 col-md-8 main col-md-offset-2 col-xs-offset-0">
+    <h1>Install browser extension</h1>
     <div class="row">
-      <ol>
-        <li><a href="/pokrex-chrome-extention-pack.zip"><b>Download</b></a> and extract extension zip file (95kb)</li>
-        <li>Open URL: <b>chrome://extensions/</b> in Chrome</li>
-        <li><b>Drag</b> extracted extension folder into the page</li>
-      </ol>
-      <img class="installation-image" src="/installachromeextension.png" alt="drag and install extension"/>
+      <div class="col-md-6 text-center">
+        <a href="https://chrome.google.com/webstore/detail/pokrex-jira-assistant/bndnbeoklgjfpokbblifccahppafbfng?hl=en-US&gl=US" target="_blank">
+          <%= image_tag "extensions/chrome.png", size: "200x200", alt: "Install pokrex jira assistant from Google chrome web store" %>
+        </a>
+        <p><a href="https://chrome.google.com/webstore/detail/pokrex-jira-assistant/bndnbeoklgjfpokbblifccahppafbfng?hl=en-US&gl=US">Install from Chrome web store</a></p>
+      </div>
+      <div class="col-md-6 text-center">
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/pokrex-jira-assistant/" target="_blank">
+          <%= image_tag "extensions/firefox.png", size: "200x200", alt: "Install pokrex jira assistant from Firefox Add-ons center" %>
+        </a>
+        <p><a href="https://addons.mozilla.org/en-US/firefox/addon/pokrex-jira-assistant/">Install from Firefox Add-ons center</a></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="line-spliter">
+        <span><b>👉Extension quick introduction👈</b></span>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">"Add to Pokrex" button</h3>
+        <%= image_tag "extensions/add-to-pokrex.png", class: "img-thumbnail", alt: 'Click "Add to Pokrex" to add tickets to preparation bucket' %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">Prepare a room</h3>
+        <%= image_tag "extensions/prepare.png", class: "img-thumbnail", alt: 'Prepare a room' %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">Update to JIRA</h3>
+        <%= image_tag "extensions/sync.png", class: "img-thumbnail", alt: "Update points to JIRA" %>
+      </div>
+      <div class="col-md-12 extension__screenshot">
+        <h3 class="text-center">See your recent rooms</h3>
+        <%= image_tag "extensions/rooms.png", class: "img-thumbnail", alt: "List your recent rooms" %>
+      </div>
     </div>
   </div>
-  <div class="col-xs-2 col-md-2"></div>
 </div>

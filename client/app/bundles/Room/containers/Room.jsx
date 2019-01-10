@@ -193,10 +193,13 @@ export default class Room extends React.Component {
             />
           </div>
         </div>
-        {
-          this.roomClosed() &&
-            <Board roomId={this.props.roomId} roomState={this.state.roomState} role={this.props.role} />
-        }
+        {/* Keep this DIV to delegate synk button event to it. */}
+        <div id="board">
+          {
+            this.roomClosed() &&
+              <Board roomId={this.props.roomId} roomState={this.state.roomState} role={this.props.role} />
+          }
+        </div>
         {
           !this.roomClosed() && this.props.role === "Moderator" && !ieBrowser11() &&
             <TimeCounter roomId={this.props.roomId} initialDuration={this.props.duration}/>

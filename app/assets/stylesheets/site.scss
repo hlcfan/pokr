@@ -31,7 +31,7 @@ $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   min-height: 400px;
 }
 
-.donate {
+.donate, .extensions {
   font-family: $openSansFont;
 
   h1, h3 {
@@ -43,19 +43,25 @@ $openSansFont: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     span {
       top: -20px;
+
+      @media #{$mobile} {
+        top: -12px;
+      }
     }
 
     b {
       font-size: 28px;
+
+      @media #{$mobile} {
+        font-size: 12px;
+      }
     }
   }
 }
 
-.extensions {
-  .installation-image {
-    width: 100%;
-    padding: 20px;
-  }
+.extension__screenshot {
+  padding-bottom: 40px;
+  border-bottom: 3px dashed #ccc;
 }
 
 .pricing_page {

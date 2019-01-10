@@ -55,39 +55,37 @@ export default class Board extends React.Component {
     })
 
     return (
-      <div id="board">
-        <div className="modal fade" tabIndex="-1" role="dialog">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title">C'est la vie</h4>
-              </div>
-              <div className="modal-body">
-                <table className="table table-bordered">
-                  <tbody>
-                    <tr><th>Story</th><th>Point</th></tr>
-                    {dataNodes}
-                  </tbody>
-                  {totalPoints > 0 &&
+      <div className="modal fade" tabIndex="-1" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title">C'est la vie</h4>
+            </div>
+            <div className="modal-body">
+              <table className="table table-bordered">
+                <tbody>
+                  <tr><th>Story</th><th>Point</th></tr>
+                  {dataNodes}
+                </tbody>
+                {totalPoints > 0 &&
                     <tfoot>
                       <tr>
                         <td>Total</td>
                         <td>{totalPoints}</td>
                       </tr>
                     </tfoot>
-                  }
-                </table>
-              </div>
-              <div className="modal-footer">
-                <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
-                <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
-                {
-                  this.props.role === "Moderator" &&
-                    <button type="button" className="btn btn-info" id="synk-button" onClick={this.handleSync}>Update to JIRA</button>
                 }
-                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
+              </table>
+            </div>
+            <div className="modal-footer">
+              <a href={`/rooms/${this.props.roomId}/summary`} target="_blank" className="pull-left">View summary</a>
+              <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
+              {
+                this.props.role === "Moderator" &&
+                  <button type="button" className="btn btn-info" id="synk-button" onClick={this.handleSync}>Update to JIRA</button>
+              }
+              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
