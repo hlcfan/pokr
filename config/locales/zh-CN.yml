@@ -244,7 +244,7 @@ zh-CN:
     scheme_f_4:     "自定义分数"
     synk:           "JIRA 集成"
     synk_alt:       "Pokrex 计划扑克 - JIRA 集成"
-    synk_desc:      "轻点鼠标，即可很轻松地将故事分（故事点）同步到 JIRA。"
+    synk_desc:      "轻点鼠标，即可很轻松地将用户故事（story）导入 Pokrex，并且将故事分（故事点）同步回到 JIRA。详见<a href='/extensions' target='_blank'>浏览器插件</a>。"
     synk_f_1:       "方便快捷"
     synk_f_2:       "绝对安全"
     synk_f_3:       "支持云托管的 JIRA"

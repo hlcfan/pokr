@@ -84,7 +84,7 @@ en:
     scheme_f_4:     "Customized point schemes"
     synk:           "JIRA integration"
     synk_alt:       "Pokrex Scrum Poker - JIRA integration"
-    synk_desc:      "Easily sync ticket points to JIRA with one click."
+    synk_desc:      "Easily import tickets from JIRA to Pokrex and update points back to JIRA with one click. See <a href='/extensions' target='_blank'>browser extensions.</a>"
     synk_f_1:       "Convenient and concise"
     synk_f_2:       "Totally secure"
     synk_f_3:       "JIRA cloud supported"
