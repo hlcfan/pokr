@@ -22,7 +22,6 @@
   <!-- End Google Tag Manager -->
   <%= render 'layouts/favicon' %>
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "home" %>
   <%= csrf_meta_tags %>
   <script type="application/ld+json">
     {
@@ -183,11 +182,16 @@
     <div class="row view-section view-section__intro-3">
       <div class="container">
         <div class="col-xs-12 col-md-8 image-section">
-          <%= image_tag "home/synk.png", alt: t("intro.synk_alt"), title: t("intro.synk_alt") %>
+          <div class="my-slider">
+            <div><%= image_tag "home/sync.png", alt: t("intro.synk_sync_alt"), title: t("intro.synk_sync_alt") %></div>
+            <div><%= image_tag "home/add-to-pokrex.png", alt: t("intro.synk_add_alt"), title: t("intro.synk_add_alt") %></div>
+            <div><%= image_tag "home/prepare.png", alt: t("intro.synk_prepare_alt"), title: t("intro.synk_prepare_alt") %></div>
+            <div><%= image_tag "home/rooms.png", alt: t("intro.synk_rooms_alt"), title: t("intro.synk_alt") %></div>
+          </div>
         </div>
         <div class="col-xs-12 col-md-4 text-section">
           <h2><%= t("intro.synk") %></h2>
-          <h3><%= t("intro.synk_desc") %></h3>
+          <h3><%= t("intro.synk_desc").html_safe %></h3>
           <ul class="list-unstyled">
             <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_1") %></li>
             <li><i class="fa fa-check-circle"></i><%= t("intro.synk_f_2") %></li>
@@ -277,6 +281,7 @@
   </div>
   <%= render "layouts/feedback" %>
   <%= render "layouts/tracking" %>
+  <%= javascript_include_tag "home" %>
 </body>
 </html>
 <% end %>

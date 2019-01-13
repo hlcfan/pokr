@@ -308,8 +308,9 @@ html {
   &.view-section__intro-3 {
     .container {
       img {
-        -webkit-filter: drop-shadow(5px 4px 10px #777);
-        filter: drop-shadow(5px 4px 10px #777);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
       }
     }
   }
