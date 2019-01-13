@@ -87,7 +87,7 @@ en:
     synk_add_alt:     "Pokrex Scrum Poker - Add JIRA ticket/story to Pokrex"
     synk_prepare_alt: "Pokrex Scrum Poker - Prepare stories/tickets for grooming"
     synk_rooms_alt:   "Pokrex Scrum Poker - List all rooms for updating JIRA issues"
-    synk_desc:        "Easily import tickets from JIRA to Pokrex and update points back to JIRA with one click. See <a href='/extensions' target='_blank'>browser extensions.</a>"
+    synk_desc:        "Easily import tickets from JIRA to Pokrex and update points back to JIRA with one click. See <a href='/extensions' target='_blank'>browser extensions</a>."
     synk_f_1:       "Convenient and concise"
     synk_f_2:       "Totally secure"
     synk_f_3:       "JIRA cloud supported"
