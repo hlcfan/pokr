@@ -3,6 +3,7 @@ class Rooms
     $('.import').on 'click', ->
       if $('.import').data('status') == 'input'
         $('#story-row .row').hide()
+        $('#story-row .row input').attr("required", false)
         $('.btn.add').hide()
         $('.bulk-links').show()
         $('#room_bulk').val true
@@ -11,6 +12,7 @@ class Rooms
         $('#story-row .row').show()
         $('.btn.add').show()
         $('.bulk-links').hide()
+        $('#story-row .row input').attr("required", true)
         $('#room_bulk').val false
         $('.import').data 'status', 'input'
 
