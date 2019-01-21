@@ -12,7 +12,7 @@ module Api
         end
 
         custom_schemes = Scheme.where( user_id: current_user.id ).inject({}) do|hash, scheme|
-          hash[scheme.slug] = scheme.name
+          hash[scheme.name] = scheme.slug
           hash
         end
 
