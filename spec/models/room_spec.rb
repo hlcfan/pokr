@@ -140,9 +140,9 @@ RSpec.describe Room, type: :model do
   describe "#sort_point_values" do
     it "sorts point values everytime before room saved according to scheme" do
       room.name = 'test'
-      room.pv = %w(40 3 20 8 13).join(',')
+      room.pv = %w(40 3 21 8 13).join(',')
       room.save!
-      expect(room.pv).to eq %w(3 8 13 20 40).join(',')
+      expect(room.pv).to eq %w(3 8 13 21 40).join(',')
     end
   end
 
@@ -368,14 +368,14 @@ RSpec.describe Room, type: :model do
 
   describe "#pv_for_form" do
     it "returns string joined by ','" do
-      expect(room.pv_for_form).to eq "0,1,2,3,5,8,13,20,40,100,?,coffee"
+      expect(room.pv_for_form).to eq "0,1,2,3,5,8,13,21,40,100,?,coffee"
     end
   end
 
   describe "#default_values" do
     it "returns default scheme and pv" do
       expect(room.scheme).to eq "fibonacci"
-      expect(room.pv).to eq "0,1,2,3,5,8,13,20,40,100,?,coffee"
+      expect(room.pv).to eq "0,1,2,3,5,8,13,21,40,100,?,coffee"
     end
   end
 
