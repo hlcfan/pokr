@@ -10,17 +10,17 @@ RSpec.describe UserStoryPoint, type: :model do
     end
 
     it "updates record when user re-vote" do
-      UserStoryPoint.vote user_id, story_id, 20
-      expect(UserStoryPoint.find_by(user_id: user_id, story_id: story_id).points).to eq "20"
+      UserStoryPoint.vote user_id, story_id, 21
+      expect(UserStoryPoint.find_by(user_id: user_id, story_id: story_id).points).to eq "21"
     end
 
     it "updates comment if comment is present" do
-      UserStoryPoint.vote user_id, story_id, 20, "my comments"
+      UserStoryPoint.vote user_id, story_id, 21, "my comments"
       expect(UserStoryPoint.find_by(user_id: user_id, story_id: story_id).comment).to eq "my comments"
     end
 
     it "doesn't updates comment if no comment " do
-      UserStoryPoint.vote user_id, story_id, 20
+      UserStoryPoint.vote user_id, story_id, 21
       expect(UserStoryPoint.find_by(user_id: user_id, story_id: story_id).comment).to be_nil
     end
   end
