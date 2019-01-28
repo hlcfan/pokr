@@ -83,7 +83,7 @@ export default class Board extends React.Component {
               <a href={`/rooms/${this.props.roomId}.xlsx`} target="_blank" className="pull-left" style={{marginLeft: 10 + 'px'}}>Download report</a>
               {
                 this.props.role === "Moderator" &&
-                  <button type="button" className="btn btn-info" id="synk-button" onClick={this.handleSync}>Update to JIRA</button>
+                  <button type="button" className="btn btn-info" id="synk-button" data-room-id={this.props.roomId} onClick={this.handleSync}>Update to JIRA</button>
               }
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>

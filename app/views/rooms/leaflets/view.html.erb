@@ -80,7 +80,7 @@
       <div class="modal-footer">
         <a href="<%= summary_room_path(@room.slug)%>" target="_blank" class="pull-left">View summary</a>
         <a href="<%= room_path(@room.slug, format: "xlsx")%>" target="_blank" class="pull-left" style="margin-left: 10px;">Download report</a>
-        <button type="button" class="btn btn-info" id="synk-button">Update to JIRA</button>
+        <button type="button" class="btn btn-info" data-room-id="<%= @room.slug %>" id="synk-link">Update to JIRA</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
