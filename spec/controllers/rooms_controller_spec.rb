@@ -82,6 +82,14 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to redirect_to(view_room_path(room.slug))
     end
 
+    it "returns Excel file if async room requests with format xlsx" do
+      room = Room.create! valid_attributes.merge(name: "async room", style: Room::LEAFLET_STYLE)
+      UserRoom.create(user_id: User.find_by(email: "a@a.com").id, room_id: room.id, role: UserRoom::MODERATOR)
+
+      get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename=async-room.xlsx")
+    end
+
     context "if room is up to 10 participants for non premium moderator" do
       it "redirects back to dashboard page if signed in" do
         moderator = User.find_by email: "a@a.com"

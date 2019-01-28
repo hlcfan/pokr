@@ -35,7 +35,9 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    redirect_to(view_room_path(@room.slug)) and return if moderator_of_async_room?
+    if moderator_of_async_room? && request.format != "xlsx"
+      redirect_to(view_room_path(@room.slug)) and return
+    end
 
     cookies[:room_id] = @room.slug
     respond_to do |format|
