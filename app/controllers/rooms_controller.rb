@@ -13,10 +13,15 @@ class RoomsController < ApplicationController
   end
 
   def set_room_status
-    if valid_room_status.present? && (@room.status != valid_room_status)
-      @room.update_attribute :status, valid_room_status
+    # binding.pry
+    # if valid_room_status.present? && (@room.status != valid_room_status)
+    #   @room.update_attribute :status, valid_room_status
+    # end
+
+    respond_to do |format|
+      format.json { head :no_content }
+      format.js
     end
-    head :no_content
   end
 
   def story_list

@@ -17,9 +17,10 @@
             <a href="<%= edit_room_path(@room.slug) %>" class="btn btn-default">✏️ Edit room</a>
             <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
             <a href="<%= summary_room_path(@room.slug)%>" class="btn btn-default ">📊 Summary</a>
-            <div id="tooltip-area"></div>
-            <input type="text" id="hiddenField" class="leaflet__room-share-link" value="<%= room_url(@room.slug) %>" />
+            <%= link_to "🏁 Close room", set_room_status_room_path(@room.slug, status: "draw"), remote: true, method: "post", class: "btn btn-default"%>
           </div>
+          <div id="tooltip-area"></div>
+          <input type="text" id="hiddenField" class="leaflet__room-share-link" value="<%= room_url(@room.slug) %>" />
         </div>
         <hr class="leaflet__view-split"/>
         <% @story_points.each do |story_item| %>
@@ -64,4 +65,25 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="board-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">C'est la vie</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a href="<%= summary_room_path(@room.slug)%>" target="_blank" class="pull-left">View summary</a>
+        <a href="<%= room_path(@room.slug, format: "xlsx")%>" target="_blank" class="pull-left" style="margin-left: 10px;">Download report</a>
+        <button type="button" class="btn btn-info" id="synk-button">Update to JIRA</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 

@@ -1,0 +1,2 @@
+$('#board-modal table').empty().append("<%= escape_javascript(render partial: 'rooms/leaflets/board_ticket_list', locals: {tickets: @room.groomed_stories}) %>");
+$('#board-modal').modal({keyboard: false, backdrop: 'static'})
