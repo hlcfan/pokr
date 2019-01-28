@@ -144,6 +144,13 @@ RSpec.describe Room, type: :model do
       room.save!
       expect(room.pv).to eq %w(3 8 13 21 40).join(',')
     end
+
+    it "sorts point values if less point values to be sorted" do
+      room.name = 'test'
+      room.pv = %w(40 3 8 13).join(',')
+      room.save!
+      expect(room.pv).to eq %w(3 8 13 40).join(',')
+    end
   end
 
   describe "#timer_interval" do
