@@ -36,6 +36,16 @@ class Leaflets
         return
       )
 
+    roomState = $("#roomState").val()
+    if "draw" == roomState
+      $.ajax
+        url: "/rooms/#{roomId}/set_room_status"
+        method: "POST"
+        data: {status: "draw"}
+        dataType: 'script'
+        success: ->
+          console.log("Room closed.")
+
     originalTitle = "Copy to clipboard"
     $('[data-toggle="tooltip"]').tooltip(
         container: '#tooltip-area'

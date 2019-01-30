@@ -14,9 +14,9 @@ class RoomsController < ApplicationController
 
   def set_room_status
     # binding.pry
-    # if valid_room_status.present? && (@room.status != valid_room_status)
-    #   @room.update_attribute :status, valid_room_status
-    # end
+    if valid_room_status.present? && (@room.status != valid_room_status)
+      @room.update_attribute :status, valid_room_status
+    end
 
     respond_to do |format|
       format.json { head :no_content }
