@@ -27,6 +27,7 @@
         <hr class="leaflet__view-split"/>
         <% @story_points.each do |story_item| %>
           <h4><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></h4>
+          <p class="leaflet__ticket-desc"><%= story_item[:desc] %></p>
           <% if story_item[:individuals].blank? %>
             <div class="alert alert-info" role="alert">No one vote yet...Start sending the room link to your team members.</div>
           <% else %>

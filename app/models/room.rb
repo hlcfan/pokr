@@ -70,7 +70,7 @@ class Room < ApplicationRecord
   end
 
   def leaflet_votes_summary
-    summary_by_condition(stories.pluck(:id, :link, :point))
+    summary_by_condition(stories.pluck(:id, :link, :desc, :point))
   end
 
   def current_story_id
@@ -202,7 +202,8 @@ class Room < ApplicationRecord
       {
         id: story[0],
         link: story[1],
-        point: story[2],
+        desc: story[2],
+        point: story[3],
         individuals: user_votes_summary[story[0]]
       }
     end
