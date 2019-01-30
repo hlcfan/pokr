@@ -65,7 +65,7 @@ class Room < ApplicationRecord
   end
 
   def summary
-    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
+    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :desc, :point)
     summary_by_condition(stories_list)
   end
 
