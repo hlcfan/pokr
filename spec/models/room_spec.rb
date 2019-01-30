@@ -373,7 +373,6 @@ RSpec.describe Room, type: :model do
       vote_alex = UserStoryPoint.create(user_id: user_alex.id, story_id: story.id, points: 13)
       vote_bob = UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
 
-      binding.pry
       expect(room.leaflet_votes_summary).to eq(
         [{:id=>story2.id, :link=>story2.link, :desc=>story2.desc, :point=>nil, :individuals=>[]},
          {:id=> story.id,
