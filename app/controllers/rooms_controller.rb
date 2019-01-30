@@ -13,7 +13,6 @@ class RoomsController < ApplicationController
   end
 
   def set_room_status
-    # binding.pry
     if valid_room_status.present? && (@room.status != valid_room_status)
       @room.update_attribute :status, valid_room_status
     end
@@ -35,7 +34,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    if moderator_of_async_room? && request.format != "xlsx"
+    if moderator_of_async_room? && html_request?
       redirect_to(view_room_path(@room.slug)) and return
     end
 
@@ -198,6 +197,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def html_request?
+    request.format != "xlsx"
+  end
 
   def moderator_of_async_room?
     @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?

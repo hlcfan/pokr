@@ -270,9 +270,9 @@ class Room < ApplicationRecord
 
   def sort_point_values
     if self.pv_changed? || self.scheme_changed?
-      corresponding_scheme = Scheme.find_scheme(self.scheme)
+      scheme_found = Scheme.find_scheme(self.scheme)
       self.pv = self.pv.split(',').sort_by do |value|
-        corresponding_scheme&.index( value ) || -1
+        scheme_found&.index( value ) || -1
       end.join(',')
     end
   end
