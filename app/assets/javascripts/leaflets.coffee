@@ -39,7 +39,7 @@ class Leaflets
     roomState = $("#roomState").val()
     if "draw" == roomState
       $.ajax
-        url: "/rooms/#{roomId}/set_room_status"
+        url: "/rooms/#{roomId}/set_room_status.js"
         method: "POST"
         data: {status: "draw"}
         dataType: 'script'

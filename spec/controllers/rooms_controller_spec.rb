@@ -247,7 +247,7 @@ RSpec.describe RoomsController, type: :controller do
   describe "POST #set_room_status" do
     it "updates room status if status changed" do
       room = Room.create! valid_attributes
-      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, format: "json"
       expect(Room.last.status).to eq Room::OPEN
       expect(Room.last.status).to eq 1
       expect(response.status).to eq 204
@@ -255,7 +255,7 @@ RSpec.describe RoomsController, type: :controller do
 
     it "doesnt update room status if status parameter is invalid" do
       room = Room.create! valid_attributes
-      post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session, format: "json"
       expect(Room.last.status).to eq nil
       expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
@@ -263,11 +263,16 @@ RSpec.describe RoomsController, type: :controller do
 
     it "doesnt update room status if status parameter same with room status" do
       room = Room.create! valid_attributes.merge(status: 1)
-      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, format: "json"
       expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
     end
 
+    it "updates room status if status changed" do
+      room = Room.create! valid_attributes
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, xhr: true
+      expect(response).to render_template("rooms/set_room_status")
+    end
   end
 
   describe "GET #story_list" do
