@@ -4,6 +4,7 @@
   user_story_points = @room.async_votes_hash(current_user.id)
 %>
 
+<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
     <form action="<%= leaflet_submit_room_path(@room.slug) %>" method="post">
@@ -44,5 +45,5 @@
 </div>
 
 <script type="text/javascript">
-  Raven.config('https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730').install()
+  Sentry.init({ dsn: 'https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730' });
 </script>

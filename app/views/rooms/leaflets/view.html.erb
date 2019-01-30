@@ -2,6 +2,7 @@
   title @room.name
 %>
 
+<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomState" value="<%= @room.state %>" />
 
@@ -67,4 +68,6 @@
   </div>
 </div>
 <%= render partial: "rooms/leaflets/board", locals: { room_id: @room.slug } %>
-
+<script type="text/javascript">
+  Sentry.init({ dsn: 'https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730' });
+</script>
