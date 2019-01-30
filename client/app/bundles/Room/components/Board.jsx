@@ -34,8 +34,7 @@ export default class Board extends React.Component {
   handleSync = () => {
     const extensionCheckElement = document.getElementById("browser-extension-check")
     if(typeof(extensionCheckElement) === 'undefined' || extensionCheckElement === null || extensionCheckElement.innerText.length <= 0) {
-      $("#board .modal").modal("hide")
-      $("#synk-guide .modal").modal({keyboard: false, backdrop: "static"})
+      window.open("/extensions", "_blank")
     }
   }
 

@@ -42,7 +42,7 @@ class Leaflets
         url: "/rooms/#{roomId}/set_room_status.js"
         method: "POST"
         data: {status: "draw"}
-        dataType: 'script'
+        dataType: "script"
         success: ->
           console.log("Room closed.")
 
