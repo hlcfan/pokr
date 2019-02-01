@@ -473,6 +473,12 @@ RSpec.describe RoomsController, type: :controller do
       expect(response.status).to eq 400
     end
 
+    it "returns bad request if room is closed" do
+      room = Room.create! valid_attributes.merge(status: 2)
+      post :leaflet_submit, params: { id: room.slug }
+      expect(response.status).to eq 400
+    end
+
     it "saves votes and redirect to room page if valid votes" do
       room = Room.create! valid_attributes
       story_1 = Story.create(room_id: room.id, link: "story title")

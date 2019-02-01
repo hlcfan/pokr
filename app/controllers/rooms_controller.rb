@@ -166,7 +166,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_submit
-    head(:bad_request) and return if params[:votes].blank?
+    head(:bad_request) and return if params[:votes].blank? || "draw" == @room.state
 
     params[:votes].values.each do |vote|
       next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)

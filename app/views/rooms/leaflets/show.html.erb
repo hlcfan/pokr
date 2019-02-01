@@ -5,7 +5,8 @@
 %>
 
 <script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
-<div class="row leaflet">
+<input type="hidden" id="roomState" value="<%= @room.state %>" />
+<div class="row leaflet <%= @room.state%>">
   <div class="col-md-10 col-md-offset-1">
     <form action="<%= leaflet_submit_room_path(@room.slug) %>" method="post">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">

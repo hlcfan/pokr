@@ -15,6 +15,10 @@ class Leaflets
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-point").val(point)
       $("input[value=" + ticketId + "]").siblings(".leaflet__vote-comment").val(comment)
 
+    roomState = $("#roomState").val()
+    if "draw" == roomState
+      $(".leaflet input, .leaflet textarea").prop("disabled", true)
+
   leaflet_view: ->
     roomId = $("#roomId").val()
     $(".finalize-link-col__finalize-link").on "click", ->
@@ -45,6 +49,7 @@ class Leaflets
         dataType: "script"
         success: ->
           console.log("Room closed.")
+
 
     originalTitle = "Copy to clipboard"
     $('[data-toggle="tooltip"]').tooltip(
