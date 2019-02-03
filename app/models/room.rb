@@ -65,12 +65,12 @@ class Room < ApplicationRecord
   end
 
   def summary
-    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :point)
+    stories_list = stories.where("point IS NOT NULL").pluck(:id, :link, :desc, :point)
     summary_by_condition(stories_list)
   end
 
   def leaflet_votes_summary
-    summary_by_condition(stories.pluck(:id, :link, :point))
+    summary_by_condition(stories.pluck(:id, :link, :desc, :point))
   end
 
   def current_story_id
@@ -202,7 +202,8 @@ class Room < ApplicationRecord
       {
         id: story[0],
         link: story[1],
-        point: story[2],
+        desc: story[2],
+        point: story[3],
         individuals: user_votes_summary[story[0]]
       }
     end
@@ -270,8 +271,9 @@ class Room < ApplicationRecord
 
   def sort_point_values
     if self.pv_changed? || self.scheme_changed?
+      scheme_found = Scheme.find_scheme(self.scheme)
       self.pv = self.pv.split(',').sort_by do |value|
-        Scheme.find_scheme(self.scheme)&.index value
+        scheme_found&.index( value ) || -1
       end.join(',')
     end
   end

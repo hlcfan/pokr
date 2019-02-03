@@ -1,0 +1,20 @@
+<% total = 0 %>
+<tbody>
+  <tr>
+    <th>Story</th>
+    <th>Point</th>
+  </tr>
+  <% tickets.each do |ticket| %>
+    <% total += ticket[2].to_i %>
+    <tr>
+      <td><%= ticket[1] %></td>
+      <td><%= ticket[2] %></td>
+    </tr>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td><%= total %></td>
+    </tr>
+  </tfoot>
+</tbody>

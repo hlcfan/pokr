@@ -16,7 +16,11 @@ class RoomsController < ApplicationController
     if valid_room_status.present? && (@room.status != valid_room_status)
       @room.update_attribute :status, valid_room_status
     end
-    head :no_content
+
+    respond_to do |format|
+      format.json { head :no_content }
+      format.js
+    end
   end
 
   def story_list
@@ -30,7 +34,9 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    redirect_to(view_room_path(@room.slug)) and return if moderator_of_async_room?
+    if moderator_of_async_room? && html_request?
+      redirect_to(view_room_path(@room.slug)) and return
+    end
 
     cookies[:room_id] = @room.slug
     respond_to do |format|
@@ -160,7 +166,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_submit
-    head(:bad_request) and return if params[:votes].blank?
+    head(:bad_request) and return if params[:votes].blank? || "draw" == @room.state
 
     params[:votes].values.each do |vote|
       next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
@@ -191,6 +197,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def html_request?
+    request.format != "xlsx"
+  end
 
   def moderator_of_async_room?
     @room.async_mode? && UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).moderator?

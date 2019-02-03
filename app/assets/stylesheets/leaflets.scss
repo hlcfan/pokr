@@ -26,7 +26,7 @@
   }
 }
 
-.leaflet_view {
+.leaflet_view .panel {
   hr {
     border-color: #ccc;
   }
@@ -50,9 +50,9 @@
     padding: 0;
   }
 
-  h4 {
-    border-bottom: 1px dashed #ccc;
+  .leaflet__ticket-desc {
     padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
   }
 
   .table__finalize-link-col {

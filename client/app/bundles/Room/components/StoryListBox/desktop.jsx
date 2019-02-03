@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StoryList from '../StoryList'
-import SynkGuide from '../Synk/Guide'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 
@@ -46,7 +45,7 @@ export default class StoryListBox extends React.Component {
   sync = () => {
     const extensionCheckElement = document.getElementById("browser-extension-check")
     if(typeof(extensionCheckElement) === 'undefined' || extensionCheckElement === null || extensionCheckElement.innerText.length <= 0) {
-      $("#synk-guide .modal").modal()
+      window.open("/extensions", "_blank")
     }
   }
 
@@ -76,7 +75,7 @@ export default class StoryListBox extends React.Component {
     const syncLink = (() => {
       if (this.props.role === "Moderator") {
         return(
-          <a id="synk-link" className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync}>
+          <a id="synk-link" className={`${css["stories--sync"]} pull-right`} href="javascript:;" onClick={this.sync} data-room-id={this.props.roomId}>
             <i className="fa fa-upload"></i> Sync
           </a>
         )
@@ -107,7 +106,6 @@ export default class StoryListBox extends React.Component {
             </div>
           </div>
         </div>
-        <SynkGuide />
       </div>
     )
   }

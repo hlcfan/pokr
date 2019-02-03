@@ -2,7 +2,9 @@
   title @room.name
 %>
 
+<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
+<input type="hidden" id="roomState" value="<%= @room.state %>" />
 
 <div class="row leaflet">
   <div class="col-md-10 col-md-offset-1">
@@ -17,13 +19,17 @@
             <a href="<%= edit_room_path(@room.slug) %>" class="btn btn-default">✏️ Edit room</a>
             <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
             <a href="<%= summary_room_path(@room.slug)%>" class="btn btn-default ">📊 Summary</a>
-            <div id="tooltip-area"></div>
-            <input type="text" id="hiddenField" class="leaflet__room-share-link" value="<%= room_url(@room.slug) %>" />
+            <% if "draw" != @room.state %>
+              <%= link_to "🏁 Close room", set_room_status_room_path(@room.slug, status: "draw"), remote: true, method: "post", "data-confirm": "Are you sure to close current room?", class: "btn btn-default"%>
+            <% end %>
           </div>
+          <div id="tooltip-area"></div>
+          <input type="text" id="hiddenField" class="leaflet__room-share-link" value="<%= room_url(@room.slug) %>" />
         </div>
         <hr class="leaflet__view-split"/>
         <% @story_points.each do |story_item| %>
           <h4><%= link_to story_item[:link], show_story_link(story_item[:link]), target: "_blank" %></h4>
+          <p class="leaflet__ticket-desc"><%= story_item[:desc] %></p>
           <% if story_item[:individuals].blank? %>
             <div class="alert alert-info" role="alert">No one vote yet...Start sending the room link to your team members.</div>
           <% else %>
@@ -64,4 +70,7 @@
     </div>
   </div>
 </div>
-
+<%= render partial: "rooms/leaflets/board", locals: { room_id: @room.slug } %>
+<script type="text/javascript">
+  Sentry.init({ dsn: 'https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730' });
+</script>

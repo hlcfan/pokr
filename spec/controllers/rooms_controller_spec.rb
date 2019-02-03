@@ -82,6 +82,14 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to redirect_to(view_room_path(room.slug))
     end
 
+    it "returns Excel file if async room requests with format xlsx" do
+      room = Room.create! valid_attributes.merge(name: "async room", style: Room::LEAFLET_STYLE)
+      UserRoom.create(user_id: User.find_by(email: "a@a.com").id, room_id: room.id, role: UserRoom::MODERATOR)
+
+      get :show, params: {id: room.slug}, session: valid_session, format: :xlsx
+      expect(response.header["Content-Disposition"]).to eq("attachment; filename=async-room.xlsx")
+    end
+
     context "if room is up to 10 participants for non premium moderator" do
       it "redirects back to dashboard page if signed in" do
         moderator = User.find_by email: "a@a.com"
@@ -239,7 +247,7 @@ RSpec.describe RoomsController, type: :controller do
   describe "POST #set_room_status" do
     it "updates room status if status changed" do
       room = Room.create! valid_attributes
-      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, format: "json"
       expect(Room.last.status).to eq Room::OPEN
       expect(Room.last.status).to eq 1
       expect(response.status).to eq 204
@@ -247,7 +255,7 @@ RSpec.describe RoomsController, type: :controller do
 
     it "doesnt update room status if status parameter is invalid" do
       room = Room.create! valid_attributes
-      post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "wut"}, session: valid_session, format: "json"
       expect(Room.last.status).to eq nil
       expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
@@ -255,11 +263,16 @@ RSpec.describe RoomsController, type: :controller do
 
     it "doesnt update room status if status parameter same with room status" do
       room = Room.create! valid_attributes.merge(status: 1)
-      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, format: "json"
       expect(Room.last.updated_at.iso8601(6)).to eq room.updated_at.iso8601(6)
       expect(response.status).to eq 204
     end
 
+    it "updates room status if status changed" do
+      room = Room.create! valid_attributes
+      post :set_room_status, params: {:id => room.slug, status: "open"}, session: valid_session, xhr: true
+      expect(response).to render_template("rooms/set_room_status")
+    end
   end
 
   describe "GET #story_list" do
@@ -456,6 +469,12 @@ RSpec.describe RoomsController, type: :controller do
   describe "#leaflet_submit" do
     it "returns bad request if no votes in params" do
       room = Room.create! valid_attributes
+      post :leaflet_submit, params: { id: room.slug }
+      expect(response.status).to eq 400
+    end
+
+    it "returns bad request if room is closed" do
+      room = Room.create! valid_attributes.merge(status: 2)
       post :leaflet_submit, params: { id: room.slug }
       expect(response.status).to eq 400
     end

@@ -1,4 +1,3 @@
-#= require electron.js
 #= require jquery2
 #= require jquery_ujs
 #= require libs/bootstrap-tagsinput.min
