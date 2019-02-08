@@ -151,7 +151,7 @@ class RoomsController < ApplicationController
 
   def screen
     if current_user
-      redirect_to room_path(params[:id])
+      redirect_to room_path(params[:id]) and return
     end
 
     handle_quick_join
