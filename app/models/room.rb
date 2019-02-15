@@ -45,7 +45,7 @@ class Room < ApplicationRecord
   end
 
   def display_state
-    if state == "draw"
+    if closed?
       "Finished"
     else
       "In Progress"

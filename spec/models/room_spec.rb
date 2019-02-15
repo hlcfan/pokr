@@ -40,7 +40,7 @@ RSpec.describe Room, type: :model do
 
   describe "#display_state" do
     it "is Finished if state equals draw" do
-      allow(room).to receive(:state) { "draw" }
+      room.status = 2
       expect(room.display_state).to eq "Finished"
     end
 
