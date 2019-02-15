@@ -299,13 +299,17 @@ html {
     img {
       width: 80px;
 
+      &.bosch {
+        width: 100px;
+      }
+
       @media #{$mobile} {
         width: 100%;
-      }
-    }
 
-    .bosch {
-      width: 100px;
+        &.bosch {
+          width: 100%;
+        }
+      }
     }
   }
 
