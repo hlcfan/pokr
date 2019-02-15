@@ -195,6 +195,10 @@ class Room < ApplicationRecord
     end
   end
 
+  def closed?
+    Room::DRAW == status
+  end
+
   private
 
   def summary_by_condition stories_list

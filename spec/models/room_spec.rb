@@ -473,4 +473,16 @@ RSpec.describe Room, type: :model do
       expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
     end
   end
+
+  describe "#closed?" do
+    it "returns true if room is closed" do
+      room.status = 2
+      expect(room.closed?).to be true
+    end
+
+    it "returns false if room is not closed" do
+      room.status = 1
+      expect(room.closed?).to be false
+    end
+  end
 end
