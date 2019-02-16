@@ -52,8 +52,7 @@ export default class VoteBox extends React.Component {
     return (
       <div className="panel panel-default" id="deck">
         <div className="panel-heading">
-          Vote
-          <span className="pull-right"><i className="fa fa-info-circle"></i> Click to vote</span>
+          Click to vote
         </div>
         <div className="vote-list panel-body">
           <ul className="list-inline">
