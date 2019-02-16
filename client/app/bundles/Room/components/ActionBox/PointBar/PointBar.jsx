@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
 import CursorImage from './check.cur'
+import css from './index.scss'
 
 export default class PointBar extends React.Component {
   selectPoint = () => {
@@ -27,6 +28,10 @@ export default class PointBar extends React.Component {
         <div className="col-md-9 col-xs-9 bar" style={cursorStyle}>
           <div onClick={this.selectPoint} style={{width: this.props.barWidth + '%', background: this.props.color, color: '#fff', 'textAlign': 'center'}}>
             {this.props.count}
+            {
+              ("Moderator" === this.props.role) &&
+              <i className={`fa fa-angle-double-right ${css["point-bar__accessory"]}`}></i>
+            }
           </div>
         </div>
       </li>
