@@ -40,7 +40,7 @@ RSpec.describe Room, type: :model do
 
   describe "#display_state" do
     it "is Finished if state equals draw" do
-      allow(room).to receive(:state) { "draw" }
+      room.status = 2
       expect(room.display_state).to eq "Finished"
     end
 
@@ -364,6 +364,7 @@ RSpec.describe Room, type: :model do
     it "returns leaflet summary" do
       room = Room.create(name: "test slug")
       story = Story.create(link: "link_1", room_id: room.id, desc: "description")
+      sleep 0.5
       story2 = Story.create(link: "link_2", room_id: room.id, desc: "description 2")
       story.update_attribute :point, 13
       user_alex = User.create email: 'a@a.com', password: 'password'
@@ -374,26 +375,37 @@ RSpec.describe Room, type: :model do
       vote_bob = UserStoryPoint.create(user_id: user_bob.id, story_id: story.id, points: 8)
 
       expect(room.leaflet_votes_summary).to eq(
-        [{:id=>story2.id, :link=>story2.link, :desc=>story2.desc, :point=>nil, :individuals=>[]},
-         {:id=> story.id,
-          :link=>story.link,
-          :desc=>story.desc,
-          :point=>story.point,
-          :individuals=>
-          [{:user_id=>user_alex.id,
-            :user_point=>"13",
-            :user_name=>user_alex.display_name,
-            :user_avatar=>user_alex.letter_avatar,
-            :user_story_point_id=>vote_alex.encoded_id,
-            :user_story_point_finalized=>nil,
-            :user_story_point_comment=>nil},
-            {:user_id=>user_bob.id,
-             :user_point=>"8",
-             :user_name=>user_bob.display_name,
-             :user_avatar=>user_bob.letter_avatar,
-             :user_story_point_id=>vote_bob.encoded_id,
-             :user_story_point_finalized=>nil,
-             :user_story_point_comment=>nil}]}]
+        [
+          {
+            :id => story2.id, :link=>story2.link, :desc=>story2.desc, :point=>nil, :individuals=>[]
+          },
+          {
+            :id    => story.id,
+            :link  => story.link,
+            :desc  => story.desc,
+            :point => story.point,
+            :individuals=> [
+              {
+                :user_id                    => user_alex.id,
+                :user_point                 => "13",
+                :user_name                  => user_alex.display_name,
+                :user_avatar                => user_alex.letter_avatar,
+                :user_story_point_id        => vote_alex.encoded_id,
+                :user_story_point_finalized => nil,
+                :user_story_point_comment   => nil
+              },
+              {
+                :user_id                    => user_bob.id,
+                :user_point                 => "8",
+                :user_name                  => user_bob.display_name,
+                :user_avatar                => user_bob.letter_avatar,
+                :user_story_point_id        => vote_bob.encoded_id,
+                :user_story_point_finalized => nil,
+                :user_story_point_comment   => nil
+              }
+            ]
+          }
+        ]
       )
     end
   end
@@ -471,6 +483,18 @@ RSpec.describe Room, type: :model do
       vote = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13", comment: "My comments")
 
       expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
+    end
+  end
+
+  describe "#closed?" do
+    it "returns true if room is closed" do
+      room.status = 2
+      expect(room.closed?).to be true
+    end
+
+    it "returns false if room is not closed" do
+      room.status = 1
+      expect(room.closed?).to be false
     end
   end
 end

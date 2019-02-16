@@ -16,11 +16,13 @@
         <div class="clearfix">
           <div class="pull-left"><h3 class="leaflet__name"><%= @room.name %></h3></div>
           <div class="btn-group pull-right" role="group">
-            <a href="<%= edit_room_path(@room.slug) %>" class="btn btn-default">✏️ Edit room</a>
+            <% if !@room.closed? %>
+              <a href="<%= edit_room_path(@room.slug) %>" class="leaflet__edit btn btn-default">✏️ Edit room</a>
+            <% end %>
             <button type="button" onClick="copyToClipboard()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">📻 Share link</button>
             <a href="<%= summary_room_path(@room.slug)%>" class="btn btn-default ">📊 Summary</a>
-            <% if "draw" != @room.state %>
-              <%= link_to "🏁 Close room", set_room_status_room_path(@room.slug, status: "draw"), remote: true, method: "post", "data-confirm": "Are you sure to close current room?", class: "btn btn-default"%>
+            <% if !@room.closed? %>
+              <%= link_to "🏁 Close room", set_room_status_room_path(@room.slug, status: "draw"), remote: true, method: "post", "data-confirm": "Are you sure to close current room?", class: "leaflet__close btn btn-default"%>
             <% end %>
           </div>
           <div id="tooltip-area"></div>

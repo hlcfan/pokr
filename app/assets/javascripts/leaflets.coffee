@@ -63,7 +63,7 @@ class Leaflets
       return
 
     copyLink = () ->
-      aField = document.getElementById("hiddenField");
+      aField = document.getElementById("hiddenField")
       aField.hidden   = false
       aField.value    = window.location.href
       aField.select()

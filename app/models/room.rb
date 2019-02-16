@@ -45,7 +45,7 @@ class Room < ApplicationRecord
   end
 
   def display_state
-    if state == "draw"
+    if closed?
       "Finished"
     else
       "In Progress"
@@ -193,6 +193,10 @@ class Room < ApplicationRecord
 
       hash
     end
+  end
+
+  def closed?
+    Room::DRAW == status
   end
 
   private

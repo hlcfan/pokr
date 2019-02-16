@@ -143,7 +143,7 @@ export default class ActionBox extends React.Component {
         buttonCount = 2;
       } else if (this.state.roomState === 'draw') {
         onClickName = this.showBoard;
-        buttonText = "Show board";
+        buttonText = "Show results";
       }
     }
     buttonHtml = ((() => {
