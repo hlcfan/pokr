@@ -16,7 +16,8 @@ class SiteController < ApplicationController
       { name: "Steve",   amount: print_money(400) },
       { name: "Matthew", amount: print_money(193) },
       { name: "Noah",    amount: print_money(53) },
-      { name: "Renee",   amount: print_money(5) },
+      { name: "Renee",   amount: print_money(14) },
+      { name: "Cici",   amount: print_money(8) },
       { name: "Kevin",   amount: print_money(8) }
     ]
 
