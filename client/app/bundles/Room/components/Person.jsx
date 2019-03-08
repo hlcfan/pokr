@@ -8,7 +8,7 @@ export default class Person extends React.Component {
   remove = () => {
     if (this.props.role === 'Moderator') {
       MessageBus.publish("remove_person", {
-        id: this.props.roomId,
+        roomId: this.props.roomId,
         data: { user_id: this.props.id }
       })
     }

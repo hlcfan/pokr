@@ -9,7 +9,7 @@ export default class PointBar extends React.Component {
     if (this.props.role === 'Moderator') {
       Cookies.set("pointClicked", true)
       MessageBus.publish("set_story_point", {
-        id: this.props.roomId,
+        roomId: this.props.roomId,
         data: { point: this.props.point, story_id: this.props.storyId }
       })
     }

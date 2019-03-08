@@ -51,7 +51,7 @@ export default {
 
     MessageBus.publish = function(action, payload) {
       console.log(`${action}:${payload}`)
-      fetch(`/rooms/${action}`, {
+      fetch(`/rooms/${payload.roomId}/${action}`, {
         body: JSON.stringify(payload),
         method: "POST",
         headers: {

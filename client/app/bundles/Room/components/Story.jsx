@@ -7,7 +7,7 @@ export default class Story extends React.Component {
     const revoteStoryId = $(e.target).parents("li").data("id");
     if (this.props.role === 'Moderator') {
       MessageBus.publish("revote", {
-        id: this.props.roomId,
+        roomId: this.props.roomId,
         data: { story_id: revoteStoryId }
       })
     }

@@ -40,9 +40,6 @@ Rails.application.routes.draw do
       post :leaflet_submit
       get :view, to: 'rooms#leaflet_view'
       post :leaflet_finalize_point
-    end
-
-    collection do
       post :vote
       post :action
       post :set_story_point

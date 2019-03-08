@@ -16,7 +16,7 @@ export default class VoteBox extends React.Component {
       let targetPoint = e.target.getAttribute("data-point")
       this.setState({currentVote: targetPoint})
       MessageBus.publish("vote", {
-        id: this.props.roomId,
+        roomId: this.props.roomId,
         data: { points: targetPoint, story_id: this.props.storyId },
       })
     }
