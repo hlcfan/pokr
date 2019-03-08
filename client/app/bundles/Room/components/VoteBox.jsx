@@ -15,10 +15,14 @@ export default class VoteBox extends React.Component {
     if ("draw" !== this.props.roomState) {
       let targetPoint = e.target.getAttribute("data-point")
       this.setState({currentVote: targetPoint})
-      App.rooms.perform('vote', {
-        roomId: this.props.roomId,
+      MessageBus.publish("vote", {
+        id: this.props.roomId,
         data: { points: targetPoint, story_id: this.props.storyId },
       })
+      // App.rooms.perform('vote', {
+      //   roomId: this.props.roomId,
+      //   data: { points: targetPoint, story_id: this.props.storyId },
+      // })
     }
   }
 

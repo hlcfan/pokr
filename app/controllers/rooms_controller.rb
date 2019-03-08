@@ -196,7 +196,29 @@ class RoomsController < ApplicationController
     end
   end
 
+  def vote
+    payload = params["data"]
+    set_room
+    if valid_vote? payload
+      UserStoryPoint.vote(current_user.id,
+                      payload["story_id"],
+                      payload["points"]) do |user_story_point|
+        broadcaster "rooms/#{@room.slug}",
+                    type: "notify",
+                    person_id: user_story_point.user_id
+
+                    # story_id: user_story_point.story_id,
+                    # points: user_story_point.points,
+                    # sync: @room.state == "open"
+      end
+    end
+  end
+
   private
+
+  def valid_vote? payload
+    @room.valid_vote_point?(payload["points"].to_s) && payload["story_id"].present?
+  end
 
   def html_request?
     request.format != "xlsx"

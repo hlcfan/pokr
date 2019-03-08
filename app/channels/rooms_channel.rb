@@ -12,24 +12,6 @@ class RoomsChannel < ApplicationCable::Channel
     ActionCable.server.broadcast "rooms/#{data['roomId']}", data
   end
 
-  def vote data
-    payload = data["data"]
-    set_room data["roomId"]
-    if valid_vote? payload
-      UserStoryPoint.vote(current_user.id,
-                      payload["story_id"],
-                      payload["points"]) do |user_story_point|
-        broadcaster "rooms/#{@room.slug}",
-                    type: "notify",
-                    person_id: user_story_point.user_id
-
-                    # story_id: user_story_point.story_id,
-                    # points: user_story_point.points,
-                    # sync: @room.state == "open"
-      end
-    end
-  end
-
   def set_story_point data
     payload = data["data"]
     set_room data["roomId"]

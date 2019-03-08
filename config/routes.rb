@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'extensions', to: 'site#extensions'
   get 'pricing', to: 'site#pricing_page'
 
-  mount ActionCable.server => '/cable'
+  # mount ActionCable.server => '/cable'
 
   admin_constraint = lambda do |request|
     request.env['warden'].authenticate? and request.env['warden'].user.admin?
@@ -42,6 +42,10 @@ Rails.application.routes.draw do
       post :leaflet_submit
       get :view, to: 'rooms#leaflet_view'
       post :leaflet_finalize_point
+    end
+
+    collection do
+      post :vote
     end
   end
 
