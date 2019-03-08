@@ -220,7 +220,7 @@ class RoomsController < ApplicationController
       @room.update_attribute(:status, Room::OPEN) if @room
     end
 
-    broadcaster "rooms/#{@room.slug}", params.slice(:data, :type)
+    broadcaster "rooms/#{@room.slug}", { :data => params[:data], :type => params[:type] }
   end
 
   def set_story_point
@@ -262,6 +262,18 @@ class RoomsController < ApplicationController
       end
     end
   end
+
+  def clear_votes
+    payload = params["data"]
+    set_room
+
+    UserStoryPoint.where(story_id: payload["story_id"]).delete_all
+    @room.update_attribute :status, nil
+    broadcaster "rooms/#{@room.slug}",
+            type: "action",
+            data: "clear-votes"
+  end
+
 
 
   private

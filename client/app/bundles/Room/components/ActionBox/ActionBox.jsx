@@ -55,8 +55,8 @@ export default class ActionBox extends React.Component {
 
   clearVotes = () => {
     if (this.props.role === 'Moderator') {
-      App.rooms.perform('clear_votes', {
-        roomId: this.props.roomId,
+      MessageBus.publish("clear_votes", {
+        id: this.props.roomId,
         data: { story_id: this.props.storyId }
       })
     }
