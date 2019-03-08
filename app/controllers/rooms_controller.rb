@@ -214,6 +214,14 @@ class RoomsController < ApplicationController
     end
   end
 
+  def action
+    if params["data"] == "open"
+      set_room
+      @room.update_attribute(:status, Room::OPEN) if @room
+    end
+    broadcaster "rooms/#{@room.slug}", data
+  end
+
   private
 
   def valid_vote? payload
@@ -284,7 +292,7 @@ class RoomsController < ApplicationController
   end
 
   def broadcaster channel, *message
-    ActionCable.server.broadcast channel, *message
+    MessageBus.publish channel, *message
   end
 
   def guest_check

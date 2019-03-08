@@ -19,10 +19,6 @@ export default class VoteBox extends React.Component {
         id: this.props.roomId,
         data: { points: targetPoint, story_id: this.props.storyId },
       })
-      // App.rooms.perform('vote', {
-      //   roomId: this.props.roomId,
-      //   data: { points: targetPoint, story_id: this.props.storyId },
-      // })
     }
   }
 

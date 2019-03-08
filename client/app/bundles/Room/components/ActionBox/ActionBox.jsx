@@ -36,8 +36,8 @@ export default class ActionBox extends React.Component {
     this.setState(newState)
 
     if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
-      App.rooms.perform('action', {
-        roomId: this.props.roomId,
+      MessageBus.publish("action", {
+        id: this.props.roomId,
         data: 'open',
         type: 'action'
       })

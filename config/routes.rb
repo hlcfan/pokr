@@ -46,6 +46,7 @@ Rails.application.routes.draw do
 
     collection do
       post :vote
+      post :action
     end
   end
 
