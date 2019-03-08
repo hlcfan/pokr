@@ -292,8 +292,6 @@ class RoomsController < ApplicationController
             data: "clear-votes"
   end
 
-
-
   private
 
   def valid_vote? payload
