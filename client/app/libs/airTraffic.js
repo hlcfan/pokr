@@ -10,8 +10,8 @@ export default {
     MessageBus.start()
     MessageBus.callbackInterval = 500
 
-    MessageBus.subscribe(`/cable/${roomId}`, function(data){
-      // console.dir(data)
+    MessageBus.subscribe(`rooms/${roomId}`, function(data){
+      console.dir(data)
       if (data.type === 'action') {
         if (data.data === 'open') {
           RoomActions.showResultSection()
