@@ -171,8 +171,6 @@ RSpec.describe Room, type: :model do
     let!(:story_3) { Story.create(link: "link_3", room_id: 1, point: 3) }
 
     it "returns stories grouped by whether it has point or not" do
-      sleep 1
-      story_2.touch(:created_at)
       room.id = 1
       expect(room.grouped_stories.size).to eq 2
       expect(room.grouped_stories[:groomed].size).to eq 1

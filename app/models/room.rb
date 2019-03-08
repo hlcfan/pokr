@@ -53,7 +53,7 @@ class Room < ApplicationRecord
   end
 
   def grouped_stories
-    stories_grouped = stories.group_by do |story|
+    stories_grouped = stories.order(:id).group_by do |story|
       story.point.present?
     end
 
