@@ -10,6 +10,6 @@ function error(msg,url,line){
 }
 
 
-window.onerror = function(msg,url,line) {
-  error(msg,url,line);
-}
+// window.onerror = function(msg,url,line) {
+//   error(msg,url,line);
+// }
