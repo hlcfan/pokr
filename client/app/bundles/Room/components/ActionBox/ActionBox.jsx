@@ -46,8 +46,8 @@ export default class ActionBox extends React.Component {
 
   skipStory = () => {
     if (this.props.role === 'Moderator') {
-      App.rooms.perform('set_story_point', {
-        roomId: this.props.roomId,
+      MessageBus.publish("set_story_point", {
+        id: this.props.roomId,
         data: { point: 'null', story_id: this.props.storyId }
       })
     }

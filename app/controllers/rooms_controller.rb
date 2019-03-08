@@ -219,8 +219,32 @@ class RoomsController < ApplicationController
       set_room
       @room.update_attribute(:status, Room::OPEN) if @room
     end
-    broadcaster "rooms/#{@room.slug}", data
+
+    broadcaster "rooms/#{@room.slug}", params.slice(:data, :type)
   end
+
+  def set_story_point
+    payload = params["data"]
+    set_room
+
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+
+    if user_room.moderator? && @room.valid_vote_point?(payload["point"])
+      story = Story.find_by id: payload["story_id"], room_id: @room.id
+      if story
+        story_point = @room.free_style? ? nil : payload["point"]
+        story.update_attribute :point, story_point
+        if @room.free_style?
+          UserStoryPoint.where(story_id: story.id).destroy_all
+        end
+        @room.update_attribute :status, nil
+        broadcaster "rooms/#{@room.slug}",
+                    type: "action",
+                    data: "next-story"
+      end
+    end
+  end
+
 
   private
 
