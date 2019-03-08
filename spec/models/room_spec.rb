@@ -375,9 +375,6 @@ RSpec.describe Room, type: :model do
       expect(room.leaflet_votes_summary).to eq(
         [
           {
-            :id => story2.id, :link=>story2.link, :desc=>story2.desc, :point=>nil, :individuals=>[]
-          },
-          {
             :id    => story.id,
             :link  => story.link,
             :desc  => story.desc,
@@ -402,6 +399,9 @@ RSpec.describe Room, type: :model do
                 :user_story_point_comment   => nil
               }
             ]
+          },
+          {
+            :id => story2.id, :link => story2.link, :desc => story2.desc, :point => nil, :individuals => []
           }
         ]
       )
