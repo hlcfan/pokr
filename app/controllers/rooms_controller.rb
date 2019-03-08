@@ -245,6 +245,24 @@ class RoomsController < ApplicationController
     end
   end
 
+  def revote
+    payload = params["data"]
+    set_room
+
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+
+    if user_room.moderator?
+      story = Story.find_by id: payload["story_id"], room_id: @room.id
+      if story
+        story.update_attribute :point, nil
+        @room.update_attribute :status, nil
+        broadcaster "rooms/#{@room.slug}",
+                    type: "action",
+                    data: "revote"
+      end
+    end
+  end
+
 
   private
 

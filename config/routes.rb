@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       post :vote
       post :action
       post :set_story_point
+      post :revote
     end
   end
 
