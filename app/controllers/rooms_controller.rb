@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show, :leaflet_view]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status, unless: -> { request.format.json? }
 
@@ -198,7 +198,6 @@ class RoomsController < ApplicationController
 
   def vote
     payload = params["data"]
-    set_room
     if valid_vote? payload
       UserStoryPoint.vote(current_user.id,
                       payload["story_id"],
@@ -225,8 +224,6 @@ class RoomsController < ApplicationController
 
   def set_story_point
     payload = params["data"]
-    set_room
-
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room.moderator? && @room.valid_vote_point?(payload["point"])
@@ -246,7 +243,6 @@ class RoomsController < ApplicationController
   end
 
   def remove_person
-    set_room
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
@@ -259,14 +255,11 @@ class RoomsController < ApplicationController
   end
 
   def timing
-    set_room
     @room.update_duration params["duration"].to_f
   end
 
   def revote
     payload = params["data"]
-    set_room
-
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room.moderator?
@@ -283,10 +276,9 @@ class RoomsController < ApplicationController
 
   def clear_votes
     payload = params["data"]
-    set_room
-
     UserStoryPoint.where(story_id: payload["story_id"]).delete_all
     @room.update_attribute :status, nil
+
     broadcaster "rooms/#{@room.slug}",
             type: "action",
             data: "clear-votes"
