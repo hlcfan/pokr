@@ -245,6 +245,24 @@ class RoomsController < ApplicationController
     end
   end
 
+  def remove_person
+    set_room
+    payload = params["data"]
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
+
+    if user_room.moderator?
+      UserRoom.where(user_id: payload["user_id"], room_id: @room.id).destroy_all
+      broadcaster "rooms/#{@room.slug}",
+                    type: "evictUser",
+                    data: { userId: payload["user_id"] }
+    end
+  end
+
+  def timing
+    set_room
+    @room.update_duration params["duration"].to_f
+  end
+
   def revote
     payload = params["data"]
     set_room

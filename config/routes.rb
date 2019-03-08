@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       post :set_story_point
       post :revote
       post :clear_votes
+      post :remove_person
+      post :timing
     end
   end
 
