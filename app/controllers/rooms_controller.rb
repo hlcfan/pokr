@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show, :leaflet_view]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point, :vote, :action, :set_story_point, :remove_person, :timing, :revote, :clear_votes]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status, unless: -> { request.format.json? }
 
@@ -217,7 +217,6 @@ class RoomsController < ApplicationController
 
   def action
     if params["data"] == "open"
-      set_room
       @room.update_attribute(:status, Room::OPEN) if @room
     end
 
@@ -230,7 +229,7 @@ class RoomsController < ApplicationController
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    if user_room.moderator? && @room.valid_vote_point?(payload["point"])
+    if user_room&.moderator? && @room.valid_vote_point?(payload["point"])
       story = Story.find_by id: payload["story_id"], room_id: @room.id
       if story
         story_point = @room.free_style? ? nil : payload["point"]
@@ -252,11 +251,11 @@ class RoomsController < ApplicationController
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    if user_room.moderator?
+    if user_room&.moderator?
       UserRoom.where(user_id: payload["user_id"], room_id: @room.id).destroy_all
       broadcaster "rooms/#{@room.slug}",
                     type: "evictUser",
-                    data: { userId: payload["user_id"] }
+                    data: { userId: payload["user_id"].to_s }
     end
 
     head :ok
@@ -271,7 +270,7 @@ class RoomsController < ApplicationController
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    if user_room.moderator?
+    if user_room&.moderator?
       story = Story.find_by id: payload["story_id"], room_id: @room.id
       if story
         story.update_attribute :point, nil
@@ -287,12 +286,16 @@ class RoomsController < ApplicationController
 
   def clear_votes
     payload = params["data"]
-    UserStoryPoint.where(story_id: payload["story_id"]).delete_all
-    @room.update_attribute :status, nil
+    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
-    broadcaster "rooms/#{@room.slug}",
-            type: "action",
-            data: "clear-votes"
+    if user_room&.moderator?
+      UserStoryPoint.where(story_id: payload["story_id"]).delete_all
+      @room.update_attribute :status, nil
+
+      broadcaster "rooms/#{@room.slug}",
+              type: "action",
+              data: "clear-votes"
+    end
 
     head :ok
   end
