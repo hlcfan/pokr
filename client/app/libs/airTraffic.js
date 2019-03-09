@@ -51,12 +51,13 @@ export default {
 
     MessageBus.publish = function(action, payload) {
       console.log(`${action}:${payload}`)
-      fetch(`/rooms/${payload.roomId}/${action}`, {
+      fetch(`/rooms/${payload.roomId}/${action}.json`, {
         body: JSON.stringify(payload),
         method: "POST",
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': ReactOnRails.authenticityToken()
         },
       })
         .then(data => {
