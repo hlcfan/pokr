@@ -188,8 +188,13 @@ class Room < ApplicationRecord
   end
 
   def async_votes_hash current_user_id
-    UserStoryPoint.where(user_id: current_user_id, story_id: stories.pluck(:id)).inject({}) do |hash, user_story_point|
-      hash[user_story_point.story_id] = { point: user_story_point.points, comment: user_story_point.comment }
+    UserStoryPoint
+    .joins(:story)
+    .where("user_story_points.story_id = stories.id")
+    .where(user_id: current_user_id, story_id: stories.pluck(:id))
+    .pluck("stories.uid", "user_story_points.points", "user_story_points.comment")
+    .inject({}) do |hash, user_story_point|
+      hash[user_story_point[0]] = { point: user_story_point[1], comment: user_story_point[2] }
 
       hash
     end

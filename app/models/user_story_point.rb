@@ -14,13 +14,4 @@ class UserStoryPoint < ApplicationRecord
       yield user_point if block_given?
     end
   end
-
-  # def encoded_id
-  #   Base64.strict_encode64("#{id}").unpack("H*").first
-  # end
-
-  # def self.decoded_id string
-  #   Base64.strict_decode64 [string].pack("H*")
-  # end
-
 end
