@@ -592,7 +592,7 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       participant = User.create(email: "one-participant@pokrex.com", password: "password")
       UserRoom.create(user_id: participant.id, room_id: room.id)
-      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: { userId: participant.id }, type: "evictUser" })
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: { userId: participant.id.to_s }, type: "evictUser" })
       post :remove_person, params: { id: room.slug, data: { user_id: participant.id } }
       expect(UserRoom.where(user_id: participant.id, room_id: room.id)).to be_empty
     end

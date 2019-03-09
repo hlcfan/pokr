@@ -255,7 +255,7 @@ class RoomsController < ApplicationController
       UserRoom.where(user_id: payload["user_id"], room_id: @room.id).destroy_all
       broadcaster "rooms/#{@room.slug}",
                     type: "evictUser",
-                    data: { userId: payload["user_id"].to_s }
+                    data: { userId: payload["user_id"] }
     end
 
     head :ok
