@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_082606) do
+ActiveRecord::Schema.define(version: 2019_03_09_090308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -85,7 +85,9 @@ ActiveRecord::Schema.define(version: 2019_03_09_082606) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uid", null: false
     t.index ["slug"], name: "index_schemes_on_slug", unique: true
+    t.index ["uid"], name: "index_schemes_on_uid", unique: true
     t.index ["user_id"], name: "index_schemes_on_user_id"
   end
 
@@ -98,7 +100,9 @@ ActiveRecord::Schema.define(version: 2019_03_09_082606) do
     t.string "point"
     t.integer "sequence"
     t.datetime "discarded_at"
+    t.string "uid", null: false
     t.index ["discarded_at"], name: "index_stories_on_discarded_at"
+    t.index ["uid"], name: "index_stories_on_uid", unique: true
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -122,7 +126,9 @@ ActiveRecord::Schema.define(version: 2019_03_09_082606) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role"
+    t.string "uid", null: false
     t.index ["room_id"], name: "index_user_rooms_on_room_id"
+    t.index ["uid"], name: "index_user_rooms_on_uid", unique: true
     t.index ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true
   end
 
@@ -134,8 +140,10 @@ ActiveRecord::Schema.define(version: 2019_03_09_082606) do
     t.datetime "updated_at", null: false
     t.text "comment"
     t.boolean "finalized"
+    t.string "uid", null: false
     t.index ["finalized"], name: "index_user_story_points_on_finalized"
     t.index ["story_id"], name: "index_user_story_points_on_story_id"
+    t.index ["uid"], name: "index_user_story_points_on_uid", unique: true
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
 
@@ -160,7 +168,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_082606) do
     t.datetime "avatar_updated_at"
     t.string "image"
     t.datetime "premium_expiration"
-    t.string "uid"
+    t.string "uid", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
