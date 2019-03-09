@@ -480,7 +480,7 @@ RSpec.describe Room, type: :model do
       story = Story.create(link: "link_1", room_id: room.id)
       vote = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13", comment: "My comments")
 
-      expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
+      expect(room.async_votes_hash(user.id)).to eq({story.uid => { :point => "13", :comment => "My comments" }})
     end
   end
 
