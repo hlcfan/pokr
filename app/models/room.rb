@@ -75,7 +75,7 @@ class Room < ApplicationRecord
 
   def current_story_id
     @current_story_id ||= begin
-      if story_id = un_groomed_stories.pluck(:id).first
+      if story_id = un_groomed_stories.pluck(:id, :uid).first
         story_id
       end
     end
@@ -115,11 +115,11 @@ class Room < ApplicationRecord
 
   def user_list params={}
     user_story_points = (UserStoryPoint.joins(user: :user_rooms)
-      .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id)
+      .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id[0])
       .inject({}) do |h, user_story_point|
       h[user_story_point.user_id] = user_story_point.points
       h
-    end if current_story_id) || {}
+    end if current_story_id[0]) || {}
 
     room_users = User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
       .order("user_rooms.created_at")
@@ -127,7 +127,7 @@ class Room < ApplicationRecord
       .select("user_rooms.role as role")
       .inject([]) do |array, user|
       array.push({
-        id: user.id,
+        id: user.uid,
         name: user.display_name,
         display_role: display_role(user.role),
         avatar_thumb: user.letter_avatar,

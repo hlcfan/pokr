@@ -183,7 +183,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
-    user_story_point = UserStoryPoint.find UserStoryPoint.decoded_id(params[:voteId])
+    user_story_point = UserStoryPoint.find_by uid: params[:voteId]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
@@ -204,11 +204,7 @@ class RoomsController < ApplicationController
                       payload["points"]) do |user_story_point|
         broadcaster "rooms/#{@room.slug}",
                     type: "notify",
-                    person_id: user_story_point.user_id
-
-                    # story_id: user_story_point.story_id,
-                    # points: user_story_point.points,
-                    # sync: @room.state == "open"
+                    person_id: current_user.uid
       end
     end
 
@@ -230,7 +226,7 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room&.moderator? && @room.valid_vote_point?(payload["point"])
-      story = Story.find_by id: payload["story_id"], room_id: @room.id
+      story = Story.find_by uid: payload["story_id"], room_id: @room.id
       if story
         story_point = @room.free_style? ? nil : payload["point"]
         story.update_attribute :point, story_point
@@ -271,7 +267,7 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room&.moderator?
-      story = Story.find_by id: payload["story_id"], room_id: @room.id
+      story = Story.find_by uid: payload["story_id"], room_id: @room.id
       if story
         story.update_attribute :point, nil
         @room.update_attribute :status, nil
