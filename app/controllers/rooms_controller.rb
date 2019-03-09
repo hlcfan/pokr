@@ -211,6 +211,8 @@ class RoomsController < ApplicationController
                     # sync: @room.state == "open"
       end
     end
+
+    head :ok
   end
 
   def action
@@ -220,6 +222,8 @@ class RoomsController < ApplicationController
     end
 
     broadcaster "rooms/#{@room.slug}", { :data => params[:data], :type => params[:type] }
+
+    head :ok
   end
 
   def set_story_point
@@ -240,6 +244,8 @@ class RoomsController < ApplicationController
                     data: "next-story"
       end
     end
+
+    head :ok
   end
 
   def remove_person
@@ -252,10 +258,13 @@ class RoomsController < ApplicationController
                     type: "evictUser",
                     data: { userId: payload["user_id"] }
     end
+
+    head :ok
   end
 
   def timing
     @room.update_duration params["duration"].to_f
+    head :ok
   end
 
   def revote
@@ -272,6 +281,8 @@ class RoomsController < ApplicationController
                     data: "revote"
       end
     end
+
+    head :ok
   end
 
   def clear_votes
@@ -282,6 +293,8 @@ class RoomsController < ApplicationController
     broadcaster "rooms/#{@room.slug}",
             type: "action",
             data: "clear-votes"
+
+    head :ok
   end
 
   private
