@@ -6,3 +6,5 @@
 #= require libs/js.cookie
 #= require libs/Sortable.min
 #= require libs/typeahead.bundle.min
+#= require libs/promise-polyfill.min
+#= require libs/fetch.umd
