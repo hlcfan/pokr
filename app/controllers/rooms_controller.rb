@@ -286,7 +286,8 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room&.moderator?
-      UserStoryPoint.where(story_id: payload["story_id"]).delete_all
+      story = Story.find_by uid: payload["story_id"]
+      UserStoryPoint.where(story_id: story.id).delete_all
       @room.update_attribute :status, nil
 
       broadcaster "rooms/#{@room.slug}",
