@@ -248,7 +248,8 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_room&.moderator?
-      UserRoom.where(user_id: payload["user_id"], room_id: @room.id).destroy_all
+      participant = User.find_by(uid: payload["user_id"])
+      UserRoom.where(user_id: participant.id, room_id: @room.id).destroy_all
       broadcaster "rooms/#{@room.slug}",
                     type: "evictUser",
                     data: { userId: payload["user_id"] }
@@ -352,7 +353,7 @@ class RoomsController < ApplicationController
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
       broadcaster "rooms/#{@room.slug}",
-        user_id: current_user.id,
+        user_id: current_user.uid,
         data: 'refresh-users',
         type: 'action'
     end

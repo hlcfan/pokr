@@ -1,5 +1,7 @@
 class UserStoryPoint < ApplicationRecord
 
+  include UidGeneration
+
   belongs_to :user
   belongs_to :story
 
