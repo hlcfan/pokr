@@ -296,7 +296,7 @@ RSpec.describe RoomsController, type: :controller do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
       expect(assigns(:users)).to eq [{
-        id: user.id,
+        id: user.uid,
         name: user.display_name,
         display_role: user_room.display_role,
         avatar_thumb: user.letter_avatar,
@@ -484,7 +484,7 @@ RSpec.describe RoomsController, type: :controller do
     it "saves votes and redirect to room page if valid votes" do
       room = Room.create! valid_attributes
       story_1 = Story.create(room_id: room.id, link: "story title")
-      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.id, point: "13" }}}
+      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.uid, point: "13" }}}
       expect(response).to redirect_to room_path(room.slug)
     end
   end
@@ -518,7 +518,7 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: 999, room_id: room.id, role: UserRoom::MODERATOR)
       story= Story.create(room_id: room.id, link: "story title")
       user_story_point = UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
-      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.encoded_id }
+      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.uid }
 
       expect(story.reload.point).to eq("13")
       expect(response.status).to eq 200
@@ -529,7 +529,7 @@ RSpec.describe RoomsController, type: :controller do
     let(:story) { Story.create(room_id: room.id, link: "story title") }
 
     it "notifies if participant votes if valid vote" do
-      post :vote, :params => { :id => room.slug, :data => { :story_id => story.id, :points => "13" } }
+      post :vote, :params => { :id => room.slug, :data => { :story_id => story.uid, :points => "13" } }
       expect(UserStoryPoint.find_by(user_id: controller.current_user.id, story_id: story.id).points).to eq("13")
     end
 
@@ -560,13 +560,13 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
 
       expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
-      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.id } }
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
       expect((story.reload).point).to eq("13")
     end
 
     it "does nothing if no moderator" do
       expect(MessageBus).not_to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
-      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.id } }
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
     end
 
     it "does nothing if invalid votes" do
@@ -580,7 +580,7 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
 
       expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
-      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.id } }
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
       expect((story.reload).point).to be_nil
       all_votes = UserStoryPoint.where(story_id: story.id)
       expect(all_votes).to be_empty
@@ -592,8 +592,8 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       participant = User.create(email: "one-participant@pokrex.com", password: "password")
       UserRoom.create(user_id: participant.id, room_id: room.id)
-      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: { userId: participant.id.to_s }, type: "evictUser" })
-      post :remove_person, params: { id: room.slug, data: { user_id: participant.id } }
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: { userId: participant.uid }, type: "evictUser" })
+      post :remove_person, params: { id: room.slug, data: { user_id: participant.uid } }
       expect(UserRoom.where(user_id: participant.id, room_id: room.id)).to be_empty
     end
 
@@ -616,7 +616,7 @@ RSpec.describe RoomsController, type: :controller do
     it "resets the ticket if moderator" do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "revote", type: "action" })
-      post :revote, params: { id: room.slug, data: { story_id: story.id } }
+      post :revote, params: { id: room.slug, data: { story_id: story.uid } }
       expect(story.reload.point).to be_nil
       expect(room.reload.status).to be_nil
     end

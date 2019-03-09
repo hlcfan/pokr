@@ -77,7 +77,7 @@ class Room < ApplicationRecord
     @current_story_id ||= begin
       if story_id = un_groomed_stories.pluck(:id, :uid).first
         story_id
-      end
+      end || []
     end
   end
 
@@ -227,7 +227,7 @@ class Room < ApplicationRecord
         user_point:                 user_story_point.points,
         user_name:                  users_hash[user_story_point.user_id][:name],
         user_avatar:                users_hash[user_story_point.user_id][:avatar],
-        user_story_point_id:        user_story_point.encoded_id,
+        user_story_point_id:        user_story_point.uid,
         user_story_point_finalized: user_story_point.finalized,
         user_story_point_comment: user_story_point.comment
       }
