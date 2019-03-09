@@ -123,7 +123,7 @@ class Room < ApplicationRecord
 
     room_users = User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
       .order("user_rooms.created_at")
-      .select(:id, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
+      .select(:id, :uid, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
       .select("user_rooms.role as role")
       .inject([]) do |array, user|
       array.push({
