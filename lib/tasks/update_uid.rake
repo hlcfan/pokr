@@ -25,5 +25,10 @@ task generate_uid: :environment do
     puts "Scheme #{scheme.id} updated."
   end
 
+  Room.where(uid: nil).find_each do |room|
+    room.update_attribute :uid, SecureRandom.rand(36**8).to_s(36)
+    puts "Room #{room.slug} updated."
+  end
+
   puts "Done."
 end

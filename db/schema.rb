@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_090308) do
+ActiveRecord::Schema.define(version: 2019_03_09_143241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -72,10 +72,12 @@ ActiveRecord::Schema.define(version: 2019_03_09_090308) do
     t.float "duration"
     t.string "scheme"
     t.datetime "discarded_at"
+    t.string "uid", null: false
     t.index ["created_by"], name: "index_rooms_on_created_by"
     t.index ["discarded_at"], name: "index_rooms_on_discarded_at"
     t.index ["name"], name: "index_rooms_on_name"
     t.index ["slug"], name: "index_rooms_on_slug", unique: true
+    t.index ["uid"], name: "index_rooms_on_uid", unique: true
   end
 
   create_table "schemes", force: :cascade do |t|
