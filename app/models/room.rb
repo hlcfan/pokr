@@ -2,6 +2,7 @@
 
 class Room < ApplicationRecord
 
+  include UidGeneration
   include PgSearch
   multisearchable :against => [:name], :unless => :discarded_at?
 
