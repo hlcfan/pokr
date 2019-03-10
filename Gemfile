@@ -53,7 +53,6 @@ gem 'pg_search'
 gem 'rubyzip', '~> 1.2.1'
 gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
-gem 'paypal-sdk-rest'
 gem 'message_bus'
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }
