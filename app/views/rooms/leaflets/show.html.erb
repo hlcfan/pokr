@@ -18,14 +18,14 @@
         <div class="panel-body">
           <ul class="list-group">
             <% @room.stories.each.with_index do |story, index| %>
-              <% current_vote = user_story_points[story.id]&.[](:point) %>
-              <% current_comment = user_story_points[story.id]&.[](:comment)%>
+              <% current_vote = user_story_points[story.uid]&.[](:point) %>
+              <% current_comment = user_story_points[story.uid]&.[](:comment)%>
               <li class="list-group-item">
-                <input type="hidden" class="leaflet__vote-story-id" name="votes[<%= index %>][story_id]" value="<%= story.id %>" />
+                <input type="hidden" class="leaflet__vote-story-id" name="votes[<%= index %>][story_id]" value="<%= story.uid %>" />
                 <input type="hidden" class="leaflet__vote-point" name="votes[<%= index %>][point]" value="<%= current_vote %>" />
                 <h4><%= link_to story.link, show_story_link(story.link), target: "_blank" %></h4>
                 <p><%= story.desc %></p>
-                <ul class="<%= scheme_type.parameterize %> list-inline point-values" data-ticket-id="<%= story.id %>">
+                <ul class="<%= scheme_type.parameterize %> list-inline point-values" data-ticket-id="<%= story.uid %>">
                   <%= render_leaflet_option(current_vote, @room.point_values) %>
                 </ul>
                 <div class="form-group">

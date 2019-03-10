@@ -2,8 +2,9 @@
 #= require jquery_ujs
 #= require libs/bootstrap-tagsinput.min
 #= require libs/bootstrap.min
-#= require libs/error-reporter
 #= require libs/jquery.readyselector
 #= require libs/js.cookie
 #= require libs/Sortable.min
 #= require libs/typeahead.bundle.min
+#= require libs/promise-polyfill.min
+#= require libs/fetch.umd

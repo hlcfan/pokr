@@ -36,7 +36,7 @@ export default class ActionBox extends React.Component {
     this.setState(newState)
 
     if (this.props.role === 'Moderator' && this.state.roomState !== 'open') {
-      App.rooms.perform('action', {
+      MessageBus.publish("action", {
         roomId: this.props.roomId,
         data: 'open',
         type: 'action'
@@ -46,7 +46,7 @@ export default class ActionBox extends React.Component {
 
   skipStory = () => {
     if (this.props.role === 'Moderator') {
-      App.rooms.perform('set_story_point', {
+      MessageBus.publish("set_story_point", {
         roomId: this.props.roomId,
         data: { point: 'null', story_id: this.props.storyId }
       })
@@ -55,7 +55,7 @@ export default class ActionBox extends React.Component {
 
   clearVotes = () => {
     if (this.props.role === 'Moderator') {
-      App.rooms.perform('clear_votes', {
+      MessageBus.publish("clear_votes", {
         roomId: this.props.roomId,
         data: { story_id: this.props.storyId }
       })
