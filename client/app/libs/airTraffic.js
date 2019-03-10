@@ -1,7 +1,6 @@
 import EventEmitter from 'libs/eventEmitter'
 import BarColors from 'libs/barColors'
 import RoomActions from 'libs/roomActions'
-import ActionCable from 'actioncable'
 
 window.App = {}
 

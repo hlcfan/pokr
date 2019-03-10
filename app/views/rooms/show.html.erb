@@ -16,8 +16,7 @@
 <input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
 <input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
-<%= action_cable_meta_tag %>
-<%# binding.pry %>
+
 <%= react_component(component_name,
   props: {roomId: @room.slug,
           roomName: @room.name,

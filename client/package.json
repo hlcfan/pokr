@@ -19,7 +19,6 @@
     "client/node_modules"
   ],
   "dependencies": {
-    "actioncable": "^5.1.4",
     "js-yaml": "^3.8.2",
     "node-sass": "^4.9.0",
     "qrcode.react": "^0.7.2",
