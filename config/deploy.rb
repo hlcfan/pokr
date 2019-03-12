@@ -91,7 +91,6 @@ task :deploy => :environment do
       invoke :'sidekiq:restart'
       invoke :'god:stop'
       invoke :'god:start'
-      invoke :'signal_apm'
     end
   end
 end
@@ -101,13 +100,6 @@ task :seed => :environment do
   command "cd #{fetch(:current_path)}/"
   command "bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   command  %[echo "-----> Rake Seeding Completed."]
-end
-
-desc "Signal APM"
-task :signal_apm => :environment do
-  command "cd #{fetch(:current_path)}/"
-  command "bundle exec appsignal notify_of_deploy -h"
-  command  %[echo "-----> Signal APM."]
 end
 
 namespace :whenever do
