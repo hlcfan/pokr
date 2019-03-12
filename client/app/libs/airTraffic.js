@@ -11,7 +11,7 @@ export default {
     MessageBus.callbackInterval = 500
 
     MessageBus.subscribe(`rooms/${roomId}`, function(data){
-      // console.dir(data)
+      console.dir(data)
       if (data.type === 'action') {
         if (data.data === 'open') {
           RoomActions.showResultSection()
@@ -50,7 +50,7 @@ export default {
     })
 
     MessageBus.publish = function(action, payload) {
-      // console.log(`${action}:${payload}`)
+      console.log(`${action}:${payload}`)
       fetch(`/rooms/${payload.roomId}/${action}.json`, {
         body: JSON.stringify(payload),
         method: "POST",
@@ -60,6 +60,9 @@ export default {
           'X-CSRF-Token': ReactOnRails.authenticityToken()
         },
       })
+        .then(data => {
+          console.log(data)
+        })
         .catch(error => {
           console.error(error)
         })
