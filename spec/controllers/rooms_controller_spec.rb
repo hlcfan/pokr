@@ -534,7 +534,7 @@ RSpec.describe RoomsController, type: :controller do
     end
 
     it "doesnt notify anyoen if invalid vote" do
-      post :vote, :params => { :id => room.slug, :data => { :story_id => story.uid, :points => "14" } }
+      post :vote, :params => { :id => room.slug, :data => { :story_id => story.id, :points => "14" } }
       expect(UserStoryPoint.find_by(user_id: controller.current_user.id, story_id: story.id)).to be_nil
     end
   end
@@ -572,7 +572,7 @@ RSpec.describe RoomsController, type: :controller do
     it "does nothing if invalid votes" do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       expect(MessageBus).not_to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
-      post :set_story_point, params: { id: room.slug, data: { point: "14", story_id: story.uid } }
+      post :set_story_point, params: { id: room.slug, data: { point: "14", story_id: story.id } }
     end
 
     it "sets current story point to nil and clear votes if free style room" do
@@ -623,7 +623,7 @@ RSpec.describe RoomsController, type: :controller do
 
     it "does nothing if no moderator" do
       expect(MessageBus).not_to receive(:publish)
-      post :revote, params: { id: room.slug, data: { story_id: story.uid } }
+      post :revote, params: { id: room.slug, data: { story_id: story.id } }
     end
   end
 
@@ -634,13 +634,13 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
       expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "clear-votes", type: "action" })
-      post :clear_votes, params: { id: room.slug, data: { story_id: story.uid } }
+      post :clear_votes, params: { id: room.slug, data: { story_id: story.id } }
       expect(UserStoryPoint.where(story_id: story.id)).to be_empty
     end
 
     it "does nothing if no moderator" do
       expect(MessageBus).not_to receive(:publish)
-      post :clear_votes, params: { id: room.slug, data: { story_id: story.uid } }
+      post :clear_votes, params: { id: room.slug, data: { story_id: story.id } }
     end
   end
 end
