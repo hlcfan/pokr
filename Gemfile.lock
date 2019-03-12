@@ -58,8 +58,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    appsignal (2.8.4)
-      rack
     arel (9.0.0)
     axlsx (3.0.0.pre)
       htmlentities (~> 4.3, >= 4.3.4)
@@ -358,7 +356,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appsignal
   awesome_nested_fields!
   axlsx (= 3.0.0.pre)
   axlsx_rails
