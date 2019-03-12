@@ -67,7 +67,7 @@ RSpec.describe Room, type: :model do
 
     it "returns first un groomed story's id" do
       room.id = 1
-      expect(room.current_story_id).to eq [story_1.id, story_1.uid]
+      expect(room.current_story_id).to eq story_1.id
     end
   end
 
@@ -244,7 +244,7 @@ RSpec.describe Room, type: :model do
         UserStoryPoint.create(user_id: user1.id, story_id: story.id, points: 10)
         UserStoryPoint.create(user_id: user2.id, story_id: story.id, points: 13)
 
-        expect(room.user_list.map{|u|u[:id]}).to eq([user2.uid, user1.uid])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
         expect(room.user_list.map{|u|u[:voted]}).to eq([true, true])
       end
 
@@ -255,7 +255,7 @@ RSpec.describe Room, type: :model do
         UserRoom.create(user_id: user2.id, room_id: room.id, role: 0)
         UserRoom.create(user_id: user1.id, room_id: room.id, role: 2)
 
-        expect(room.user_list.map{|u|u[:id]}).to eq([user2.uid, user1.uid])
+        expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id])
         expect(room.user_list.map{|u|u[:voted]}).to eq([false, false])
       end
     end
@@ -270,7 +270,7 @@ RSpec.describe Room, type: :model do
       sleep 0.1
       UserRoom.create(user_id: user1.id, room_id: room.id, role: 1)
 
-      expect(room.user_list.map{|u|u[:id]}).to eq([user2.uid, user1.uid, watcher.uid])
+      expect(room.user_list.map{|u|u[:id]}).to eq([user2.id, user1.id, watcher.id])
     end
   end
 
@@ -340,7 +340,7 @@ RSpec.describe Room, type: :model do
             user_point: "13",
             user_name: user_alex.display_name,
             user_avatar: user_alex.letter_avatar,
-            user_story_point_id: vote_alex.uid,
+            user_story_point_id: vote_alex.encoded_id,
             user_story_point_finalized: nil,
             user_story_point_comment: nil
           },
@@ -349,7 +349,7 @@ RSpec.describe Room, type: :model do
             user_point: "8",
             user_name: user_bob.display_name,
             user_avatar: user_bob.letter_avatar,
-            user_story_point_id: vote_bob.uid,
+            user_story_point_id: vote_bob.encoded_id,
             user_story_point_finalized: nil,
             user_story_point_comment: nil
           }
@@ -385,7 +385,7 @@ RSpec.describe Room, type: :model do
                 :user_point                 => "13",
                 :user_name                  => user_alex.display_name,
                 :user_avatar                => user_alex.letter_avatar,
-                :user_story_point_id        => vote_alex.uid,
+                :user_story_point_id        => vote_alex.encoded_id,
                 :user_story_point_finalized => nil,
                 :user_story_point_comment   => nil
               },
@@ -394,7 +394,7 @@ RSpec.describe Room, type: :model do
                 :user_point                 => "8",
                 :user_name                  => user_bob.display_name,
                 :user_avatar                => user_bob.letter_avatar,
-                :user_story_point_id        => vote_bob.uid,
+                :user_story_point_id        => vote_bob.encoded_id,
                 :user_story_point_finalized => nil,
                 :user_story_point_comment   => nil
               }
@@ -480,7 +480,7 @@ RSpec.describe Room, type: :model do
       story = Story.create(link: "link_1", room_id: room.id)
       vote = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13", comment: "My comments")
 
-      expect(room.async_votes_hash(user.id)).to eq({story.uid => { :point => "13", :comment => "My comments" }})
+      expect(room.async_votes_hash(user.id)).to eq({story.id => { :point => "13", :comment => "My comments" }})
     end
   end
 

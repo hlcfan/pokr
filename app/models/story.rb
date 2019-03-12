@@ -1,8 +1,6 @@
 class Story < ApplicationRecord
 
   include PgSearch
-  include UidGeneration
-
   multisearchable :against => [:wrecked_link, :desc], :if => :point?
 
   validates_presence_of :link

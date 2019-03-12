@@ -9,5 +9,5 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(
-  room_init.js 404.css home.js libs/joyride.css dashboard.js message-bus.js
+  room_init.js 404.css home.js libs/joyride.css dashboard.js
 )
