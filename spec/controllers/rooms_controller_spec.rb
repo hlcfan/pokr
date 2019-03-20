@@ -90,12 +90,12 @@ RSpec.describe RoomsController, type: :controller do
       expect(response.header["Content-Disposition"]).to eq("attachment; filename=async-room.xlsx")
     end
 
-    context "if room is up to 10 participants for non premium moderator" do
+    context "if room is up to 7 participants for non premium moderator" do
       it "redirects back to dashboard page if signed in" do
         moderator = User.find_by email: "a@a.com"
         room = Room.create! valid_attributes.merge(created_by: moderator.id)
         user = nil
-        1.upto(10).each do
+        1.upto(7).each do
           begin
             user = User.create(email: "a-#{SecureRandom.rand(50)}@pokrex.com", password: "password")
             UserRoom.create(user_id: user.id, room_id: room.id)
@@ -107,7 +107,7 @@ RSpec.describe RoomsController, type: :controller do
         get :show, params: {:id => room.slug}, session: valid_session
 
         expect(response).to redirect_to dashboard_index_path
-        expect(flash[:error]).to eq("Non-premium moderator can only create room with 10 participants at most, please tell your moderator to be our premium member.")
+        expect(flash[:error]).to eq("Non-premium moderator can only create room with 7 participants at most, please tell your moderator to be our premium member.")
 
         allow(controller.current_user).to receive(:id) { user.id }
         get :show, params: {:id => room.slug}, session: valid_session
