@@ -51,13 +51,13 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let wsSupported
+let wsSupported = true
 const Messenger = {
   connect: (roomId) => {
     if (window.WebSocket) {
       try {
         var websocket = new WebSocket( "wss://echo.websocket.org" )
-        sleep(300).then(() => {
+        sleep(200).then(() => {
           if (websocket.readyState === 3) {
             wsSupported = false
           } else {
@@ -71,13 +71,15 @@ const Messenger = {
       wsSupported = false
     }
 
-    if (wsSupported) {
-      console.log("WebSocket supported!")
-      WsAdapter.connect(roomId)
-    } else {
-      console.log("WebSocket not supported, switching to polling.")
-      PollingAdapter.connect(roomId)
-    }
+    sleep(200).then(() => {
+      if (wsSupported) {
+        console.log("WebSocket supported!")
+        WsAdapter.connect(roomId)
+      } else {
+        console.log("WebSocket not supported, switching to polling.")
+        PollingAdapter.connect(roomId)
+      }
+    })
   },
   publish: (action, payload) => {
     if (wsSupported) {
