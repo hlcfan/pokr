@@ -48,6 +48,35 @@ const PollingAdapter = {
   }
 }
 
+let wsSupported
+const Messenger = {
+  connect: (roomId) => {
+    if (window.WebSocket) {
+      try {
+        var websocket = new WebSocket( "wss://echo.websocket.org" )
+        wsSupported = true
+      } catch ( e ) {
+        wsSupported = false
+      }
+    } else {
+      wsSupported = false
+    }
+
+    if (wsSupported) {
+      WsAdapter.connect(roomId)
+    } else {
+      PollingAdapter.connect(roomId)
+    }
+    console.log("WS supported!")
+  },
+  publish: (action, payload) => {
+    if (wsSupported) {
+      WsAdapter.publish(action, payload)
+    } else {
+      PollingAdapter.publish(action, payload)
+    }
+  }
+}
 function handleMessage(data) {
   console.dir(data)
   if (data.type === 'action') {
@@ -87,7 +116,4 @@ function handleMessage(data) {
   }
 }
 
-module.exports = {
-  WsAdapter: WsAdapter,
-  PollingAdapter: PollingAdapter
-}
+export default Messenger
