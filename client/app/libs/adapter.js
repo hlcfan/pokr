@@ -77,6 +77,7 @@ const Messenger = {
     }
   }
 }
+
 function handleMessage(data) {
   console.dir(data)
   if (data.type === 'action') {
@@ -116,4 +117,6 @@ function handleMessage(data) {
   }
 }
 
-export default Messenger
+module.exports = {
+  Messenger: Messenger
+}

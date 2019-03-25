@@ -1,7 +1,8 @@
-import Messenger from 'libs/adapter'
+import { Messenger } from 'libs/adapter'
 
 export default {
   setupChannelSubscription(roomId) {
-    Messenger.connect(roomId)
+    window.Messenger = Messenger
+    window.Messenger.connect(roomId)
   }
 }
