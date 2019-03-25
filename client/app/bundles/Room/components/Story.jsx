@@ -6,7 +6,7 @@ export default class Story extends React.Component {
   revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
     if (this.props.role === 'Moderator') {
-      App.rooms.perform('revote', {
+      Messenger.publish('revote', {
         roomId: this.props.roomId,
         data: { story_id: revoteStoryId }
       });
