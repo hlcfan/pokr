@@ -197,10 +197,9 @@ class RoomsController < ApplicationController
   end
 
   [:action, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes].each do |method_name|
-    define_method method_name do |data|
+    define_method method_name do
       set_room
-      message = RoomCommunication.send(method_name, @room, current_user, data)
-      # binding.pry
+      message = RoomCommunication.send(method_name, @room, current_user, params)
       broadcast "rooms/#{@room.slug}", message
 
       head :ok
@@ -273,7 +272,7 @@ class RoomsController < ApplicationController
   end
 
   def broadcast channel, *message
-    ActionCable.server.broadcast channel, *message
+    MessageBus.publish channel, *message
   end
 
   def guest_check

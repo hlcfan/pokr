@@ -2,14 +2,13 @@ import EventEmitter from 'libs/eventEmitter'
 import RoomActions from 'libs/roomActions'
 import ActionCable from 'actioncable'
 
-window.App = {}
+let App = {}
 const WsAdapter = {
   connect: (roomId) => {
     App.cable = ActionCable.createConsumer()
 
     App.rooms = App.cable.subscriptions.create({channel: 'RoomsChannel', room: roomId}, {
       connected: () => {
-        console.log("connected")
       },
       received: (data) => {
         handleMessage(data)
@@ -25,13 +24,12 @@ const PollingAdapter = {
   connect: (roomId) => {
     MessageBus.start()
     MessageBus.callbackInterval = 500
-    console.log("connected")
     MessageBus.subscribe(`rooms/${roomId}`, function(data){
       handleMessage(data)
     })
   },
   publish: (action, payload) => {
-    console.log(`Polling call: ${action}:${payload}`)
+    // console.dir(`Polling call: ${action}:${payload}`)
     $.ajax({
       url: `/rooms/${payload.roomId}/${action}.json`,
       method: 'POST',
@@ -48,13 +46,24 @@ const PollingAdapter = {
   }
 }
 
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 let wsSupported
 const Messenger = {
   connect: (roomId) => {
     if (window.WebSocket) {
       try {
         var websocket = new WebSocket( "wss://echo.websocket.org" )
-        wsSupported = true
+        sleep(300).then(() => {
+          if (websocket.readyState === 3) {
+            wsSupported = false
+          } else {
+            wsSupported = true
+          }
+        })
       } catch ( e ) {
         wsSupported = false
       }
@@ -63,11 +72,12 @@ const Messenger = {
     }
 
     if (wsSupported) {
+      console.log("WebSocket supported!")
       WsAdapter.connect(roomId)
     } else {
+      console.log("WebSocket not supported, switching to polling.")
       PollingAdapter.connect(roomId)
     }
-    console.log("WS supported!")
   },
   publish: (action, payload) => {
     if (wsSupported) {
@@ -79,7 +89,7 @@ const Messenger = {
 }
 
 function handleMessage(data) {
-  console.dir(data)
+  // console.dir(data)
   if (data.type === 'action') {
     if (data.data === 'open') {
       RoomActions.showResultSection()
