@@ -1,7 +1,6 @@
 module RoomCommunication
 
   def self.vote room, current_user, params
-    # binding.pry
     payload = params["data"]
     if valid_vote? room, payload
       UserStoryPoint.vote(current_user.id,
@@ -43,14 +42,14 @@ module RoomCommunication
     end
   end
 
-  def self.remove_person params
+  def self.remove_person room, current_user, params
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: room.id)
 
     if user_room&.moderator?
       participant = User.find_by(uid: payload["user_id"])
       UserRoom.where(user_id: participant.id, room_id: room.id).destroy_all
-      
+
       return {
         type: "evictUser",
         data: { userId: payload["user_id"] }
@@ -72,7 +71,7 @@ module RoomCommunication
       if story
         story.update_attribute :point, nil
         room.update_attribute :status, nil
-        
+
         return {
           type: "action",
           data: "revote"

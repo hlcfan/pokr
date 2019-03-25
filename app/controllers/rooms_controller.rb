@@ -183,7 +183,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
-    user_story_point = UserStoryPoint.find UserStoryPoint.decoded_id(params[:voteId])
+    user_story_point = UserStoryPoint.find_by(uid: params[:voteId])
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
@@ -200,7 +200,7 @@ class RoomsController < ApplicationController
     define_method method_name do
       set_room
       message = RoomCommunication.send(method_name, @room, current_user, params)
-      broadcast "rooms/#{@room.slug}", message
+      broadcast( "rooms/#{@room.slug}", message ) if message.present?
 
       head :ok
     end
