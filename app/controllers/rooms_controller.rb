@@ -169,7 +169,7 @@ class RoomsController < ApplicationController
     head(:bad_request) and return if params[:votes].blank? || @room.closed?
 
     params[:votes].values.each do |vote|
-      next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
+      next unless @room.stories.pluck(:uid).include?(vote[:story_id])
       UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
     end
     redirect_to room_path(@room.slug), flash: { success: "Thanks for your votes, moderator will see your votes!" }

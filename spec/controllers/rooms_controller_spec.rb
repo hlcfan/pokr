@@ -485,6 +485,7 @@ RSpec.describe RoomsController, type: :controller do
       room = Room.create! valid_attributes
       story_1 = Story.create(room_id: room.id, link: "story title")
       post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.uid, point: "13" }}}
+      expect(UserStoryPoint.find_by(story_id: story_1.id).points).to eq("13")
       expect(response).to redirect_to room_path(room.slug)
     end
   end
