@@ -635,7 +635,7 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
       UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
       expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "clear-votes", type: "action" })
-      post :clear_votes, params: { id: room.slug, data: { story_id: story.id } }
+      post :clear_votes, params: { id: room.slug, data: { story_id: story.uid } }
       expect(UserStoryPoint.where(story_id: story.id)).to be_empty
     end
 
