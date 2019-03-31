@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.float "duration"
     t.string "scheme"
     t.datetime "discarded_at"
-    t.string "uid", null: false
+    t.string "uid"
     t.index ["created_by"], name: "index_rooms_on_created_by"
     t.index ["discarded_at"], name: "index_rooms_on_discarded_at"
     t.index ["name"], name: "index_rooms_on_name"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uid", null: false
+    t.string "uid"
     t.index ["slug"], name: "index_schemes_on_slug", unique: true
     t.index ["uid"], name: "index_schemes_on_uid", unique: true
     t.index ["user_id"], name: "index_schemes_on_user_id"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.string "point"
     t.integer "sequence"
     t.datetime "discarded_at"
-    t.string "uid", null: false
+    t.string "uid"
     t.index ["discarded_at"], name: "index_stories_on_discarded_at"
     t.index ["uid"], name: "index_stories_on_uid", unique: true
   end
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role"
-    t.string "uid", null: false
+    t.string "uid"
     t.index ["room_id"], name: "index_user_rooms_on_room_id"
     t.index ["uid"], name: "index_user_rooms_on_uid", unique: true
     t.index ["user_id", "room_id"], name: "index_user_rooms_on_user_id_and_room_id", unique: true
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.datetime "updated_at", null: false
     t.text "comment"
     t.boolean "finalized"
-    t.string "uid", null: false
+    t.string "uid"
     t.index ["finalized"], name: "index_user_story_points_on_finalized"
     t.index ["story_id"], name: "index_user_story_points_on_story_id"
     t.index ["uid"], name: "index_user_story_points_on_uid", unique: true

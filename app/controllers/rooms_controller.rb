@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
 
   before_action :guest_check, only: [:show, :leaflet_view]
   before_action :authenticate_user!, except: [:screen]
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point, :vote, :action, :set_story_point, :remove_person, :timing, :revote, :clear_votes]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :story_list, :user_list, :set_room_status, :draw_board, :switch_role, :summary, :invite, :sync_status, :leaflet_submit, :leaflet_view, :leaflet_finalize_point]
   before_action :enter_room, only: [:show]
   protect_from_forgery except: :sync_status, unless: -> { request.format.json? }
 
@@ -82,7 +82,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if repo.update_entity @room, room_params
         remove_memorization_of_moderators
-        broadcaster "rooms/#{@room.slug}",
+        broadcast "rooms/#{@room.slug}",
           user_id: current_user.id,
           data: 'next-story',
           type: 'action'
@@ -124,7 +124,7 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
     if user_room && !user_room.moderator? && user_room.role != role
       user_room.update(role: role)
-      broadcaster "rooms/#{@room.slug}",
+      broadcast "rooms/#{@room.slug}",
         user_id: current_user.id,
         data: 'switch-roles',
         type: 'action'
@@ -158,7 +158,7 @@ class RoomsController < ApplicationController
   end
 
   def sync_status
-    broadcaster "rooms/#{@room.slug}",
+    broadcast "rooms/#{@room.slug}",
       type: 'sync',
       data: {link: params[:link], point: params[:point]}
 
@@ -183,7 +183,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
-    user_story_point = UserStoryPoint.find_by uid: params[:voteId]
+    user_story_point = UserStoryPoint.find_by(uid: params[:voteId])
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
@@ -196,113 +196,17 @@ class RoomsController < ApplicationController
     end
   end
 
-  def vote
-    payload = params["data"]
-    if valid_vote? payload
-      UserStoryPoint.vote(current_user.id,
-                      payload["story_id"],
-                      payload["points"]) do |user_story_point|
-        broadcaster "rooms/#{@room.slug}",
-                    type: "notify",
-                    person_id: current_user.uid
-      end
+  [:action, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes].each do |method_name|
+    define_method method_name do
+      set_room
+      message = RoomCommunication.send(method_name, @room, current_user, params)
+      broadcast( "rooms/#{@room.slug}", message ) if message.present?
+
+      head :ok
     end
-
-    head :ok
-  end
-
-  def action
-    if params["data"] == "open"
-      @room.update_attribute(:status, Room::OPEN) if @room
-    end
-
-    broadcaster "rooms/#{@room.slug}", { :data => params[:data], :type => params[:type] }
-
-    head :ok
-  end
-
-  def set_story_point
-    payload = params["data"]
-    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
-    if user_room&.moderator? && @room.valid_vote_point?(payload["point"])
-      story = Story.find_by uid: payload["story_id"], room_id: @room.id
-      if story
-        story_point = @room.free_style? ? nil : payload["point"]
-        story.update_attribute :point, story_point
-        if @room.free_style?
-          UserStoryPoint.where(story_id: story.id).destroy_all
-        end
-        @room.update_attribute :status, nil
-        broadcaster "rooms/#{@room.slug}",
-                    type: "action",
-                    data: "next-story"
-      end
-    end
-
-    head :ok
-  end
-
-  def remove_person
-    payload = params["data"]
-    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
-    if user_room&.moderator?
-      participant = User.find_by(uid: payload["user_id"])
-      UserRoom.where(user_id: participant.id, room_id: @room.id).destroy_all
-      broadcaster "rooms/#{@room.slug}",
-                    type: "evictUser",
-                    data: { userId: payload["user_id"] }
-    end
-
-    head :ok
-  end
-
-  def timing
-    @room.update_duration params["duration"].to_f
-    head :ok
-  end
-
-  def revote
-    payload = params["data"]
-    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
-    if user_room&.moderator?
-      story = Story.find_by uid: payload["story_id"], room_id: @room.id
-      if story
-        story.update_attribute :point, nil
-        @room.update_attribute :status, nil
-        broadcaster "rooms/#{@room.slug}",
-                    type: "action",
-                    data: "revote"
-      end
-    end
-
-    head :ok
-  end
-
-  def clear_votes
-    payload = params["data"]
-    user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
-
-    if user_room&.moderator?
-      story = Story.find_by uid: payload["story_id"]
-      UserStoryPoint.where(story_id: story.id).delete_all
-      @room.update_attribute :status, nil
-
-      broadcaster "rooms/#{@room.slug}",
-              type: "action",
-              data: "clear-votes"
-    end
-
-    head :ok
   end
 
   private
-
-  def valid_vote? payload
-    @room.valid_vote_point?(payload["points"].to_s) && payload["story_id"].present?
-  end
 
   def html_request?
     request.format != "xlsx"
@@ -349,11 +253,11 @@ class RoomsController < ApplicationController
   def enter_room
     redirection_path = signed_in? ? dashboard_index_path : screen_room_path(@room.slug)
     user_room = UserRoom.find_or_initialize_by(user_id: current_user.id, room_id: @room.id)
-    premium_check(redirection_path, "Non-premium moderator can only create room with 10 participants at most, please tell your moderator to be our premium member.", !@room.creator.premium?, @room.created_by != current_user.id, @room.users.count > 9, user_room.new_record?); return if performed?
+    premium_check(redirection_path, "Non-premium moderator can only create room with 7 participants at most, please tell your moderator to be our premium member.", !@room.creator.premium?, @room.created_by != current_user.id, @room.users.count > 6, user_room.new_record?); return if performed?
 
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
-      broadcaster "rooms/#{@room.slug}",
+      broadcast "rooms/#{@room.slug}",
         user_id: current_user.uid,
         data: 'refresh-users',
         type: 'action'
@@ -367,7 +271,7 @@ class RoomsController < ApplicationController
     }[params[:status]]
   end
 
-  def broadcaster channel, *message
+  def broadcast channel, *message
     MessageBus.publish channel, *message
   end
 

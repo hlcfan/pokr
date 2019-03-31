@@ -8,4 +8,4 @@ module UidGeneration
   def generate_uid
     self.uid = SecureRandom.rand(36**8).to_s(36)
   end
-end
+end 

@@ -16,11 +16,11 @@ export default class StatusBar extends React.Component {
 
   closeRoom = () => {
     if(confirm("WARNING: Do you want to close this room? This cannot be undone.")) {
-      MessageBus.publish("action", {
+      Messenger.publish('action', {
         roomId: this.props.roomId,
         data: "close-room",
         type: 'action'
-      })
+      });
     }
   }
 

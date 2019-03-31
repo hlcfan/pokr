@@ -1,7 +1,6 @@
 class UserStoryPoint < ApplicationRecord
 
   include UidGeneration
-
   belongs_to :user
   belongs_to :story
 
@@ -11,7 +10,8 @@ class UserStoryPoint < ApplicationRecord
     user_point.comment = comment if comment.present?
 
     if user_point.update points: points
-      yield user_point if block_given?
+      user_point
     end
   end
+
 end

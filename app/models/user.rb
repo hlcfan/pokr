@@ -1,8 +1,7 @@
 class User < ApplicationRecord
 
-  include LetterAvatar::AvatarHelper
   include UidGeneration
-
+  include LetterAvatar::AvatarHelper
   EMAIL_PREFIX = "pokrex"
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
