@@ -3,6 +3,7 @@
 %>
 
 <script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
+<%= javascript_include_tag "message-bus", async: true %>
 <%= javascript_pack_tag('vendor-bundle') %>
 <%= javascript_pack_tag('app-bundle') %>
 <%= stylesheet_pack_tag('app-bundle') %>
@@ -20,7 +21,7 @@
 <%= react_component(component_name,
   props: {roomId: @room.slug,
           roomName: @room.name,
-          currentUserId: current_user.id,
+          currentUserId: current_user.uid,
           role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
           roomState: @room.state,
           pointValues: @room.point_values,
@@ -28,8 +29,8 @@
           freeStyle: @room.free_style?,
           storyListUrl: "/rooms/#{@room.slug}/story_list.json",
           peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
-          currentVote: current_user.points_of_story(@room.current_story_id),
-          currentStoryId: @room.current_story_id,
+          currentVote: current_user.points_of_story(@room.current_story_id[0]),
+          currentStoryId: @room.current_story_id[1],
           duration: @room.duration
           },
   prerender: false) %>

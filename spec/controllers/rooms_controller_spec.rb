@@ -13,6 +13,8 @@ RSpec.describe RoomsController, type: :controller do
     { name: nil }
   }
 
+  let(:room) { Room.create! valid_attributes }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # RoomsController. Be sure to keep this updated too.
@@ -294,7 +296,7 @@ RSpec.describe RoomsController, type: :controller do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
       expect(assigns(:users)).to eq [{
-        id: user.id,
+        id: user.uid,
         name: user.display_name,
         display_role: user_room.display_role,
         avatar_thumb: user.letter_avatar,
@@ -330,7 +332,7 @@ RSpec.describe RoomsController, type: :controller do
       user = User.find_by email: 'a@a.com'
       user_room = UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::WATCHER)
 
-      expect(controller).to receive(:broadcaster).once
+      expect(controller).to receive(:broadcast).once
 
       post :switch_role, params: {id: room.slug, role: UserRoom::PARTICIPANT}, session: valid_session
 
@@ -343,7 +345,7 @@ RSpec.describe RoomsController, type: :controller do
       user = User.find_by email: 'a@a.com'
       user_room = UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::WATCHER)
 
-      expect(controller).not_to receive(:broadcaster)
+      expect(controller).not_to receive(:broadcast)
 
       post :switch_role, params: {id: room.slug, role: "invalid_role"}, session: valid_session
 
@@ -356,7 +358,7 @@ RSpec.describe RoomsController, type: :controller do
       user = User.find_by email: 'a@a.com'
       user_room = UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::WATCHER)
 
-      expect(controller).not_to receive(:broadcaster)
+      expect(controller).not_to receive(:broadcast)
 
       post :switch_role, params: {id: room.slug, role: UserRoom::WATCHER}, session: valid_session
 
@@ -369,7 +371,7 @@ RSpec.describe RoomsController, type: :controller do
       user = User.find_by email: 'a@a.com'
       user_room = UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::MODERATOR)
 
-      expect(controller).not_to receive(:broadcaster)
+      expect(controller).not_to receive(:broadcast)
 
       post :switch_role, params: {id: room.slug, role: UserRoom::PARTICIPANT}, session: valid_session
 
@@ -460,7 +462,7 @@ RSpec.describe RoomsController, type: :controller do
     it "broadcast data" do
       room = Room.create! valid_attributes
 
-      expect(controller).to receive(:broadcaster).once.with("rooms/room-name", {:type=>"sync", :data=>{:link=>"link", :point=>"13"}})
+      expect(controller).to receive(:broadcast).once.with("rooms/room-name", {:type=>"sync", :data=>{:link=>"link", :point=>"13"}})
       post :sync_status, params: {id: room.slug, link: "link", point: 13}
       expect(response.status).to eq 200
     end
@@ -482,7 +484,8 @@ RSpec.describe RoomsController, type: :controller do
     it "saves votes and redirect to room page if valid votes" do
       room = Room.create! valid_attributes
       story_1 = Story.create(room_id: room.id, link: "story title")
-      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.id, point: "13" }}}
+      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.uid, point: "13" }}}
+      expect(UserStoryPoint.find_by(story_id: story_1.id).points).to eq("13")
       expect(response).to redirect_to room_path(room.slug)
     end
   end
@@ -516,10 +519,129 @@ RSpec.describe RoomsController, type: :controller do
       UserRoom.create(user_id: 999, room_id: room.id, role: UserRoom::MODERATOR)
       story= Story.create(room_id: room.id, link: "story title")
       user_story_point = UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
-      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.encoded_id }
+      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.uid }
 
       expect(story.reload.point).to eq("13")
       expect(response.status).to eq 200
+    end
+  end
+
+   describe "POST #vote" do
+    let(:story) { Story.create(room_id: room.id, link: "story title") }
+
+    it "notifies if participant votes if valid vote" do
+      post :vote, :params => { :id => room.slug, :data => { :story_id => story.uid, :points => "13" } }
+      expect(UserStoryPoint.find_by(user_id: controller.current_user.id, story_id: story.id).points).to eq("13")
+    end
+
+    it "doesnt notify anyoen if invalid vote" do
+      post :vote, :params => { :id => room.slug, :data => { :story_id => story.id, :points => "14" } }
+      expect(UserStoryPoint.find_by(user_id: controller.current_user.id, story_id: story.id)).to be_nil
+    end
+  end
+
+  describe "POST #action" do
+    it "transmits all data go through action" do
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "close-room", type: "action" })
+      post :action, params: { id: room.slug, data: "close-room", type: "action" }
+      expect(room.reload.status).to be_nil
+    end
+
+    it "updates room status to open if action is open" do
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "open", type: "action" })
+      post :action, params: { id: room.slug, data: "open", type: "action" }
+      expect(room.reload.status).to eq(Room::OPEN)
+    end
+  end
+
+  describe "POST #set_story_point" do
+    let(:story) { Story.create(room_id: room.id, link: "story title") }
+
+    it "sets story point only for moderator and valid vote" do
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
+      expect((story.reload).point).to eq("13")
+    end
+
+    it "does nothing if no moderator" do
+      expect(MessageBus).not_to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
+    end
+
+    it "does nothing if invalid votes" do
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+      expect(MessageBus).not_to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
+      post :set_story_point, params: { id: room.slug, data: { point: "14", story_id: story.id } }
+    end
+
+    it "sets current story point to nil and clear votes if free style room" do
+      room.update_attribute :style, Room::FREE_STYLE
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "next-story", type: "action" })
+      post :set_story_point, params: { id: room.slug, data: { point: "13", story_id: story.uid } }
+      expect((story.reload).point).to be_nil
+      all_votes = UserStoryPoint.where(story_id: story.id)
+      expect(all_votes).to be_empty
+    end
+  end
+
+  describe "POST #remove_person" do
+    it "removes person if moderator" do
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+      participant = User.create(email: "one-participant@pokrex.com", password: "password")
+      UserRoom.create(user_id: participant.id, room_id: room.id)
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: { userId: participant.uid }, type: "evictUser" })
+      post :remove_person, params: { id: room.slug, data: { user_id: participant.uid } }
+      expect(UserRoom.where(user_id: participant.id, room_id: room.id)).to be_empty
+    end
+
+    it "does nothing if no moderator" do
+      expect(MessageBus).not_to receive(:publish)
+      post :remove_person, params: { id: room.slug, data: { user_id: "user-id" } }
+    end
+  end
+
+  describe "POST #timing" do
+    it "updates duration" do
+      post :timing, params: { id: room.slug, duration: "3.1" }
+      expect(room.reload.duration).to eq(3.1)
+    end
+  end
+
+  describe "POST #revote" do
+    let(:story) { Story.create(room_id: room.id, link: "story title") }
+
+    it "resets the ticket if moderator" do
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "revote", type: "action" })
+      post :revote, params: { id: room.slug, data: { story_id: story.uid } }
+      expect(story.reload.point).to be_nil
+      expect(room.reload.status).to be_nil
+    end
+
+    it "does nothing if no moderator" do
+      expect(MessageBus).not_to receive(:publish)
+      post :revote, params: { id: room.slug, data: { story_id: story.id } }
+    end
+  end
+
+  describe "POST #clear_votes" do
+    let(:story) { Story.create(room_id: room.id, link: "story title") }
+
+    it "clears user votes if moderator" do
+      UserRoom.create(user_id: controller.current_user.id, room_id: room.id, role: UserRoom::MODERATOR)
+      UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
+      expect(MessageBus).to receive(:publish).with("rooms/#{room.slug}", { data: "clear-votes", type: "action" })
+      post :clear_votes, params: { id: room.slug, data: { story_id: story.id } }
+      expect(UserStoryPoint.where(story_id: story.id)).to be_empty
+    end
+
+    it "does nothing if no moderator" do
+      expect(MessageBus).not_to receive(:publish)
+      post :clear_votes, params: { id: room.slug, data: { story_id: story.uid } }
     end
   end
 end

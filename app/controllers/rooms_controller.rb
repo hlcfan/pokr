@@ -82,7 +82,7 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if repo.update_entity @room, room_params
         remove_memorization_of_moderators
-        broadcaster "rooms/#{@room.slug}",
+        broadcast "rooms/#{@room.slug}",
           user_id: current_user.id,
           data: 'next-story',
           type: 'action'
@@ -124,7 +124,7 @@ class RoomsController < ApplicationController
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
     if user_room && !user_room.moderator? && user_room.role != role
       user_room.update(role: role)
-      broadcaster "rooms/#{@room.slug}",
+      broadcast "rooms/#{@room.slug}",
         user_id: current_user.id,
         data: 'switch-roles',
         type: 'action'
@@ -158,7 +158,7 @@ class RoomsController < ApplicationController
   end
 
   def sync_status
-    broadcaster "rooms/#{@room.slug}",
+    broadcast "rooms/#{@room.slug}",
       type: 'sync',
       data: {link: params[:link], point: params[:point]}
 
@@ -169,7 +169,7 @@ class RoomsController < ApplicationController
     head(:bad_request) and return if params[:votes].blank? || @room.closed?
 
     params[:votes].values.each do |vote|
-      next unless @room.stories.pluck(:id).include?(vote[:story_id].to_i)
+      next unless @room.stories.pluck(:uid).include?(vote[:story_id])
       UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
     end
     redirect_to room_path(@room.slug), flash: { success: "Thanks for your votes, moderator will see your votes!" }
@@ -183,7 +183,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
-    user_story_point = UserStoryPoint.find UserStoryPoint.decoded_id(params[:voteId])
+    user_story_point = UserStoryPoint.find_by(uid: params[:voteId])
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
@@ -191,6 +191,16 @@ class RoomsController < ApplicationController
       story.update_attribute :point, user_story_point.points if story
       UserStoryPoint.where(story_id: story.id).where.not(finalized: nil).update_all(finalized: nil)
       user_story_point.update_attribute(:finalized, true)
+
+      head :ok
+    end
+  end
+
+  [:action, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes].each do |method_name|
+    define_method method_name do
+      set_room
+      message = RoomCommunication.send(method_name, @room, current_user, params)
+      broadcast( "rooms/#{@room.slug}", message ) if message.present?
 
       head :ok
     end
@@ -247,8 +257,8 @@ class RoomsController < ApplicationController
 
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
-      broadcaster "rooms/#{@room.slug}",
-        user_id: current_user.id,
+      broadcast "rooms/#{@room.slug}",
+        user_id: current_user.uid,
         data: 'refresh-users',
         type: 'action'
     end
@@ -261,8 +271,8 @@ class RoomsController < ApplicationController
     }[params[:status]]
   end
 
-  def broadcaster channel, *message
-    ActionCable.server.broadcast channel, *message
+  def broadcast channel, *message
+    MessageBus.publish channel, *message
   end
 
   def guest_check
