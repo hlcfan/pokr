@@ -11,7 +11,16 @@ module BillingHelper
     end
   end
 
+  def billing_plan_category
+    if trial?
+      "trial"
+    else
+      "normal"
+    end
+  end
+
   private def trial?
+    return false
     Time.now - current_user.created_at <= 30.days
   end
 end
