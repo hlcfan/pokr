@@ -9,19 +9,16 @@ class Subscription < ApplicationRecord
   end
 
   def plan_name
-    plans[subscription_plan_id][:name]
+    plan = self.plans.values.find{ |h| h[:trial] == subscription_plan_id || h[:normal] == subscription_plan_id }
+    plan[:name] || "Unknow plan"
   end
 
-  private
-
-  def plans
+  def self.plans
     {
-      "542882" => { name: "Monthly subscription - Trial" },
-      "557854" => { name: "Monthly subscription" },
-      "555649" => { name: "Quaterly subscription - Trial" },
-      "557854" => { name: "Monthly subscription" },
-      "552848" => { name: "Yearly subscription - Trial" },
-      "557856" => { name: "Yearly subscription" }
+      "monthly":    { trial: "542882", normal: "557854", name: "Monthly subscription", fee: 7 },
+      "quaterly":   { trial: "555649", normal: "557855", name: "Quaterly subscription", fee: 20 },
+      "yearly":     { trial: "552848", normal: "557856", name: "Yearly subscription", fee: 77 },
+      "enterprise": { trial: "557853", normal: "557853", name: "Enterprise subscription", fee: 200 }
     }
   end
 end
