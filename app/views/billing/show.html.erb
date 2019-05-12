@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-10">
               <% if current_user.subscription_active? %>
-                <a href="<%= current_user.subscription_cancel_url %>">Cancel subscription</a>
+                <a href="<%= current_user.subscription_cancel_url %>" onclick="return confirm('Cancel your premium membership, will lost premium privileges. Are you sure?')">Cancel subscription</a>
               <% else %>
                 <div class="row">
                   <div class="col-md-6">
