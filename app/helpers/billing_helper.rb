@@ -37,7 +37,6 @@ module BillingHelper
   end
 
   private def trial?
-    return false
     Time.now - current_user.created_at <= 30.days
   end
 end

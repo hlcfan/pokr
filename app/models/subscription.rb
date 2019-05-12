@@ -9,7 +9,7 @@ class Subscription < ApplicationRecord
   end
 
   def plan_name
-    plan = self.plans.values.find{ |h| h[:trial] == subscription_plan_id || h[:normal] == subscription_plan_id }
+    plan = self.class.plans.values.find{ |h| h[:trial] == subscription_plan_id || h[:normal] == subscription_plan_id }
     plan[:name] || "Unknow plan"
   end
 
