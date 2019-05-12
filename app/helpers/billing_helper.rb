@@ -19,6 +19,15 @@ module BillingHelper
     end
   end
 
+  def billing_plan
+    if current_user.premium?
+      subscription = Subscription.where(user_id: current_user.id).last
+      subscription&.plan_name
+    else
+      "Free"
+    end
+  end
+
   private def trial?
     return false
     Time.now - current_user.created_at <= 30.days
