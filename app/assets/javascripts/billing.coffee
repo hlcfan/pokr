@@ -8,18 +8,21 @@ class Billing
     }
 
     upgradeButton = document.getElementById("paddle-button")
-    billingPlanCategory = document.getElementById("billing-plan-category").value
-    previousButtonText = upgradeButton.text
 
-    $(".billing__plan-dropdown").on "change", ->
-      plan = (plans[this.value] || plans["monthly"])[billingPlanCategory]
-      console.log("Plan:" + plan)
-      upgradeButton.setAttribute("data-product", plan)
+    if upgradeButton && upgradeButton.length > 0
+      billingPlanCategory = document.getElementById("billing-plan-category").value
+      previousButtonText = upgradeButton.text
 
-      if this.value == "enterprise"
-        upgradeButton.text = "Upgrade"
-      else
-        upgradeButton.text = previousButtonText
+      $(".billing__plan-dropdown").on "change", ->
+        plan = (plans[this.value] || plans["monthly"])[billingPlanCategory]
+        console.log("Plan:" + plan)
+        upgradeButton.setAttribute("data-product", plan)
+
+        if this.value == "enterprise"
+          upgradeButton.text = "Upgrade"
+        else
+          upgradeButton.text = previousButtonText
+
 
 $(document).on "ready", ->
   $(".billing.show").ready ->
