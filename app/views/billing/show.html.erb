@@ -6,6 +6,7 @@
 <script type="text/javascript">
   Paddle.Setup({ vendor: 36288 });
 </script>
+<input type="hidden" id="billing-plan-category" value="<%= billing_plan_category %>" />
 
 <div class="row billing">
   <div class="col-md-8 col-md-offset-2">
@@ -21,7 +22,7 @@
             </div>
             <div class="col-md-10">
               <b>
-                <%= current_user.premium? ? "Premium" : "Free"%>
+                <%= billing_plan %>
               </b>
             </div>
           </div>
@@ -32,9 +33,16 @@
             </div>
             <div class="col-md-10">
               <% if current_user.subscription_active? %>
-                <a href="<%= current_user.subscription_cancel_url %>">Cancel subscription</a>
+                <a href="<%= current_user.subscription_cancel_url %>" onclick="return confirm('Cancel your premium membership, will lost premium privileges. Are you sure?')">Cancel subscription</a>
               <% else %>
-                <a href="#!" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent="true" data-success="/billing">Try free for 30 days</a>
+                <div class="row">
+                  <div class="col-md-6">
+                    <select class="billing__plan-dropdown form-control">
+                      <%= pricing_select_options %>
+                    </select>
+                  </div>
+                  <a href="#!" id="paddle-button" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent="true" data-success="/billing"><%= upgrade_button_text %></a>
+                </div>
               <% end %>
             </div>
           </div>
