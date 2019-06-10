@@ -257,7 +257,7 @@ class RoomsController < ApplicationController
 
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
-      broadcast "rooms/#{@room.slug}",
+      ActionCable.server.broadcast "rooms/#{@room.slug}",
         user_id: current_user.uid,
         data: 'refresh-users',
         type: 'action'
