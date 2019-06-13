@@ -41,7 +41,7 @@
                       <%= pricing_select_options %>
                     </select>
                   </div>
-                  <a href="#!" id="paddle-button" class="paddle_button btn btn-success plan__submit" data-product="542882" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent="true" data-success="/billing"><%= upgrade_button_text %></a>
+                  <a href="#!" id="paddle-button" class="paddle_button btn btn-success plan__submit" data-product="<%= default_monthly_plan_id %>" data-passthrough="<%= current_user.email %>" data-email="<%= current_user.email %>" data-marketing-consent="true" data-success="/billing"><%= upgrade_button_text %></a>
                 </div>
               <% end %>
             </div>

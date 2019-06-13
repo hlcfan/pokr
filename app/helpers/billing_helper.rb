@@ -36,6 +36,10 @@ module BillingHelper
     end.join.html_safe
   end
 
+  def default_monthly_plan_id
+    Subscription.plans[:monthly][billing_plan_category.to_sym]
+  end
+
   private def trial?
     Time.now - current_user.created_at <= 30.days
   end
