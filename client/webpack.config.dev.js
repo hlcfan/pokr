@@ -4,8 +4,7 @@
 
 const webpack = require('webpack');
 const { resolve } = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const configPath = resolve('..', 'config');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
@@ -13,13 +12,26 @@ const { output, settings } = webpackConfigLoader(configPath);
 const isHMR = !!settings.dev_server ? settings.dev_server.hmr : false;
 
 module.exports = {
+  mode: "development",
   entry: {
     'vendor-bundle': [
       'babel-polyfill'
     ],
     'app-bundle': [
       './app/bundles/Room/startup/registration',
-    ]
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: "initial",
+          test: "vendor-bundle",
+          name: "vendor-bundle",
+          enforce: true
+        }
+      }
+    }
   },
   output: {
     filename: isHMR ? '[name]-[hash].js' : '[name]-[chunkhash].js',
@@ -51,62 +63,79 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: false,
-                modules: true,
-                importLoaders: 1,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // only enable hot in development
+              hmr: process.env.NODE_ENV === 'development',
+              // if hmr does not work, this is a forceful method.
+              reloadAll: true,
+            },
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
                 localIdentName: 'prf_[local]__[hash:base64:5]',
               },
+              importLoaders: 1,
             },
-            {
-              loader: 'postcss-loader', options: {
-                plugins: [autoprefixer]
-            }}
-          ],
-        }),
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer')
+              ]
+            }
+          }
+        ],
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
+        use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                // only enable hot in development
+                hmr: process.env.NODE_ENV === 'development',
+                // if hmr does not work, this is a forceful method.
+                reloadAll: true,
+              },
+            },
             {
               loader: 'css-loader',
               options: {
-                minimize: false,
-                modules: true,
+                modules: {
+                  localIdentName: 'prf_[local]__[hash:base64:5]',
+                },
                 importLoaders: 3,
-                localIdentName: 'prf_[local]__[hash:base64:5]',
               },
             },
             {
               loader: 'postcss-loader',
               options: {
-                plugins: 'autoprefixer'
+                plugins: [
+                  require('autoprefixer')
+                ]
               }
             },
             {
               loader: 'sass-loader',
             }
           ],
-        }),
-      },
+        },
     ]
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
       allChunks: true
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
-      minimize: false,
       debug: false
     }),
     new ManifestPlugin({
@@ -114,17 +143,17 @@ module.exports = {
       writeToFileEmit: true
     }),
     // https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk
-    new webpack.optimize.CommonsChunkPlugin({
-      // This name 'vendor-bundle' ties into the entry definition
-      name: 'vendor-bundle',
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   // This name 'vendor-bundle' ties into the entry definition
+    //   name: 'vendor-bundle',
 
-      // We don't want the default vendor.js name
-      filename: 'vendor-bundle-[hash].js',
+    //   // We don't want the default vendor.js name
+    //   filename: 'vendor-bundle-[hash].js',
 
-      minChunks(module) {
-        // this assumes your vendor imports exist in the node_modules directory
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      },
-    }),
+    //   minChunks(module) {
+    //     // this assumes your vendor imports exist in the node_modules directory
+    //     return module.context && module.context.indexOf('node_modules') !== -1;
+    //   },
+    // }),
   ]
 }
