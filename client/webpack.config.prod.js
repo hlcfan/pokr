@@ -39,7 +39,7 @@ module.exports = {
       cacheGroups: {
         vendor: {
           chunks: "initial",
-          test: "vendor-bundle",
+          test: /[\\/]node_modules[\\/]/,
           name: "vendor-bundle",
           enforce: true
         }

@@ -26,7 +26,7 @@ module.exports = {
       cacheGroups: {
         vendor: {
           chunks: "initial",
-          test: "vendor-bundle",
+          test: /[\\/]node_modules[\\/]/,
           name: "vendor-bundle",
           enforce: true
         }
@@ -68,7 +68,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               // only enable hot in development
-              hmr: process.env.NODE_ENV === 'development',
+              hmr: true,
               // if hmr does not work, this is a forceful method.
               reloadAll: true,
             },
@@ -99,7 +99,7 @@ module.exports = {
               loader: MiniCssExtractPlugin.loader,
               options: {
                 // only enable hot in development
-                hmr: process.env.NODE_ENV === 'development',
+                hmr: true,
                 // if hmr does not work, this is a forceful method.
                 reloadAll: true,
               },
@@ -142,18 +142,5 @@ module.exports = {
       publicPath: output.publicPath,
       writeToFileEmit: true
     }),
-    // https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   // This name 'vendor-bundle' ties into the entry definition
-    //   name: 'vendor-bundle',
-
-    //   // We don't want the default vendor.js name
-    //   filename: 'vendor-bundle-[hash].js',
-
-    //   minChunks(module) {
-    //     // this assumes your vendor imports exist in the node_modules directory
-    //     return module.context && module.context.indexOf('node_modules') !== -1;
-    //   },
-    // }),
   ]
 }
