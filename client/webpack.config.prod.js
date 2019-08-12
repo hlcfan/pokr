@@ -7,7 +7,7 @@ const { resolve } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const PurifyCSSPlugin = require('purifycss-webpack');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
@@ -143,22 +143,8 @@ module.exports = {
       filename: '[name]-[hash].css',
       allChunks: true
     }),
-    new PurifyCSSPlugin({
-      moduleExtensions: [
-        '.html',
-        '.js',
-        '.jsx',
-      ],
-      paths: glob.sync(resolve(__dirname, 'client/app/**/*.{js,jsx,html}')),
-      purifyOptions: {
-        minify: true,
-        info: true,
-        whitelist: ['*polyfill*', '*prf*'],
-      },
-      styleExtensions: [
-        '.css',
-        '.scss',
-      ],
+    new PurgecssPlugin({
+      paths: glob.sync(resolve(__dirname, 'app/**/*'), { nodir: true }),
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -168,17 +154,5 @@ module.exports = {
       publicPath: output.publicPath,
       writeToFileEmit: true
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   // This name 'vendor-bundle' ties into the entry definition
-    //   name: 'vendor-bundle',
-
-    //   // We don't want the default vendor.js name
-    //   filename: 'vendor-bundle-[hash].js',
-
-    //   minChunks(module) {
-    //     // this assumes your vendor imports exist in the node_modules directory
-    //     return module.context && module.context.indexOf('node_modules') !== -1;
-    //   },
-    // }),
   ]
 }
