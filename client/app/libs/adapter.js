@@ -52,7 +52,7 @@ function sleep(ms) {
 }
 
 let wsSupported = true
-const Messenger = {
+export const Messenger = {
   connect: (roomId) => {
     if (window.WebSocket) {
       try {
@@ -129,6 +129,3 @@ function handleMessage(data) {
   }
 }
 
-module.exports = {
-  Messenger: Messenger
-}
