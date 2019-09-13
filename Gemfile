@@ -16,7 +16,7 @@ gem 'mini_racer', platforms: :ruby
 gem 'marked-rails'
 gem 'font-awesome-rails'
 gem 'awesome_nested_fields', git: 'https://github.com/hlcfan/awesome_nested_fields.git'
-gem 'devise', '~> 4.6.1'
+gem 'devise', '~> 4.7.1'
 gem 'ruby-pinyin'
 gem 'paperclip', '~> 5.2.1'
 gem 'letter_avatar'
