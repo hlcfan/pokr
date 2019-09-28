@@ -257,12 +257,18 @@
     display: none;
   }
 
+  #story-row {
+    padding-top: 0;
+  }
+
   .stories-section .import {
     text-decoration: none;
   }
 
   .stories-section .bulk-links textarea {
     height: 200px;
+    border: none;
+    box-shadow: none;
   }
 
   .schemes-type {
