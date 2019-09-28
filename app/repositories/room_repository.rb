@@ -65,12 +65,13 @@ class RoomRepository
 
   def bulk_import_stories
     if "true" == @params.delete(:bulk)
-      links = @params.delete(:bulk_links).split "\r\n"
-      return {} if links.blank?
+      lines = @params.delete(:bulk_links).split "\r\n"
+      return {} if lines.blank?
 
       stories_hash = {}
-      links.each_with_index do |story_link, index|
-        stories_hash[index.to_s] = { link: story_link, desc: '', id: '', _destroy: "false" }
+      lines.each_with_index do |line, index|
+        name, desc = line.split(/\||\t/)
+        stories_hash[index.to_s] = { link: name, desc: desc, id: '', _destroy: "false" }
       end
       @params[:stories_attributes] = stories_hash
     else

@@ -4,19 +4,20 @@ RSpec.describe RoomRepository do
   subject(:repo) { RoomRepository.new }
 
   describe "#new_entity" do
-    it "initialize a room object if bulk import enabled" do
+    it "initializes a room object if bulk import enabled" do
       room_params = {
         name: "test",
         bulk: "true",
-        bulk_links: "link1\r\nlink2\r\nlink3"
+        bulk_links: "link1\tdescription\r\nlink2\tanother description\r\nlink3|third description and forth"
       }
       room = repo.new_entity(room_params)
 
       expect(room.stories.map(&:link)).to eq ["link1", "link2", "link3"]
+      expect(room.stories.map(&:desc)).to eq ["description", "another description", "third description and forth"]
       expect(room.stories.map(&:sequence)).to eq [1, 2, 3]
     end
 
-    it "initialize a room object if bulk import not enabled" do
+    it "initializes a room object if bulk import not enabled" do
       room_params = {
         name: "test"
       }
@@ -25,7 +26,7 @@ RSpec.describe RoomRepository do
       expect(room.name).to eq "test"
     end
 
-    it "initialize a room object with stories with sequence" do
+    it "initializes a room object with stories with sequence" do
       room_params = {
         name: "test",
         stories_attributes: {
