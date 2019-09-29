@@ -17,7 +17,7 @@ class RoomRepository
       0 == moderator_id && moderator_id.blank?
     end
 
-    if room.update_attributes @params
+    if room.update @params
       if moderator_ids.length > room.moderator_ids_ary.length
         delta = moderator_ids - room.moderator_ids_ary
         ActiveRecord::Base.transaction do

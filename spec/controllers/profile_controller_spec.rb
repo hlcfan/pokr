@@ -32,7 +32,7 @@ RSpec.describe ProfileController, type: :controller do
       end
 
       it "renders show template if updating failed" do
-        allow_any_instance_of(User).to receive(:update_attributes) { false }
+        allow_any_instance_of(User).to receive(:update) { false }
         patch :update, params: { user: { name: 'name-to-be', email: 'b@b.com' } }
         expect(User.last.name).to eq "alex"
         expect(response).to render_template "show"
