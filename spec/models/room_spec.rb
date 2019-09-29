@@ -450,7 +450,7 @@ RSpec.describe Room, type: :model do
     it "returns only name and created_at" do
       room.name = "room name"
       room.created_at = "2048-12-12"
-      expect(room.as_json).to eq({"name"=>"room name", "created_at"=>"Sat, 12 Dec 2048 00:00:00 UTC +00:00"})
+      expect(room.as_json).to eq({"name"=>"room name", "created_at"=>"2048-12-12T00:00:00.000Z"})
     end
   end
 

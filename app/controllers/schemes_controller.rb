@@ -27,7 +27,7 @@ class SchemesController < ApplicationController
   end
 
   def update
-    if @scheme.update_attributes scheme_params
+    if @scheme.update scheme_params
       redirect_to schemes_path, flash: { success: "Scheme updated successfully." }
     else
       render :edit

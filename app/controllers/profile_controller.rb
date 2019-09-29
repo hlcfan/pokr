@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
   end
 
   def update
-    if @user.update_attributes profile_params
+    if @user.update profile_params
       remove_guest_and_reset_password if guest_user_updated_email?(@user.email)
       redirect_to profile_path, flash: { success: "Your profile updated successfully, we'll send you an email to reset your password" }
     else
