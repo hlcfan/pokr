@@ -20,11 +20,11 @@ ReactOnRails.configure do |config|
   # If you are using the ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
   # with rspec then this controls what yarn command is run
   # to automatically refresh your webpack assets on every test run.
-  config.build_test_command = "yarn && yarn run test"
+  config.build_test_command = "npm i && npm run test"
 
   # This configures the script to run to build the production assets by webpack. Set this to nil
   # if you don't want react_on_rails building this file for you.
-  config.build_production_command = "yarn && yarn run prod"
+  config.build_production_command = "npm i && npm run prod"
 
   ################################################################################
   # CLIENT RENDERING OPTIONS
