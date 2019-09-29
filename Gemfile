@@ -5,7 +5,7 @@ gem 'rails', '~> 6.0.0'
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 6.0.0.beta3'
+gem 'sass-rails', '~> 6.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -66,7 +66,7 @@ gem 'message_bus'
 # gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.6'
+  gem 'rspec-rails', '~> 4.0.0.beta2'
   gem "pry"
   gem 'pry-doc'
   gem 'pry-nav'

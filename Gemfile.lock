@@ -298,14 +298,14 @@ GEM
     rspec-mocks (3.8.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
-    rspec-rails (3.8.2)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-      rspec-support (~> 3.8.0)
+    rspec-rails (4.0.0.beta2)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.8)
+      rspec-expectations (~> 3.8)
+      rspec-mocks (~> 3.8)
+      rspec-support (~> 3.8)
     rspec-support (3.8.2)
     ruby-pinyin (0.5.0)
       rmmseg-cpp-new (~> 0.3.1)
@@ -407,10 +407,10 @@ DEPENDENCIES
   react_on_rails (~> 10)
   redis
   rqrcode
-  rspec-rails (~> 3.6)
+  rspec-rails (~> 4.0.0.beta2)
   ruby-pinyin
   rubyzip (~> 1.2.1)
-  sass-rails (~> 6.0.0.beta3)
+  sass-rails (~> 6.0.0)
   shoulda-matchers (~> 3.1)
   sidekiq
   sitemap_generator
