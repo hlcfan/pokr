@@ -143,9 +143,9 @@ module.exports = {
       filename: '[name]-[hash].css',
       allChunks: true
     }),
-    new PurgecssPlugin({
-      paths: glob.sync(resolve(__dirname, 'app/**/*'), { nodir: true }),
-    }),
+    // new PurgecssPlugin({
+    //   paths: glob.sync(resolve(__dirname, 'app/**/*'), { nodir: true }),
+    // }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
