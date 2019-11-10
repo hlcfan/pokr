@@ -50,7 +50,7 @@ gem 'mina-sitemap_generator', :require => false, git: "https://github.com/hlcfan
 gem 'mina-sidekiq', :require => false
 gem 'rqrcode'
 gem 'pg_search'
-gem 'rubyzip', '~> 1.2.1'
+gem 'rubyzip', '~> 1.3.0'
 gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
 gem 'message_bus'

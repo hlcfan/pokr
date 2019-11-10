@@ -309,7 +309,7 @@ GEM
     rspec-support (3.8.2)
     ruby-pinyin (0.5.0)
       rmmseg-cpp-new (~> 0.3.1)
-    rubyzip (1.2.4)
+    rubyzip (1.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.2.1)
@@ -409,7 +409,7 @@ DEPENDENCIES
   rqrcode
   rspec-rails (~> 4.0.0.beta2)
   ruby-pinyin
-  rubyzip (~> 1.2.1)
+  rubyzip (~> 1.3.0)
   sass-rails (~> 6.0.0)
   shoulda-matchers (~> 3.1)
   sidekiq
