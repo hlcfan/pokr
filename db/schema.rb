@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_143200) do
+ActiveRecord::Schema.define(version: 2019_12_22_102554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authorizations_on_user_id"
+  end
+
+  create_table "columns", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.integer "retro_id", null: false
+    t.string "uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string "text"
+    t.integer "user_id", null: false
+    t.string "uid", null: false
+    t.integer "retro_id", null: false
+    t.integer "retro_scheme_id", null: false
+    t.string "retro_scheme_col_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["retro_id"], name: "index_notes_on_retro_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -55,6 +76,37 @@ ActiveRecord::Schema.define(version: 2019_03_09_143200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
+  end
+
+  create_table "retro_schemes", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.string "uid", null: false
+    t.string "col_1"
+    t.string "col_2"
+    t.string "col_3"
+    t.string "col_4"
+    t.string "col_5"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["col_1"], name: "index_retro_schemes_on_col_1"
+    t.index ["col_2"], name: "index_retro_schemes_on_col_2"
+    t.index ["col_3"], name: "index_retro_schemes_on_col_3"
+    t.index ["col_4"], name: "index_retro_schemes_on_col_4"
+    t.index ["col_5"], name: "index_retro_schemes_on_col_5"
+    t.index ["uid"], name: "index_retro_schemes_on_uid"
+    t.index ["user_id"], name: "index_retro_schemes_on_user_id"
+  end
+
+  create_table "retros", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "created_by", null: false
+    t.string "uid", null: false
+    t.integer "retro_scheme_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by"], name: "index_retros_on_created_by"
+    t.index ["uid"], name: "index_retros_on_uid"
   end
 
   create_table "rooms", id: :serial, force: :cascade do |t|

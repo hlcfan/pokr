@@ -1,0 +1,2 @@
+class RetroScheme < ApplicationRecord
+end
