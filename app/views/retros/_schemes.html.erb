@@ -1,0 +1,6 @@
+<div class="schemes-type">
+  <% RetroScheme.default.each do |scheme| %>
+    <span class="label <%= scheme.id == retro.retro_scheme_id ? "label-info" : "label-default" %>" data-scheme="<%= scheme.uid %>"><%= scheme.name %></span>
+  <% end %>
+</div>
+<hr />

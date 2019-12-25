@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe RetroScheme, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe ".default" do
+    it "returns default schemes" do
+      expect(RetroScheme.default.length).to eq 4
+    end
+  end
 end
