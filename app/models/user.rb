@@ -108,7 +108,7 @@ class User < ApplicationRecord
   end
 
   def expand_premium_expiration duration
-    self.premium_expiration ||= Time.now.utc
+    self.premium_expiration = Time.now.utc
     self.premium_expiration += duration
 
     save!
