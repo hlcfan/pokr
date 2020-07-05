@@ -78,7 +78,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'god'
 end
 
 group :test do
