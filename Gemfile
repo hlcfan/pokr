@@ -53,7 +53,7 @@ gem 'pg_search'
 gem 'rubyzip', '~> 1.3.0'
 gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
-gem 'message_bus'
+
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }
 # #<Errno::ETIMEDOUT: Operation timed out - user specified timeout>
