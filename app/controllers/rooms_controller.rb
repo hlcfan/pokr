@@ -196,16 +196,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  [:action, :vote, :set_story_point, :remove_person, :timing, :revote, :clear_votes].each do |method_name|
-    define_method method_name do
-      set_room
-      message = RoomCommunication.send(method_name, @room, current_user, params)
-      broadcast( "rooms/#{@room.slug}", message ) if message.present?
-
-      head :ok
-    end
-  end
-
   private
 
   def html_request?
@@ -257,7 +247,7 @@ class RoomsController < ApplicationController
 
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
-      ActionCable.server.broadcast "rooms/#{@room.slug}",
+      broadcast "rooms/#{@room.slug}",
         user_id: current_user.uid,
         data: 'refresh-users',
         type: 'action'
@@ -271,8 +261,8 @@ class RoomsController < ApplicationController
     }[params[:status]]
   end
 
-  def broadcast channel, *message
-    MessageBus.publish channel, *message
+  def broadcast channel, message
+    ActionCable.server.broadcast channel, message
   end
 
   def guest_check
