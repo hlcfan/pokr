@@ -157,5 +157,31 @@ RSpec.describe RoomRepository do
 
       expect(room.stories.map(&:link)).to eq ["first", "third", "second"]
     end
+
+    it "updates room stories with sequence when bulk edit" do
+      room_params = {
+        name: "test",
+        created_by: 1,
+        stories_attributes: {
+          "0"=>{"link"=>"first", "desc"=>"", "_destroy"=>"false"},
+          "1"=>{"link"=>"second", "desc"=>"", "_destroy"=>"false"}
+        }
+      }
+      room = repo.new_entity(room_params)
+      room = repo.save room
+
+      first_story = Story.find_by link: "first"
+      second_story = Story.find_by link: "second"
+
+      new_room_params = {
+        name: "test",
+        bulk: "true",
+        bulk_links: "first1\tdescription1|##{first_story.uid}#\r\nsecond2\tanother description|##{second_story.uid}#\r\nnew story|new description"
+      }
+      room = repo.update_entity room, new_room_params
+
+      expect(room.stories.map(&:link)).to eq ["first1", "second2", "new story"]
+      expect(room.stories.map(&:desc)).to eq ["description1", "another description", "new description"]
+    end
   end
 end
