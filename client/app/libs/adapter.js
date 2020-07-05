@@ -54,39 +54,10 @@ function sleep(ms) {
 let wsSupported = true
 export const Messenger = {
   connect: (roomId) => {
-    if (window.WebSocket) {
-      try {
-        var websocket = new WebSocket( "wss://echo.websocket.org" )
-        sleep(200).then(() => {
-          if (websocket.readyState === 3) {
-            wsSupported = false
-          } else {
-            wsSupported = true
-          }
-        })
-      } catch ( e ) {
-        wsSupported = false
-      }
-    } else {
-      wsSupported = false
-    }
-
-    sleep(200).then(() => {
-      if (wsSupported) {
-        console.log("WebSocket supported!")
-        WsAdapter.connect(roomId)
-      } else {
-        console.log("WebSocket not supported, switching to polling.")
-        PollingAdapter.connect(roomId)
-      }
-    })
+    WsAdapter.connect(roomId)
   },
   publish: (action, payload) => {
-    if (wsSupported) {
-      WsAdapter.publish(action, payload)
-    } else {
-      PollingAdapter.publish(action, payload)
-    }
+    WsAdapter.publish(action, payload)
   }
 }
 
