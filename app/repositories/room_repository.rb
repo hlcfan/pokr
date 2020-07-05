@@ -1,5 +1,7 @@
 class RoomRepository
 
+  STORY_LINE_RE = /\||\t/
+
   def new_entity params
     @params = params
 
@@ -12,7 +14,10 @@ class RoomRepository
 
   def update_entity room, params
     @params = params.merge(status: nil)
+    bulk_edit_stories
     add_sequence_to_stories
+    permit_params!
+
     moderator_ids = (@params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
       0 == moderator_id && moderator_id.blank?
     end
@@ -65,15 +70,35 @@ class RoomRepository
 
   def bulk_import_stories
     if "true" == @params.delete(:bulk)
-      lines = @params.delete(:bulk_links).split "\r\n"
+      lines = cleanup_lines(@params.delete(:bulk_links))
       return {} if lines.blank?
 
       stories_hash = {}
       lines.each_with_index do |line, index|
-        name, desc = line.split(/\||\t/)
+        name, desc = line.split(STORY_LINE_RE)
         stories_hash[index.to_s] = { link: name, desc: desc, id: '', _destroy: "false" }
       end
       @params[:stories_attributes] = stories_hash
+    else
+      @params.delete(:bulk_links)
+    end
+  end
+
+  def bulk_edit_stories
+    if "true" == @params.delete(:bulk)
+      lines = cleanup_lines(@params.delete(:bulk_links))
+      return {} if lines.blank?
+
+      stories_hash = {}
+      story_uids = []
+      lines.each do |line|
+        name, desc, uid = line.split(STORY_LINE_RE)
+        story_uids << uid
+        stories_hash[uid] = { link: name, desc: desc, id: '', _destroy: "false" }
+      end
+
+      stories_attributes = build_stories_attributes(story_uids, stories_hash)
+      @params[:stories_attributes] = stories_attributes
     else
       @params.delete(:bulk_links)
     end
@@ -95,4 +120,24 @@ class RoomRepository
     end
   end
 
+  def cleanup_lines str
+    str = str.gsub(/^\r\n/, "")
+    str = str.gsub(/#/, "")
+
+    str.split "\r\n"
+  end
+
+  def build_stories_attributes(uids, stories_hash)
+    stories = Story.where(uid: uids).pluck(:id, :uid)
+    stories.each do |story|
+      stories_hash[story[1]][:id] = story[0]
+    end
+
+    stories_attributes = {}
+    i = 0
+    stories_hash.each_pair do |_, story|
+      stories_attributes[i.to_s] = story
+      i += 1
+    end
+  end
 end

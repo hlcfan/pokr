@@ -44,21 +44,20 @@
   <section class="stories-section panel panel-default" id="story-section">
     <div class="panel-heading clearfix">
       <h3 class="panel-title pull-left">Stories</h3>
-      <% if @room.new_record? %>
-        <a class="pull-right import" href="javascript:;" data-status="input">
-          <i class="fa fa-list" aria-hidden="true"></i>
-          Import from list
-        </a>
+      <a class="pull-right import" href="javascript:;" data-status="input">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Import from list
+        <% if !@room.new_record? %>
+          <i class="fa fa-question-circle has-tooltip" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Please ignore last column cuddled by #, only update title and description."></i>
       <% end %>
+      </a>
     </div>
     <div class="panel-body" id="story-row">
       <%= render partial: 'rooms/story_form', locals: { f: f } %>
-      <% if @room.new_record? %>
-        <div class="row bulk-links" style="display: none;">
-          <input type="hidden" name="room[bulk]" id="room_bulk">
-          <%= text_area_tag "room[bulk_links]", nil, placeholder: "One story per line, use \"|\" to separate title and description OR copy from spreadsheet, like Excel, Numbers, Google Docs.", class: 'form-control col-xs-10' %>
-        </div>
-      <% end %>
+      <div class="row bulk-links" style="display: none;">
+        <input type="hidden" name="room[bulk]" id="room_bulk">
+        <%= text_area_tag "room[bulk_links]", @tickets, placeholder: "One story per line, use \"|\" to separate title and description OR copy from spreadsheet, like Excel, Numbers, Google Docs.", class: 'form-control col-xs-10' %>
+      </div>
     </div>
     <div class="form-group">
       <button type="button" class="add btn btn-info">

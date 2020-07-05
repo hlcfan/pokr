@@ -55,6 +55,9 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1/edit
   def edit
+    @tickets = @room.stories.map do |ticket|
+      "#{ticket.link}|#{ticket.desc}|##{ticket.uid}#"
+    end.join("\r\n")
   end
 
   # POST /rooms
