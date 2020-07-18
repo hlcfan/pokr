@@ -128,7 +128,7 @@ class RoomRepository
   end
 
   def build_stories_attributes(uids, stories_hash)
-    stories = Story.where(uid: uids).pluck(:id, :uid)
+    stories = Story.joins(:room).where("rooms.id = stories.room_id").where(uid: uids).pluck(:id, :uid)
     stories.each do |story|
       stories_hash[story[1]][:id] = story[0]
     end
