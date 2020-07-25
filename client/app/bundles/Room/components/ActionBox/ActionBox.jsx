@@ -76,6 +76,14 @@ export default class ActionBox extends React.Component {
     }
   }
 
+  refreshActionBox = () => {
+    let newState = update(this.state, {
+      roomState: { $set: "open" },
+    })
+
+    this.setState(newState)
+  }
+
   showBoard = () => {
     EventEmitter.dispatch("showBoard")
   }
@@ -86,6 +94,9 @@ export default class ActionBox extends React.Component {
 
   componentDidMount() {
     EventEmitter.subscribe("resetActionBox", this.resetActionBox)
+
+    EventEmitter.subscribe("refreshActionBox", this.refreshActionBox)
+
     if (this.props.roomState !== "draw" && this.props.countDown > 0) {
       this.intervalId = setInterval(this.timer, 1000)
     }

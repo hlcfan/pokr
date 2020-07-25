@@ -12,6 +12,7 @@ export default {
   showResultSection() {
     window.syncResult = true
     EventEmitter.dispatch("refreshUsers")
+    EventEmitter.dispatch("refreshActionBox")
   }
 
 }
