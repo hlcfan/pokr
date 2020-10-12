@@ -33,8 +33,8 @@ RSpec.describe Team, type: :model do
       team_a_members = users["team A"].collect { |u| u.id }
       team_b_members = users["team B"].collect { |u| u.id }
 
-      expect(team_a_members).to eq([user3.id, user2.id, user1.id])
-      expect(team_b_members).to eq([user3.id, user1.id])
+      expect(team_a_members).to eq([user1.id, user2.id, user3.id])
+      expect(team_b_members).to eq([user1.id, user3.id])
     end
   end
 end

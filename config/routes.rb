@@ -64,6 +64,7 @@ Rails.application.routes.draw do
   
   post 'payments/hook'
   get 'billing' => 'billing#show'
+  get 'teams' => 'teams#show'
 
   get 'typeahead' => 'typeahead#index'
 

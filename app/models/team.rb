@@ -11,10 +11,10 @@ class Team < ApplicationRecord
       .left_joins(:teams)
       .left_joins(:user_teams)
       .where("teams.id in (?)", team_ids)
-      .select(:id, :uid, :name)
+      .select(:id, :uid, :email, :name, :image)
       .select("teams.name as team_name")
       .select("teams.uid as team_uid")
-      .order("user_teams.created_at desc")
+      .order("user_teams.created_at")
       .group_by {|u| u.attributes["team_name"]}
       .inject({}) do |h, (team_name, members)|
       h[team_name] = members.uniq
