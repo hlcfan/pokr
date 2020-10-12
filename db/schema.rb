@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_110440) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
     t.index ["user_id"], name: "index_user_teams_on_user_id"
   end
 
