@@ -7,6 +7,10 @@
       </div>
       <div class="panel-body">
         <div class="teams">
+          <% if @teams.empty? %>
+            <div class="alert alert-info" role="alert">You don't have any teams.</div>
+            <a href="/teams/new" class="btn btn-info">Create one!</a>
+          <% end %>
           <% @teams.each do |team_name, members| %>
             <h4><%= team_name %></h4>
             <ul class="list-group team">
