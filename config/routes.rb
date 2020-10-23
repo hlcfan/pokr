@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   resources :schemes
+  resources :teams
 
   namespace :users do
     get :autocomplete
@@ -61,7 +62,7 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:show, :index]
-  
+
   post 'payments/hook'
   get 'billing' => 'billing#show'
 
