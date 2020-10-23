@@ -6,8 +6,8 @@ RSpec.describe Team, type: :model do
       expect(Team.reflect_on_association(:user_teams).macro).to eq(:has_many)
     end
 
-    xit "has many teams" do
-      expect(Team.reflect_on_association(:teams).macro).to eq(:has_many)
+    it "has many users" do
+      expect(Team.reflect_on_association(:users).macro).to eq(:has_many)
     end
   end
 
