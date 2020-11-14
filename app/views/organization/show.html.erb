@@ -1,27 +1,31 @@
-<div class="row teams">
+<div class="row organization">
   <div class="col-md-4"></div>
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= @org.name %></h3>
+        <h3 class="panel-title"><%= @org[0] %></h3>
       </div>
       <div class="panel-body">
-        <div class="teams">
-          <% if @org.nil? %>
+        <div class="organization__members">
+          <% if @org.empty? %>
             <div class="alert alert-info" role="alert">You don't have any teams.</div>
-            <a class="teams__create btn btn-info">Create one!</a>
+            <a class="organization__create btn btn-info">Create one!</a>
+          <% else %>
+            <ul class="list-group">
+              <% @org[1].each do |user| %>
+                <li class="list-group-item member">
+                  <% if user.uid == current_user.uid %>
+                    <span class="member__self label label-default pull-right">You</span>
+                  <% end %>
+                  <% if UserOrganization.admin?(user.organization_role) %>
+                    <span class="member__role label label-info pull-right">Admin</span>
+                  <% end %>
+                  <img src="<%= user.letter_avatar %>" class="img-circle profile-image">
+                  <%= user.display_name %>
+                </li>
+              <% end %>
+            </ul>
           <% end %>
-          <ul class="list-group team">
-            <% @org.users.each do |user| %>
-              <li class="list-group-item">
-                <% if user.uid == current_user.uid %>
-                  <span class="badge">You</span>
-                <% end %>
-                <img src="<%= user.letter_avatar %>" class="img-circle profile-image">
-                <%= user.display_name %>
-              </li>
-            <% end %>
-          </ul>
         </div>
       </div>
     </div>

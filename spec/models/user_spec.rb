@@ -13,6 +13,14 @@ RSpec.describe User, type: :model do
     it "has many subscriptions" do
       expect(User.reflect_on_association(:subscriptions).macro).to eq(:has_many)
     end
+
+    it "has one organization" do
+      expect(User.reflect_on_association(:user_organization).macro).to eq(:has_one)
+    end
+
+    it "has one organization" do
+      expect(User.reflect_on_association(:organization).macro).to eq(:has_one)
+    end
   end
 
   describe "#name" do

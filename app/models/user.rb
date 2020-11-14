@@ -25,7 +25,6 @@ class User < ApplicationRecord
   has_many :schemes
   has_many :orders
   has_many :subscriptions
-
   has_one :user_organization
   has_one :organization, through: :user_organization
 
@@ -34,6 +33,8 @@ class User < ApplicationRecord
   after_avatar_post_process :set_avatar_as_image
 
   attr_accessor :points, :display_role, :voted, :avatar_thumb
+
+  attribute :organization_role
 
   OWNER = 0
   PARTICIPANT = 1

@@ -20,6 +20,7 @@ RSpec.describe RoomsController, type: :controller do
   # RoomsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
   login_user
+
   describe "GET #index" do
     it "redirects to dashboard page if signed in" do
       room = Room.create! valid_attributes

@@ -8,26 +8,26 @@ RSpec.describe OrganizationController, type: :controller do
 
   let(:valid_session) { {} }
 
-  login_user
-
   describe "GET #show" do
-    it "assigns the requested org as @org" do
-      org = Organization.create! valid_attributes
-      UserOrganization.create! user_id: current_user.id,  organization_id: org.id
-      get :show, params: {}, session: valid_session
+    context "when user signed in" do
+      login_user
 
-      assigned_org = assigns(:org)
+      it "renders organization show template" do
+        get :show, params: {}, session: valid_session
 
-      expect(assigned_org.users).to eq([current_user])
-      expect(assigned_org).to eq(org)
+        expect(assigns(:org)).to be_nil
+        expect(response).to render_template("show")
+      end
     end
 
-    it "renders organization show template" do
-      org = Organization.create! valid_attributes
-      UserOrganization.create! user_id: current_user.id,  organization_id: org.id
-      get :show, params: {}, session: valid_session
+    context "when user does not signed in" do
+      render_views
 
-      expect(response).to render_template("show")
+      it "redirects to sign in page" do
+        get :show, params: {}, session: valid_session
+
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 end
