@@ -1,0 +1,30 @@
+<div class="row teams">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @org.name %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="teams">
+          <% if @org.nil? %>
+            <div class="alert alert-info" role="alert">You don't have any teams.</div>
+            <a class="teams__create btn btn-info">Create one!</a>
+          <% end %>
+          <ul class="list-group team">
+            <% @org.users.each do |user| %>
+              <li class="list-group-item">
+                <% if user.uid == current_user.uid %>
+                  <span class="badge">You</span>
+                <% end %>
+                <img src="<%= user.letter_avatar %>" class="img-circle profile-image">
+                <%= user.display_name %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>

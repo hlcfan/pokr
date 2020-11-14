@@ -61,7 +61,8 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:show, :index]
-  
+
+  get "organization" => "organization#show"
   post 'payments/hook'
   get 'billing' => 'billing#show'
 
