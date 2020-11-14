@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_110440) do
+ActiveRecord::Schema.define(version: 2019_03_09_143200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_110440) do
   create_table "stories", id: :serial, force: :cascade do |t|
     t.integer "room_id"
     t.string "link"
-    t.string "desc"
+    t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "point"
@@ -120,13 +120,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_110440) do
     t.index ["status"], name: "index_subscriptions_on_status"
     t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id"
     t.index ["user_id", "status"], name: "index_subscriptions_on_user_id_and_status"
-  end
-
-  create_table "teams", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "uid", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_rooms", id: :serial, force: :cascade do |t|
@@ -156,16 +149,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_110440) do
     t.index ["user_id", "story_id"], name: "index_user_story_points_on_user_id_and_story_id", unique: true
   end
 
-  create_table "user_teams", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "team_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_id"], name: "index_user_teams_on_team_id"
-    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
-    t.index ["user_id"], name: "index_user_teams_on_user_id"
-  end
-
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "role"
@@ -187,12 +170,10 @@ ActiveRecord::Schema.define(version: 2020_10_09_110440) do
     t.datetime "avatar_updated_at"
     t.string "image"
     t.datetime "premium_expiration"
-    t.string "uid"
+    t.string "uid", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
-  add_foreign_key "user_teams", "teams"
-  add_foreign_key "user_teams", "users"
 end

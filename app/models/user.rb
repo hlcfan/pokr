@@ -25,14 +25,12 @@ class User < ApplicationRecord
   has_many :schemes
   has_many :orders
   has_many :subscriptions
-  has_many :user_teams
-  has_many :teams, through: :user_teams
 
   after_initialize :default_values
 
   after_avatar_post_process :set_avatar_as_image
 
-  attr_accessor :points, :display_role, :voted, :avatar_thumb, :team_uid, :team_name
+  attr_accessor :points, :display_role, :voted, :avatar_thumb
 
   OWNER = 0
   PARTICIPANT = 1
