@@ -26,6 +26,9 @@ class User < ApplicationRecord
   has_many :orders
   has_many :subscriptions
 
+  has_one :user_organization
+  has_one :organization, through: :user_organization
+
   after_initialize :default_values
 
   after_avatar_post_process :set_avatar_as_image

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_14_044653) do
+ActiveRecord::Schema.define(version: 2020_11_14_053323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -132,6 +132,17 @@ ActiveRecord::Schema.define(version: 2020_11_14_044653) do
     t.index ["user_id", "status"], name: "index_subscriptions_on_user_id_and_status"
   end
 
+  create_table "user_organizations", force: :cascade do |t|
+    t.string "uid"
+    t.integer "user_id", null: false
+    t.integer "organization_id", null: false
+    t.integer "role"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id", "user_id"], name: "index_user_organizations_on_organization_id_and_user_id", unique: true
+    t.index ["uid"], name: "index_user_organizations_on_uid", unique: true
+  end
+
   create_table "user_rooms", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "room_id", null: false
@@ -187,4 +198,6 @@ ActiveRecord::Schema.define(version: 2020_11_14_044653) do
   end
 
   add_foreign_key "organizations", "users", column: "created_by"
+  add_foreign_key "user_organizations", "organizations"
+  add_foreign_key "user_organizations", "users"
 end
