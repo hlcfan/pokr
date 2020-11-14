@@ -21,3 +21,4 @@
 //= require typeahead
 //= require schemes
 //= require billing
+//= require teams

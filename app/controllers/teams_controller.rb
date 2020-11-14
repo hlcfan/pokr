@@ -6,4 +6,8 @@ class TeamsController < ApplicationController
     @teams = Team.find_by_user(current_user)
   end
 
+  def new
+
+  end
+
 end
