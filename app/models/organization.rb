@@ -16,11 +16,17 @@ class Organization < ApplicationRecord
       .where("organizations.id = ?", organization_id)
       .select(:id, :uid, :email, :name, :image)
       .select("organizations.name as organization_name")
+      .select("organizations.uid as organization_uid")
       .select("user_organizations.role as organization_role")
       .order("user_organizations.created_at")
       .group_by {|u| u.attributes["organization_name"]}
-      .inject({}) do |h, (organization_name, members)|
-        h[organization_name] = members.uniq
+      .inject([]) do |h, (organization_name, members)|
+        h << {
+          name: organization_name,
+          uid: members[0].organization_uid,
+          members: members.uniq
+        }
+
         h
       end
   end

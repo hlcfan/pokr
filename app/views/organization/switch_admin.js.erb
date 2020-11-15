@@ -1,0 +1,1 @@
+$(".organization__members-group").empty().append("<%= escape_javascript(render partial: 'organization/member', locals: {name: @org[:name], uid: @org[:uid], members: @org[:members]}) %>");

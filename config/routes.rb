@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   resources :posts, only: [:show, :index]
 
   get "organization" => "organization#show"
+  post "organization/:organization_id/switch_admin/:uid" => "organization#switch_admin", as: :organization_switch_admin
+
   post 'payments/hook'
   get 'billing' => 'billing#show'
 

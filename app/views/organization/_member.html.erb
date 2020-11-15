@@ -1,0 +1,23 @@
+<% members.each do |user| %>
+  <li class="list-group-item member">
+    <div class="row">
+      <div class="col-md-6 member__name">
+        <img src="<%= user.letter_avatar %>" class="img-circle profile-image">
+        <%= user.display_name %>
+      </div>
+      <div class="col-md-6 member__operation">
+        <% if user.uid == current_user.uid %>
+          <span class="member__self label label-default">You</span>
+        <% end %>
+        <% if UserOrganization.admin?(current_user.user_organization.role) %>
+          <% if UserOrganization.admin?(user.organization_role) %>
+            <% if user.uid != current_user.uid %>
+              <%= link_to "Remove admin", organization_switch_admin_path(uid, user.uid), "data-confirm": "Are you sure to remove \"#{user.display_name}\" as admin?", remote: true, method: :post %>
+            <% end %>
+          <% else %>
+            <%= link_to "Set as admin", organization_switch_admin_path(uid, user.uid), data: { user_id: user.uid, confirm: "Are you sure to set \"#{user.display_name}\" as admin?" }, remote: true, method: :post %>
+          <% end %>
+        <% end %>
+      </div>
+  </li>
+<% end %>

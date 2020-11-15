@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   attr_accessor :points, :display_role, :voted, :avatar_thumb
 
-  attribute :organization_role
+  attribute :organization_role#, :organization_uid
 
   OWNER = 0
   PARTICIPANT = 1

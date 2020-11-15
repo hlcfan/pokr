@@ -11,19 +11,8 @@
             <div class="alert alert-info" role="alert">You don't have any teams.</div>
             <a class="organization__create btn btn-info">Create one!</a>
           <% else %>
-            <ul class="list-group">
-              <% @org[1].each do |user| %>
-                <li class="list-group-item member">
-                  <% if user.uid == current_user.uid %>
-                    <span class="member__self label label-default pull-right">You</span>
-                  <% end %>
-                  <% if UserOrganization.admin?(user.organization_role) %>
-                    <span class="member__role label label-info pull-right">Admin</span>
-                  <% end %>
-                  <img src="<%= user.letter_avatar %>" class="img-circle profile-image">
-                  <%= user.display_name %>
-                </li>
-              <% end %>
+            <ul class="list-group organization__members-group">
+              <%= render partial: "organization/member", locals: { name: @org[:name], uid: @org[:uid], members: @org[:members] } %>
             </ul>
           <% end %>
         </div>
