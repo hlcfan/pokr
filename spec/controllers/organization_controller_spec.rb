@@ -13,6 +13,9 @@ RSpec.describe OrganizationController, type: :controller do
       login_user
 
       it "renders organization show template" do
+        org = Organization.create(valid_org_attributes)
+        user_org = UserOrganization.create(user_id: current_user.id, organization_id: org.id)
+
         get :show, params: {}, session: valid_session
 
         expect(assigns(:org)).to be_nil
