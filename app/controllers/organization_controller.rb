@@ -4,6 +4,8 @@ class OrganizationController < ApplicationController
   def show
     if current_user.user_organization.present?
       @org = Organization.members(current_user.user_organization.organization_id).first
+    else
+      redirect_to dashboard_index_path, flash: { notice: "You don't belong to any organization." }
     end
   end
 

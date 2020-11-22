@@ -9,6 +9,17 @@
         <% if user.uid == current_user.uid %>
           <span class="member__self label label-default">You</span>
         <% end %>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="fa fa-ellipsis-v"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Set as admin</a></li>
+            <li><a href="#">Remove admin</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Remove from organization</a></li>
+          </ul>
+        </div>
         <% if UserOrganization.admin?(current_user.user_organization.role) %>
           <% if UserOrganization.admin?(user.organization_role) %>
             <% if user.uid != current_user.uid %>
