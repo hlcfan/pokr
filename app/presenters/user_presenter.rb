@@ -34,7 +34,7 @@ class UserPresenter < SimpleDelegator
     Story.available.joins(:user_story_points)
       .where("user_story_points.user_id = ?", id)
       .where("point IS NOT NULL")
-      .order("updated_at DESC").limit(10)
+      .order("stories.updated_at DESC").limit(10)
   end
 
 
