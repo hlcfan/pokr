@@ -419,6 +419,7 @@ DEPENDENCIES
   pry-doc
   pry-nav
   pry-rails
+  puma (~> 5.1.1)
   rails (~> 6.1.0)
   rails-controller-testing
   react_on_rails (~> 10)
