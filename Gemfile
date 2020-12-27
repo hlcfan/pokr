@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.1.0'
 
 gem 'pg'
 
@@ -14,7 +14,7 @@ gem 'coffee-rails', '~> 5.0.0'
 gem 'mini_racer', platforms: :ruby
 
 gem 'marked-rails'
-gem 'font-awesome-rails'
+gem 'font-awesome-rails', github: "bokmann/font-awesome-rails", branch: "master" #'~> 4.7.0.6'
 gem 'awesome_nested_fields', git: 'https://github.com/hlcfan/awesome_nested_fields.git'
 gem 'devise', '~> 4.7.1'
 gem 'ruby-pinyin'
@@ -41,13 +41,11 @@ gem 'jbuilder', '~> 2.0'
 
 gem "react_on_rails", "~> 10"
 gem "webpacker"
-gem 'puma'
 gem 'sidekiq'
-gem 'mina-puma', '1.1.0', require: false
 gem 'sitemap_generator'
 gem 'whenever', :require => false
-gem 'mina-sitemap_generator', :require => false, git: "https://github.com/hlcfan/mina-sitemap_generator.git"
-gem 'mina-sidekiq', :require => false
+# gem 'mina-sitemap_generator', :require => false, git: "https://github.com/hlcfan/mina-sitemap_generator.git"
+# gem 'mina-sidekiq', :require => false
 gem 'rqrcode'
 gem 'pg_search'
 gem 'rubyzip', '~> 1.3.0'
@@ -75,6 +73,11 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'letter_opener'
+
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.6", require: false
+  gem 'capistrano-rbenv', '~> 2.2'
+  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
 end
 
 group :production do
@@ -82,6 +85,6 @@ end
 
 group :test do
   gem 'rails-controller-testing'
-  gem 'codecov', :require => false
+  gem 'codecov', '~> 0.2.15', :require => false
   gem 'shoulda-matchers', '~> 3.1'
 end
