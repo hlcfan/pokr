@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Story from '../components/Story';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 export default class StoryList extends React.Component {
   render() {
@@ -21,9 +20,7 @@ export default class StoryList extends React.Component {
     return (
       <div className="storyList col-md-12">
         <ul>
-          <CSSTransitionGroup transitionName="story" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-            {storyNodes}
-          </CSSTransitionGroup>
+          {storyNodes}
         </ul>
       </div>
     )

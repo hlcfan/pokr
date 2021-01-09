@@ -1,45 +1,51 @@
 # Note: You must restart bin/webpack-dev-server for changes to take effect
 
 default: &default
-  # source_path: app/javascript
-  # source_entry_path: packs
-  public_output_path: webpack
+  source_path: app/javascript
+  source_entry_path: react
+  extract_css: false
+  public_root_path: public
+  public_output_path: packs
   cache_path: tmp/cache/webpacker
-  check_yarn_integrity: false
+  webpack_compile_output: true
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  resolved_paths: []
+  additional_paths: []
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
-  compile: false
-  extract_css: true
-
-  extensions:
-    - .coffee
-    - .erb
-    - .js
-    - .jsx
-    - .ts
-    - .vue
-    - .sass
-    - .scss
-    - .css
-    - .png
-    - .svg
-    - .gif
-    - .jpeg
-    - .jpg
 
 development:
   <<: *default
+  compile: true
 
-  # dev_server:
-  #   host: localhost
-  #   port: 3035
-  #   hmr: false
-  #   https: false
+  # Reference: https://webpack.js.org/configuration/dev-server/
+  dev_server:
+    https: false
+    host: localhost
+    port: 3035
+    public: localhost:3035
+    # Hot Module Replacement updates modules while the application is running without a full reload
+    hmr: false
+    # Inline should be set to true if using HMR; it inserts a script to take care of live reloading
+    inline: true
+    # Should we show a full-screen overlay in the browser when there are compiler errors or warnings?
+    overlay: true
+    # Should we use gzip compression?
+    compress: true
+    # Note that apps that do not check the host are vulnerable to DNS rebinding attacks
+    disable_host_check: true
+    # This option lets the browser open with your local IP
+    use_local_ip: false
+    # When enabled, nothing except the initial startup information will be written to the console.
+    # This also means that errors or warnings from webpack are not visible.
+    quiet: false
+    pretty: false
+    headers:
+      'Access-Control-Allow-Origin': '*'
+    watch_options:
+      ignored: '**/node_modules/**'
 
 test:
   <<: *default

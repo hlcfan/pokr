@@ -1,5 +1,5 @@
 #= require jquery2
-#= require jquery_ujs
+#= require rails-ujs
 #= require libs/bootstrap-tagsinput.min
 #= require libs/bootstrap.min
 #= require libs/jquery.readyselector
