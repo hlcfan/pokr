@@ -1,2 +1,3 @@
 web: rails s -p 3000
+webpacker: ./bin/webpack-dev-server
 client: sh -c 'rm public/webpack/development || true && cd client && bundle exec rake react_on_rails:locale && yarn run dev'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import PeopleList from '../components/PeopleList'
-import Invitation from '../components/Invitation/index'
+import PeopleList from './PeopleList'
+import Invitation from './Invitation/index.jsx'
 import EventEmitter from 'libs/eventEmitter'
 import {defaultTourColor} from 'libs/barColors'
 import css from './Invitation/index.scss'
@@ -98,8 +98,7 @@ export default class PeopleListBox extends React.Component {
           </div>
         </div>
         {
-          !this.roomClosed() &&
-            <Invitation roomId={this.props.roomId} />
+          !this.roomClosed() && <Invitation roomId={this.props.roomId} />
         }
       </div>
     )

@@ -37,3 +37,10 @@ active_record_log_subscriber.rb
 /public/packs-test
 
 .gitattributes
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

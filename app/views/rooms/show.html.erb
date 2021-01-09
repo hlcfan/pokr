@@ -3,10 +3,10 @@
 %>
 
 <script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
+<%= javascript_pack_tag 'room_app' %>
 <%= javascript_pack_tag('vendor-bundle') %>
-<%= javascript_pack_tag('app-bundle') %>
-<%= stylesheet_pack_tag('app-bundle') %>
 <%= stylesheet_link_tag "libs/joyride" %>
+
 <input type="hidden" id="roomId" value="<%= @room.slug %>" />
 <input type="hidden" id="roomName" value="<%= @room.name %>" />
 <input type="hidden" id="role" value="<%= UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role %>" />
@@ -15,24 +15,14 @@
 <input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
 <input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
+<input type="hidden" id="currentUserId" value="<%= @current_user.uid %>" />
+<input type="hidden" id="currentStoryId" value="<%= @room.current_story_id[1] %>" />
+<input type="hidden" id="duration" value="<%= @room.duration %>" />
+
 <%= action_cable_meta_tag %>
 
-<%= react_component(component_name,
-  props: {roomId: @room.slug,
-          roomName: @room.name,
-          currentUserId: current_user.uid,
-          role: UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id).display_role,
-          roomState: @room.state,
-          pointValues: @room.point_values,
-          timerInterval: @room.timer_interval,
-          freeStyle: @room.free_style?,
-          storyListUrl: "/rooms/#{@room.slug}/story_list.json",
-          peopleListUrl: "/rooms/#{@room.slug}/user_list.json",
-          currentVote: current_user.points_of_story(@room.current_story_id[0]),
-          currentStoryId: @room.current_story_id[1],
-          duration: @room.duration
-          },
-  prerender: false) %>
+<div id="room"></div>
+
 <script type="text/javascript">
   Sentry.init({ dsn: 'https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730' });
 </script>

@@ -63,3 +63,6 @@ export default class VoteBox extends React.Component {
     )
   }
 }
+VoteBox.defaultProps = {
+  pointValues: []
+}

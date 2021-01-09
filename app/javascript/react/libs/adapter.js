@@ -1,11 +1,11 @@
 import EventEmitter from 'libs/eventEmitter'
 import RoomActions from 'libs/roomActions'
-import ActionCable from 'actioncable'
+import { createConsumer } from "@rails/actioncable"
 
 let App = {}
 const WsAdapter = {
   connect: (roomId) => {
-    App.cable = ActionCable.createConsumer()
+    App.cable = createConsumer()
 
     App.rooms = App.cable.subscriptions.create({channel: 'RoomsChannel', room: roomId}, {
       connected: () => {

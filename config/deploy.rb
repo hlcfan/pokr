@@ -1,169 +1,70 @@
-require 'mina/bundler'
-require 'mina/rails'
-require 'mina/git'
-require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-require 'mina/puma'
-# require 'mina/rvm'    # for rvm support. (http://rvm.io)
-require 'mina/sitemap_generator'
-require 'mina_sidekiq/tasks'
-
-set :domain, 'pokrex.com'
-set :deploy_to, '/home/hlcfan/pokr'
-set :app_path,  "#{fetch(:current_path)}"
-set :repository, 'https://github.com/hlcfan/pokr.git'
-set :branch, 'master'
-set :user, 'hlcfan'
-set :identity_file, "/Users/alexshi/.ssh/google_vm"
-set :keep_releases, 5
-set :term_mode, :system
+# If the environment differs from the stage name
 set :rails_env, 'production'
-set :force_asset_precompile, true
-set :pty, false
 
-set :sidekiq_pid, "tmp/pids/sidekiq.pid"
-set :puma_socket, '/tmp/puma_pokr.sock'
-set :puma_pid, 'tmp/pids/puma.pid'
-set :puma_state, 'tmp/sockets/puma.state'
+set :rbenv_type, :user # or :system, or :fullstaq (for Fullstaq Ruby), depends on your rbenv setup
+set :rbenv_ruby, File.read('.ruby-version').strip
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all # default value
 
-# For system-wide RVM install.
-#   set :rvm_path, '/usr/local/rvm/bin/rvm'
+# Defaults to :db role
+set :migration_role, :app
 
-# Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
-# They will be linked in the 'deploy:link_shared_paths' step.
-# set :shared_paths, ['config/database.yml', 'log', 'tmp/pids', 'tmp/sockets', 'public/system']
-set :shared_dirs, fetch(:shared_dirs, []).push(*['log', 'tmp/pids', 'tmp/sockets', 'public/system', 'public/webpack', 'client/node_modules'])
-set :shared_files, fetch(:shared_files, []).push(*['config/database.yml', 'config/oauth.yml', 'config/paypal.yml'])
-# Optional settings:
-#   set :user, 'foobar'    # Username in the server to SSH to.
-#   set :port, '30000'     # SSH port number.
-#   set :forward_agent, true     # SSH forward_agent.
+# Defaults to the primary :db server
+set :migration_servers, -> { primary(fetch(:migration_role)) }
 
-# This task is the environment that is loaded for most commands, such as
-# `mina deploy` or `mina rake`.
-task :environment do
-  # If you're using rbenv, use this to load the rbenv environment.
-  # Be sure to commit your .rbenv-version to your repository.
-  invoke :'rbenv:load'
+# Defaults to `db:migrate`
+set :migration_command, 'db:migrate'
 
-  # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use[ruby-2.2.0@default]'
-end
+# Defaults to false
+# Skip migration if files in db/migrate were not modified
+set :conditionally_migrate, true
 
-# Put any custom mkdir's in here for when `mina setup` is ran.
-# For Rails apps, we'll make some of the shared paths that are shared between
-# all releases.
-task :setup => :environment do
-  command %[mkdir -p "#{fetch(:shared_path)}/log"]
-  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/log"]
+# Defaults to [:web]
+set :assets_roles, [:app]
 
-  command %[mkdir -p "#{fetch(:shared_path)}/uploads"]
-  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/uploads"]
+set :repo_url, "https://github.com/hlcfan/pokr.git"
 
-  command %[mkdir -p "#{fetch(:shared_path)}/config"]
-  command %[chmod g+rx,u+rwx "#{fetch(:shared_path)}/config"]
+set :branch, "master"
 
-  command %[touch "#{fetch(:shared_path)}/config/database.yml"]
-  command  %[echo "-----> Be sure to edit '#{fetch(:shared_path)}/config/database.yml'."]
+set :deploy_to, "/home/hlcfan/pokrex/#{fetch(:application)}"
 
-  command %{
-    mkdir -p "#{fetch(:deploy_to)}/shared/tmp/pids"
-    mkdir -p "#{fetch(:deploy_to)}/shared/tmp/sockets"
-  }
-end
+# Defaults to 'assets'
+# This should match config.assets.prefix in your rails config/application.rb
+set :assets_prefix, 'prepackaged-assets'
 
-desc "Deploys the current version to the server."
-task :deploy => :environment do
-  deploy do
-    # Put things that will set up an empty directory into a fully set-up
-    # instance of your project.
-    invoke :'git:clone'
-    # invoke :'sidekiq:quiet'
-    invoke :'deploy:link_shared_paths'
-    invoke :'bundle:install'
-    invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
-    invoke :'deploy:cleanup'
+# Defaults to ["/path/to/release_path/public/#{fetch(:assets_prefix)}/.sprockets-manifest*", "/path/to/release_path/public/#{fetch(:assets_prefix)}/manifest*.*"]
+# This should match config.assets.manifest in your rails config/application.rb
+set :assets_manifests, ['app/assets/config/manifest.js']
 
-    on :launch do
-      invoke :'puma:restart'
-      invoke :'whenever:update'
-      invoke :'sitemap:create'
-      invoke :'sidekiq:restart'
-      invoke :'god:stop'
-      invoke :'god:start'
+# RAILS_GROUPS env value for the assets:precompile task. Default to nil.
+set :rails_assets_groups, :assets
+
+# If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
+set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
+
+# Defaults to nil (no asset cleanup is performed)
+# If you use Rails 4+ and you'd like to clean up old assets after each deploy,
+# set this to the number of versions to keep
+set :keep_assets, 2
+
+set :puma_init_active_record, true
+
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads', 'public/assets', 'public/webpack'
+
+append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/oauth.yml', 'config/paypal.yml'
+
+append :linked_files, "config/master.key"
+
+namespace :deploy do
+  namespace :check do
+    before :linked_files, :set_master_key do
+      on roles(:app), in: :sequence, wait: 10 do
+        unless test("[ -f #{shared_path}/config/master.key ]")
+          upload! 'config/master.key', "#{shared_path}/config/master.key"
+        end
+      end
     end
   end
 end
 
-desc "Seed data to the database"
-task :seed => :environment do
-  command "cd #{fetch(:current_path)}/"
-  command "bundle exec rake db:seed RAILS_ENV=#{rails_env}"
-  command  %[echo "-----> Rake Seeding Completed."]
-end
-
-namespace :whenever do
-  desc "Clear crontab"
-  task :clear do
-    command %{
-      echo "-----> Clear crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --clear-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
-    }
-  end
-  desc "Update crontab"
-  task :update do
-    command %{
-      echo "-----> Update crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --update-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
-    }
-  end
-  desc "Write crontab"
-  task :write do
-    command %{
-      echo "-----> Update crontab for #{fetch(:domain)}"
-      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --write-crontab #{fetch(:domain)} --set 'environment=production&path=#{fetch(:current_path)}']}
-    }
-  end
-end
-
-namespace :yarn do
-  desc "Yarn install"
-  task :install do
-    command %{
-      echo "-----> Yarn for #{fetch(:app_path)}"
-    }
-    command "cd #{fetch(:app_path)}"
-    command "yarn"
-  end
-end
-
-namespace :god do
-  desc "Start God"
-  task :start => :environment do
-    command 'echo "------> Start God"'
-    command %{
-      cd #{fetch(:app_path)}
-      bundle exec god -c #{fetch(:app_path)}/config/sidekiq.god -p 17770
-    }
-    # bundle exec god -c config/puma.god
-    command 'echo "------> God started"'
-  end
-
-  desc "Stop God"
-  task :stop do
-    command 'echo "------> Stop God"'
-    command %{
-      cd #{fetch(:app_path)}
-      bundle exec god stop sidekiq
-    }
-    # bundle exec god stop puma
-    command 'echo "------> God stopped"'
-  end
-end
-
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
