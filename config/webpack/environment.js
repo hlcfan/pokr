@@ -5,7 +5,7 @@ environment.config.merge({
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.scss'],
     alias: {
-      libs: resolve('app/javascript/react/libs')
+      libs: resolve('app/javascript/packs/libs')
     }
   },
   entry: {
