@@ -168,7 +168,6 @@ GEM
     letter_avatar (0.3.8)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (8.4.255.0)
     logster (2.9.4)
     loofah (2.8.0)
       crass (~> 1.0.2)
@@ -185,8 +184,6 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.3.1)
-      libv8 (~> 8.4.255)
     minitest (5.14.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -399,7 +396,6 @@ DEPENDENCIES
   letter_opener
   logster
   marked-rails
-  mini_racer (~> 0.3.1)
   omniauth
   omniauth-facebook
   omniauth-github
