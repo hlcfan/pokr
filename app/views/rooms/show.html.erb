@@ -2,7 +2,6 @@
   title @room.name
 %>
 
-<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
 <%= javascript_pack_tag 'room_app' %>
 <%= javascript_pack_tag('vendor-bundle') %>
 <%= stylesheet_link_tag "libs/joyride" %>
@@ -23,6 +22,3 @@
 
 <div id="room"></div>
 
-<script type="text/javascript">
-  Sentry.init({ dsn: 'https://e1070f75c7b24052a1784b4ce297b9e2@sentry.io/221730' });
-</script>

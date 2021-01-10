@@ -27,6 +27,18 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import Room from './bundles/Room/containers/Room'
+import * as Sentry from "@sentry/react"
+import { Integrations } from "@sentry/tracing"
+
+Sentry.init({
+  dsn: "https://e1070f75c7b24052a1784b4ce297b9e2@o100957.ingest.sentry.io/221730",
+  release: "my-project-name@" + process.env.npm_package_version,
+  integrations: [new Integrations.BrowserTracing()],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   roomId = document.querySelector("#roomId").value
