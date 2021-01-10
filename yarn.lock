@@ -6718,11 +6718,6 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
-serialize-javascript@^1.7.0:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.9.1.tgz#cfc200aef77b600c47da9bb8149c943e798c2fdb"
-  integrity sha512-0Vb/54WJ6k5v8sSWN09S0ora+Hnr+cX40r9F170nT+mSkaxltoE/7R3OrIdBSUv1OoiobH1QoWQbCnAO+e8J1A==
-
 serialize-javascript@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-4.0.0.tgz#b525e1238489a5ecfc42afacc3fe99e666f4b1aa"
@@ -7471,26 +7466,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-uglify-js@^3.6.0:
-  version "3.12.4"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.12.4.tgz#93de48bb76bb3ec0fc36563f871ba46e2ee5c7ee"
-  integrity sha512-L5i5jg/SHkEqzN18gQMTWsZk3KelRsfD1wUVNqtq0kzqWQqcJjyL8yc1o8hJgRrWqrAl2mUFbhfznEIoi7zi2A==
-
-uglifyjs-webpack-plugin@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-2.2.0.tgz#e75bc80e7f1937f725954c9b4c5a1e967ea9d0d7"
-  integrity sha512-mHSkufBmBuJ+KHQhv5H0MXijtsoA1lynJt1lXOaotja8/I0pR4L9oGaPIZw+bQBOFittXZg9OC1sXSGO9D9ZYg==
-  dependencies:
-    cacache "^12.0.2"
-    find-cache-dir "^2.1.0"
-    is-wsl "^1.1.0"
-    schema-utils "^1.0.0"
-    serialize-javascript "^1.7.0"
-    source-map "^0.6.1"
-    uglify-js "^3.6.0"
-    webpack-sources "^1.4.0"
-    worker-farm "^1.7.0"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
