@@ -399,7 +399,7 @@ DEPENDENCIES
   letter_opener
   logster
   marked-rails
-  mini_racer
+  mini_racer (~> 0.3.1)
   omniauth
   omniauth-facebook
   omniauth-github
