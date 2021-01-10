@@ -53,7 +53,7 @@ export default class Person extends React.Component {
         <i className="person--avatar">
           <img src={this.props.avatar} />
         </i>
-        <a href="javascript:;" className="person">
+        <a className="person">
           {this.props.name}
           {accessoryLabel}
         </a>

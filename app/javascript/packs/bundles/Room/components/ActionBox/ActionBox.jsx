@@ -123,7 +123,7 @@ export default class ActionBox extends React.Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       roomState: nextProps.roomState,
       countDown: this.state.countDown
@@ -161,11 +161,11 @@ export default class ActionBox extends React.Component {
       if (onClickName && buttonText && buttonCount > 1) {
         return (
           <div className="row" role="group">
-            <a onClick={onClickName} className="col-md-5" href="javascript:;" role="button">
+            <a onClick={onClickName} className="col-md-5" role="button">
               {buttonText}
             </a>
           <span className="col-md-2"></span>
-            <a onClick={secondOnClickName} className="col-md-5" href="javascript:;" role="button">
+            <a onClick={secondOnClickName} className="col-md-5" role="button">
               {secondButtonText}
             </a>
           </div>
@@ -173,7 +173,7 @@ export default class ActionBox extends React.Component {
       } else if (onClickName && buttonText) {
         return (
           <div className="" role="group">
-            <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" href="javascript:;" role="button">
+            <a onClick={onClickName} className="btn btn-default btn-lg btn-info btn-block" role="button">
               {buttonText}
             </a>
           </div>

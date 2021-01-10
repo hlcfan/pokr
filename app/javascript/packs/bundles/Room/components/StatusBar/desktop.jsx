@@ -146,7 +146,7 @@ export default class StatusBar extends React.Component {
         </div>
         <div className="col-md-4 col-xs-4">
           <div className={`pull-left ${css['tour-guide']}`}>
-            <a href="javascript:;" onClick={this.playTourGuide}>
+            <a onClick={this.playTourGuide}>
               <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a>
           </div>
@@ -156,8 +156,8 @@ export default class StatusBar extends React.Component {
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 👲</a></li>
-              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
+              <li className={userRoleClassName("Watcher")}><a className={css.role__option} onClick={this.beWatcher}>Be watcher 👲</a></li>
+              <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant}>Be participant 👷</a></li>            </ul>
           </div>
         </div>
         <input type="text" id="hiddenField" className="room--share-link" />

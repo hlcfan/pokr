@@ -1,6 +1,7 @@
 a.invitation__link, a.edit__link {
   color: #444;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a.edit__link {
@@ -17,6 +18,7 @@ a.edit__link {
 
     a {
       text-decoration: none;
+      cursor: pointer;
     }
   }
 
@@ -24,6 +26,10 @@ a.edit__link {
     margin-top: 3px;
     padding-left: 0;
     font-size: 1.3em;
+
+    a {
+      cursor: pointer;
+    }
   }
 
   .invitation__icon--on {

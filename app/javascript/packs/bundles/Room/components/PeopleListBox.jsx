@@ -68,7 +68,7 @@ export default class PeopleListBox extends React.Component {
       return(
         <span>
           <span className={`pull-right ${css["link-divider"]}`}>|</span>
-          <a className={`pull-right ${css.edit__link}`} href="javascript:;" onClick={this.edit}>
+          <a className={`pull-right ${css.edit__link}`} onClick={this.edit}>
             <i className={`fa ${icon}`}></i> {text}
           </a>
         </span>
@@ -79,7 +79,7 @@ export default class PeopleListBox extends React.Component {
       <div className="panel panel-default" id="people">
         <div className="panel-heading">
           People
-          <a className={`pull-right ${css.invitation__link}`} href="javascript:;" onClick={this.invite}>
+          <a className={`pull-right ${css.invitation__link}`} onClick={this.invite}>
             <i className="fa fa-plus-circle"></i> Invite
           </a>
           {

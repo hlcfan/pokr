@@ -12,8 +12,9 @@
   }
 }
 
-.stories--sync {
+.stories__sync {
   color: #444;
+  cursor: pointer;
 
   &:hover, &:focus {
     text-decoration: none;

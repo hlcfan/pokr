@@ -7,11 +7,16 @@
     width: 100px;
     color: #444;
     text-decoration: none;
+    cursor: pointer;
   }
 }
 
 .room__status_bar .room__title {
   margin-top: 10px;
+}
+
+a.role__option {
+  cursor: pointer;
 }
 
 @media only screen and (max-device-width: 736px) {

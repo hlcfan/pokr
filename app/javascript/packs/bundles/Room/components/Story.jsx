@@ -2,6 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import BarColors from 'libs/barColors'
 
+const revoteStyle = {
+  cursor: "pointer"
+}
+
 export default class Story extends React.Component {
   revote = (e) => {
     const revoteStoryId = $(e.target).parents("li").data("id");
@@ -20,7 +24,7 @@ export default class Story extends React.Component {
     revoteIcon = (() => {
       if (this.props.role === 'Moderator' && that.props.tab === "groomed" && this.props.roomState !== "draw") {
         return(
-          <a href="javascript:;" className="revote" onClick={that.revote}>
+          <a style={revoteStyle} className="revote" onClick={that.revote}>
             <i className="fa fa-refresh"></i>
           </a>
         )

@@ -103,7 +103,7 @@ export default class Invitation extends React.Component {
                 {
                   this.state.emails.length > 1 &&
                     <div className={`col-xs-1 ${css.invitation__remove}`}>
-                      <a href="javascript:;" onClick={() => this.onRemove(index)}><i className="fa fa-trash-o"></i></a>
+                      <a onClick={() => this.onRemove(index)}><i className="fa fa-trash-o"></i></a>
                     </div>
                 }
               </div>
@@ -118,7 +118,7 @@ export default class Invitation extends React.Component {
             {emailFields}
             <div className={`row ${css.invitation__add}`}>
               <div className="col-xs-8">
-                <a href="javascript:;" onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
+                <a onClick={this.addEmail}><i className="fa fa-plus-circle"></i> Add another</a>
               </div>
             </div>
           </div>

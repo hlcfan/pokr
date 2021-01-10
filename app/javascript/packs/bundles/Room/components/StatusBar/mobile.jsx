@@ -97,10 +97,10 @@ export default class StatusBar extends React.Component {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>{editButton}</li>
             <li>{roomStatusButton}</li>
-            <li><a href="javascript:;" onClick={this.playTourGuide}>
+            <li><a onClick={this.playTourGuide}>
               <i className="fa fa-question-circle" aria-hidden="true"></i> Take a tour
             </a></li>
-            <li><a href="javascript:;">🔳 QR code</a></li>
+            <li><a>🔳 QR code</a></li>
             <div className={css['status-bar__qr']}><QRCode value={location.href} /></div>
           </ul>
         )
@@ -146,8 +146,9 @@ export default class StatusBar extends React.Component {
                 <span className="caret"></span>
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher} href="javascript:;">Be watcher 👲</a></li>
-                <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant} href="javascript:;">Be participant 👷</a></li>            </ul>
+                <li className={userRoleClassName("Watcher")}><a onClick={this.beWatcher}>Be watcher 👲</a></li>
+                <li className={userRoleClassName("Participant")}><a onClick={this.beParticipant}>Be participant 👷</a></li>
+              </ul>
             </div>
           </div>
           <div id="tooltip-area"></div>
