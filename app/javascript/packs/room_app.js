@@ -27,6 +27,7 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import Room from './bundles/Room/containers/Room'
+import RoomMobile from './bundles/Room/containers/RoomMobile'
 import * as Sentry from "@sentry/react"
 import { Integrations } from "@sentry/tracing"
 
@@ -41,33 +42,54 @@ Sentry.init({
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  roomId = document.querySelector("#roomId").value
-  roomName = document.querySelector("#roomName").value
-  role = document.querySelector("#role").value
-  currentVote = document.querySelector("#currentVote").value
-  roomState = document.querySelector("#roomState").value
-  pointValues = JSON.parse(document.querySelector("#pointValues").value)
-  timerInterval = document.querySelector("#timerInterval").value
-  freeStyle = document.querySelector("#freeStyle").value
-  currentStoryId = document.querySelector("#currentStoryId").value
-  currentUserId = document.querySelector("#currentUserId").value
-  duration = parseInt(document.querySelector("#duration").value)
+  const roomId = document.querySelector("#roomId").value
+  const roomName = document.querySelector("#roomName").value
+  const role = document.querySelector("#role").value
+  const currentVote = document.querySelector("#currentVote").value
+  const roomState = document.querySelector("#roomState").value
+  const pointValues = JSON.parse(document.querySelector("#pointValues").value)
+  const timerInterval = document.querySelector("#timerInterval").value
+  const freeStyle = document.querySelector("#freeStyle").value
+  const currentStoryId = document.querySelector("#currentStoryId").value
+  const currentUserId = document.querySelector("#currentUserId").value
+  const duration = parseInt(document.querySelector("#duration").value)
   const roomApp = document.querySelector('#room')
+  const isMobileRequest = document.querySelector('#isMobileRequest')
 
-  ReactDOM.render(
-    <Room roomId= { roomId }
-          roomName={ roomName }
-          currentUserId= { currentUserId }
-          role= { role }
-          roomState= { roomState }
-          pointValues= { pointValues }
-          timerInterval= { timerInterval }
-          freeStyle= { freeStyle }
-          storyListUrl= { "/rooms/"+roomId+"/story_list.json" }
-          peopleListUrl= { "/rooms/"+roomId+"/user_list.json" }
-          currentVote= { currentVote }
-          currentStoryId= { currentStoryId }
-          duration= { duration } />,
-    roomApp
-  )
+  if (isMobileRequest === "true") {
+    ReactDOM.render(
+      <RoomMobile roomId= { roomId }
+        roomName={ roomName }
+        currentUserId= { currentUserId }
+        role= { role }
+        roomState= { roomState }
+        pointValues= { pointValues }
+        timerInterval= { timerInterval }
+        freeStyle= { freeStyle }
+        storyListUrl= { "/rooms/"+roomId+"/story_list.json" }
+        peopleListUrl= { "/rooms/"+roomId+"/user_list.json" }
+        currentVote= { currentVote }
+        currentStoryId= { currentStoryId }
+        duration= { duration } />,
+      roomApp
+    )
+  } else {
+    ReactDOM.render(
+      <Room roomId= { roomId }
+        roomName={ roomName }
+        currentUserId= { currentUserId }
+        role= { role }
+        roomState= { roomState }
+        pointValues= { pointValues }
+        timerInterval= { timerInterval }
+        freeStyle= { freeStyle }
+        storyListUrl= { "/rooms/"+roomId+"/story_list.json" }
+        peopleListUrl= { "/rooms/"+roomId+"/user_list.json" }
+        currentVote= { currentVote }
+        currentStoryId= { currentStoryId }
+        duration= { duration } />,
+      roomApp
+    )
+  }
+
 })
