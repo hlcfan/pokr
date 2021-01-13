@@ -14,9 +14,10 @@
 <input type="hidden" id="pointValues" value=<%= @room.point_values.to_json.html_safe %> />
 <input type="hidden" id="timerInterval" value="<%= @room.timer_interval %>" />
 <input type="hidden" id="freeStyle" value="<%= @room.free_style? %>" />
-<input type="hidden" id="currentUserId" value="<%= @current_user.uid %>" />
+<input type="hidden" id="currentUserId" value="<%= current_user.uid %>" />
 <input type="hidden" id="currentStoryId" value="<%= @room.current_story_id[1] %>" />
 <input type="hidden" id="duration" value="<%= @room.duration %>" />
+<input type="hidden" id="isMobileRequest" value="<%= is_mobile_request? %>" />
 
 <%= action_cable_meta_tag %>
 
