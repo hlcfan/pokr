@@ -1,10 +1,9 @@
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const environment = require('./environment')
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 environment.config.merge({
   mode: 'development',
@@ -24,6 +23,9 @@ environment.config.merge({
       },
     ]
   },
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
   // plugins: [
     // new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV }),
     // new MiniCssExtractPlugin({
