@@ -65,7 +65,7 @@ gem 'axlsx_rails'
 # gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rspec-rails', '~> 5.0.1'
   gem "pry"
   gem 'pry-doc'
   gem 'pry-nav'

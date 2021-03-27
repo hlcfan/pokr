@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject(:user) { User.new }
+  let(:user_id) { SecureRandom.uuid }
 
   describe "Associations" do
     it { should have_many(:schemes) }
@@ -37,7 +38,8 @@ RSpec.describe User, type: :model do
   describe "#points_of_story" do
     it "returns the point user voted for a story" do
       user = User.create(email: 'a@a.com', password: 'password')
-      story = Story.create(link: 'http://jira.com/123')
+      room = Room.create(name: "test room", created_by: user.id)
+      story = Story.create(link: 'http://jira.com/123', room_id: room.id)
       user_story_point = UserStoryPoint.create user_id: user.id, story_id: story.id, points: 13
       expect(user.points_of_story(story.id)).to eq "13"
     end
@@ -58,8 +60,11 @@ RSpec.describe User, type: :model do
   describe "#stories_groomed_count" do
     it "simply returns stories user voted" do
       user = User.create(email: 'a@a.com', password: 'password')
-      UserStoryPoint.create(user_id: user.id, story_id: 1, points: 1)
-      UserStoryPoint.create(user_id: user.id, story_id: 2, points: 13)
+      room = Room.create!(name: "a room", created_by: user.id)
+      story1 = Story.create(link: "link1", room_id: room.id)
+      story2 = Story.create(link: "link2", room_id: room.id)
+      UserStoryPoint.create(user_id: user.id, story_id: story1.id, points: 1)
+      UserStoryPoint.create(user_id: user.id, story_id: story2.id, points: 13)
       expect(user.stories_groomed_count).to eq 2
     end
   end
@@ -73,12 +78,12 @@ RSpec.describe User, type: :model do
 
   describe "#letter_avatar" do
     it "returns medium size avatar if user uploaded avatar" do
-      user.id = 1
+      user.id = user_id
       user.avatar = File.new "#{Rails.root}/spec/fixtures/avatar.png"
 
-      expect(user.letter_avatar).to start_with "/system/users/avatars/000/000/001/medium/avatar.png"
+      expect(user.letter_avatar).to start_with "/system/users/avatars/"
     end
-    
+
     it "returns user avatar if avatar set from oauth platform" do
       user.image = "image-from-twitter"
 

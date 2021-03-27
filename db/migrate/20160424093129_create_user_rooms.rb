@@ -1,8 +1,8 @@
 class CreateUserRooms < ActiveRecord::Migration[4.2]
   def change
-    create_table :user_rooms do |t|
-      t.integer :user_id
-      t.integer :room_id
+    create_table :user_rooms, id: :uuid do |t|
+      t.uuid :user_id
+      t.uuid :room_id
 
       t.timestamps null: false
     end
