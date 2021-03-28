@@ -14,6 +14,7 @@ RSpec.describe RoomsController, type: :controller do
   }
 
   let(:room) { Room.create! valid_attributes }
+  let(:user) { User.create(email: "el@example.com", password: "123456") }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -96,22 +97,22 @@ RSpec.describe RoomsController, type: :controller do
       it "redirects back to dashboard page if signed in" do
         moderator = User.find_by email: "a@a.com"
         room = Room.create! valid_attributes.merge(created_by: moderator.id)
-        user = nil
+        some_user = nil
         1.upto(7).each do
           begin
-            user = User.create(email: "a-#{SecureRandom.rand(50)}@pokrex.com", password: "password")
-            UserRoom.create(user_id: user.id, room_id: room.id)
+            some_user = User.create(email: "a-#{SecureRandom.rand(50)}@pokrex.com", password: "password")
+            UserRoom.create(user_id: some_user.id, room_id: room.id)
           rescue
             retry
           end
         end
-        allow(controller.current_user).to receive(:id) { 999 }
+        allow(controller.current_user).to receive(:id) { user.id }
         get :show, params: {:id => room.slug}, session: valid_session
 
         expect(response).to redirect_to dashboard_index_path
         expect(flash[:error]).to eq("Non-premium moderator can only create room with 7 participants at most, please tell your moderator to be our premium member.")
 
-        allow(controller.current_user).to receive(:id) { user.id }
+        allow(controller.current_user).to receive(:id) { some_user.id }
         get :show, params: {:id => room.slug}, session: valid_session
         expect(response).to render_template("show")
       end
@@ -175,7 +176,9 @@ RSpec.describe RoomsController, type: :controller do
     context "with valid params" do
       let(:moderator) { User.create(name: "Mod", email: "mod.r@ator", password: "password") }
       let(:new_attributes) {
-        { name: "another name", scheme: "fibonacci", pv: "13,8,1,5", moderator_ids: "#{moderator.id}-#{moderator.name}" }
+        # Why it looks like below before???
+        # { name: "another name", scheme: "fibonacci", pv: "13,8,1,5", moderator_ids: "#{moderator.id}-#{moderator.name}" }
+        { name: "another name", scheme: "fibonacci", pv: "13,8,1,5", moderator_ids: moderator.id }
       }
 
       it "updates the requested room" do
@@ -217,24 +220,24 @@ RSpec.describe RoomsController, type: :controller do
 
   describe "DELETE #destroy" do
     before do
-      allow(controller.current_user).to receive(:id) { 999 }
+      allow(controller.current_user).to receive(:id) { user.id }
     end
 
     it "destroys the requested room" do
-      room = Room.create! valid_attributes.merge(created_by: 999)
+      room = Room.create! valid_attributes.merge(created_by: user.id)
       expect {
         delete :destroy, params: {:id => room.slug}, session: valid_session
       }.to change{Room.available.count}.by(-1)
     end
 
     it "redirects to the rooms list" do
-      room = Room.create! valid_attributes.merge(created_by: 999)
+      room = Room.create! valid_attributes.merge(created_by: user.id)
       delete :destroy, params: {:id => room.slug}, session: valid_session
       expect(response).to redirect_to(rooms_url)
     end
 
     it "renders corresponding js" do
-      room = Room.create! valid_attributes.merge(created_by: 999)
+      room = Room.create! valid_attributes.merge(created_by: user.id)
       delete :destroy, params: {:id => room.slug}, session: valid_session, format: :js
       expect(response).to render_template("rooms/destroy")
     end
@@ -296,7 +299,7 @@ RSpec.describe RoomsController, type: :controller do
       get :user_list, format: :json, params: {:id => room.slug}, session: valid_session
 
       expect(assigns(:users)).to eq [{
-        id: user.uid,
+        id: user.id,
         name: user.display_name,
         display_role: user_room.display_role,
         avatar_thumb: user.letter_avatar,
@@ -484,7 +487,7 @@ RSpec.describe RoomsController, type: :controller do
     it "saves votes and redirect to room page if valid votes" do
       room = Room.create! valid_attributes
       story_1 = Story.create(room_id: room.id, link: "story title")
-      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.uid, point: "13" }}}
+      post :leaflet_submit, params: { id: room.slug, votes: {"0" => {story_id: story_1.id, point: "13" }}}
       expect(UserStoryPoint.find_by(story_id: story_1.id).points).to eq("13")
       expect(response).to redirect_to room_path(room.slug)
     end
@@ -492,14 +495,14 @@ RSpec.describe RoomsController, type: :controller do
 
   describe "#leaflet_view" do
     it "shows async room view page for moderator" do
-      allow(controller.current_user).to receive(:id) { 999 }
-      room = Room.create! valid_attributes.merge(created_by: 999)
+      allow(controller.current_user).to receive(:id) { user.id }
+      room = Room.create! valid_attributes.merge(created_by: user.id)
       get :leaflet_view, params: {id: room.slug}
       expect(response).to render_template "rooms/leaflets/view"
     end
 
     it "redirects to asycn room show page if not moderator" do
-      room = Room.create! valid_attributes.merge(created_by: 999)
+      room = Room.create! valid_attributes.merge(created_by: user.id)
       get :leaflet_view, params: {id: room.slug}
       expect(response).to redirect_to room_path(room.slug)
     end
@@ -514,12 +517,12 @@ RSpec.describe RoomsController, type: :controller do
 
   describe "#leaflet_finalize_point" do
     it "finalizes story point for async room" do
-      allow(controller.current_user).to receive(:id) { 999 }
-      room = Room.create! valid_attributes.merge(created_by: 999)
-      UserRoom.create(user_id: 999, room_id: room.id, role: UserRoom::MODERATOR)
+      allow(controller.current_user).to receive(:id) { user.id }
+      room = Room.create! valid_attributes.merge(created_by: user.id)
+      UserRoom.create(user_id: user.id, room_id: room.id, role: UserRoom::MODERATOR)
       story= Story.create(room_id: room.id, link: "story title")
-      user_story_point = UserStoryPoint.create(user_id: 999, story_id: story.id, points: "13")
-      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.uid }
+      user_story_point = UserStoryPoint.create(user_id: user.id, story_id: story.id, points: "13")
+      post :leaflet_finalize_point, params: { id: room.slug, voteId: user_story_point.id }
 
       expect(story.reload.point).to eq("13")
       expect(response.status).to eq 200

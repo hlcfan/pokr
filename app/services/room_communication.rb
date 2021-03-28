@@ -8,7 +8,7 @@ module RoomCommunication
                       payload["points"])
       {
         type: "notify",
-        person_id: current_user.uid
+        person_id: current_user.id
       }
     end
   end
@@ -26,7 +26,7 @@ module RoomCommunication
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: room.id)
 
     if user_room&.moderator? && room.valid_vote_point?(payload["point"])
-      story = Story.find_by uid: payload["story_id"], room_id: room.id
+      story = Story.find_by id: payload["story_id"], room_id: room.id
       if story
         story_point = room.free_style? ? nil : payload["point"]
         story.update_attribute :point, story_point
@@ -47,7 +47,7 @@ module RoomCommunication
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: room.id)
 
     if user_room&.moderator?
-      participant = User.find_by(uid: payload["user_id"])
+      participant = User.find_by(id: payload["user_id"])
       UserRoom.where(user_id: participant.id, room_id: room.id).destroy_all
 
       return {
@@ -67,7 +67,7 @@ module RoomCommunication
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: room.id)
 
     if user_room&.moderator?
-      story = Story.find_by uid: payload["story_id"], room_id: room.id
+      story = Story.find_by id: payload["story_id"], room_id: room.id
       if story
         story.update_attribute :point, nil
         room.update_attribute :status, nil
@@ -84,7 +84,7 @@ module RoomCommunication
     payload = params["data"]
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: room.id)
 
-    story = Story.find_by(uid: payload["story_id"])
+    story = Story.find_by(id: payload["story_id"])
     if user_room&.moderator?
       UserStoryPoint.where(story_id: story.id).delete_all
       room.update_attribute :status, nil

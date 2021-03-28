@@ -27,8 +27,10 @@ RSpec.describe BillingHelper, type: :helper do
 
   describe "#billing_plan" do
     it "returns subscription plan name if not in trial" do
-      allow(helper).to receive(:current_user) { double(:user, :created_at => 2.month.ago, :id => 1) }
-      Subscription.create(user_id: 1, subscription_plan_id: "557856")
+      alex = User.create(email: "alex@example.com", password: "123456")
+
+      allow(helper).to receive(:current_user) { double(:user, :created_at => 2.month.ago, :id => alex.id) }
+      Subscription.create(user_id: alex.id, subscription_plan_id: "557856")
       expect(helper.billing_plan).to eq("Yearly subscription")
     end
 

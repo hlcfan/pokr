@@ -46,7 +46,7 @@ RSpec.describe RoomRepository do
       room_params = {
         name: "test",
         created_by: alex.id,
-        moderator_ids: "#{bob.id}-#{bob.name}"
+        moderator_ids: bob.id
       }
       room = repo.new_entity(room_params)
       room = repo.save room
@@ -63,14 +63,14 @@ RSpec.describe RoomRepository do
       room_params = {
         name: "test",
         created_by: alex.id,
-        moderator_ids: "#{bob.id}-#{bob.name}"
+        moderator_ids: "#{bob.id}"
       }
 
       catlin = User.create(name: "Catlin", email: "c@c.com", password: "password")
       drake = User.create(name: "Drake", email: "d@d.com", password: "password")
       new_room_params = {
         name: "updated-name",
-        moderator_ids: "#{bob.id}-#{bob.name},#{catlin.id}-#{catlin.name},#{drake.id}-#{drake.name}"
+        moderator_ids: "#{bob.id},#{catlin.id},#{drake.id}"
       }
       room = repo.new_entity(room_params)
       room = repo.save room
@@ -91,12 +91,12 @@ RSpec.describe RoomRepository do
       room_params = {
         name: "test",
         created_by: alex.id,
-        moderator_ids: "#{bob.id}-#{bob.name},#{catlin.id}-#{catlin.name}"
+        moderator_ids: "#{bob.id},#{catlin.id}"
       }
 
       new_room_params = {
         name: "updated-name",
-        moderator_ids: "#{bob.id}-#{bob.name}"
+        moderator_ids: "#{bob.id}"
       }
       room = repo.new_entity(room_params)
       room = repo.save room
@@ -114,12 +114,12 @@ RSpec.describe RoomRepository do
       room_params = {
         name: "test",
         created_by: alex.id,
-        moderator_ids: "#{bob.id}-#{bob.name}"
+        moderator_ids: "#{bob.id}"
       }
 
       new_room_params = {
         name: "updated-name",
-        moderator_ids: "#{catlin.id}-#{catlin.name}"
+        moderator_ids: "#{catlin.id}"
       }
       room = repo.new_entity(room_params)
       room = repo.save room
@@ -131,9 +131,11 @@ RSpec.describe RoomRepository do
     end
 
     it "updates room stories with sequence" do
+      alex = User.create(name: "Alex", email: "a@a.com", password: "password")
+
       room_params = {
         name: "test",
-        created_by: 1,
+        created_by: alex.id,
         stories_attributes: {
           "0"=>{"link"=>"first", "desc"=>"", "_destroy"=>"false"},
           "1"=>{"link"=>"second", "desc"=>"", "_destroy"=>"false"}
@@ -159,9 +161,11 @@ RSpec.describe RoomRepository do
     end
 
     it "updates room stories with sequence when bulk edit" do
+      alex = User.create(name: "Alex", email: "a@a.com", password: "password")
+
       room_params = {
         name: "test",
-        created_by: 1,
+        created_by: alex.id,
         stories_attributes: {
           "0"=>{"link"=>"first", "desc"=>"", "_destroy"=>"false"},
           "1"=>{"link"=>"second", "desc"=>"", "_destroy"=>"false"}
@@ -178,7 +182,7 @@ RSpec.describe RoomRepository do
       new_room_params = {
         name: "test",
         bulk: "true",
-        bulk_links: "first1\tdescription1|##{first_story.uid}#\r\nsecond2\tanother description|##{second_story.uid}#\r\nnew story|new description\r\nanother story||##{story_from_other_room.uid}"
+        bulk_links: "first1\tdescription1|##{first_story.id}#\r\nsecond2\tanother description|##{second_story.id}#\r\nnew story|new description\r\nanother story||##{story_from_other_room.id}"
       }
       room = repo.update_entity room, new_room_params
 
