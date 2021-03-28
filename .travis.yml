@@ -22,6 +22,7 @@ addons:
   apt:
     packages:
       - postgresql-client-10
+      - postgresql-contrib-10
 
 before_install:
   - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
@@ -31,8 +32,8 @@ before_install:
 
 install:
   - bundle install
-  - nvm install 12.10.0 && nvm alias default 12.10.0
-  - npm install -g npm@6.10.x
+  - nvm install 14.15.0 && nvm alias default 14.15.0
+  - npm install -g npm@6.14.x
   - npm install -g yarn
   - node --version
   - npm --version
