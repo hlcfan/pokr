@@ -53,6 +53,7 @@ gem 'pg_search'
 gem 'rubyzip', '~> 1.3.0'
 gem 'axlsx', '3.0.0.pre'
 gem 'axlsx_rails'
+gem 'logster'
 
 # Disable for error:
 # Rack app error handling request { POST /mini-profiler-resources/results }
@@ -83,7 +84,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'logster'
 end
 
 group :test do
