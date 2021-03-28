@@ -4,8 +4,6 @@ env:
     - USE_OFFICIAL_GEM_SOURCE=1
     - COVERAGE=true
     - RAILS_ENV=test
-    - CC=gcc-9
-    - CXX=g++-9
     - PGPORT=5433
 
 addons:
@@ -23,7 +21,7 @@ rvm:
   - 2.7.2
 
 sudo: true
-dist: trusty
+dist: bionic
 
 addons:
   postgresql: "10"
@@ -31,8 +29,6 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - gcc-9
-      - g++-9
       - postgresql-10
       - postgresql-client-10
 
