@@ -127,11 +127,23 @@ RENAME COLUMN id TO integer_id;
 ALTER TABLE authorizations
 RENAME COLUMN uuid TO id;
 
+ALTER TABLE authorizations
+RENAME COLUMN user_id TO integer_user_id;
+
+ALTER TABLE authorizations
+RENAME COLUMN user_uuid TO user_id;
+
 ALTER TABLE orders
 RENAME COLUMN id TO integer_id;
 
 ALTER TABLE orders
 RENAME COLUMN uuid TO id;
+
+ALTER TABLE orders
+RENAME COLUMN user_id TO integer_user_id;
+
+ALTER TABLE orders
+RENAME COLUMN user_uuid TO user_id;
 
 ALTER TABLE rooms
 RENAME COLUMN id TO integer_id;
@@ -151,6 +163,12 @@ RENAME COLUMN id TO integer_id;
 ALTER TABLE schemes
 RENAME COLUMN uuid TO id;
 
+ALTER TABLE schemes
+RENAME COLUMN user_id TO integer_user_id;
+
+ALTER TABLE schemes
+RENAME COLUMN user_uuid TO user_id;
+
 ALTER TABLE stories
 RENAME COLUMN id TO integer_id;
 
@@ -168,6 +186,12 @@ RENAME COLUMN id TO integer_id;
 
 ALTER TABLE subscriptions
 RENAME COLUMN uuid TO id;
+
+ALTER TABLE subscriptions
+RENAME COLUMN user_id TO integer_user_id;
+
+ALTER TABLE subscriptions
+RENAME COLUMN user_uuid TO user_id;
 
 ALTER TABLE user_rooms
 RENAME COLUMN id TO integer_id;
@@ -229,9 +253,12 @@ RENAME COLUMN searchable_uuid TO searchable_id;
 -- Update Primary key
 ALTER TABLE authorizations DROP COLUMN integer_id;
 ALTER TABLE authorizations ADD PRIMARY KEY (id);
+ALTER TABLE authorizations DROP COLUMN integer_id;
+ALTER TABLE authorizations DROP COLUMN integer_user_id;
 
 ALTER TABLE orders DROP COLUMN integer_id;
 ALTER TABLE orders ADD PRIMARY KEY (id);
+ALTER TABLE orders DROP COLUMN integer_user_id;
 
 ALTER TABLE pg_search_documents DROP COLUMN integer_id;
 ALTER TABLE pg_search_documents ADD PRIMARY KEY (id);
@@ -252,11 +279,29 @@ ALTER TABLE stories DROP COLUMN integer_room_id;
 ALTER TABLE subscriptions DROP COLUMN integer_id;
 ALTER TABLE subscriptions ADD PRIMARY KEY (id);
 
+ALTER TABLE subscriptions DROP COLUMN integer_user_id;
+
 ALTER TABLE user_rooms DROP COLUMN integer_id;
 ALTER TABLE user_rooms ADD PRIMARY KEY (id);
+
+ALTER TABLE user_rooms DROP COLUMN integer_room_id;
+ALTER TABLE user_rooms DROP COLUMN integer_user_id;
 
 ALTER TABLE user_story_points DROP COLUMN integer_id;
 ALTER TABLE user_story_points ADD PRIMARY KEY (id);
 
+ALTER TABLE user_story_points DROP COLUMN integer_user_id;
+ALTER TABLE user_story_points DROP COLUMN integer_story_id;
+
 ALTER TABLE users DROP COLUMN integer_id;
 ALTER TABLE users ADD PRIMARY KEY (id);
+
+-- Remove existing uid
+ALTER TABLE authorizations DROP COLUMN uid;
+ALTER TABLE orders DROP COLUMN uid;
+ALTER TABLE rooms DROP COLUMN uid;
+ALTER TABLE schemes DROP COLUMN uid;
+ALTER TABLE stories DROP COLUMN uid;
+ALTER TABLE user_rooms DROP COLUMN uid;
+ALTER TABLE user_story_points DROP COLUMN uid;
+ALTER TABLE users DROP COLUMN uid;
