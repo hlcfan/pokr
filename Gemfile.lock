@@ -14,6 +14,14 @@ GIT
       rails (> 3.0.0)
 
 GIT
+  remote: https://github.com/rubyjs/mini_racer.git
+  revision: b0b35eef0cdc1bd0871b4c5e5bf8163e3056d69d
+  branch: refs/pull/186/head
+  specs:
+    mini_racer (0.3.1)
+      libv8-node (~> 15.5.1.0.beta1)
+
+GIT
   remote: https://github.com/seuros/capistrano-puma.git
   revision: d4ac7b9950ddc53835f661c7761ad3e904c48c65
   specs:
@@ -167,7 +175,7 @@ GEM
     letter_avatar (0.3.8)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (8.4.255.0)
+    libv8-node (15.5.1.0.beta1)
     logster (2.9.6)
     loofah (2.9.0)
       crass (~> 1.0.2)
@@ -185,8 +193,6 @@ GEM
       rake
     mini_mime (1.0.3)
     mini_portile2 (2.5.0)
-    mini_racer (0.3.1)
-      libv8 (~> 8.4.255)
     minitest (5.14.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -408,7 +414,7 @@ DEPENDENCIES
   letter_opener
   logster
   marked-rails
-  mini_racer
+  mini_racer!
   omniauth
   omniauth-facebook
   omniauth-github
