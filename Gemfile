@@ -28,7 +28,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'redis'
-gem 'logster'
 gem 'http_accept_language'
 
 # Use jquery as the JavaScript library
@@ -82,6 +81,7 @@ group :development, :test do
 end
 
 group :production do
+  gem 'logster'
 end
 
 group :test do
