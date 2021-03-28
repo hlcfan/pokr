@@ -4,7 +4,8 @@ env:
     - USE_OFFICIAL_GEM_SOURCE=1
     - COVERAGE=true
     - RAILS_ENV=test
-    - CXX=g++-4.9
+    - CC=gcc-9
+    - CXX=g++-9
     - PGPORT=5433
 
 addons:
@@ -30,7 +31,8 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.9
+      - gcc-9
+      - g++-9
       - postgresql-10
       - postgresql-client-10
 
