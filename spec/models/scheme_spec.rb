@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Scheme, type: :model do
   subject(:scheme) { Scheme.new }
+  let(:user) { User.create(email: "a@a.com", password: "password") }
 
   describe "Validations" do
     it { is_expected.to validate_presence_of(:name) }
@@ -15,20 +16,20 @@ RSpec.describe Scheme, type: :model do
 
   describe "#slug!" do
     it "generates slug before creation" do
-      scheme = Scheme.create(name: "test slug", user_id: 1, points: ["2", "3"])
+      scheme = Scheme.create(name: "test slug", user_id: user.id, points: ["2", "3"])
       expect(scheme.slug).to eq "test-slug"
     end
 
     it "re-generates slug if scheme with slug exists" do
-      scheme_1 = Scheme.create(name: 'test slug', user_id: 1, points: ["a"])
-      scheme_2 = Scheme.create(name: 'test slug', user_id: 1, points: ["a"])
+      scheme_1 = Scheme.create(name: 'test slug', user_id: user.id, points: ["a"])
+      scheme_2 = Scheme.create(name: 'test slug', user_id: user.id, points: ["a"])
 
       expect(scheme_2.slug).to be_present
       expect(scheme_2.slug).not_to eq scheme_1.slug
     end
 
     it "translates name when Chinese" do
-      scheme = Scheme.create(name: '测试', user_id: 1, points: ["a"])
+      scheme = Scheme.create(name: '测试', user_id: user.id, points: ["a"])
 
       expect(scheme.slug).to eq "ce-shi"
       expect(scheme.slug).to be_present
@@ -52,7 +53,7 @@ RSpec.describe Scheme, type: :model do
     end
 
     it "returns user created scheme if it's not default scheme" do
-      scheme.user_id = 1
+      scheme.user_id = user.id
       scheme.points = ["1", "2", "3"]
       scheme.name = "sample scheme"
       scheme.save!
@@ -62,11 +63,11 @@ RSpec.describe Scheme, type: :model do
 
   describe ".schemes_of" do
     it "returns specific user's schemes" do
-      scheme.user_id = 1
+      scheme.user_id = user.id
       scheme.points = ["1", "2", "3"]
       scheme.name = "sample scheme"
       scheme.save!
-      expect(Scheme.schemes_of(1)["sample-scheme"][:points]).to eq(["1", "2", "3"])
+      expect(Scheme.schemes_of(user.id)["sample-scheme"][:points]).to eq(["1", "2", "3"])
     end
   end
 end

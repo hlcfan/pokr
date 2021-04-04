@@ -56,7 +56,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1/edit
   def edit
     @tickets = @room.stories.map do |ticket|
-      "#{ticket.link}|#{ticket.desc}|##{ticket.uid}#"
+      "#{ticket.link}|#{ticket.desc}|##{ticket.id}#"
     end.join("\r\n")
   end
 
@@ -172,7 +172,7 @@ class RoomsController < ApplicationController
     head(:bad_request) and return if params[:votes].blank? || @room.closed?
 
     params[:votes].values.each do |vote|
-      next unless @room.stories.pluck(:uid).include?(vote[:story_id])
+      next unless @room.stories.pluck(:id).include?(vote[:story_id])
       UserStoryPoint.vote(current_user.id, vote[:story_id], vote[:point], vote[:comment])
     end
     redirect_to room_path(@room.slug), flash: { success: "Thanks for your votes, moderator will see your votes!" }
@@ -186,7 +186,7 @@ class RoomsController < ApplicationController
   end
 
   def leaflet_finalize_point
-    user_story_point = UserStoryPoint.find_by(uid: params[:voteId])
+    user_story_point = UserStoryPoint.find(params[:voteId])
     user_room = UserRoom.find_by_with_cache(user_id: current_user.id, room_id: @room.id)
 
     if user_story_point.present? && user_room.moderator? && @room.valid_vote_point?(user_story_point.points)
@@ -251,7 +251,7 @@ class RoomsController < ApplicationController
     if user_room.new_record?
       user_room.update!(role: UserRoom::PARTICIPANT)
       broadcast "rooms/#{@room.slug}",
-        user_id: current_user.uid,
+        user_id: current_user.id,
         data: 'refresh-users',
         type: 'action'
     end

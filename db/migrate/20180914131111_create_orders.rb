@@ -1,9 +1,9 @@
 class CreateOrders < ActiveRecord::Migration[5.2]
   def change
-    create_table :orders do |t|
+    create_table :orders, id: :uuid do |t|
       t.string :name
       t.decimal :price, :precision => 8, :scale => 2
-      t.integer :user_id, null: false
+      t.uuid :user_id, null: false
       t.string :ip
       t.string :payment_id
       t.string :payer_id

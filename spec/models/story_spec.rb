@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Story, type: :model do
-  subject(:story) { Story.new }
+  let(:creator) { User.create(email: "creator@example.com", password: "password") }
+  let(:room){ Room.create!(name: "a room", created_by: creator.id) }
+  subject(:story) { Story.new(room_id: room.id) }
 
   describe "#link" do
     it "is invalid if no link specified" do
@@ -15,19 +17,19 @@ RSpec.describe Story, type: :model do
     end
 
     it "is valid if link contains emoji" do
-      story = Story.create(link: "😀😀😀")
+      story.link = "😀😀😀"
       expect(story.valid?).to be true
     end
   end
 
   describe "#description" do
     it "is valid if description contains emoji" do
-      story = Story.create(link: "😀😀😀", desc: "description😀")
+      story = Story.create(link: "😀😀😀", desc: "description😀", room_id: room.id)
       expect(story.valid?).to be true
     end
 
     it "is invalid if description is longer than 500 chars" do
-      story = Story.create(link: "link", desc: "descr"*101)
+      story = Story.create(link: "link", desc: "descr"*101, room_id: room.id)
       expect(story.errors[:desc][0]).to eq("is too long (maximum is 500 characters)")
       expect(story.valid?).to be false
     end
@@ -45,7 +47,7 @@ RSpec.describe Story, type: :model do
   describe "#related_to_user?" do
     it "returns true if user joined the room where the story belongs to" do
       user = User.create(email: 'a@a.com', password: 'password')
-      room = Room.create!(name: "a room")
+      room = Room.create!(name: "a room", created_by: creator.id)
       story = Story.create(link: "story name", room_id: room.id)
       UserRoom.create(user_id: user.id, room_id: room.id)
       PgSearch::Multisearch.rebuild(Story)
@@ -55,7 +57,7 @@ RSpec.describe Story, type: :model do
 
     it "returns false user joined the room where the story doesn't belong to" do
       user = User.create(email: 'a@a.com', password: 'password')
-      room = Room.create!(name: "a room")
+      room = Room.create!(name: "a room", created_by: creator.id)
       story = Story.create(link: "story name", room_id: room.id)
       PgSearch::Multisearch.rebuild(Story)
 

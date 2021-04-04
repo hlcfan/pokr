@@ -1,8 +1,8 @@
 class CreateUserStoryPoints < ActiveRecord::Migration[4.2]
   def change
-    create_table :user_story_points do |t|
-      t.integer :user_id
-      t.integer :story_id
+    create_table :user_story_points, id: :uuid do |t|
+      t.uuid :user_id
+      t.uuid :story_id
       t.string :points
 
       t.timestamps null: false

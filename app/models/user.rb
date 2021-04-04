@@ -1,6 +1,5 @@
 class User < ApplicationRecord
 
-  include UidGeneration
   include LetterAvatar::AvatarHelper
   EMAIL_PREFIX = "pokrex"
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -10,6 +9,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  # TODO: replace paperclip
   has_attached_file :avatar, styles: { medium: "300x300", thumb: "100x100" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   validates_attachment_size :avatar, :in => 0.megabytes..2.megabytes
