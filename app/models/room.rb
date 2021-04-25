@@ -2,6 +2,7 @@
 
 class Room < ApplicationRecord
 
+  include UidGeneration
   include PgSearch::Model
   multisearchable :against => [:name], :unless => :discarded_at?
 
@@ -53,7 +54,7 @@ class Room < ApplicationRecord
   end
 
   def grouped_stories
-    stories_grouped = stories.order(:created_at).group_by do |story|
+    stories_grouped = stories.order(:id).group_by do |story|
       story.point.present?
     end
 
@@ -70,14 +71,14 @@ class Room < ApplicationRecord
   end
 
   def leaflet_votes_summary
-    summary_by_condition(stories.order(:created_at).pluck(:id, :link, :desc, :point))
+    summary_by_condition(stories.order(:id).pluck(:id, :link, :desc, :point))
   end
 
   def current_story_id
     @current_story_id ||= begin
-      if story_id = un_groomed_stories.pluck(:id).first
+      if story_id = un_groomed_stories.pluck(:id, :uid).first
         story_id
-      end
+      end || []
     end
   end
 
@@ -115,19 +116,19 @@ class Room < ApplicationRecord
 
   def user_list params={}
     user_story_points = (UserStoryPoint.joins(user: :user_rooms)
-      .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id)
+      .where("user_rooms.user_id = user_story_points.user_id AND user_story_points.story_id = ?", current_story_id[0])
       .inject({}) do |h, user_story_point|
       h[user_story_point.user_id] = user_story_point.points
       h
-    end if current_story_id) || {}
+    end if current_story_id[0]) || {}
 
     room_users = User.joins(:user_rooms).where("user_rooms.user_id = users.id AND user_rooms.room_id = ?", id)
       .order("user_rooms.created_at")
-      .select(:id, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
+      .select(:id, :uid, :role, :name, :avatar_file_name, :avatar_content_type, :avatar_file_size, :image)
       .select("user_rooms.role as role")
       .inject([]) do |array, user|
       array.push({
-        id: user.id,
+        id: user.uid,
         name: user.display_name,
         display_role: display_role(user.role),
         avatar_thumb: user.letter_avatar,
@@ -192,7 +193,7 @@ class Room < ApplicationRecord
     .joins(:story)
     .where("user_story_points.story_id = stories.id")
     .where(user_id: current_user_id, story_id: stories.pluck(:id))
-    .pluck("stories.id", "user_story_points.points", "user_story_points.comment")
+    .pluck("stories.uid", "user_story_points.points", "user_story_points.comment")
     .inject({}) do |hash, user_story_point|
       hash[user_story_point[0]] = { point: user_story_point[1], comment: user_story_point[2] }
 
@@ -224,7 +225,7 @@ class Room < ApplicationRecord
     users.each do |user|
       users_hash.update(user.id => { name: user.display_name, avatar: user.letter_avatar })
     end
-    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys).order("created_at ASC")
+    user_story_points = UserStoryPoint.where(story_id: story_ids, user_id: users_hash.keys).order("id ASC")
     user_story_points_hash = Hash.new {|hsh, key| hsh[key] = [] }
     user_story_points.each do |user_story_point|
       user_story_points_hash[user_story_point.story_id] << {
@@ -232,7 +233,7 @@ class Room < ApplicationRecord
         user_point:                 user_story_point.points,
         user_name:                  users_hash[user_story_point.user_id][:name],
         user_avatar:                users_hash[user_story_point.user_id][:avatar],
-        user_story_point_id:        user_story_point.id,
+        user_story_point_id:        user_story_point.uid,
         user_story_point_finalized: user_story_point.finalized,
         user_story_point_comment: user_story_point.comment
       }

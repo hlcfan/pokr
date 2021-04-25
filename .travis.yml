@@ -4,25 +4,35 @@ env:
     - USE_OFFICIAL_GEM_SOURCE=1
     - COVERAGE=true
     - RAILS_ENV=test
-    - PGPORT=5432
-    - PGUSER=travis
-
-services:
-  - redis-server
-
-rvm:
-  - 2.6.6
-  - 2.7.2
-
-sudo: true
-dist: bionic
+    - CXX=g++-4.9
+    - PGPORT=5433
 
 addons:
   postgresql: "10"
   apt:
     packages:
+    - postgresql-10
+    - postgresql-client-10
+
+services:
+  - redis-server
+
+rvm:
+  - 2.5.1
+  - 2.6.4
+
+sudo: true
+dist: trusty
+
+addons:
+  postgresql: "10"
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9
+      - postgresql-10
       - postgresql-client-10
-      - postgresql-contrib-10
 
 before_install:
   - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
@@ -32,8 +42,8 @@ before_install:
 
 install:
   - bundle install
-  - nvm install 14.15.0 && nvm alias default 14.15.0
-  - npm install -g npm@6.14.x
+  - nvm install 12.10.0 && nvm alias default 12.10.0
+  - npm install -g npm@6.10.x
   - npm install -g yarn
   - node --version
   - npm --version
