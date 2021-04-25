@@ -10,8 +10,6 @@ RSpec.describe SchemesController, type: :controller do
     { name: nil }
   }
 
-  let(:creator) { User.create(email: "creator@example.com", password: "123456") }
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SchemesController. Be sure to keep this updated too.
@@ -155,18 +153,18 @@ RSpec.describe SchemesController, type: :controller do
 
   describe "DELETE #destroy" do
     before do
-      allow(controller.current_user).to receive(:id) { creator.id }
+      allow(controller.current_user).to receive(:id) { 999 }
     end
 
     it "destroys the requested scheme" do
-      scheme = Scheme.create! valid_attributes.merge(user_id: creator.id)
+      scheme = Scheme.create! valid_attributes.merge(user_id: 999)
       expect {
         delete :destroy, params: {:id => scheme.slug}, session: valid_session
       }.to change{Scheme.count}.by(-1)
     end
 
     it "redirects to the schemes list" do
-      scheme = Scheme.create! valid_attributes.merge(user_id: creator.id)
+      scheme = Scheme.create! valid_attributes.merge(user_id: 999)
       delete :destroy, params: {:id => scheme.slug}, session: valid_session
       expect(response).to redirect_to(schemes_url)
     end

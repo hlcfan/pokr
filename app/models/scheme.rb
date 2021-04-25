@@ -1,5 +1,6 @@
 class Scheme < ApplicationRecord
 
+  include UidGeneration
   belongs_to :user
 
   validates_presence_of :name, :points, :user_id

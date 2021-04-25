@@ -18,8 +18,8 @@ class RoomRepository
     add_sequence_to_stories
     permit_params!
 
-    moderator_ids = (@params.delete(:moderator_ids)||"").split(",").reject do |moderator_id|
-      moderator_id.blank?
+    moderator_ids = (@params.delete(:moderator_ids)||"").split(",").map(&:to_i).reject do |moderator_id|
+      0 == moderator_id && moderator_id.blank?
     end
 
     if room.update @params
@@ -90,14 +90,14 @@ class RoomRepository
       return {} if lines.blank?
 
       stories_hash = {}
-      story_ids = []
+      story_uids = []
       lines.each do |line|
-        name, desc, id = line.split(STORY_LINE_RE)
-        story_ids << id
-        stories_hash[id] = { link: name, desc: desc, id: '', _destroy: "false" }
+        name, desc, uid = line.split(STORY_LINE_RE)
+        story_uids << uid
+        stories_hash[uid] = { link: name, desc: desc, id: '', _destroy: "false" }
       end
 
-      stories_attributes = build_stories_attributes(story_ids, stories_hash)
+      stories_attributes = build_stories_attributes(story_uids, stories_hash)
       @params[:stories_attributes] = stories_attributes
     else
       @params.delete(:bulk_links)
@@ -127,10 +127,10 @@ class RoomRepository
     str.split "\r\n"
   end
 
-  def build_stories_attributes(ids, stories_hash)
-    story_ids = Story.joins(:room).where("rooms.id = stories.room_id").where(id: ids).pluck(:id)
-    story_ids.each do |story_id|
-      stories_hash[story_id][:id] = story_id
+  def build_stories_attributes(uids, stories_hash)
+    stories = Story.joins(:room).where("rooms.id = stories.room_id").where(uid: uids).pluck(:id, :uid)
+    stories.each do |story|
+      stories_hash[story[1]][:id] = story[0]
     end
 
     stories_attributes = {}

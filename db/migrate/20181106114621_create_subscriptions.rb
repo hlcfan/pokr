@@ -1,7 +1,7 @@
 class CreateSubscriptions < ActiveRecord::Migration[5.2]
   def change
-    create_table :subscriptions, id: :uuid do |t|
-      t.uuid :user_id, null: false
+    create_table :subscriptions do |t|
+      t.integer :user_id, null: false
       t.integer :status
       t.string :subscription_id
       t.string :subscription_plan_id
