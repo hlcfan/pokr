@@ -1,5 +1,7 @@
 # Pokrex https://pokrex.com
 
+[Archived] This repo is **archived**.
+
 Yet another planning poker, aiming at efficiency & user experience.
 
 [![Build Status](https://travis-ci.org/hlcfan/pokr.svg?branch=master)](https://travis-ci.org/hlcfan/pokr)
