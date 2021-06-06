@@ -1,4 +1,4 @@
-# Pokrex https://pokrex.com
+# Pokrex https://agilemana.com
 
 [Archived] This repo is **archived**.
 
