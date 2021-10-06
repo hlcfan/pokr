@@ -132,7 +132,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.7)
-    connection_pool (2.2.3)
+    connection_pool (2.2.5)
     crass (1.0.6)
     devise (4.7.3)
       bcrypt (~> 3.0)
@@ -339,7 +339,7 @@ GEM
     semantic_range (2.3.1)
     shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
-    sidekiq (6.1.2)
+    sidekiq (6.2.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
