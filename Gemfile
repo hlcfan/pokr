@@ -41,7 +41,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem "react_on_rails", "~> 10"
 gem "webpacker"
-gem 'puma', '4.3.7'
+gem 'puma', '4.3.11'
 gem 'sidekiq'
 gem 'sitemap_generator'
 gem 'whenever', :require => false
